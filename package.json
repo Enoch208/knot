@@ -27,6 +27,7 @@
     "test:live:discovery": "node --test tests/discovery/discovery.live.ts",
     "test:integration:postgres": "node --test tests/db/postgres.integration.ts",
     "manifest:verify": "node scripts/verify-manifest.ts",
+    "sellers:verify:public": "node scripts/verify-public-sellers.ts",
     "check": "npm run build && npm run test:root && npm run category:parity",
     "worker:start": "node apps/worker/src/main.ts"
   },
