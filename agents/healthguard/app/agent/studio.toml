@@ -99,6 +99,6 @@ terms_accepted_at = "2026-09-09T09:15:30Z"
 packaging = "zip"
 
 [identity]
-endpoint = "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json"
+endpoint = "https://knot-health.truematchx.com/.well-known/agent-card.json"
 registered_at = "2026-09-09T08:43:25.181Z"
 agent_id = 2295
