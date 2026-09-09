@@ -10,6 +10,7 @@
   },
   "scripts": {
     "api:start": "node apps/api/src/server.ts",
+    "advantage:verify": "node packages/advantage/src/cli.ts",
     "build": "tsc -p tsconfig.json",
     "build:healthguard": "npm --prefix agents/healthguard/app/agent run build",
     "build:sellers": "node scripts/run-seller-command.ts build",
@@ -18,6 +19,7 @@
     "test": "npm run test:root && npm run test:parity && npm run test:sellers",
     "test:root": "node --test tests/**/*.test.ts tests/services/**/*.test.ts",
     "test:healthguard": "npm --prefix agents/healthguard/app/agent test",
+    "test:advantage": "node --test tests/advantage/**/*.test.ts",
     "test:parity": "agents/healthguard/app/agent/node_modules/.bin/tsx --test tests/category-parity/category-parity.parity.ts",
     "test:sellers": "node scripts/run-seller-command.ts test",
     "test:live:venus": "node --test tests/chain/venus-health.live.ts",
