@@ -1,7 +1,7 @@
 import { buildHireCalls, type Call } from "@altananetwork/sdk"
 import { getAddress, type Address } from "viem"
 import { requireCommerceWriteReady, type CommerceCompatibility } from "./compatibility.ts"
-import { TESTNET_SDK_SOURCES } from "./deployments.ts"
+import { resolveTestnetSdkSource } from "./deployments.ts"
 
 export interface PrepareHireInput {
   jobId: bigint
@@ -32,7 +32,7 @@ export function prepareHire(
   if (input.expiredAt <= earliestExpiry) {
     throw new Error(`expiredAt must exceed ${earliestExpiry} for the selected policy`)
   }
-  const deployment = TESTNET_SDK_SOURCES[1].deployment
+  const deployment = resolveTestnetSdkSource("@bnbagent/sdk").deployment
   return buildHireCalls({
     addresses: {
       commerce: deployment.commerce,

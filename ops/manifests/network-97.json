@@ -2,8 +2,8 @@
   "chainId": 97,
   "label": "BSC testnet",
   "rpcUrl": "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
-  "blockNumber": "129988431",
-  "observedAtUtc": "2026-09-09T08:08:40.952Z",
+  "blockNumber": "129994817",
+  "observedAtUtc": "2026-09-09T08:56:30.925Z",
   "writesPermitted": true,
   "contracts": [
     {
@@ -57,5 +57,45 @@
       "proxyAdmin": null
     }
   ],
+  "commerceCompatibility": {
+    "status": "VERIFIED",
+    "writeAllowed": true,
+    "chainId": 97,
+    "blockNumber": "129994828",
+    "observedAtUtc": "2026-09-09T08:56:30.925Z",
+    "sdkVersions": {
+      "@altananetwork/sdk": "0.7.1",
+      "@bnbagent/sdk": "0.5.5"
+    },
+    "selectedPolicy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "declarationConflict": true,
+    "reasons": [],
+    "policies": [
+      {
+        "address": "0x4F4678D4439feC812Ac7674Bb3Efb4C8f5Fb78A6",
+        "declaredBy": [
+          "@altananetwork/sdk@0.7.1"
+        ],
+        "codeHash": "0x10b1f9306d2a03557471d90a8624e7f758757b736b44d1e25ef3eba83ed96812",
+        "whitelisted": false,
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "disputeWindowSeconds": "86400",
+        "compatible": false
+      },
+      {
+        "address": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "declaredBy": [
+          "@bnbagent/sdk@0.5.5"
+        ],
+        "codeHash": "0xe06798700c986d4387898a1dfde009d52c75f77c7d8dd1a3e179c02d5138cb9b",
+        "whitelisted": true,
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "disputeWindowSeconds": "900",
+        "compatible": true
+      }
+    ]
+  },
   "suspensions": []
 }

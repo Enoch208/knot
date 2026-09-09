@@ -10,7 +10,9 @@ export {
   TESTNET_CODE_SNAPSHOT,
   TESTNET_SDK_SOURCES,
   readInstalledSdkVersions,
+  resolveTestnetSdkSource,
   type CommerceDeployment,
   type InstalledSdkVersions,
   type SdkDeploymentSource,
+  type TestnetSdkPackageName,
 } from "./deployments.ts"

@@ -28,6 +28,8 @@ export interface InstalledSdkVersions {
   "@bnbagent/sdk": string
 }
 
+export type TestnetSdkPackageName = keyof InstalledSdkVersions
+
 const TESTNET_CHAIN_ID = 97
 const altana = ERC8183_ADDRESSES[TESTNET_CHAIN_ID]
 const bnbNetwork = NETWORKS["bsc-testnet"]
@@ -71,6 +73,15 @@ export const TESTNET_SDK_SOURCES: readonly [SdkDeploymentSource, SdkDeploymentSo
     },
   },
 ]
+
+export function resolveTestnetSdkSource(packageName: TestnetSdkPackageName): SdkDeploymentSource {
+  const matches = TESTNET_SDK_SOURCES.filter((source) => source.packageName === packageName)
+  const source = matches[0]
+  if (matches.length !== 1 || !source) {
+    throw new Error(`expected exactly one BSC testnet deployment from ${packageName}`)
+  }
+  return source
+}
 
 export const TESTNET_CODE_SNAPSHOT = {
   chainId: TESTNET_CHAIN_ID,

@@ -4,6 +4,7 @@ import { decodeFunctionData, getAddress, type Address, type Hex } from "viem"
 import {
   prepareHire,
   requireCommerceWriteReady,
+  resolveTestnetSdkSource,
   TESTNET_CODE_SNAPSHOT,
   TESTNET_SDK_SOURCES,
   verifyTestnetCommerce,
@@ -76,6 +77,11 @@ class FixtureReader implements CommerceProbeReader {
 const fixture = (): FixtureReader => {
   return new FixtureReader()
 }
+
+test("SDK deployments resolve by package name", () => {
+  assert.equal(resolveTestnetSdkSource("@altananetwork/sdk").packageName, "@altananetwork/sdk")
+  assert.equal(resolveTestnetSdkSource("@bnbagent/sdk").packageName, "@bnbagent/sdk")
+})
 
 test("the live-whitelisted BNB Agent policy resolves the SDK declaration conflict", async () => {
   const reader = fixture()
@@ -165,6 +171,16 @@ test("hire preparation binds the only live compatible policy", async () => {
     nowSeconds: 1000000n,
   })
   assert.equal(calls.length, 5)
+  assert.deepEqual(
+    calls.map((call) => call.to.toLowerCase()),
+    [
+      bnbAgent.deployment.commerce,
+      bnbAgent.deployment.router,
+      bnbAgent.deployment.commerce,
+      bnbAgent.deployment.paymentToken,
+      bnbAgent.deployment.commerce,
+    ].map((address) => address.toLowerCase()),
+  )
   const registration = calls[1]
   assert.ok(registration)
   assert.ok(registration.data)

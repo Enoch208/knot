@@ -1,6 +1,7 @@
 import { getAddress, type Address, type Hex } from "viem"
 import {
   readInstalledSdkVersions,
+  resolveTestnetSdkSource,
   TESTNET_CODE_SNAPSHOT,
   TESTNET_SDK_SOURCES,
   type InstalledSdkVersions,
@@ -60,7 +61,8 @@ async function inspectTestnetCommerce(
   reader: CommerceProbeReader,
   observedAtUtc: string,
 ): Promise<CommerceCompatibility> {
-  const [altana, bnbAgent] = TESTNET_SDK_SOURCES
+  const altana = resolveTestnetSdkSource("@altananetwork/sdk")
+  const bnbAgent = resolveTestnetSdkSource("@bnbagent/sdk")
   const expected = bnbAgent.deployment
   const sdkVersions = await readInstalledSdkVersions()
   const chainId = await reader.chainId()
