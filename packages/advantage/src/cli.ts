@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { HealthGuardIndependentEvaluator } from "./healthguard.ts"
 import { validateExperimentDataset, type EvidenceResolver } from "./runner.ts"
+import { YieldScoutIndependentEvaluator } from "./yieldscout.ts"
 
 const datasetArgument = process.argv[2]
 if (!datasetArgument) throw new Error("usage: npm run advantage:verify -- <dataset.json>")
@@ -18,5 +19,6 @@ const resolver: EvidenceResolver = async (reference) => {
 const source = await readFile(datasetPath, "utf8")
 const dataset = await validateExperimentDataset(JSON.parse(source) as unknown, resolver, [
   new HealthGuardIndependentEvaluator(),
+  new YieldScoutIndependentEvaluator(),
 ])
 console.info(`[advantage] verified ${dataset.experiments.length} paired experiment record(s)`)
