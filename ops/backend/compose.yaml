@@ -113,7 +113,7 @@ services:
       resources:
         limits:
           cpus: "0.15"
-          memory: 128m
+          memory: 256m
 
   migrate:
     <<: *app
