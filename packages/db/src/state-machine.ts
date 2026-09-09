@@ -24,7 +24,7 @@ const financialTransitions: Readonly<Record<FinancialState, readonly FinancialSt
 }
 
 const actionTransitions: Readonly<Record<ChainActionState, readonly ChainActionState[]>> = {
-  PREPARED: ["SUBMITTED", "FAILED"],
+  PREPARED: ["SUBMITTED", "FAILED", "UNKNOWN"],
   SUBMITTED: ["CONFIRMED", "FAILED", "UNKNOWN"],
   CONFIRMED: [],
   FAILED: [],

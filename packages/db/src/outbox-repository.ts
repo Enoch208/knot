@@ -40,4 +40,12 @@ export class OutboxRepository {
       throw new LeaseRejectedError()
     }
   }
+
+  async releaseLease(lease: OutboxLease): Promise<boolean> {
+    const result = await this.pool.query(
+      "UPDATE outbox SET lease_owner = NULL, lease_expires_at = NULL WHERE id = $1 AND lease_owner = $2 AND fencing_token = $3 AND published_at IS NULL RETURNING id",
+      [lease.id, lease.leaseOwner, lease.fencingToken],
+    )
+    return result.rowCount === 1
+  }
 }

@@ -16,6 +16,14 @@ interface JobEventRow {
   created_at: Date
 }
 
+const claimedJob = (row: JobRow, workerId: string): ClaimedJob => {
+  if (!row.lease_expires_at) throw new LeaseRejectedError()
+  return {
+    job: mapJob(row),
+    lease: { jobId: row.id, workerId, fencingToken: row.fencing_token, expiresAt: row.lease_expires_at },
+  }
+}
+
 const ensureIdempotentMatch = (job: JobRecord, input: CreateJobInput): JobRecord => {
   if (job.id !== input.id || job.taskId !== input.taskId || job.quoteId !== input.quoteId) {
     throw new IdempotencyConflictError()
@@ -92,17 +100,35 @@ export class JobRepository {
       throw new RangeError("lease duration must be a positive safe integer")
     }
     const result = await this.pool.query<JobRow>(
-      "UPDATE jobs SET lease_owner = $2, lease_expires_at = now() + ($3 * interval '1 millisecond'), fencing_token = fencing_token + 1, version = version + 1 WHERE id = $1 AND (lease_expires_at IS NULL OR lease_expires_at <= now()) RETURNING *",
+      "UPDATE jobs SET lease_owner = $2, lease_expires_at = clock_timestamp() + ($3 * interval '1 millisecond'), fencing_token = fencing_token + 1, version = version + 1 WHERE id = $1 AND (lease_expires_at IS NULL OR lease_expires_at <= clock_timestamp()) RETURNING *",
       [jobId, workerId, leaseMilliseconds],
     )
     const row = result.rows[0]
-    if (!row || !row.lease_expires_at) {
-      return null
+    return row ? claimedJob(row, workerId) : null
+  }
+
+  async claimChainActionRecovery(workerId: string, leaseMilliseconds: number): Promise<ClaimedJob | null> {
+    if (!Number.isSafeInteger(leaseMilliseconds) || leaseMilliseconds < 1) {
+      throw new RangeError("lease duration must be a positive safe integer")
     }
-    return {
-      job: mapJob(row),
-      lease: { jobId, workerId, fencingToken: row.fencing_token, expiresAt: row.lease_expires_at },
-    }
+    const result = await this.pool.query<JobRow>(
+      "WITH available AS (SELECT jobs.id FROM jobs WHERE (jobs.lease_expires_at IS NULL OR jobs.lease_expires_at <= clock_timestamp()) AND EXISTS (SELECT 1 FROM chain_actions WHERE chain_actions.job_id = jobs.id AND chain_actions.state IN ('PREPARED', 'SUBMITTED', 'UNKNOWN') AND chain_actions.nonce IS NOT NULL AND chain_actions.relay_intent_id IS NULL AND chain_actions.transaction_intent IS NOT NULL AND (chain_actions.state <> 'SUBMITTED' OR chain_actions.transaction_hash IS NOT NULL)) ORDER BY greatest((SELECT min(chain_actions.updated_at) FROM chain_actions WHERE chain_actions.job_id = jobs.id AND chain_actions.state IN ('PREPARED', 'SUBMITTED', 'UNKNOWN') AND chain_actions.nonce IS NOT NULL AND chain_actions.relay_intent_id IS NULL AND chain_actions.transaction_intent IS NOT NULL AND (chain_actions.state <> 'SUBMITTED' OR chain_actions.transaction_hash IS NOT NULL)), jobs.updated_at), jobs.id FOR UPDATE SKIP LOCKED LIMIT 1) UPDATE jobs AS target SET lease_owner = $1, lease_expires_at = clock_timestamp() + ($2 * interval '1 millisecond'), fencing_token = target.fencing_token + 1, version = target.version + 1 FROM available WHERE target.id = available.id RETURNING target.*",
+      [workerId, leaseMilliseconds],
+    )
+    const row = result.rows[0]
+    return row ? claimedJob(row, workerId) : null
+  }
+
+  async releaseLease(lease: WorkerLease): Promise<boolean> {
+    const result = await this.pool.query(
+      "UPDATE jobs SET lease_owner = NULL, lease_expires_at = NULL, version = version + 1 WHERE id = $1 AND lease_owner = $2 AND fencing_token = $3 RETURNING id",
+      [lease.jobId, lease.workerId, lease.fencingToken],
+    )
+    return result.rowCount === 1
+  }
+
+  async releaseChainActionRecovery(lease: WorkerLease): Promise<boolean> {
+    return this.releaseLease(lease)
   }
 
   async renew(
@@ -114,7 +140,7 @@ export class JobRepository {
       throw new RangeError("lease duration must be a positive safe integer")
     }
     const result = await this.pool.query<JobRow>(
-      "UPDATE jobs SET lease_expires_at = now() + ($5 * interval '1 millisecond'), version = version + 1 WHERE id = $1 AND lease_owner = $2 AND fencing_token = $3 AND version = $4 AND lease_expires_at > now() RETURNING *",
+      "UPDATE jobs SET lease_expires_at = clock_timestamp() + ($5 * interval '1 millisecond'), version = version + 1 WHERE id = $1 AND lease_owner = $2 AND fencing_token = $3 AND version = $4 AND lease_expires_at > clock_timestamp() RETURNING *",
       [lease.jobId, lease.workerId, lease.fencingToken, expectedVersion, leaseMilliseconds],
     )
     const row = result.rows[0]
@@ -157,7 +183,7 @@ export class JobRepository {
         throw new IdempotencyConflictError()
       }
       const updated = await client.query<JobRow>(
-        "UPDATE jobs SET work_state = $2, financial_state = $3, protocol_state = $4::jsonb, version = version + 1, chain_id = COALESCE(chain_id, $8::integer), commerce = COALESCE(commerce, lower($9)), chain_job_id = COALESCE(chain_job_id, $10::numeric) WHERE id = $1 AND version = $5 AND lease_owner = $6 AND fencing_token = $7 AND lease_expires_at > now() RETURNING *",
+        "UPDATE jobs SET work_state = $2, financial_state = $3, protocol_state = $4::jsonb, version = version + 1, chain_id = COALESCE(chain_id, $8::integer), commerce = COALESCE(commerce, lower($9)), chain_job_id = COALESCE(chain_job_id, $10::numeric) WHERE id = $1 AND version = $5 AND lease_owner = $6 AND fencing_token = $7 AND lease_expires_at > clock_timestamp() RETURNING *",
         [
           input.jobId,
           input.workState,

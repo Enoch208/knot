@@ -1,4 +1,5 @@
 import assert from "node:assert/strict"
+import { readFile } from "node:fs/promises"
 import { describe, it } from "node:test"
 import {
   InvalidStateTransitionError,
@@ -25,9 +26,23 @@ describe("durable state machines", () => {
   })
 
   it("only reconciles unknown actions to an observed terminal outcome", () => {
+    assert.doesNotThrow(() => assertChainActionTransition("PREPARED", "UNKNOWN"))
     assert.doesNotThrow(() => assertChainActionTransition("SUBMITTED", "UNKNOWN"))
     assert.doesNotThrow(() => assertChainActionTransition("UNKNOWN", "CONFIRMED"))
     assert.throws(() => assertChainActionTransition("UNKNOWN", "SUBMITTED"), InvalidStateTransitionError)
     assert.throws(() => assertChainActionTransition("CONFIRMED", "CONFIRMED"), InvalidStateTransitionError)
+  })
+
+  it("keeps the forward database guard aligned with the prepared broadcast fence", async () => {
+    const sql = await readFile(new URL("../../packages/db/migrations/0004_chain_action_broadcast_unknown.sql", import.meta.url), "utf8")
+    assert.match(sql, /\('PREPARED', 'UNKNOWN'\)/)
+    assert.doesNotMatch(sql, /\('UNKNOWN', 'SUBMITTED'\)/)
+  })
+
+  it("enforces new nonce-only records without blocking an audit of legacy rows", async () => {
+    const sql = await readFile(new URL("../../packages/db/migrations/0005_chain_action_recovery.sql", import.meta.url), "utf8")
+    assert.match(sql, /chain_actions_transaction_hash_required[^\n]+NOT VALID;/)
+    assert.match(sql, /chain_actions_nonce_locator[^\n]+NOT VALID;/)
+    assert.match(sql, /CREATE VIEW chain_action_legacy_violations/)
   })
 })
