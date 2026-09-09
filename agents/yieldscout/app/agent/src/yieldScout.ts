@@ -24,6 +24,7 @@ const LIMITATIONS = [
 export const SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-base64url/1:";
 export const COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-deflate-base64url/1:";
 const MAX_DECOMPRESSED_TASK_BYTES = 65_536;
+const MAX_ENCODED_TASK_CHARS = Math.ceil(MAX_DECOMPRESSED_TASK_BYTES / 3) * 4;
 type Comparison = YieldScoutArtifact["eligibleMarkets"][number];
 
 export function encodeSignedTaskTransport(text: string): string {
@@ -36,14 +37,23 @@ export function encodeCompressedSignedTaskTransport(text: string): string {
 
 function decodeSignedTaskTransport(text: string): string | null {
   const compressed = text.startsWith(COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX);
-  if (!compressed && !text.startsWith(SIGNED_TASK_TRANSPORT_PREFIX)) return text;
+  if (!compressed && !text.startsWith(SIGNED_TASK_TRANSPORT_PREFIX)) {
+    return Buffer.byteLength(text, "utf8") <= MAX_DECOMPRESSED_TASK_BYTES ? text : null;
+  }
   const prefix = compressed ? COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX : SIGNED_TASK_TRANSPORT_PREFIX;
   const payload = text.slice(prefix.length);
-  if (!/^[A-Za-z0-9_-]+$/.test(payload) || payload.length % 4 === 1) return null;
+  if (
+    payload.length > MAX_ENCODED_TASK_CHARS ||
+    !/^[A-Za-z0-9_-]+$/.test(payload) ||
+    payload.length % 4 === 1
+  ) {
+    return null;
+  }
   try {
     const bytes = Buffer.from(payload, "base64url");
     if (bytes.toString("base64url") !== payload) return null;
     const decoded = compressed ? inflateRawSync(bytes, { maxOutputLength: MAX_DECOMPRESSED_TASK_BYTES }) : bytes;
+    if (decoded.length > MAX_DECOMPRESSED_TASK_BYTES) return null;
     return new TextDecoder("utf-8", { fatal: true }).decode(decoded);
   } catch {
     return null;

@@ -127,6 +127,15 @@ test("bounded compression preserves a large signed request under the claim limit
   assert.equal(JSON.parse(analyzeRangePilotText(malformed, NOW)).reasonCode, "INVALID_JSON");
 });
 
+test("rejects oversized raw, encoded, and compressed task transports", () => {
+  const oversized = "a".repeat(65_537);
+  const encoded = `${SIGNED_TASK_TRANSPORT_PREFIX}${Buffer.from(oversized, "utf8").toString("base64url")}`;
+  const compressed = `${COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX}${"A".repeat(87_388)}`;
+  assert.equal(JSON.parse(analyzeRangePilotText(oversized, NOW)).reasonCode, "INVALID_JSON");
+  assert.equal(JSON.parse(analyzeRangePilotText(encoded, NOW)).reasonCode, "INVALID_JSON");
+  assert.equal(JSON.parse(analyzeRangePilotText(compressed, NOW)).reasonCode, "INVALID_JSON");
+});
+
 test("malformed transport and unknown fields fail closed", () => {
   const malformed = `${SIGNED_TASK_TRANSPORT_PREFIX}%%%`;
   const malformedArtifact = JSON.parse(analyzeRangePilotText(malformed, NOW)) as Record<string, unknown>;
