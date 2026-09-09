@@ -17,6 +17,7 @@
     "test:root": "node --test tests/**/*.test.ts tests/services/**/*.test.ts",
     "test:healthguard": "npm --prefix agents/healthguard/app/agent test",
     "test:live:venus": "node --test tests/chain/venus-health.live.ts",
+    "test:live:discovery": "node --test tests/discovery/discovery.live.ts",
     "test:integration:postgres": "node --test tests/db/postgres.integration.ts",
     "manifest:verify": "node scripts/verify-manifest.ts",
     "check": "npm run build && npm run build:healthguard && npm test",
