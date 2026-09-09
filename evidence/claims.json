@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "knot.claims/1",
+  "updatedAtUtc": "2026-09-09T08:52:10.237Z",
+  "revision": {
+    "baseCommit": "56de2ed84ad168c77b689a103eb6ac2b4cad4e6f",
+    "branch": "main"
+  },
+  "statusDefinitions": {
+    "SUPPORTED": "The listed evidence supports the claim within its stated scope.",
+    "PARTIAL": "The listed evidence supports only part of the claim; limitations identify the unsupported portion.",
+    "UNMEASURED": "No benchmark or representative measured dataset supports the claim.",
+    "NOT_CLAIMED": "The capability is explicitly outside the current submission claim set."
+  },
+  "evidenceClassDefinitions": {
+    "mainnet_observation": "A time-bound read from a mainnet network.",
+    "testnet_observation": "A time-bound read or interaction on a test network.",
+    "historical_replay": "A result produced by replaying a fixed historical dataset.",
+    "synthetic_fixture": "A deterministic result produced from controlled fixture data.",
+    "publisher_claim": "A statement or status returned by the operator's own service."
+  },
+  "claims": [
+    {
+      "id": "knot-api-available",
+      "claim": "The public KNOT API and its database reported AVAILABLE.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "service": "knot-api",
+        "url": "https://knot-api.truematchx.com/health"
+      },
+      "observedAtUtc": "2026-09-09T08:52:10.237Z",
+      "sources": [
+        {
+          "type": "https_probe",
+          "url": "https://knot-api.truematchx.com/health",
+          "httpStatus": 200,
+          "observation": {
+            "service": "knot-api",
+            "status": "AVAILABLE",
+            "dependencies": {
+              "database": "AVAILABLE"
+            }
+          }
+        }
+      ],
+      "limitations": [
+        "This is a point-in-time self-reported health response, not an uptime guarantee.",
+        "The observation does not exercise authenticated task or job mutations."
+      ]
+    },
+    {
+      "id": "knot-api-boundaries",
+      "claim": "The KNOT API implements repository-tested health, private task creation and read, and private job read boundaries.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "service": "knot-api",
+        "capability": "control-plane API"
+      },
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "tests/api/api.test.ts",
+          "command": "npm run test:root"
+        }
+      ],
+      "limitations": [
+        "Only the health endpoint was exercised in the published deployment observation.",
+        "Authenticated task and job operations are not exposed as a public demo."
+      ]
+    },
+    {
+      "id": "healthguard-card-live",
+      "claim": "The deployed HealthGuard public agent card returned HTTP 200 and advertised negotiate and notify_funded operations.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "service": "healthguard-agent",
+        "deploymentId": "01M22N9QVXY26V7JKXSM2WF4FS",
+        "runtimeAgentId": "01M22N9QVXCSAQ8YVH1Z9VGNET"
+      },
+      "observedAtUtc": "2026-09-09T08:50:47Z",
+      "sources": [
+        {
+          "type": "https_probe",
+          "url": "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "observation": {
+            "name": "healthguard-agent",
+            "version": "1.0.0",
+            "operationIds": [
+              "negotiate",
+              "notify_funded"
+            ]
+          }
+        },
+        {
+          "type": "repository_file",
+          "path": "agents/healthguard/app/agent/studio.toml"
+        }
+      ],
+      "limitations": [
+        "The deployment is a temporary trial reporting expiry at 2026-09-11T08:42:34Z.",
+        "A reachable agent card does not demonstrate authenticated delivery or an on-chain paid job."
+      ]
+    },
+    {
+      "id": "healthguard-erc8004-registration",
+      "claim": "HealthGuard is registered as ERC-8004 agent 2295 on BSC testnet for seller address 0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+        "agentId": "2295",
+        "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+      },
+      "observedAtUtc": "2026-09-09T08:43:25.181Z",
+      "sources": [
+        {
+          "type": "testnet_identity_read",
+          "network": "BSC testnet",
+          "chainId": 97,
+          "result": {
+            "agentId": "2295",
+            "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+          }
+        },
+        {
+          "type": "repository_file",
+          "path": "agents/healthguard/app/agent/studio.toml"
+        }
+      ],
+      "limitations": [
+        "This is a testnet identity, not a mainnet registration.",
+        "Registration does not prove a completed commercial job."
+      ]
+    },
+    {
+      "id": "healthguard-signed-quote",
+      "claim": "An authenticated HealthGuard negotiation returned an accepted wallet-signed quote for 100000000000000000 base units of U on BSC testnet.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "currencySymbol": "U",
+        "currencyDecimals": 18,
+        "priceBaseUnits": "100000000000000000",
+        "priceDisplay": "0.1 U",
+        "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+      },
+      "observedOnDate": "2026-09-09",
+      "sources": [
+        {
+          "type": "authenticated_negotiation_observation",
+          "result": "accepted",
+          "signaturePresent": true,
+          "chainId": 97,
+          "priceBaseUnits": "100000000000000000",
+          "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+        },
+        {
+          "type": "repository_file",
+          "path": "agents/healthguard/app/agent/studio.toml"
+        }
+      ],
+      "limitations": [
+        "The exact observation time and full signed response were not archived as a public artifact.",
+        "The quote was not funded and does not prove delivery, verification, settlement, or earnings."
+      ]
+    },
+    {
+      "id": "healthguard-analysis",
+      "claim": "HealthGuard implements deterministic, analysis-only lending-health assessment with explicit incomplete, stale, unsupported, and unknown outcomes.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "category": "health",
+        "capability": "analysis",
+        "dataNetwork": "BSC mainnet"
+      },
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "agents/healthguard/app/agent/tests/healthGuard.test.ts",
+          "command": "npm run test:healthguard"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/chain/venus-health.test.ts",
+          "command": "npm run test:root"
+        }
+      ],
+      "limitations": [
+        "The default tests use controlled snapshots.",
+        "The analyzer does not sign or execute lending transactions."
+      ]
+    },
+    {
+      "id": "rangepilot-analysis",
+      "claim": "RangePilot implements deterministic, analysis-only range assessment for bounded PancakeSwap v3 position snapshots.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "category": "rebalancing",
+        "capability": "analysis",
+        "supportedChainIds": [
+          56,
+          97
+        ]
+      },
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "tests/services/rangepilot/rangepilot.test.ts",
+          "command": "npm run test:root"
+        }
+      ],
+      "limitations": [
+        "No public RangePilot service deployment is evidenced.",
+        "No liquidity-position transaction has been executed."
+      ]
+    },
+    {
+      "id": "gridquant-analysis",
+      "claim": "GridQuant implements deterministic, analysis-only grid construction for one allowlisted BSC mainnet WBNB/USDT PancakeSwap v3 pool.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "category": "grid",
+        "capability": "analysis",
+        "chainId": 56,
+        "pairId": "bsc:WBNB/USDT:pancakeswap-v3"
+      },
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "tests/services/gridquant/gridquant.test.ts",
+          "command": "npm run test:root"
+        }
+      ],
+      "limitations": [
+        "No orders or swaps are placed.",
+        "There are no observed fills, realized PnL, or historical evaluation results."
+      ]
+    },
+    {
+      "id": "yieldscout-analysis",
+      "claim": "YieldScout implements deterministic, analysis-only same-asset supply comparison for configured Venus Core and Aave v3 markets on BSC mainnet.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "category": "yield",
+        "capability": "analysis",
+        "chainId": 56,
+        "integrationIds": [
+          "venus-core-supply-v1",
+          "aave-v3-bsc-supply-v1"
+        ]
+      },
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "tests/services/yieldscout/yieldscout.test.ts",
+          "command": "npm run test:root"
+        }
+      ],
+      "limitations": [
+        "No deposits, withdrawals, or migrations are executed.",
+        "Current rates are not promised returns."
+      ]
+    },
+    {
+      "id": "paid-flow",
+      "claim": "A complete quote-to-funded-job-to-delivery-to-verification-to-settlement flow has not been demonstrated.",
+      "status": "NOT_CLAIMED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "network": "BSC testnet",
+        "chainId": 97
+      },
+      "sources": [
+        {
+          "type": "submission_disclosure",
+          "path": "README.md",
+          "section": "Submission boundary"
+        }
+      ],
+      "limitations": [
+        "Repository fixtures are not external paid-flow evidence.",
+        "A signed quote is not a funded job."
+      ]
+    },
+    {
+      "id": "comparative-benchmarks",
+      "claim": "No comparative quality, return, win-rate, execution, latency, or cost benchmark has been published.",
+      "status": "UNMEASURED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "components": [
+          "HealthGuard",
+          "RangePilot",
+          "GridQuant",
+          "YieldScout"
+        ]
+      },
+      "sources": [
+        {
+          "type": "submission_disclosure",
+          "path": "README.md",
+          "section": "Why this structure matters"
+        }
+      ],
+      "limitations": [
+        "No superiority or performance claim should be inferred from implementation tests."
+      ]
+    }
+  ]
+}
