@@ -1,0 +1,6 @@
+- hostname: knot-api.truematchx.com
+  service: http://127.0.0.1:3100
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-api.truematchx.com
+

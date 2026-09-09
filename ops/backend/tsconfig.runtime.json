@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "../..",
+    "outDir": "../../dist"
+  },
+  "include": [
+    "../../apps/api/**/*.ts",
+    "../../apps/worker/**/*.ts",
+    "../../packages/**/*.ts"
+  ],
+  "exclude": ["../../node_modules", "../../.probe", "../../agents", "../../tests"]
+}

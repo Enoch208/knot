@@ -1,0 +1,232 @@
+name: knot-backend
+
+x-app: &app
+  image: knot/backend:${KNOT_IMAGE_TAG:-local}
+  build:
+    context: .
+    dockerfile: ops/backend/Dockerfile
+  init: true
+  read_only: true
+  tmpfs:
+    - /tmp:size=64m,mode=1777
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+  networks:
+    - private
+    - egress
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  postgres:
+    image: postgres:16.10-bookworm
+    env_file:
+      - /etc/knot/postgres.env
+    restart: unless-stopped
+    shm_size: 256mb
+    stop_grace_period: 60s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      - /var/run/postgresql:size=16m,mode=3775
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=\"$${POSTGRES_USER}\" --dbname=\"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - private
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 2g
+        reservations:
+          memory: 512m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+
+  object-store:
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    command: server /data
+    env_file:
+      - /etc/knot/object-store.env
+    restart: unless-stopped
+    stop_grace_period: 30s
+    volumes:
+      - artifacts:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - private
+    deploy:
+      resources:
+        limits:
+          cpus: "0.35"
+          memory: 768m
+        reservations:
+          memory: 256m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  object-store-init:
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+    env_file:
+      - /etc/knot/object-store.env
+      - /etc/knot/artifact-client.env
+    entrypoint: ["/bin/sh", "-ceu"]
+    command:
+      - |
+        mc alias set local http://object-store:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"
+        mc mb --ignore-existing local/knot-artifacts
+        mc anonymous set none local/knot-artifacts
+        mc version enable local/knot-artifacts
+        mc admin user add local "$${AWS_ACCESS_KEY_ID}" "$${AWS_SECRET_ACCESS_KEY}"
+        mc admin policy create local knot-artifacts /etc/knot/artifact-policy.json
+        mc admin policy attach local knot-artifacts --user "$${AWS_ACCESS_KEY_ID}"
+    depends_on:
+      object-store:
+        condition: service_healthy
+    networks:
+      - private
+    volumes:
+      - ./ops/backend/artifact-policy.json:/etc/knot/artifact-policy.json:ro
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 128m
+
+  migrate:
+    <<: *app
+    command: ["node", "dist/packages/db/src/migrate-cli.js"]
+    env_file:
+      - /etc/knot/database-client.env
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 512m
+
+  api:
+    <<: *app
+    command: ["node", "dist/apps/api/src/server.js"]
+    env_file:
+      - /etc/knot/database-client.env
+      - /etc/knot/api.env
+      - /etc/knot/artifact-client.env
+    restart: unless-stopped
+    stop_grace_period: 20s
+    environment:
+      KNOT_API_HOST: 0.0.0.0
+      KNOT_API_PORT: "3000"
+    ports:
+      - "127.0.0.1:3100:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      object-store-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 1g
+        reservations:
+          memory: 256m
+
+  worker:
+    <<: *app
+    command: ["node", "dist/apps/worker/src/main.js"]
+    env_file:
+      - /etc/knot/database-client.env
+      - /etc/knot/artifact-client.env
+    restart: unless-stopped
+    stop_grace_period: 45s
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      object-store-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "const{Client}=require('pg');const c=new Client({connectionString:process.env.DATABASE_URL});c.connect().then(()=>c.query('SELECT 1')).then(()=>c.end()).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 1g
+        reservations:
+          memory: 256m
+
+  artifact-tools:
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+    env_file:
+      - /etc/knot/object-store.env
+    entrypoint: ["/bin/sh", "-ceu"]
+    command: ["exit 0"]
+    networks:
+      - private
+    profiles:
+      - maintenance
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256m
+
+volumes:
+  postgres-data:
+    name: knot_backend_postgres_16
+  artifacts:
+    name: knot_backend_artifacts
+
+networks:
+  private:
+    name: knot_backend_private
+    internal: true
+  egress:
+    name: knot_backend_egress
