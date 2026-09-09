@@ -23,6 +23,7 @@
     "test:parity": "agents/healthguard/app/agent/node_modules/.bin/tsx --test tests/category-parity/category-parity.parity.ts",
     "test:sellers": "node scripts/run-seller-command.ts test",
     "test:live:venus": "node --test tests/chain/venus-health.live.ts",
+    "test:live:shield": "node --test tests/chain/shield.live.ts",
     "test:live:discovery": "node --test tests/discovery/discovery.live.ts",
     "test:integration:postgres": "node --test tests/db/postgres.integration.ts",
     "manifest:verify": "node scripts/verify-manifest.ts",

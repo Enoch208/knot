@@ -183,3 +183,4 @@ export const shieldArtifact = z
 export type ShieldRequest = z.infer<typeof shieldRequest>
 export type ShieldArtifact = z.infer<typeof shieldArtifact>
 export type ShieldFinding = ShieldArtifact["findings"][number]
+export type ShieldSnapshot = ShieldRequest["snapshot"]
