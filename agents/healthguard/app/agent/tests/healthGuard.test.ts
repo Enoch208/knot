@@ -7,6 +7,7 @@ import {
   analyzeHealthGuardText,
   encodeSignedTaskTransport,
 } from "../src/healthGuard.js";
+import { healthGuardArtifact } from "../src/healthSchemas.js";
 import { healthFixture as fixture, NOW } from "./healthFixture.js";
 
 test("returns a typed solvent assessment with labeled metrics", () => {
@@ -123,6 +124,33 @@ test("plain JSON remains compatible with the signed task analyzer", () => {
   const artifact = JSON.parse(analyzeHealthGuardText(JSON.stringify(fixture()), NOW)) as Record<string, unknown>;
   assert.equal(artifact.status, "ASSESSED");
   assert.equal(artifact.taskId, "health-1");
+});
+
+test("the artifact schema accepts assessed, no-debt, and invalid-request outputs", () => {
+  const assessed = analyzeHealthGuard(fixture(), NOW);
+  const noDebtInput = fixture();
+  noDebtInput.snapshot.markets[1].debtUnits = "0";
+  const noDebt = analyzeHealthGuard(noDebtInput, NOW);
+  const invalid = JSON.parse(analyzeHealthGuardText("not-json", NOW));
+  for (const artifact of [assessed, noDebt, invalid]) {
+    assert.equal(healthGuardArtifact.safeParse(artifact).success, true);
+  }
+});
+
+test("the artifact schema rejects unknown and malformed fields at every object boundary", () => {
+  const artifact = analyzeHealthGuard(fixture(), NOW);
+  const position = artifact.positions[0];
+  assert.ok(position);
+  const invalidArtifacts = [
+    { ...artifact, undisclosed: true },
+    { ...artifact, metrics: { ...artifact.metrics, undisclosed: "1" } },
+    { ...artifact, snapshot: { ...artifact.snapshot, undisclosed: true } },
+    { ...artifact, positions: [{ ...position, collateralUnits: -1 }] },
+    { ...artifact, status: "SAFE" },
+  ];
+  for (const invalid of invalidArtifacts) {
+    assert.equal(healthGuardArtifact.safeParse(invalid).success, false);
+  }
 });
 
 test("unknown request fields fail the closed schema", () => {

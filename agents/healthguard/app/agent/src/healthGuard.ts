@@ -1,42 +1,16 @@
-import { healthGuardRequest, type HealthGuardRequest, type HealthMarket } from "./healthSchemas.js";
+import {
+  healthGuardArtifact,
+  healthGuardRequest,
+  type HealthGuardArtifact,
+  type HealthGuardArtifactStatus,
+  type HealthGuardPosition,
+  type HealthGuardRequest,
+  type HealthMarket,
+} from "./healthSchemas.js";
 
 const E18 = 10n ** 18n;
 const BPS = 10_000n;
 export const SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-base64url/1:";
-
-type ArtifactStatus =
-  | "ASSESSED"
-  | "NO_DEBT"
-  | "ASSESSMENT_INCOMPLETE"
-  | "STALE_SNAPSHOT"
-  | "UNSUPPORTED_POSITION"
-  | "INVALID_REQUEST";
-
-export interface HealthGuardArtifact {
-  schemaVersion: "knot.health.artifact/1";
-  category: "health";
-  capability: "analysis";
-  taskId: string | null;
-  status: ArtifactStatus;
-  reasonCode: string | null;
-  assessedAtUtc: string;
-  snapshot: { snapshotId: string; chainId: 56 | 97; blockNumber: string; blockHash: string } | null;
-  protocol: { family: string; comptroller: string; status: string; forcedLiquidation: string } | null;
-  positions: Array<Record<string, string | number | boolean | null>>;
-  metrics: {
-    collateralValueUsdE18: string | null;
-    borrowingPowerCollateralUsdE18: string | null;
-    liquidationThresholdCollateralUsdE18: string | null;
-    debtValueUsdE18: string | null;
-    healthRatioE18: string | null;
-  };
-  missingCoverage: string[];
-  recommendation: "HOLD" | "REPAY" | "NONE" | "REFUSED";
-  minimumEligibleAction: Record<string, string | boolean | null> | null;
-  projectedPostAction: Record<string, string | null> | null;
-  assumptions: string[];
-  limitations: string[];
-}
 
 export function encodeSignedTaskTransport(text: string): string {
   return `${SIGNED_TASK_TRANSPORT_PREFIX}${Buffer.from(text, "utf8").toString("base64url")}`;
@@ -75,6 +49,10 @@ export function analyzeHealthGuardText(text: string, now = new Date()): string {
 }
 
 export function analyzeHealthGuard(request: HealthGuardRequest, now = new Date()): HealthGuardArtifact {
+  return healthGuardArtifact.parse(buildHealthGuardArtifact(request, now));
+}
+
+function buildHealthGuardArtifact(request: HealthGuardRequest, now: Date): HealthGuardArtifact {
   const { task, snapshot } = request;
   const base = artifactBase(request, now);
   const mismatches = targetMismatches(request);
@@ -145,15 +123,15 @@ function artifactBase(request: HealthGuardRequest, now: Date): HealthGuardArtifa
   };
 }
 
-function refusal(status: ArtifactStatus, reasonCode: string, now: Date, missingCoverage: string[]): HealthGuardArtifact {
-  return {
+function refusal(status: HealthGuardArtifactStatus, reasonCode: string, now: Date, missingCoverage: string[]): HealthGuardArtifact {
+  return healthGuardArtifact.parse({
     schemaVersion: "knot.health.artifact/1", category: "health", capability: "analysis", taskId: null,
     status, reasonCode, assessedAtUtc: now.toISOString(), snapshot: null, protocol: null, positions: [],
     metrics: { collateralValueUsdE18: null, borrowingPowerCollateralUsdE18: null, liquidationThresholdCollateralUsdE18: null, debtValueUsdE18: null, healthRatioE18: null },
     missingCoverage, recommendation: "REFUSED", minimumEligibleAction: null, projectedPostAction: null,
     assumptions: ["no assessment is produced from invalid input"],
     limitations: ["analysis only", "invalid input was not assessed"],
-  };
+  });
 }
 
 function targetMismatches({ task, snapshot }: HealthGuardRequest): string[] {
@@ -200,7 +178,7 @@ function missingCoverage({ snapshot }: HealthGuardRequest): string[] {
   return [...new Set(failures)];
 }
 
-function positionRow(market: HealthMarket): Record<string, string | number | boolean | null> {
+function positionRow(market: HealthMarket): HealthGuardPosition {
   const price = market.oraclePriceUsdE18 === null ? null : BigInt(market.oraclePriceUsdE18);
   const collateral = price === null ? null : valueFloor(market.collateralUnits, market.decimals, price);
   const debt = price === null ? null : valueCeil(market.debtUnits, market.decimals, price);
