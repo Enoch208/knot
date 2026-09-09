@@ -1,0 +1,5 @@
+.studio/wallets/
+.studio/audit-log.jsonl
+.env.local
+node_modules/
+dist/
