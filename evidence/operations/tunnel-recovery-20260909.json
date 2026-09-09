@@ -1,0 +1,419 @@
+{
+  "schemaVersion": "knot.tunnel-recovery-evidence/1",
+  "observedFromUtc": "2026-09-09T16:27:11.698Z",
+  "observedUntilUtc": "2026-09-09T16:27:27.121Z",
+  "gitCommit": "a4b092a777ff5bf66f5197e5ac0d06460bf54b8d",
+  "result": "RECOVERED",
+  "drill": {
+    "mode": "controlled-cloudflared-service-restart",
+    "command": "npm run tunnel:drill -- --execute",
+    "targetUnit": "cloudflared.service",
+    "recoveryTimeoutMs": 120000,
+    "pollIntervalMs": 1000,
+    "httpRequestTimeoutMs": 10000,
+    "recoveryProbeAttempts": 1
+  },
+  "boundary": {
+    "explicitExecutionFlag": true,
+    "sshBatchMode": true,
+    "remoteMutationCommands": [
+      "systemctl restart cloudflared"
+    ],
+    "remoteMutationCommandCount": 1,
+    "dockerMutationCommands": 0,
+    "containerRestartCommands": 0,
+    "dockerDaemonRestarted": false,
+    "vpsRestarted": false,
+    "authenticatedSellerRequests": 0,
+    "commerceMutationCommands": 0,
+    "chainRpcRequests": 0,
+    "transactionSubmissions": 0,
+    "mainnetWriteCommands": 0,
+    "fundTransferCommands": 0,
+    "networkTrafficInstrumented": false
+  },
+  "serviceBefore": {
+    "unitId": "cloudflared.service",
+    "names": [
+      "cloudflared.service"
+    ],
+    "description": "cloudflared",
+    "loadState": "loaded",
+    "activeState": "active",
+    "subState": "running",
+    "unitFileState": "enabled",
+    "restartPolicy": "on-failure",
+    "restartDelay": "5s",
+    "startLimitInterval": "10s",
+    "startLimitBurst": 5,
+    "automaticRestartCount": 0,
+    "mainPid": 494128,
+    "invocationId": "dac1b7e6896a4a27896311f2623aa72e",
+    "activeEnterTimestampMonotonicMicros": "29169432307",
+    "result": "success"
+  },
+  "serviceAfter": {
+    "unitId": "cloudflared.service",
+    "names": [
+      "cloudflared.service"
+    ],
+    "description": "cloudflared",
+    "loadState": "loaded",
+    "activeState": "active",
+    "subState": "running",
+    "unitFileState": "enabled",
+    "restartPolicy": "on-failure",
+    "restartDelay": "5s",
+    "startLimitInterval": "10s",
+    "startLimitBurst": 5,
+    "automaticRestartCount": 0,
+    "mainPid": 1094627,
+    "invocationId": "db1a790e05c74cd997a9697b9856fab0",
+    "activeEnterTimestampMonotonicMicros": "50172027804",
+    "result": "success"
+  },
+  "containersBefore": [
+    {
+      "key": "healthguard",
+      "name": "knot-healthguard-agent-1",
+      "imageReference": "knot/healthguard:125da80",
+      "immutableImageId": "sha256:2187510f3b49b4e272bb69a08fe6aca664b7235325a2b2767293277763daf022",
+      "startedAtUtc": "2026-09-09T12:54:00.896121674Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "rangepilot",
+      "name": "knot-rangepilot-agent-1",
+      "imageReference": "knot/rangepilot:4b71a8d",
+      "immutableImageId": "sha256:59010c281fd6830e245bf44a72f58626c2344383f2831497d93a2c0172223be5",
+      "startedAtUtc": "2026-09-09T12:54:27.251024688Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "gridquant",
+      "name": "knot-gridquant-agent-1",
+      "imageReference": "knot/gridquant:4b71a8d",
+      "immutableImageId": "sha256:99fa455566867ac5c3e01bb42c0748855580173df2b9d0ad47ce428a167f0006",
+      "startedAtUtc": "2026-09-09T12:54:55.651119914Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "yieldscout",
+      "name": "knot-yieldscout-agent-1",
+      "imageReference": "knot/yieldscout:4b71a8d",
+      "immutableImageId": "sha256:db18eb09678f0d12c0a112da25c671bd6ffb25d084966ff4bc742cc7ff76b9ad",
+      "startedAtUtc": "2026-09-09T12:55:28.615297426Z",
+      "running": true,
+      "health": "healthy"
+    }
+  ],
+  "containersAfter": [
+    {
+      "key": "healthguard",
+      "name": "knot-healthguard-agent-1",
+      "imageReference": "knot/healthguard:125da80",
+      "immutableImageId": "sha256:2187510f3b49b4e272bb69a08fe6aca664b7235325a2b2767293277763daf022",
+      "startedAtUtc": "2026-09-09T12:54:00.896121674Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "rangepilot",
+      "name": "knot-rangepilot-agent-1",
+      "imageReference": "knot/rangepilot:4b71a8d",
+      "immutableImageId": "sha256:59010c281fd6830e245bf44a72f58626c2344383f2831497d93a2c0172223be5",
+      "startedAtUtc": "2026-09-09T12:54:27.251024688Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "gridquant",
+      "name": "knot-gridquant-agent-1",
+      "imageReference": "knot/gridquant:4b71a8d",
+      "immutableImageId": "sha256:99fa455566867ac5c3e01bb42c0748855580173df2b9d0ad47ce428a167f0006",
+      "startedAtUtc": "2026-09-09T12:54:55.651119914Z",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "key": "yieldscout",
+      "name": "knot-yieldscout-agent-1",
+      "imageReference": "knot/yieldscout:4b71a8d",
+      "immutableImageId": "sha256:db18eb09678f0d12c0a112da25c671bd6ffb25d084966ff4bc742cc7ff76b9ad",
+      "startedAtUtc": "2026-09-09T12:55:28.615297426Z",
+      "running": true,
+      "health": "healthy"
+    }
+  ],
+  "publicBefore": {
+    "requestNonce": "92df5c3dcd75ea50dd10cc84ccdf59f9",
+    "observedAtUtc": "2026-09-09T16:27:11.698Z",
+    "completedAtUtc": "2026-09-09T16:27:14.280Z",
+    "apiHealth": {
+      "url": "https://knot-api.truematchx.com/health?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+      "httpStatus": 200,
+      "latencyMs": 1179,
+      "sha256": "9e257e3af5b3c431fa18ed765077f8bc7c9364d50d24ac14f54d25a04c6aec00",
+      "byteLength": 122,
+      "bodyBase64": "eyJzZXJ2aWNlIjoia25vdC1hcGkiLCJzdGF0dXMiOiJBVkFJTEFCTEUiLCJjaGVja2VkQXQiOiIyMDI2LTA5LTA5VDE2OjI3OjEyLjgyM1oiLCJkZXBlbmRlbmNpZXMiOnsiZGF0YWJhc2UiOiJBVkFJTEFCTEUifX0="
+    },
+    "sellers": [
+      {
+        "key": "healthguard",
+        "agentId": 2295,
+        "agentCard": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-card.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 1055,
+          "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+          "byteLength": 2001,
+          "bodyBase64": "eyJuYW1lIjoiaGVhbHRoZ3VhcmQtYWdlbnQiLCJkZXNjcmlwdGlvbiI6IkVSQy04MTgzIHNlbGxlciBhZ2VudCAoaGVhbHRoZ3VhcmQtYWdlbnQpIOKAlCBuZWdvdGlhdGUgKyBub3RpZnlfZnVuZGVkIG92ZXIgQTJBLiIsInVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vIiwidmVyc2lvbiI6IjEuMC4wIiwicHJvdG9jb2xWZXJzaW9uIjoiMC4zLjAiLCJwcmVmZXJyZWRUcmFuc3BvcnQiOiJKU09OUlBDIiwiY2FwYWJpbGl0aWVzIjp7InN0cmVhbWluZyI6ZmFsc2V9LCJkZWZhdWx0SW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sImRlZmF1bHRPdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInNraWxscyI6W3siaWQiOiJuZWdvdGlhdGUiLCJuYW1lIjoiTmVnb3RpYXRlIGFuIEVSQy04MTgzIGpvYiIsImRlc2NyaXB0aW9uIjoiU2VuZCBhIGRhdGEgcGFydCB7XCJza2lsbFwiOiBcIm5lZ290aWF0ZVwiLCBcInRhc2tfZGVzY3JpcHRpb25cIjogXCIuLi5cIiwgXCJ0ZXJtc1wiOiB7XCJkZWxpdmVyYWJsZXNcIjogXCIuLi5cIiwgXCJxdWFsaXR5X3N0YW5kYXJkc1wiOiBcIi4uLlwifX0gKGJvdGggdGVybXMga2V5cyBhcmUgUkVRVUlSRUQpIGFuZCByZWNlaXZlIGEgd2FsbGV0LXNpZ25lZCBwcmljZSBxdW90ZSAocHJpY2UsIGN1cnJlbmN5LCBuZWdvdGlhdGlvbl9oYXNoLCBwcm92aWRlcl9zaWcpLiBBbmNob3IgdGhlIHJldHVybmVkIGVudmVsb3BlIG9uLWNoYWluIHZpYSBjcmVhdGVKb2IgKyBmdW5kLCB0aGVuIHNlbmQgdGhlIGBub3RpZnlfZnVuZGVkYCBza2lsbCB3aXRoIHRoZSBqb2JfaWQgdG8gcmVxdWVzdCBkZWxpdmVyeS4iLCJ0YWdzIjpbImVyYzgxODMiLCJuZWdvdGlhdGlvbiIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfSx7ImlkIjoibm90aWZ5X2Z1bmRlZCIsIm5hbWUiOiJOb3RpZnkgdGhlIHNlbGxlciBhIGpvYiBpcyBmdW5kZWQgKHJlcXVlc3QgZGVsaXZlcnkpIiwiZGVzY3JpcHRpb24iOiJBZnRlciB5b3UgZnVuZCB0aGUgam9iIG9uLWNoYWluLCBzZW5kIHtcInNraWxsXCI6IFwibm90aWZ5X2Z1bmRlZFwiLCBcImpvYl9pZFwiOiA8aW50Pn0gdG8gdGVsbCB0aGUgc2VsbGVyIFwiSSBmdW5kZWQgam9iIFgg4oCUIHBsZWFzZSBkZWxpdmVyXCIuIFRoZSBzZWxsZXIgdmVyaWZpZXMgdGhlIGZ1bmRlZCBqb2IgY2FycmllcyBpdHMgc2lnbmVkIHF1b3RlIGFuZCByZXBsaWVzIEFUIE9OQ0Ugd2l0aCB7XCJzdGF0dXNcIjogXCJhY2NlcHRlZFwifFwicmVqZWN0ZWRcIiwgXCJqb2JfaWRcIn07IGRlbGl2ZXJ5IHRoZW4gcnVucyBpbiB0aGUgYmFja2dyb3VuZCAod29yayB0YWtlcyB0aW1lKS4gRG8gTk9UIHdhaXQgb24gdGhpcyBjYWxsIGZvciB0aGUgcmVzdWx0IOKAlCByZWFkIHRoZSBkZWxpdmVyYWJsZSBiYWNrIGZyb20gdGhlIENIQUlOIG9uY2UgdGhlIGpvYiByZWFjaGVzIFNVQk1JVFRFRCAodGhlIGBzdWJtaXRgIHR4IGNhcnJpZXMgdGhlIGRlbGl2ZXJhYmxlX3VybDsgRVJDLTgxODMgYGdldF9kZWxpdmVyYWJsZV91cmxgKS4gVGhlIGFnZW50IHNlcnZlcyBubyBqb2ItcXVlcnkgZW5kcG9pbnQuIiwidGFncyI6WyJlcmM4MTgzIiwiZGVsaXZlcnkiLCJibmItY2hhaW4iXSwiaW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sIm91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXX1dLCJzZWN1cml0eVNjaGVtZXMiOnsib2F1dGgyIjp7InR5cGUiOiJvYXV0aDIiLCJmbG93cyI6eyJjbGllbnRDcmVkZW50aWFscyI6eyJ0b2tlblVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpoZWFsdGhndWFyZDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OmhlYWx0aGd1YXJkOmludm9rZSJdfV19"
+        },
+        "domainRegistration": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 1083,
+          "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk1LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-health.truematchx.com/?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 401,
+          "latencyMs": 1080
+        }
+      },
+      {
+        "key": "rangepilot",
+        "agentId": 2297,
+        "agentCard": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-card.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 1321,
+          "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+          "byteLength": 2063,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBSYW5nZVBpbG90IiwiZGVzY3JpcHRpb24iOiJLTk9UIFJhbmdlUGlsb3QgYW5hbHl6ZXMgYSBwaW5uZWQgUGFuY2FrZVN3YXAgdjMgcG9zaXRpb24gc25hcHNob3QgYW5kIHJldHVybnMgYSBib3VuZGVkIHJhbmdlIHBsYW4uIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC1yYW5nZS50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXJhbmdlLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6cmFuZ2VwaWxvdDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnJhbmdlcGlsb3Q6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 1323,
+          "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk3LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-range.truematchx.com/?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 401,
+          "latencyMs": 1321
+        }
+      },
+      {
+        "key": "gridquant",
+        "agentId": 2298,
+        "agentCard": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 2352,
+          "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+          "byteLength": 2069,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBHcmlkUXVhbnQiLCJkZXNjcmlwdGlvbiI6IktOT1QgR3JpZFF1YW50IGFuYWx5emVzIGEgcGlubmVkIEJTQyBtYWlubmV0IFdCTkIvVVNEVCBQYW5jYWtlU3dhcCB2MyBzbmFwc2hvdCBhbmQgcmV0dXJucyBhIGJvdW5kZWQgZ3JpZCBwbGFuLiBBbmFseXNpcyBvbmx5OyBzZXJ2aWNlIHBheW1lbnRzIHVzZSBCU0MgdGVzdG5ldC4iLCJ1cmwiOiJodHRwczovL2tub3QtZ3JpZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LWdyaWQudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpncmlkcXVhbnQ6aW52b2tlIjoiSW52b2tlIHRoZSBzZWxsZXIgYWdlbnQifX19fX0sInNlY3VyaXR5IjpbeyJvYXV0aDIiOlsia25vdDpncmlkcXVhbnQ6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 2353,
+          "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk4LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-grid.truematchx.com/?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 401,
+          "latencyMs": 2246
+        }
+      },
+      {
+        "key": "yieldscout",
+        "agentId": 2299,
+        "agentCard": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 2504,
+          "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+          "byteLength": 2093,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBZaWVsZFNjb3V0IiwiZGVzY3JpcHRpb24iOiJLTk9UIFlpZWxkU2NvdXQgY29tcGFyZXMgcGlubmVkIEJTQyBtYWlubmV0IHNhbWUtYXNzZXQgc3VwcGx5IG1hcmtldHMgd2l0aCBleHBsaWNpdCByYXRlcywgaW5jZW50aXZlcywgbGlxdWlkaXR5LCByaXNrLCBhbmQgY29zdHMuIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC15aWVsZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXlpZWxkLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6eWllbGRzY291dDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnlpZWxkc2NvdXQ6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 200,
+          "latencyMs": 2498,
+          "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk5LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-yield.truematchx.com/?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+          "httpStatus": 401,
+          "latencyMs": 2573
+        }
+      }
+    ],
+    "retainedArtifact": {
+      "sellerKey": "healthguard",
+      "expectedSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+      "response": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json?tunnel-recovery=92df5c3dcd75ea50dd10cc84ccdf59f9",
+        "httpStatus": 200,
+        "latencyMs": 808,
+        "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+        "byteLength": 1546,
+        "bodyBase64": "eyJjaGFpbl9pZCI6OTcsImNvbnRyYWN0cyI6eyJjb21tZXJjZSI6IjB4YTIwNmMwNTE3QjYzNzFDNjYzOENEOWU0YTQyQ2M5ZjAyQTMzQjBERSIsInBvbGljeSI6IjB4ZDZhNDIxNzU4OEY2QjFGNTY1N2E5MkEzZTk0RTY0MjJhRDc3MWNFQSIsInJvdXRlciI6IjB4RDdkMzZENjZkMkYxQjYwOEEwRjk0M2Y3MjJEMjdlMzc0NGY2NkYyNSJ9LCJqb2JfaWQiOjExODUsIm1ldGFkYXRhIjp7ImJ1aWx0X3dpdGgiOiJodHRwczovL2dpdGh1Yi5jb20vYm5iLWNoYWluL2JuYmFnZW50LXN0dWRpbyIsImdlbmVyYXRvciI6ImhlYWx0aGd1YXJkIiwiam9iX2lkIjoxMTg1fSwicmVzcG9uc2UiOnsiY29udGVudCI6IntcInNjaGVtYVZlcnNpb25cIjpcImtub3QuaGVhbHRoLmFydGlmYWN0LzFcIixcImNhdGVnb3J5XCI6XCJoZWFsdGhcIixcImNhcGFiaWxpdHlcIjpcImFuYWx5c2lzXCIsXCJ0YXNrSWRcIjpcImhlYWx0aF8xMjA4NjI2MDlcIixcInN0YXR1c1wiOlwiTk9fREVCVFwiLFwicmVhc29uQ29kZVwiOlwiTk9fREVCVFwiLFwiYXNzZXNzZWRBdFV0Y1wiOlwiMjAyNi0wOS0wOVQxMDozMjoxMy4zMThaXCIsXCJzbmFwc2hvdFwiOntcInNuYXBzaG90SWRcIjpcIjB4OTdkZDYxMTg1ZGMzZjhhMTNjMGMzNmY5ODY0MmNlYzU2NmMwZmRmYTE0M2VlY2Q1YjU4NWNlNGU5OGNjNzllM1wiLFwiY2hhaW5JZFwiOjU2LFwiYmxvY2tOdW1iZXJcIjpcIjEyMDg2MjYwOVwiLFwiYmxvY2tIYXNoXCI6XCIweDYzNzlhMjJiN2VmZjc1OGRiZGUyZTIxOWRlM2MyY2FiYjM5NWFlODljMjk3Y2MxOWYwMWZjMzM4OGRlZTRkMDhcIn0sXCJwcm90b2NvbFwiOntcImZhbWlseVwiOlwidmVudXMtY29yZVwiLFwiY29tcHRyb2xsZXJcIjpcIjB4ZmQzNmUyYzJhNjc4OWRiMjMxMTM2ODUwMzFkN2YxNjMyOTE1ODM4NFwiLFwic3RhdHVzXCI6XCJhY3RpdmVcIixcImZvcmNlZExpcXVpZGF0aW9uXCI6XCJwYXVzZWRcIn0sXCJwb3NpdGlvbnNcIjpbXSxcIm1ldHJpY3NcIjp7XCJjb2xsYXRlcmFsVmFsdWVVc2RFMThcIjpcIjBcIixcImJvcnJvd2luZ1Bvd2VyQ29sbGF0ZXJhbFVzZEUxOFwiOlwiMFwiLFwibGlxdWlkYXRpb25UaHJlc2hvbGRDb2xsYXRlcmFsVXNkRTE4XCI6XCIwXCIsXCJkZWJ0VmFsdWVVc2RFMThcIjpcIjBcIixcImhlYWx0aFJhdGlvRTE4XCI6bnVsbH0sXCJtaXNzaW5nQ292ZXJhZ2VcIjpbXSxcInJlY29tbWVuZGF0aW9uXCI6XCJOT05FXCIsXCJtaW5pbXVtRWxpZ2libGVBY3Rpb25cIjpudWxsLFwicHJvamVjdGVkUG9zdEFjdGlvblwiOm51bGwsXCJhc3N1bXB0aW9uc1wiOltcInByaWNlcyByZW1haW4gdW5jaGFuZ2VkIGZvciBwcm9qZWN0ZWQgcmVwYXltZW50XCIsXCJVU0QgdmFsdWVzIHVzZSAxOCBkZWNpbWFsIGZpeGVkLXBvaW50IHVuaXRzXCJdLFwibGltaXRhdGlvbnNcIjpbXCJhbmFseXNpcyBvbmx5XCIsXCJkb2VzIG5vdCBndWFyYW50ZWUgbGlxdWlkYXRpb24gcHJldmVudGlvblwiLFwiZG9lcyBub3QgZXhlY3V0ZSByZXBheW1lbnRcIl19IiwiY29udGVudF90eXBlIjoidGV4dC9wbGFpbiJ9LCJ2ZXJzaW9uIjoxfQ=="
+      }
+    }
+  },
+  "publicAfter": {
+    "requestNonce": "ae4c389e3bd8e1d2fedf416c2e2b5a70",
+    "observedAtUtc": "2026-09-09T16:27:26.142Z",
+    "completedAtUtc": "2026-09-09T16:27:27.121Z",
+    "apiHealth": {
+      "url": "https://knot-api.truematchx.com/health?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+      "httpStatus": 200,
+      "latencyMs": 891,
+      "sha256": "beb0bb3d054f0ccfc993ae9dea2b66d769dd9e6eaa9cdb27539defc539359033",
+      "byteLength": 122,
+      "bodyBase64": "eyJzZXJ2aWNlIjoia25vdC1hcGkiLCJzdGF0dXMiOiJBVkFJTEFCTEUiLCJjaGVja2VkQXQiOiIyMDI2LTA5LTA5VDE2OjI3OjI2Ljk2NVoiLCJkZXBlbmRlbmNpZXMiOnsiZGF0YWJhc2UiOiJBVkFJTEFCTEUifX0="
+    },
+    "sellers": [
+      {
+        "key": "healthguard",
+        "agentId": 2295,
+        "agentCard": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-card.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 855,
+          "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+          "byteLength": 2001,
+          "bodyBase64": "eyJuYW1lIjoiaGVhbHRoZ3VhcmQtYWdlbnQiLCJkZXNjcmlwdGlvbiI6IkVSQy04MTgzIHNlbGxlciBhZ2VudCAoaGVhbHRoZ3VhcmQtYWdlbnQpIOKAlCBuZWdvdGlhdGUgKyBub3RpZnlfZnVuZGVkIG92ZXIgQTJBLiIsInVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vIiwidmVyc2lvbiI6IjEuMC4wIiwicHJvdG9jb2xWZXJzaW9uIjoiMC4zLjAiLCJwcmVmZXJyZWRUcmFuc3BvcnQiOiJKU09OUlBDIiwiY2FwYWJpbGl0aWVzIjp7InN0cmVhbWluZyI6ZmFsc2V9LCJkZWZhdWx0SW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sImRlZmF1bHRPdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInNraWxscyI6W3siaWQiOiJuZWdvdGlhdGUiLCJuYW1lIjoiTmVnb3RpYXRlIGFuIEVSQy04MTgzIGpvYiIsImRlc2NyaXB0aW9uIjoiU2VuZCBhIGRhdGEgcGFydCB7XCJza2lsbFwiOiBcIm5lZ290aWF0ZVwiLCBcInRhc2tfZGVzY3JpcHRpb25cIjogXCIuLi5cIiwgXCJ0ZXJtc1wiOiB7XCJkZWxpdmVyYWJsZXNcIjogXCIuLi5cIiwgXCJxdWFsaXR5X3N0YW5kYXJkc1wiOiBcIi4uLlwifX0gKGJvdGggdGVybXMga2V5cyBhcmUgUkVRVUlSRUQpIGFuZCByZWNlaXZlIGEgd2FsbGV0LXNpZ25lZCBwcmljZSBxdW90ZSAocHJpY2UsIGN1cnJlbmN5LCBuZWdvdGlhdGlvbl9oYXNoLCBwcm92aWRlcl9zaWcpLiBBbmNob3IgdGhlIHJldHVybmVkIGVudmVsb3BlIG9uLWNoYWluIHZpYSBjcmVhdGVKb2IgKyBmdW5kLCB0aGVuIHNlbmQgdGhlIGBub3RpZnlfZnVuZGVkYCBza2lsbCB3aXRoIHRoZSBqb2JfaWQgdG8gcmVxdWVzdCBkZWxpdmVyeS4iLCJ0YWdzIjpbImVyYzgxODMiLCJuZWdvdGlhdGlvbiIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfSx7ImlkIjoibm90aWZ5X2Z1bmRlZCIsIm5hbWUiOiJOb3RpZnkgdGhlIHNlbGxlciBhIGpvYiBpcyBmdW5kZWQgKHJlcXVlc3QgZGVsaXZlcnkpIiwiZGVzY3JpcHRpb24iOiJBZnRlciB5b3UgZnVuZCB0aGUgam9iIG9uLWNoYWluLCBzZW5kIHtcInNraWxsXCI6IFwibm90aWZ5X2Z1bmRlZFwiLCBcImpvYl9pZFwiOiA8aW50Pn0gdG8gdGVsbCB0aGUgc2VsbGVyIFwiSSBmdW5kZWQgam9iIFgg4oCUIHBsZWFzZSBkZWxpdmVyXCIuIFRoZSBzZWxsZXIgdmVyaWZpZXMgdGhlIGZ1bmRlZCBqb2IgY2FycmllcyBpdHMgc2lnbmVkIHF1b3RlIGFuZCByZXBsaWVzIEFUIE9OQ0Ugd2l0aCB7XCJzdGF0dXNcIjogXCJhY2NlcHRlZFwifFwicmVqZWN0ZWRcIiwgXCJqb2JfaWRcIn07IGRlbGl2ZXJ5IHRoZW4gcnVucyBpbiB0aGUgYmFja2dyb3VuZCAod29yayB0YWtlcyB0aW1lKS4gRG8gTk9UIHdhaXQgb24gdGhpcyBjYWxsIGZvciB0aGUgcmVzdWx0IOKAlCByZWFkIHRoZSBkZWxpdmVyYWJsZSBiYWNrIGZyb20gdGhlIENIQUlOIG9uY2UgdGhlIGpvYiByZWFjaGVzIFNVQk1JVFRFRCAodGhlIGBzdWJtaXRgIHR4IGNhcnJpZXMgdGhlIGRlbGl2ZXJhYmxlX3VybDsgRVJDLTgxODMgYGdldF9kZWxpdmVyYWJsZV91cmxgKS4gVGhlIGFnZW50IHNlcnZlcyBubyBqb2ItcXVlcnkgZW5kcG9pbnQuIiwidGFncyI6WyJlcmM4MTgzIiwiZGVsaXZlcnkiLCJibmItY2hhaW4iXSwiaW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sIm91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXX1dLCJzZWN1cml0eVNjaGVtZXMiOnsib2F1dGgyIjp7InR5cGUiOiJvYXV0aDIiLCJmbG93cyI6eyJjbGllbnRDcmVkZW50aWFscyI6eyJ0b2tlblVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpoZWFsdGhndWFyZDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OmhlYWx0aGd1YXJkOmludm9rZSJdfV19"
+        },
+        "domainRegistration": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 835,
+          "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk1LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-health.truematchx.com/?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 401,
+          "latencyMs": 835
+        }
+      },
+      {
+        "key": "rangepilot",
+        "agentId": 2297,
+        "agentCard": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-card.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 849,
+          "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+          "byteLength": 2063,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBSYW5nZVBpbG90IiwiZGVzY3JpcHRpb24iOiJLTk9UIFJhbmdlUGlsb3QgYW5hbHl6ZXMgYSBwaW5uZWQgUGFuY2FrZVN3YXAgdjMgcG9zaXRpb24gc25hcHNob3QgYW5kIHJldHVybnMgYSBib3VuZGVkIHJhbmdlIHBsYW4uIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC1yYW5nZS50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXJhbmdlLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6cmFuZ2VwaWxvdDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnJhbmdlcGlsb3Q6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 846,
+          "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk3LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-range.truematchx.com/?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 401,
+          "latencyMs": 808
+        }
+      },
+      {
+        "key": "gridquant",
+        "agentId": 2298,
+        "agentCard": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 834,
+          "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+          "byteLength": 2069,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBHcmlkUXVhbnQiLCJkZXNjcmlwdGlvbiI6IktOT1QgR3JpZFF1YW50IGFuYWx5emVzIGEgcGlubmVkIEJTQyBtYWlubmV0IFdCTkIvVVNEVCBQYW5jYWtlU3dhcCB2MyBzbmFwc2hvdCBhbmQgcmV0dXJucyBhIGJvdW5kZWQgZ3JpZCBwbGFuLiBBbmFseXNpcyBvbmx5OyBzZXJ2aWNlIHBheW1lbnRzIHVzZSBCU0MgdGVzdG5ldC4iLCJ1cmwiOiJodHRwczovL2tub3QtZ3JpZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LWdyaWQudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpncmlkcXVhbnQ6aW52b2tlIjoiSW52b2tlIHRoZSBzZWxsZXIgYWdlbnQifX19fX0sInNlY3VyaXR5IjpbeyJvYXV0aDIiOlsia25vdDpncmlkcXVhbnQ6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 978,
+          "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk4LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-grid.truematchx.com/?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 401,
+          "latencyMs": 858
+        }
+      },
+      {
+        "key": "yieldscout",
+        "agentId": 2299,
+        "agentCard": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 846,
+          "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+          "byteLength": 2093,
+          "bodyBase64": "eyJuYW1lIjoiS05PVCBZaWVsZFNjb3V0IiwiZGVzY3JpcHRpb24iOiJLTk9UIFlpZWxkU2NvdXQgY29tcGFyZXMgcGlubmVkIEJTQyBtYWlubmV0IHNhbWUtYXNzZXQgc3VwcGx5IG1hcmtldHMgd2l0aCBleHBsaWNpdCByYXRlcywgaW5jZW50aXZlcywgbGlxdWlkaXR5LCByaXNrLCBhbmQgY29zdHMuIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC15aWVsZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXlpZWxkLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6eWllbGRzY291dDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnlpZWxkc2NvdXQ6aW52b2tlIl19XX0="
+        },
+        "domainRegistration": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 200,
+          "latencyMs": 958,
+          "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+          "byteLength": 107,
+          "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk5LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+        },
+        "unauthenticatedInvocation": {
+          "url": "https://knot-yield.truematchx.com/?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+          "httpStatus": 401,
+          "latencyMs": 876
+        }
+      }
+    ],
+    "retainedArtifact": {
+      "sellerKey": "healthguard",
+      "expectedSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+      "response": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json?tunnel-recovery=ae4c389e3bd8e1d2fedf416c2e2b5a70",
+        "httpStatus": 200,
+        "latencyMs": 858,
+        "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+        "byteLength": 1546,
+        "bodyBase64": "eyJjaGFpbl9pZCI6OTcsImNvbnRyYWN0cyI6eyJjb21tZXJjZSI6IjB4YTIwNmMwNTE3QjYzNzFDNjYzOENEOWU0YTQyQ2M5ZjAyQTMzQjBERSIsInBvbGljeSI6IjB4ZDZhNDIxNzU4OEY2QjFGNTY1N2E5MkEzZTk0RTY0MjJhRDc3MWNFQSIsInJvdXRlciI6IjB4RDdkMzZENjZkMkYxQjYwOEEwRjk0M2Y3MjJEMjdlMzc0NGY2NkYyNSJ9LCJqb2JfaWQiOjExODUsIm1ldGFkYXRhIjp7ImJ1aWx0X3dpdGgiOiJodHRwczovL2dpdGh1Yi5jb20vYm5iLWNoYWluL2JuYmFnZW50LXN0dWRpbyIsImdlbmVyYXRvciI6ImhlYWx0aGd1YXJkIiwiam9iX2lkIjoxMTg1fSwicmVzcG9uc2UiOnsiY29udGVudCI6IntcInNjaGVtYVZlcnNpb25cIjpcImtub3QuaGVhbHRoLmFydGlmYWN0LzFcIixcImNhdGVnb3J5XCI6XCJoZWFsdGhcIixcImNhcGFiaWxpdHlcIjpcImFuYWx5c2lzXCIsXCJ0YXNrSWRcIjpcImhlYWx0aF8xMjA4NjI2MDlcIixcInN0YXR1c1wiOlwiTk9fREVCVFwiLFwicmVhc29uQ29kZVwiOlwiTk9fREVCVFwiLFwiYXNzZXNzZWRBdFV0Y1wiOlwiMjAyNi0wOS0wOVQxMDozMjoxMy4zMThaXCIsXCJzbmFwc2hvdFwiOntcInNuYXBzaG90SWRcIjpcIjB4OTdkZDYxMTg1ZGMzZjhhMTNjMGMzNmY5ODY0MmNlYzU2NmMwZmRmYTE0M2VlY2Q1YjU4NWNlNGU5OGNjNzllM1wiLFwiY2hhaW5JZFwiOjU2LFwiYmxvY2tOdW1iZXJcIjpcIjEyMDg2MjYwOVwiLFwiYmxvY2tIYXNoXCI6XCIweDYzNzlhMjJiN2VmZjc1OGRiZGUyZTIxOWRlM2MyY2FiYjM5NWFlODljMjk3Y2MxOWYwMWZjMzM4OGRlZTRkMDhcIn0sXCJwcm90b2NvbFwiOntcImZhbWlseVwiOlwidmVudXMtY29yZVwiLFwiY29tcHRyb2xsZXJcIjpcIjB4ZmQzNmUyYzJhNjc4OWRiMjMxMTM2ODUwMzFkN2YxNjMyOTE1ODM4NFwiLFwic3RhdHVzXCI6XCJhY3RpdmVcIixcImZvcmNlZExpcXVpZGF0aW9uXCI6XCJwYXVzZWRcIn0sXCJwb3NpdGlvbnNcIjpbXSxcIm1ldHJpY3NcIjp7XCJjb2xsYXRlcmFsVmFsdWVVc2RFMThcIjpcIjBcIixcImJvcnJvd2luZ1Bvd2VyQ29sbGF0ZXJhbFVzZEUxOFwiOlwiMFwiLFwibGlxdWlkYXRpb25UaHJlc2hvbGRDb2xsYXRlcmFsVXNkRTE4XCI6XCIwXCIsXCJkZWJ0VmFsdWVVc2RFMThcIjpcIjBcIixcImhlYWx0aFJhdGlvRTE4XCI6bnVsbH0sXCJtaXNzaW5nQ292ZXJhZ2VcIjpbXSxcInJlY29tbWVuZGF0aW9uXCI6XCJOT05FXCIsXCJtaW5pbXVtRWxpZ2libGVBY3Rpb25cIjpudWxsLFwicHJvamVjdGVkUG9zdEFjdGlvblwiOm51bGwsXCJhc3N1bXB0aW9uc1wiOltcInByaWNlcyByZW1haW4gdW5jaGFuZ2VkIGZvciBwcm9qZWN0ZWQgcmVwYXltZW50XCIsXCJVU0QgdmFsdWVzIHVzZSAxOCBkZWNpbWFsIGZpeGVkLXBvaW50IHVuaXRzXCJdLFwibGltaXRhdGlvbnNcIjpbXCJhbmFseXNpcyBvbmx5XCIsXCJkb2VzIG5vdCBndWFyYW50ZWUgbGlxdWlkYXRpb24gcHJldmVudGlvblwiLFwiZG9lcyBub3QgZXhlY3V0ZSByZXBheW1lbnRcIl19IiwiY29udGVudF90eXBlIjoidGV4dC9wbGFpbiJ9LCJ2ZXJzaW9uIjoxfQ=="
+      }
+    }
+  },
+  "timing": {
+    "restartRequestedAtUtc": "2026-09-09T16:27:14.289Z",
+    "restartCommandCompletedAtUtc": "2026-09-09T16:27:18.660Z",
+    "completePublicRecoveryAtUtc": "2026-09-09T16:27:27.121Z",
+    "restartToCompletePublicRecoveryMs": 12832
+  },
+  "limitations": [
+    "One operator-triggered cloudflared service restart is measured; repeatability is not established.",
+    "The VPS, Docker daemon, KNOT containers, database, and object store are not restarted.",
+    "One client location and point-in-time HTTP probes do not establish uptime, an SLA, failover, load capacity, host recovery, or regional availability.",
+    "The API database state is its self-reported health value, not an independent database integrity check.",
+    "No authenticated seller request, commerce mutation, chain RPC request, transaction submission, mainnet write, or fund transfer is performed.",
+    "Network traffic is not instrumented, so no claim is made about every background process request."
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "knot.chain-recovery-rollout/1",
+  "evidenceClasses": [
+    "publisher_claim",
+    "testnet_observation"
+  ],
+  "rolloutCapturedAtUtc": "2026-09-09T18:33:48.000Z",
+  "observedUntilUtc": "2026-09-09T18:34:54.046Z",
+  "release": {
+    "releaseTag": "35def38e730e",
+    "imageReference": "knot/backend:35def38e730e",
+    "immutableImageId": "sha256:e2f11219338b090a3b3e8cb6036ad9f7368bc4739ff7de68cca92d3ca4bb3d06"
+  },
+  "services": [
+    {
+      "role": "api",
+      "startedAtUtc": "2026-09-09T18:33:17.954585521Z",
+      "health": "healthy"
+    },
+    {
+      "role": "worker",
+      "startedAtUtc": "2026-09-09T18:33:17.95530383Z",
+      "health": "healthy"
+    }
+  ],
+  "configuration": {
+    "secretFile": "/etc/knot/chain-read.env",
+    "secretFileMode": "0600",
+    "mountedServices": [
+      "worker"
+    ],
+    "recoveryEnabled": true,
+    "observerMode": "known-hash-read-only",
+    "broadcasterPresent": false
+  },
+  "database": {
+    "appliedMigrations": [
+      "0001_domain.sql",
+      "0002_state_guards.sql",
+      "0003_product_records.sql",
+      "0004_chain_action_broadcast_unknown.sql",
+      "0005_chain_action_recovery.sql",
+      "0006_chain_action_intent.sql",
+      "0007_chain_action_binding_immutability.sql"
+    ],
+    "chainActionCountAtRollout": 0,
+    "chainActionCountAfterProbe": 0
+  },
+  "workerSamples": [
+    {
+      "observedAtUtc": "2026-09-09T18:33:28.878609276Z",
+      "activeJobs": 0,
+      "outboxEntries": 0,
+      "recovery": {
+        "enabled": true,
+        "claimed": 0,
+        "examined": 0,
+        "changed": 0,
+        "queueExhausted": true,
+        "loadFailures": 0,
+        "reconcileFailures": 0
+      }
+    },
+    {
+      "observedAtUtc": "2026-09-09T18:33:38.885620321Z",
+      "activeJobs": 0,
+      "outboxEntries": 0,
+      "recovery": {
+        "enabled": true,
+        "claimed": 0,
+        "examined": 0,
+        "changed": 0,
+        "queueExhausted": true,
+        "loadFailures": 0,
+        "reconcileFailures": 0
+      }
+    }
+  ],
+  "publicChecks": [
+    {
+      "service": "api",
+      "url": "https://knot-api.truematchx.com/health",
+      "httpStatus": 200,
+      "applicationStatus": "AVAILABLE",
+      "databaseStatus": "AVAILABLE"
+    },
+    {
+      "service": "healthguard",
+      "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "service": "rangepilot",
+      "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "service": "gridquant",
+      "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "service": "yieldscout",
+      "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    }
+  ],
+  "receiptProbe": {
+    "observedAtUtc": "2026-09-09T18:34:54.046Z",
+    "status": "DEPLOYED_READ_ONLY_RECEIPT_OBSERVED",
+    "executionContext": "in-memory invocation inside deployed worker image",
+    "observer": "BscChainReceiptObserver",
+    "transport": "SafeBscReadRpcTransport",
+    "source": {
+      "purpose": "external paid job 1203 fund transaction",
+      "chainId": 97,
+      "transactionHash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+      "transactionIntentHash": "0x7d8eaa7f7f76482d3d38f618411a5a4af5294ea601df5c202a93bbde97966a7d",
+      "signerAddress": "0x71b1373fcdffbd669b85d39b2cfb37ffb9c62930",
+      "nonce": "60",
+      "status": "SUCCESS",
+      "blockNumber": "130060913",
+      "blockHash": "0x22e911b1845dbb81532e7df093dce1faa87ba7f8dbecba72977bc0ed4a7e155b",
+      "confirmations": 11022
+    },
+    "databaseUsed": false,
+    "walletUsed": false,
+    "queueUsed": false
+  },
+  "boundary": {
+    "queueReceiptRpcObservations": 0,
+    "oneShotKnownHashReceiptObservations": 1,
+    "recoveryTransitions": 0,
+    "databaseRowsCreated": 0,
+    "databaseRowsUpdated": 0,
+    "walletAccesses": 0,
+    "transactionBroadcasts": 0,
+    "chainWrites": 0,
+    "fundTransfers": 0,
+    "lostHashScans": 0
+  },
+  "limitations": [
+    "The deployed queue was empty, so no queued receipt observation, lease, reconciliation transition, recovery retry, or recovery effectiveness was exercised.",
+    "One isolated in-memory known-hash probe observed an existing BSC testnet transaction through the deployed observer and safe read transport; it did not use the database, wallet, or queue.",
+    "The receipt probe is one point-in-time testnet observation and does not establish repeatability, provider redundancy, reorg-after-terminal handling, or lost-hash recovery.",
+    "The public checks and two worker samples do not establish uptime, an SLA, load capacity, regional availability, or host recovery.",
+    "No transaction broadcaster or automatic resubmission path exists, and no chain write or fund transfer was performed.",
+    "Relay and account-abstraction recovery remain outside scope."
+  ]
+}

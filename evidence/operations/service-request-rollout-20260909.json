@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "knot.service-request-rollout/1",
+  "capturedAtUtc": "2026-09-09T19:54:26.377Z",
+  "release": {
+    "releaseTag": "bf2738478888",
+    "immutableImageId": "sha256:7a3aa1e7ad961af3b295110194f605fe91f226824dfc0bade891abb333d60ebb",
+    "previousReleaseTag": "35def38e730e",
+    "currentReleasePath": "/opt/knot/releases/bf2738478888"
+  },
+  "database": {
+    "migrationCount": 8,
+    "serviceRequestTablePresent": true,
+    "serviceRequestRowCount": 0
+  },
+  "services": [
+    {
+      "name": "knot-backend-api-1",
+      "image": "knot/backend:bf2738478888",
+      "startedAtUtc": "2026-09-09T19:54:08.034320127Z",
+      "health": "healthy"
+    },
+    {
+      "name": "knot-backend-worker-1",
+      "image": "knot/backend:bf2738478888",
+      "startedAtUtc": "2026-09-09T19:54:08.017831820Z",
+      "health": "healthy"
+    }
+  ],
+  "publicChecks": [
+    {
+      "url": "https://knot-api.truematchx.com/health",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    }
+  ],
+  "unauthenticatedRequestCheck": {
+    "method": "POST",
+    "path": "/api/tasks/nonexistent/service-requests",
+    "httpStatus": 401,
+    "code": "AUTHORITY_MISMATCH"
+  },
+  "verifiedTestCounts": {
+    "root": 392,
+    "sellerParity": 16,
+    "seller": 73,
+    "postgresIntegration": 16,
+    "snapshot": 14
+  },
+  "boundary": {
+    "authenticatedServiceRequestCreated": false,
+    "sellerNegotiationPerformed": false,
+    "sellerFundingPerformed": false,
+    "walletAccessed": false,
+    "chainRpcUsed": false,
+    "chainWritePerformed": false,
+    "mainnetWritePerformed": false,
+    "frontendChanged": false
+  },
+  "limitations": [
+    "The deployment observation proves health, schema migration, immutable image identity, and the unauthenticated refusal boundary; it does not prove an authenticated live service-request creation.",
+    "Request preparation, persistence, capability refusal, deadline, idempotency, and seller compatibility are deterministic and disposable-PostgreSQL test evidence.",
+    "Marketplace request schemas remain duplicated mirrors guarded by a declared compatibility matrix, not a single canonical package.",
+    "Raw request bytes are append-only and have no retention or crypto-erasure mechanism, so this release is limited to bounded testnet and demo inputs rather than production private portfolio data.",
+    "No seller negotiation, payment, wallet operation, chain RPC call, transaction, mainnet write, or frontend change was performed by this rollout."
+  ]
+}

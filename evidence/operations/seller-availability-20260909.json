@@ -1,0 +1,664 @@
+{
+  "schemaVersion": "knot.seller-availability-observation/1",
+  "observedFromUtc": "2026-09-09T16:04:09.995Z",
+  "observedUntilUtc": "2026-09-09T16:05:10.840Z",
+  "observationDurationMs": 60845,
+  "gitCommit": "a4b092a777ff5bf66f5197e5ac0d06460bf54b8d",
+  "method": {
+    "command": "npm run availability:observe -- --output evidence/operations/seller-availability-20260909.json",
+    "sampleCountPerSeller": 5,
+    "intendedCadenceMs": 15000,
+    "configuredSafeFetchTimeoutMs": 10000,
+    "maxRedirects": 0,
+    "transportBoundary": "safeFetch",
+    "jsonResponseLimitBytes": 131072,
+    "unauthenticatedResponseLimitBytes": 65536
+  },
+  "boundary": {
+    "authenticatedRequests": 0,
+    "chainRpcRequests": 0,
+    "stateChangingActions": 0,
+    "transactionSubmissions": 0,
+    "fundTransferCommands": 0
+  },
+  "capturedBodies": [
+    {
+      "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+      "byteLength": 2001,
+      "bodyBase64": "eyJuYW1lIjoiaGVhbHRoZ3VhcmQtYWdlbnQiLCJkZXNjcmlwdGlvbiI6IkVSQy04MTgzIHNlbGxlciBhZ2VudCAoaGVhbHRoZ3VhcmQtYWdlbnQpIOKAlCBuZWdvdGlhdGUgKyBub3RpZnlfZnVuZGVkIG92ZXIgQTJBLiIsInVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vIiwidmVyc2lvbiI6IjEuMC4wIiwicHJvdG9jb2xWZXJzaW9uIjoiMC4zLjAiLCJwcmVmZXJyZWRUcmFuc3BvcnQiOiJKU09OUlBDIiwiY2FwYWJpbGl0aWVzIjp7InN0cmVhbWluZyI6ZmFsc2V9LCJkZWZhdWx0SW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sImRlZmF1bHRPdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInNraWxscyI6W3siaWQiOiJuZWdvdGlhdGUiLCJuYW1lIjoiTmVnb3RpYXRlIGFuIEVSQy04MTgzIGpvYiIsImRlc2NyaXB0aW9uIjoiU2VuZCBhIGRhdGEgcGFydCB7XCJza2lsbFwiOiBcIm5lZ290aWF0ZVwiLCBcInRhc2tfZGVzY3JpcHRpb25cIjogXCIuLi5cIiwgXCJ0ZXJtc1wiOiB7XCJkZWxpdmVyYWJsZXNcIjogXCIuLi5cIiwgXCJxdWFsaXR5X3N0YW5kYXJkc1wiOiBcIi4uLlwifX0gKGJvdGggdGVybXMga2V5cyBhcmUgUkVRVUlSRUQpIGFuZCByZWNlaXZlIGEgd2FsbGV0LXNpZ25lZCBwcmljZSBxdW90ZSAocHJpY2UsIGN1cnJlbmN5LCBuZWdvdGlhdGlvbl9oYXNoLCBwcm92aWRlcl9zaWcpLiBBbmNob3IgdGhlIHJldHVybmVkIGVudmVsb3BlIG9uLWNoYWluIHZpYSBjcmVhdGVKb2IgKyBmdW5kLCB0aGVuIHNlbmQgdGhlIGBub3RpZnlfZnVuZGVkYCBza2lsbCB3aXRoIHRoZSBqb2JfaWQgdG8gcmVxdWVzdCBkZWxpdmVyeS4iLCJ0YWdzIjpbImVyYzgxODMiLCJuZWdvdGlhdGlvbiIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfSx7ImlkIjoibm90aWZ5X2Z1bmRlZCIsIm5hbWUiOiJOb3RpZnkgdGhlIHNlbGxlciBhIGpvYiBpcyBmdW5kZWQgKHJlcXVlc3QgZGVsaXZlcnkpIiwiZGVzY3JpcHRpb24iOiJBZnRlciB5b3UgZnVuZCB0aGUgam9iIG9uLWNoYWluLCBzZW5kIHtcInNraWxsXCI6IFwibm90aWZ5X2Z1bmRlZFwiLCBcImpvYl9pZFwiOiA8aW50Pn0gdG8gdGVsbCB0aGUgc2VsbGVyIFwiSSBmdW5kZWQgam9iIFgg4oCUIHBsZWFzZSBkZWxpdmVyXCIuIFRoZSBzZWxsZXIgdmVyaWZpZXMgdGhlIGZ1bmRlZCBqb2IgY2FycmllcyBpdHMgc2lnbmVkIHF1b3RlIGFuZCByZXBsaWVzIEFUIE9OQ0Ugd2l0aCB7XCJzdGF0dXNcIjogXCJhY2NlcHRlZFwifFwicmVqZWN0ZWRcIiwgXCJqb2JfaWRcIn07IGRlbGl2ZXJ5IHRoZW4gcnVucyBpbiB0aGUgYmFja2dyb3VuZCAod29yayB0YWtlcyB0aW1lKS4gRG8gTk9UIHdhaXQgb24gdGhpcyBjYWxsIGZvciB0aGUgcmVzdWx0IOKAlCByZWFkIHRoZSBkZWxpdmVyYWJsZSBiYWNrIGZyb20gdGhlIENIQUlOIG9uY2UgdGhlIGpvYiByZWFjaGVzIFNVQk1JVFRFRCAodGhlIGBzdWJtaXRgIHR4IGNhcnJpZXMgdGhlIGRlbGl2ZXJhYmxlX3VybDsgRVJDLTgxODMgYGdldF9kZWxpdmVyYWJsZV91cmxgKS4gVGhlIGFnZW50IHNlcnZlcyBubyBqb2ItcXVlcnkgZW5kcG9pbnQuIiwidGFncyI6WyJlcmM4MTgzIiwiZGVsaXZlcnkiLCJibmItY2hhaW4iXSwiaW5wdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sIm91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXX1dLCJzZWN1cml0eVNjaGVtZXMiOnsib2F1dGgyIjp7InR5cGUiOiJvYXV0aDIiLCJmbG93cyI6eyJjbGllbnRDcmVkZW50aWFscyI6eyJ0b2tlblVybCI6Imh0dHBzOi8va25vdC1oZWFsdGgudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpoZWFsdGhndWFyZDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OmhlYWx0aGd1YXJkOmludm9rZSJdfV19"
+    },
+    {
+      "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+      "byteLength": 107,
+      "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk1LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+    },
+    {
+      "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+      "byteLength": 107,
+      "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk3LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+    },
+    {
+      "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+      "byteLength": 2063,
+      "bodyBase64": "eyJuYW1lIjoiS05PVCBSYW5nZVBpbG90IiwiZGVzY3JpcHRpb24iOiJLTk9UIFJhbmdlUGlsb3QgYW5hbHl6ZXMgYSBwaW5uZWQgUGFuY2FrZVN3YXAgdjMgcG9zaXRpb24gc25hcHNob3QgYW5kIHJldHVybnMgYSBib3VuZGVkIHJhbmdlIHBsYW4uIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC1yYW5nZS50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXJhbmdlLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6cmFuZ2VwaWxvdDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnJhbmdlcGlsb3Q6aW52b2tlIl19XX0="
+    },
+    {
+      "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+      "byteLength": 2069,
+      "bodyBase64": "eyJuYW1lIjoiS05PVCBHcmlkUXVhbnQiLCJkZXNjcmlwdGlvbiI6IktOT1QgR3JpZFF1YW50IGFuYWx5emVzIGEgcGlubmVkIEJTQyBtYWlubmV0IFdCTkIvVVNEVCBQYW5jYWtlU3dhcCB2MyBzbmFwc2hvdCBhbmQgcmV0dXJucyBhIGJvdW5kZWQgZ3JpZCBwbGFuLiBBbmFseXNpcyBvbmx5OyBzZXJ2aWNlIHBheW1lbnRzIHVzZSBCU0MgdGVzdG5ldC4iLCJ1cmwiOiJodHRwczovL2tub3QtZ3JpZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LWdyaWQudHJ1ZW1hdGNoeC5jb20vb2F1dGgvdG9rZW4iLCJzY29wZXMiOnsia25vdDpncmlkcXVhbnQ6aW52b2tlIjoiSW52b2tlIHRoZSBzZWxsZXIgYWdlbnQifX19fX0sInNlY3VyaXR5IjpbeyJvYXV0aDIiOlsia25vdDpncmlkcXVhbnQ6aW52b2tlIl19XX0="
+    },
+    {
+      "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+      "byteLength": 107,
+      "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk4LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+    },
+    {
+      "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+      "byteLength": 2093,
+      "bodyBase64": "eyJuYW1lIjoiS05PVCBZaWVsZFNjb3V0IiwiZGVzY3JpcHRpb24iOiJLTk9UIFlpZWxkU2NvdXQgY29tcGFyZXMgcGlubmVkIEJTQyBtYWlubmV0IHNhbWUtYXNzZXQgc3VwcGx5IG1hcmtldHMgd2l0aCBleHBsaWNpdCByYXRlcywgaW5jZW50aXZlcywgbGlxdWlkaXR5LCByaXNrLCBhbmQgY29zdHMuIEFuYWx5c2lzIG9ubHk7IHNlcnZpY2UgcGF5bWVudHMgdXNlIEJTQyB0ZXN0bmV0LiIsInVybCI6Imh0dHBzOi8va25vdC15aWVsZC50cnVlbWF0Y2h4LmNvbS8iLCJ2ZXJzaW9uIjoiMS4wLjAiLCJwcm90b2NvbFZlcnNpb24iOiIwLjMuMCIsInByZWZlcnJlZFRyYW5zcG9ydCI6IkpTT05SUEMiLCJjYXBhYmlsaXRpZXMiOnsic3RyZWFtaW5nIjpmYWxzZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwic2tpbGxzIjpbeyJpZCI6Im5lZ290aWF0ZSIsIm5hbWUiOiJOZWdvdGlhdGUgYW4gRVJDLTgxODMgam9iIiwiZGVzY3JpcHRpb24iOiJTZW5kIGEgZGF0YSBwYXJ0IHtcInNraWxsXCI6IFwibmVnb3RpYXRlXCIsIFwidGFza19kZXNjcmlwdGlvblwiOiBcIi4uLlwiLCBcInRlcm1zXCI6IHtcImRlbGl2ZXJhYmxlc1wiOiBcIi4uLlwiLCBcInF1YWxpdHlfc3RhbmRhcmRzXCI6IFwiLi4uXCJ9fSAoYm90aCB0ZXJtcyBrZXlzIGFyZSBSRVFVSVJFRCkgYW5kIHJlY2VpdmUgYSB3YWxsZXQtc2lnbmVkIHByaWNlIHF1b3RlIChwcmljZSwgY3VycmVuY3ksIG5lZ290aWF0aW9uX2hhc2gsIHByb3ZpZGVyX3NpZykuIEFuY2hvciB0aGUgcmV0dXJuZWQgZW52ZWxvcGUgb24tY2hhaW4gdmlhIGNyZWF0ZUpvYiArIGZ1bmQsIHRoZW4gc2VuZCB0aGUgYG5vdGlmeV9mdW5kZWRgIHNraWxsIHdpdGggdGhlIGpvYl9pZCB0byByZXF1ZXN0IGRlbGl2ZXJ5LiIsInRhZ3MiOlsiZXJjODE4MyIsIm5lZ290aWF0aW9uIiwiYm5iLWNoYWluIl0sImlucHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJvdXRwdXRNb2RlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl19LHsiaWQiOiJub3RpZnlfZnVuZGVkIiwibmFtZSI6Ik5vdGlmeSB0aGUgc2VsbGVyIGEgam9iIGlzIGZ1bmRlZCAocmVxdWVzdCBkZWxpdmVyeSkiLCJkZXNjcmlwdGlvbiI6IkFmdGVyIHlvdSBmdW5kIHRoZSBqb2Igb24tY2hhaW4sIHNlbmQge1wic2tpbGxcIjogXCJub3RpZnlfZnVuZGVkXCIsIFwiam9iX2lkXCI6IDxpbnQ+fSB0byB0ZWxsIHRoZSBzZWxsZXIgXCJJIGZ1bmRlZCBqb2IgWCDigJQgcGxlYXNlIGRlbGl2ZXJcIi4gVGhlIHNlbGxlciB2ZXJpZmllcyB0aGUgZnVuZGVkIGpvYiBjYXJyaWVzIGl0cyBzaWduZWQgcXVvdGUgYW5kIHJlcGxpZXMgQVQgT05DRSB3aXRoIHtcInN0YXR1c1wiOiBcImFjY2VwdGVkXCJ8XCJyZWplY3RlZFwiLCBcImpvYl9pZFwifTsgZGVsaXZlcnkgdGhlbiBydW5zIGluIHRoZSBiYWNrZ3JvdW5kICh3b3JrIHRha2VzIHRpbWUpLiBEbyBOT1Qgd2FpdCBvbiB0aGlzIGNhbGwgZm9yIHRoZSByZXN1bHQg4oCUIHJlYWQgdGhlIGRlbGl2ZXJhYmxlIGJhY2sgZnJvbSB0aGUgQ0hBSU4gb25jZSB0aGUgam9iIHJlYWNoZXMgU1VCTUlUVEVEICh0aGUgYHN1Ym1pdGAgdHggY2FycmllcyB0aGUgZGVsaXZlcmFibGVfdXJsOyBFUkMtODE4MyBgZ2V0X2RlbGl2ZXJhYmxlX3VybGApLiBUaGUgYWdlbnQgc2VydmVzIG5vIGpvYi1xdWVyeSBlbmRwb2ludC4iLCJ0YWdzIjpbImVyYzgxODMiLCJkZWxpdmVyeSIsImJuYi1jaGFpbiJdLCJpbnB1dE1vZGVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwib3V0cHV0TW9kZXMiOlsiYXBwbGljYXRpb24vanNvbiJdfV0sInNlY3VyaXR5U2NoZW1lcyI6eyJvYXV0aDIiOnsidHlwZSI6Im9hdXRoMiIsImZsb3dzIjp7ImNsaWVudENyZWRlbnRpYWxzIjp7InRva2VuVXJsIjoiaHR0cHM6Ly9rbm90LXlpZWxkLnRydWVtYXRjaHguY29tL29hdXRoL3Rva2VuIiwic2NvcGVzIjp7Imtub3Q6eWllbGRzY291dDppbnZva2UiOiJJbnZva2UgdGhlIHNlbGxlciBhZ2VudCJ9fX19fSwic2VjdXJpdHkiOlt7Im9hdXRoMiI6WyJrbm90OnlpZWxkc2NvdXQ6aW52b2tlIl19XX0="
+    },
+    {
+      "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+      "byteLength": 107,
+      "bodyBase64": "eyJyZWdpc3RyYXRpb25zIjpbeyJhZ2VudElkIjoyMjk5LCJhZ2VudFJlZ2lzdHJ5IjoiZWlwMTU1Ojk3OjB4ODAwNEE4MThCRkI5MTIyMzNjNDkxODcxYjNkODRjODlBNDk0QkQ5ZSJ9XX0="
+    }
+  ],
+  "rounds": [
+    {
+      "sequence": 1,
+      "observedAtUtc": "2026-09-09T16:04:09.995Z",
+      "sellers": [
+        {
+          "key": "healthguard",
+          "origin": "https://knot-health.truematchx.com",
+          "agentId": 2295,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 1121,
+              "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+              "byteLength": 2001
+            },
+            "domainRegistration": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 1118,
+              "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-health.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 1140
+            }
+          }
+        },
+        {
+          "key": "rangepilot",
+          "origin": "https://knot-range.truematchx.com",
+          "agentId": 2297,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 3201,
+              "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+              "byteLength": 2063
+            },
+            "domainRegistration": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 3192,
+              "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-range.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 3266
+            }
+          }
+        },
+        {
+          "key": "gridquant",
+          "origin": "https://knot-grid.truematchx.com",
+          "agentId": 2298,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 3556,
+              "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+              "byteLength": 2069
+            },
+            "domainRegistration": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 3559,
+              "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-grid.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 3557
+            }
+          }
+        },
+        {
+          "key": "yieldscout",
+          "origin": "https://knot-yield.truematchx.com",
+          "agentId": 2299,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 4458,
+              "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+              "byteLength": 2093
+            },
+            "domainRegistration": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 4458,
+              "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-yield.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 4461
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "observedAtUtc": "2026-09-09T16:04:24.996Z",
+      "sellers": [
+        {
+          "key": "healthguard",
+          "origin": "https://knot-health.truematchx.com",
+          "agentId": 2295,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 743,
+              "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+              "byteLength": 2001
+            },
+            "domainRegistration": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 892,
+              "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-health.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 845
+            }
+          }
+        },
+        {
+          "key": "rangepilot",
+          "origin": "https://knot-range.truematchx.com",
+          "agentId": 2297,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 687,
+              "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+              "byteLength": 2063
+            },
+            "domainRegistration": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 751,
+              "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-range.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 916
+            }
+          }
+        },
+        {
+          "key": "gridquant",
+          "origin": "https://knot-grid.truematchx.com",
+          "agentId": 2298,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 845,
+              "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+              "byteLength": 2069
+            },
+            "domainRegistration": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 751,
+              "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-grid.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 909
+            }
+          }
+        },
+        {
+          "key": "yieldscout",
+          "origin": "https://knot-yield.truematchx.com",
+          "agentId": 2299,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 893,
+              "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+              "byteLength": 2093
+            },
+            "domainRegistration": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 687,
+              "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-yield.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 927
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "observedAtUtc": "2026-09-09T16:04:39.995Z",
+      "sellers": [
+        {
+          "key": "healthguard",
+          "origin": "https://knot-health.truematchx.com",
+          "agentId": 2295,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 812,
+              "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+              "byteLength": 2001
+            },
+            "domainRegistration": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 659,
+              "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-health.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 809
+            }
+          }
+        },
+        {
+          "key": "rangepilot",
+          "origin": "https://knot-range.truematchx.com",
+          "agentId": 2297,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 657,
+              "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+              "byteLength": 2063
+            },
+            "domainRegistration": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 856,
+              "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-range.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 808
+            }
+          }
+        },
+        {
+          "key": "gridquant",
+          "origin": "https://knot-grid.truematchx.com",
+          "agentId": 2298,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 842,
+              "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+              "byteLength": 2069
+            },
+            "domainRegistration": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 812,
+              "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-grid.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 806
+            }
+          }
+        },
+        {
+          "key": "yieldscout",
+          "origin": "https://knot-yield.truematchx.com",
+          "agentId": 2299,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 639,
+              "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+              "byteLength": 2093
+            },
+            "domainRegistration": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 800,
+              "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-yield.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 814
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sequence": 4,
+      "observedAtUtc": "2026-09-09T16:04:54.995Z",
+      "sellers": [
+        {
+          "key": "healthguard",
+          "origin": "https://knot-health.truematchx.com",
+          "agentId": 2295,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 635,
+              "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+              "byteLength": 2001
+            },
+            "domainRegistration": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 797,
+              "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-health.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 613
+            }
+          }
+        },
+        {
+          "key": "rangepilot",
+          "origin": "https://knot-range.truematchx.com",
+          "agentId": 2297,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 660,
+              "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+              "byteLength": 2063
+            },
+            "domainRegistration": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 635,
+              "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-range.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 882
+            }
+          }
+        },
+        {
+          "key": "gridquant",
+          "origin": "https://knot-grid.truematchx.com",
+          "agentId": 2298,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 865,
+              "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+              "byteLength": 2069
+            },
+            "domainRegistration": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 684,
+              "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-grid.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 615
+            }
+          }
+        },
+        {
+          "key": "yieldscout",
+          "origin": "https://knot-yield.truematchx.com",
+          "agentId": 2299,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 800,
+              "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+              "byteLength": 2093
+            },
+            "domainRegistration": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 816,
+              "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-yield.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 652
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sequence": 5,
+      "observedAtUtc": "2026-09-09T16:05:09.996Z",
+      "sellers": [
+        {
+          "key": "healthguard",
+          "origin": "https://knot-health.truematchx.com",
+          "agentId": 2295,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 769,
+              "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+              "byteLength": 2001
+            },
+            "domainRegistration": {
+              "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 613,
+              "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-health.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 764
+            }
+          }
+        },
+        {
+          "key": "rangepilot",
+          "origin": "https://knot-range.truematchx.com",
+          "agentId": 2297,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 645,
+              "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+              "byteLength": 2063
+            },
+            "domainRegistration": {
+              "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 646,
+              "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-range.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 645
+            }
+          }
+        },
+        {
+          "key": "gridquant",
+          "origin": "https://knot-grid.truematchx.com",
+          "agentId": 2298,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 644,
+              "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+              "byteLength": 2069
+            },
+            "domainRegistration": {
+              "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 759,
+              "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-grid.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 651
+            }
+          }
+        },
+        {
+          "key": "yieldscout",
+          "origin": "https://knot-yield.truematchx.com",
+          "agentId": 2299,
+          "verificationOutcome": "VERIFIED",
+          "verificationErrors": [],
+          "requests": {
+            "agentCard": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+              "httpStatus": 200,
+              "latencyMs": 644,
+              "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+              "byteLength": 2093
+            },
+            "domainRegistration": {
+              "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+              "httpStatus": 200,
+              "latencyMs": 761,
+              "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+              "byteLength": 107
+            },
+            "unauthenticatedInvocation": {
+              "url": "https://knot-yield.truematchx.com/",
+              "httpStatus": 401,
+              "latencyMs": 843
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "One approximately 60-second observation window from one client location was measured.",
+    "Client-observed HTTP responses do not establish uptime, an SLA, or server-side availability.",
+    "No regional, failover, load, authenticated workflow, or sustained-duration behavior was measured.",
+    "Only public cards, registration proofs, and fail-closed unauthenticated invocation responses were sampled."
+  ]
+}

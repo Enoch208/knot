@@ -1,0 +1,350 @@
+{
+  "schemaVersion": "knot.seller-recovery-evidence/1",
+  "observedAtUtc": "2026-09-09T12:55:49.608Z",
+  "gitCommit": "a4b092a777ff5bf66f5197e5ac0d06460bf54b8d",
+  "drill": {
+    "mode": "sequential-container-restart",
+    "command": "npm run reliability:drill -- --execute",
+    "serverRole": "KNOT seller VPS"
+  },
+  "boundary": {
+    "onlyStateChangingOperation": "seller-container-restart",
+    "dockerDaemonRestarted": false,
+    "vpsRestarted": false,
+    "cloudflaredRestarted": false,
+    "networkTrafficInstrumented": false,
+    "commerceMutationCommands": 0,
+    "mainnetWriteCommands": 0,
+    "fundTransferCommands": 0
+  },
+  "sellers": [
+    {
+      "key": "healthguard",
+      "category": "health",
+      "hostname": "knot-health.truematchx.com",
+      "agentId": "2295",
+      "image": {
+        "reference": "knot/healthguard:125da80",
+        "immutableIdBefore": "sha256:2187510f3b49b4e272bb69a08fe6aca664b7235325a2b2767293277763daf022",
+        "immutableIdAfter": "sha256:2187510f3b49b4e272bb69a08fe6aca664b7235325a2b2767293277763daf022",
+        "unchanged": true
+      },
+      "container": {
+        "startedAtBeforeUtc": "2026-09-09T10:08:03.471651597Z",
+        "startedAtAfterUtc": "2026-09-09T12:54:00.896121674Z",
+        "healthBefore": "healthy",
+        "healthAfter": "healthy",
+        "restartPolicy": "unless-stopped",
+        "readOnlyRootFilesystem": true,
+        "capDropAll": true,
+        "noNewPrivileges": true
+      },
+      "timing": {
+        "restartRequestedAtUtc": "2026-09-09T12:53:56.428Z",
+        "restartCommandCompletedAtUtc": "2026-09-09T12:54:01.346Z",
+        "recoveredAtUtc": "2026-09-09T12:54:16.519Z",
+        "recoveryDurationMs": 20091
+      },
+      "publicSurfaceBefore": {
+        "agentCard": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+          "byteLength": 2001
+        },
+        "domainRegistration": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json",
+          "httpStatus": 200,
+          "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+          "byteLength": 1546,
+          "expectedSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2"
+        }
+      },
+      "publicSurfaceAfter": {
+        "agentCard": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "c5cde2e972ac97d42404705f59a3dc46a2c7b73b650f9334a7642f90e3889f02",
+          "byteLength": 2001
+        },
+        "domainRegistration": {
+          "url": "https://knot-health.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "9fcb73bd3e94950dfc6ee7aac2d32830981b20d22fd250d40776e62b8706e9a7",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json",
+          "httpStatus": 200,
+          "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+          "byteLength": 1546,
+          "expectedSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2"
+        }
+      },
+      "authenticatedQuoteAfter": {
+        "tokenHttpStatus": 200,
+        "invocationHttpStatus": 200,
+        "accepted": true,
+        "providerSignaturePresent": true,
+        "chainId": 97,
+        "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+      }
+    },
+    {
+      "key": "rangepilot",
+      "category": "rebalancing",
+      "hostname": "knot-range.truematchx.com",
+      "agentId": "2297",
+      "image": {
+        "reference": "knot/rangepilot:4b71a8d",
+        "immutableIdBefore": "sha256:59010c281fd6830e245bf44a72f58626c2344383f2831497d93a2c0172223be5",
+        "immutableIdAfter": "sha256:59010c281fd6830e245bf44a72f58626c2344383f2831497d93a2c0172223be5",
+        "unchanged": true
+      },
+      "container": {
+        "startedAtBeforeUtc": "2026-09-09T11:13:21.486687213Z",
+        "startedAtAfterUtc": "2026-09-09T12:54:27.251024688Z",
+        "healthBefore": "healthy",
+        "healthAfter": "healthy",
+        "restartPolicy": "unless-stopped",
+        "readOnlyRootFilesystem": true,
+        "capDropAll": true,
+        "noNewPrivileges": true
+      },
+      "timing": {
+        "restartRequestedAtUtc": "2026-09-09T12:54:23.377Z",
+        "restartCommandCompletedAtUtc": "2026-09-09T12:54:27.609Z",
+        "recoveredAtUtc": "2026-09-09T12:54:43.983Z",
+        "recoveryDurationMs": 20606
+      },
+      "publicSurfaceBefore": {
+        "agentCard": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+          "byteLength": 2063
+        },
+        "domainRegistration": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a.json",
+          "httpStatus": 200,
+          "sha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+          "byteLength": 2181,
+          "expectedSha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a"
+        }
+      },
+      "publicSurfaceAfter": {
+        "agentCard": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "85a35077d4e1dc9f4f29c984d430b2ad4c56b744343656116e81194d6d693c1b",
+          "byteLength": 2063
+        },
+        "domainRegistration": {
+          "url": "https://knot-range.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "6ea12e02d16b0250c06917ea3c42dd0a01787a19c2d91b5234728bc2ffdadfd8",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a.json",
+          "httpStatus": 200,
+          "sha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+          "byteLength": 2181,
+          "expectedSha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a"
+        }
+      },
+      "authenticatedQuoteAfter": {
+        "tokenHttpStatus": 200,
+        "invocationHttpStatus": 200,
+        "accepted": true,
+        "providerSignaturePresent": true,
+        "chainId": 97,
+        "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+      }
+    },
+    {
+      "key": "gridquant",
+      "category": "grid",
+      "hostname": "knot-grid.truematchx.com",
+      "agentId": "2298",
+      "image": {
+        "reference": "knot/gridquant:4b71a8d",
+        "immutableIdBefore": "sha256:99fa455566867ac5c3e01bb42c0748855580173df2b9d0ad47ce428a167f0006",
+        "immutableIdAfter": "sha256:99fa455566867ac5c3e01bb42c0748855580173df2b9d0ad47ce428a167f0006",
+        "unchanged": true
+      },
+      "container": {
+        "startedAtBeforeUtc": "2026-09-09T11:13:39.476115442Z",
+        "startedAtAfterUtc": "2026-09-09T12:54:55.651119914Z",
+        "healthBefore": "healthy",
+        "healthAfter": "healthy",
+        "restartPolicy": "unless-stopped",
+        "readOnlyRootFilesystem": true,
+        "capDropAll": true,
+        "noNewPrivileges": true
+      },
+      "timing": {
+        "restartRequestedAtUtc": "2026-09-09T12:54:50.599Z",
+        "restartCommandCompletedAtUtc": "2026-09-09T12:54:55.914Z",
+        "recoveredAtUtc": "2026-09-09T12:55:15.791Z",
+        "recoveryDurationMs": 25192
+      },
+      "publicSurfaceBefore": {
+        "agentCard": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+          "byteLength": 2069
+        },
+        "domainRegistration": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/gridquant/sha256/0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152.json",
+          "httpStatus": 200,
+          "sha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152",
+          "byteLength": 3582,
+          "expectedSha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152"
+        }
+      },
+      "publicSurfaceAfter": {
+        "agentCard": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "c5af638a0e205f66a8a8e6d6ef7456455b932324a5eab2018f78927fce7900ef",
+          "byteLength": 2069
+        },
+        "domainRegistration": {
+          "url": "https://knot-grid.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "02ecc799ed387960db6dfc8ef96fca84ed5548e074b8f42be1b6e16b320a0c4b",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/gridquant/sha256/0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152.json",
+          "httpStatus": 200,
+          "sha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152",
+          "byteLength": 3582,
+          "expectedSha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152"
+        }
+      },
+      "authenticatedQuoteAfter": {
+        "tokenHttpStatus": 200,
+        "invocationHttpStatus": 200,
+        "accepted": true,
+        "providerSignaturePresent": true,
+        "chainId": 97,
+        "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+      }
+    },
+    {
+      "key": "yieldscout",
+      "category": "yield",
+      "hostname": "knot-yield.truematchx.com",
+      "agentId": "2299",
+      "image": {
+        "reference": "knot/yieldscout:4b71a8d",
+        "immutableIdBefore": "sha256:db18eb09678f0d12c0a112da25c671bd6ffb25d084966ff4bc742cc7ff76b9ad",
+        "immutableIdAfter": "sha256:db18eb09678f0d12c0a112da25c671bd6ffb25d084966ff4bc742cc7ff76b9ad",
+        "unchanged": true
+      },
+      "container": {
+        "startedAtBeforeUtc": "2026-09-09T11:13:54.1360225Z",
+        "startedAtAfterUtc": "2026-09-09T12:55:28.615297426Z",
+        "healthBefore": "healthy",
+        "healthAfter": "healthy",
+        "restartPolicy": "unless-stopped",
+        "readOnlyRootFilesystem": true,
+        "capDropAll": true,
+        "noNewPrivileges": true
+      },
+      "timing": {
+        "restartRequestedAtUtc": "2026-09-09T12:55:24.307Z",
+        "restartCommandCompletedAtUtc": "2026-09-09T12:55:28.847Z",
+        "recoveredAtUtc": "2026-09-09T12:55:49.607Z",
+        "recoveryDurationMs": 25300
+      },
+      "publicSurfaceBefore": {
+        "agentCard": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+          "byteLength": 2093
+        },
+        "domainRegistration": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/yieldscout/sha256/c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9.json",
+          "httpStatus": 200,
+          "sha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9",
+          "byteLength": 3269,
+          "expectedSha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9"
+        }
+      },
+      "publicSurfaceAfter": {
+        "agentCard": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "sha256": "d2990b63fdccad90d77ed4ab57fd5eee96dfb491059d281a8e870aca6e74aee2",
+          "byteLength": 2093
+        },
+        "domainRegistration": {
+          "url": "https://knot-yield.truematchx.com/.well-known/agent-registration.json",
+          "httpStatus": 200,
+          "sha256": "7e28d2844d8b35aa6516a3af995d7c7c601124e1ccb44f3bc6ac7d19137eb12b",
+          "byteLength": 107
+        },
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifact": {
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/yieldscout/sha256/c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9.json",
+          "httpStatus": 200,
+          "sha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9",
+          "byteLength": 3269,
+          "expectedSha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9"
+        }
+      },
+      "authenticatedQuoteAfter": {
+        "tokenHttpStatus": 200,
+        "invocationHttpStatus": 200,
+        "accepted": true,
+        "providerSignaturePresent": true,
+        "chainId": 97,
+        "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+      }
+    }
+  ],
+  "limitations": [
+    "One controlled restart was measured per seller.",
+    "The VPS, Docker daemon, Cloudflare tunnel, object store, and database were not restarted.",
+    "No concurrent-load, regional-availability, uptime, SLA, or host-failure claim is made.",
+    "Authenticated recovery proves the quote-response path only; the drill issued no commerce mutation, mainnet-write, or fund-transfer command.",
+    "Network traffic was not instrumented, so no claim is made about every background chain read.",
+    "Quote checks replay retained negotiate requests and establish service recovery, not current input freshness or new commerce."
+  ]
+}

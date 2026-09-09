@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "knot.verified-quote-rollout/1",
+  "capturedAtUtc": "2026-09-09T20:32:09.000Z",
+  "release": {
+    "releaseTag": "ce9bc1f260f1",
+    "imageReference": "knot/backend:ce9bc1f260f1",
+    "immutableImageId": "sha256:8e8f568e07bc3564fd2583ce473809c8b4cd56500f0fcbd1f18df880e5ec59d7",
+    "previousReleaseTag": "bf2738478888",
+    "currentReleasePath": "/opt/knot/releases/ce9bc1f260f1"
+  },
+  "services": [
+    {
+      "name": "knot-backend-api-1",
+      "startedAtUtc": "2026-09-09T20:31:28.128529474Z",
+      "health": "healthy",
+      "restartCount": 0
+    },
+    {
+      "name": "knot-backend-worker-1",
+      "startedAtUtc": "2026-09-09T20:31:28.129122212Z",
+      "health": "healthy",
+      "restartCount": 0
+    }
+  ],
+  "database": {
+    "migrationCount": 10,
+    "newMigrations": [
+      {
+        "name": "0009_service_request_transport.sql",
+        "sha256": "f62a720463b110c2c986b7bd7a2975e76ed9a2ca4b5458f7a2dffcbdfd9bf685"
+      },
+      {
+        "name": "0010_verified_quotes.sql",
+        "sha256": "0ead93e8a364723390123a57cf7e628330fbf91385069e9859457305d776520f"
+      }
+    ],
+    "taskDescriptionNotNull": true,
+    "serviceRequestRowCount": 0,
+    "verifiedQuoteTablePresent": true,
+    "verifiedQuoteRowCount": 0,
+    "activeJobCount": 0,
+    "activeChainActionCount": 0,
+    "unpublishedOutboxCount": 0
+  },
+  "recovery": {
+    "preMigrationDumpFormat": "PostgreSQL custom",
+    "preMigrationDumpMode": "0600",
+    "preMigrationDumpBytes": 67737,
+    "preMigrationDumpSha256": "6c8f6f0b410e6a44475d8df99f2ffb582a918e63295f474acd94a2967641856c",
+    "shadowRestoreVerified": true,
+    "previousReleaseRetained": true,
+    "previousImageRetained": true,
+    "backwardCompatibleBase64InsertBridgeTested": true,
+    "guardedRollbackObserved": true,
+    "guardedRollbackScope": "One pre-migration deployment attempt rejected an unsupported Compose run flag after the verified dump; the dump was restored and the previous API and worker returned healthy before the successful rollout."
+  },
+  "publicChecks": [
+    {
+      "url": "https://knot-api.truematchx.com/health",
+      "httpStatus": 200,
+      "applicationStatus": "AVAILABLE",
+      "databaseStatus": "AVAILABLE"
+    },
+    {
+      "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    }
+  ],
+  "unauthenticatedRequestCheck": {
+    "method": "POST",
+    "path": "/api/tasks/nonexistent/service-requests",
+    "httpStatus": 401,
+    "rowCountChanged": false
+  },
+  "infrastructureBoundary": {
+    "sellerContainersRestarted": false,
+    "postgresRestarted": false,
+    "objectStoreRestarted": false,
+    "observedLifecycleEventsDuringRollout": 0
+  },
+  "verifiedTestCounts": {
+    "root": 453,
+    "sellerParity": 16,
+    "seller": 73,
+    "focusedRequestQuoteRepository": 78,
+    "postgresIntegration": 17,
+    "snapshot": 14
+  },
+  "boundary": {
+    "authenticatedServiceRequestCreated": false,
+    "authenticatedSellerNegotiationPerformed": false,
+    "verifiedQuotePersistedLive": false,
+    "verifiedQuoteApiRoutePresent": false,
+    "jobCreated": false,
+    "fundingPermitted": false,
+    "walletAccessed": false,
+    "chainRpcUsed": false,
+    "chainWritePerformed": false,
+    "mainnetWritePerformed": false,
+    "frontendChanged": false
+  },
+  "limitations": [
+    "The deployment proves the release image, schema migrations, empty append-only tables, health, and unauthenticated refusal boundary; it does not prove an authenticated live request or quote flow.",
+    "The verified-quote repository is not exposed by an API route and has no job-creation, wallet, funding, notification, settlement, or chain-write connection.",
+    "Only EIP-191 EOA quotes can be persisted; ERC-1271 verification requires a future pinned-block network verifier.",
+    "Identity observation metadata is shape- and time-checked caller input, not an independently collected ERC-8004 owner observation, so verified quotes remain non-fundable.",
+    "The successful endpoint observation is pre-existing database context rather than a network observation performed by the quote repository.",
+    "GridQuant job 1187, YieldScout job 1188, and RangePilot job 1189 predate mandatory request-ID replay binding and are intentionally rejected by the new verifier.",
+    "Append-only service-request and verified-quote data have no retention or crypto-erasure mechanism.",
+    "Point-in-time service health and five HTTP responses do not establish uptime, load capacity, an SLA, regional behavior, or disaster recovery."
+  ]
+}
