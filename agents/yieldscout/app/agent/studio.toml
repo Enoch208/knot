@@ -1,5 +1,5 @@
 [project]
-name = "yieldscout-agent"
+name = "KNOT YieldScout"
 
 [stack]
 runtime = "agentcore"
@@ -12,10 +12,7 @@ default = "bsc-testnet"
 kind = "evm-local"
 signer = "local"
 keystore_dir = "../../.studio/wallets"
-
-[llm]
-provider = "openai"
-model = "gpt-4o-mini"
+address = "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3"
 
 [payments.erc8183]
 currency = "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
@@ -28,4 +25,10 @@ poll_interval_seconds = 30
 auto_settle = false
 
 [storage]
-kind = "local"
+kind = "s3"
+bucket = "knot-deliverables"
+region = "us-east-1"
+key_prefix = "yieldscout"
+public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
+endpoint = "http://object-store:9000"
+credential_mode = "env"

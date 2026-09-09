@@ -23,3 +23,8 @@
   originRequest:
     connectTimeout: 10s
     httpHostHeader: knot-grid.truematchx.com
+- hostname: knot-yield.truematchx.com
+  service: http://127.0.0.1:3204
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-yield.truematchx.com

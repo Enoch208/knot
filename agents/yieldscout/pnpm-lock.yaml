@@ -22,9 +22,6 @@ importers:
       '@bnbagent/studio-runtime':
         specifier: 0.0.13
         version: 0.0.13(@bnbagent/sdk@0.5.5(typescript@5.9.3)(zod@3.25.76))(express@5.2.1)(typescript@5.9.3)(zod@3.25.76)
-      ai:
-        specifier: ^7.0.29
-        version: 7.0.94(zod@3.25.76)
       express:
         specifier: ^5.1.0
         version: 5.2.1

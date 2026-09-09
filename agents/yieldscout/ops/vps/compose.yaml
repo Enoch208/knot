@@ -1,0 +1,92 @@
+name: knot-yieldscout
+
+services:
+  storage-init:
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+    env_file:
+      - /etc/knot/object-store.env
+      - /etc/knot/yieldscout-storage.env
+    entrypoint: ["/bin/sh", "-ceu"]
+    command:
+      - |
+        mc alias set local http://object-store:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"
+        mc mb --ignore-existing local/knot-deliverables
+        mc anonymous set download local/knot-deliverables
+        mc version enable local/knot-deliverables
+        mc admin user add local "$${DELIVERABLE_S3_ACCESS_KEY_ID}" "$${DELIVERABLE_S3_SECRET_ACCESS_KEY}"
+        mc admin policy create local knot-yieldscout /etc/knot/deliverable-policy.json
+        mc admin policy attach local knot-yieldscout --user "$${DELIVERABLE_S3_ACCESS_KEY_ID}"
+    volumes:
+      - ./deliverable-policy.json:/etc/knot/deliverable-policy.json:ro
+    networks:
+      - backend-private
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 256m
+
+  agent:
+    image: knot/yieldscout:${KNOT_YIELDSCOUT_IMAGE_TAG:-local}
+    build:
+      context: ../..
+      dockerfile: ops/vps/Dockerfile
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - /etc/knot/yieldscout.env
+      - /etc/knot/yieldscout-storage.env
+    environment:
+      AGENT_BIND_HOST: 0.0.0.0
+      AGENT_PORT: "9000"
+    ports:
+      - "127.0.0.1:3204:9000"
+    volumes:
+      - /etc/knot/yieldscout-wallets:/workspace/.studio/wallets:ro
+    networks:
+      - backend-private
+      - backend-egress
+    restart: unless-stopped
+    stop_grace_period: 30s
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:9000/ping').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 1g
+        reservations:
+          memory: 256m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    depends_on:
+      storage-init:
+        condition: service_completed_successfully
+
+networks:
+  backend-private:
+    external: true
+    name: knot_backend_private
+  backend-egress:
+    external: true
+    name: knot_backend_egress
