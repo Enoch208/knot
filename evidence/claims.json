@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T11:27:46.000Z",
+  "updatedAtUtc": "2026-09-09T11:34:55.952Z",
   "revision": {
-    "baseCommit": "20fb4bf3e2dbcf91fc06b91af65960471fed5f7a",
+    "baseCommit": "8a5d734d9b856b22a536eedce6510da388cf165b",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -314,7 +314,7 @@
     },
     {
       "id": "rangepilot-public-seller",
-      "claim": "KNOT RangePilot is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2297.",
+      "claim": "KNOT RangePilot is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, ERC-8004 identity 2297, and one completed signed 0.1 U BSC testnet job whose content-addressed artifact is bound to a pinned BSC mainnet position snapshot.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim",
@@ -331,10 +331,13 @@
         "mainnetWrites": false,
         "realFunds": false,
         "agentId": "2297",
+        "jobId": "1189",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "terminalProtocolState": "COMPLETED",
         "seller": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
         "endpoint": "https://knot-range.truematchx.com/.well-known/agent-card.json"
       },
-      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "observedAtUtc": "2026-09-09T11:34:55.952Z",
       "sources": [
         {
           "type": "deployment_evidence",
@@ -347,17 +350,30 @@
           "url": "https://testnet.bscscan.com/tx/0xb1c28779be6c64992128a583ce01b0521f6a7afda682f7eea1814bfd5f043d77",
           "receiptStatus": "success",
           "blockNumber": "130006791"
+        },
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/analysis-paid-jobs-1187-1189.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "settlement",
+          "transactionHash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "url": "https://testnet.bscscan.com/tx/0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "receiptStatus": "success",
+          "blockNumber": "130015848"
         }
       ],
       "limitations": [
         "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
         "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
-        "No paid RangePilot job, earnings, position transaction, or performance result is claimed."
+        "One completed paid analysis job does not establish repeatability, earnings, uptime, or performance.",
+        "No liquidity-position transaction was executed."
       ]
     },
     {
       "id": "gridquant-public-seller",
-      "claim": "KNOT GridQuant is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2298.",
+      "claim": "KNOT GridQuant is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, ERC-8004 identity 2298, and one completed signed 0.1 U BSC testnet job whose content-addressed artifact is bound to a pinned BSC mainnet pool snapshot.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim",
@@ -374,10 +390,13 @@
         "mainnetWrites": false,
         "realFunds": false,
         "agentId": "2298",
+        "jobId": "1187",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "terminalProtocolState": "COMPLETED",
         "seller": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
         "endpoint": "https://knot-grid.truematchx.com/.well-known/agent-card.json"
       },
-      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "observedAtUtc": "2026-09-09T11:34:55.952Z",
       "sources": [
         {
           "type": "deployment_evidence",
@@ -390,17 +409,30 @@
           "url": "https://testnet.bscscan.com/tx/0x0df285de32dc0daa6847e639b32a5bbaaf9b84efc5a480a3c0572b76819e183d",
           "receiptStatus": "success",
           "blockNumber": "130006932"
+        },
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/analysis-paid-jobs-1187-1189.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "settlement",
+          "transactionHash": "0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "url": "https://testnet.bscscan.com/tx/0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "receiptStatus": "success",
+          "blockNumber": "130015588"
         }
       ],
       "limitations": [
         "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
         "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
-        "No paid GridQuant job, earnings, order, swap, fill, or performance result is claimed."
+        "One completed paid analysis job does not establish repeatability, earnings, uptime, or performance.",
+        "No order, swap, or fill was executed."
       ]
     },
     {
       "id": "yieldscout-public-seller",
-      "claim": "KNOT YieldScout is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2299.",
+      "claim": "KNOT YieldScout is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, ERC-8004 identity 2299, and one completed signed 0.1 U BSC testnet job whose content-addressed artifact is bound to a pinned BSC mainnet same-asset market snapshot.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim",
@@ -417,10 +449,13 @@
         "mainnetWrites": false,
         "realFunds": false,
         "agentId": "2299",
+        "jobId": "1188",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "terminalProtocolState": "COMPLETED",
         "seller": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
         "endpoint": "https://knot-yield.truematchx.com/.well-known/agent-card.json"
       },
-      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "observedAtUtc": "2026-09-09T11:34:55.952Z",
       "sources": [
         {
           "type": "deployment_evidence",
@@ -433,12 +468,25 @@
           "url": "https://testnet.bscscan.com/tx/0x5c447e5fb8b541dd1afa0c9662f024b10139baf0ba1eb229886d6584129b3b37",
           "receiptStatus": "success",
           "blockNumber": "130008434"
+        },
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/analysis-paid-jobs-1187-1189.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "settlement",
+          "transactionHash": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "url": "https://testnet.bscscan.com/tx/0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "receiptStatus": "success",
+          "blockNumber": "130015708"
         }
       ],
       "limitations": [
         "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
         "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
-        "No paid YieldScout job, earnings, deposit, withdrawal, migration, or performance result is claimed."
+        "One completed paid analysis job does not establish repeatability, earnings, uptime, or performance.",
+        "No deposit, withdrawal, or migration was executed, and current rates are not promised returns."
       ]
     },
     {
@@ -572,6 +620,82 @@
         "This claim is limited to one HealthGuard job on BSC testnet.",
         "It does not establish repeatability, coverage of the other services, mainnet payment readiness, or strategy performance.",
         "Job 1180 remains separately recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path."
+      ]
+    },
+    {
+      "id": "analysis-seller-paid-flows",
+      "claim": "RangePilot job 1189, GridQuant job 1187, and YieldScout job 1188 each completed a separate-buyer signed 0.1 U BSC testnet commerce flow against one pinned BSC mainnet input; every content-addressed deliverable passed quote, task, snapshot, closed-schema, URL-digest, and on-chain manifest-hash verification before settlement paid the corresponding seller.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "mainnet_observation",
+        "testnet_observation"
+      ],
+      "scope": {
+        "services": [
+          "RangePilot",
+          "GridQuant",
+          "YieldScout"
+        ],
+        "jobIds": [
+          "1187",
+          "1188",
+          "1189"
+        ],
+        "dataChainId": 56,
+        "paymentChainId": 97,
+        "executionChainId": null,
+        "capability": "analysis",
+        "completedJobCount": 3,
+        "priceBaseUnitsPerJob": "100000000000000000",
+        "totalSettlementTransferBaseUnits": "300000000000000000",
+        "terminalProtocolState": "COMPLETED",
+        "mainnetWrites": false,
+        "realFunds": false
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T11:15:24.382Z",
+        "toUtc": "2026-09-09T11:34:55.952Z"
+      },
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/analysis-paid-jobs-1187-1189.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "gridquant_settlement",
+          "transactionHash": "0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "url": "https://testnet.bscscan.com/tx/0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "receiptStatus": "success",
+          "blockNumber": "130015588"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "yieldscout_settlement",
+          "transactionHash": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "url": "https://testnet.bscscan.com/tx/0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "receiptStatus": "success",
+          "blockNumber": "130015708"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "rangepilot_settlement",
+          "transactionHash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "url": "https://testnet.bscscan.com/tx/0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "receiptStatus": "success",
+          "blockNumber": "130015848"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/evidence/analysis-paid-jobs.test.ts",
+          "command": "node --test tests/evidence/analysis-paid-jobs.test.ts"
+        }
+      ],
+      "limitations": [
+        "Each service is represented by one completed paid analysis job, which does not establish repeatability, uptime, latency, earnings, or superiority.",
+        "BSC mainnet was read only; no position, order, swap, deposit, withdrawal, migration, or other domain transaction was executed.",
+        "The outcomes are bounded analyses of one pinned input per category, not performance history or promised returns.",
+        "Payments used testnet U on BSC testnet; no real funds or mainnet writes were used."
       ]
     },
     {
