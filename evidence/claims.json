@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T10:34:33.000Z",
+  "updatedAtUtc": "2026-09-09T10:42:15.000Z",
   "revision": {
-    "baseCommit": "4b6c6f33e524d11a7c3fcc46879ef1a6cccb15d1",
+    "baseCommit": "1e6cd0631b5f97875c7bf280b71e684c9ff75009",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -236,10 +236,10 @@
       "scope": {
         "category": "rebalancing",
         "capability": "analysis",
-        "supportedChainIds": [
-          56,
-          97
-        ]
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "executionChainId": null
       },
       "sources": [
         {
@@ -249,8 +249,8 @@
         }
       ],
       "limitations": [
-        "No public RangePilot service deployment is evidenced.",
-        "No liquidity-position transaction has been executed."
+        "No liquidity-position transaction has been executed.",
+        "Fixture coverage is not a performance or reliability benchmark."
       ]
     },
     {
@@ -263,7 +263,10 @@
       "scope": {
         "category": "grid",
         "capability": "analysis",
-        "chainId": 56,
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "executionChainId": null,
         "pairId": "bsc:WBNB/USDT:pancakeswap-v3"
       },
       "sources": [
@@ -288,7 +291,10 @@
       "scope": {
         "category": "yield",
         "capability": "analysis",
-        "chainId": 56,
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "executionChainId": null,
         "integrationIds": [
           "venus-core-supply-v1",
           "aave-v3-bsc-supply-v1"
@@ -304,6 +310,135 @@
       "limitations": [
         "No deposits, withdrawals, or migrations are executed.",
         "Current rates are not promised returns."
+      ]
+    },
+    {
+      "id": "rangepilot-public-seller",
+      "claim": "KNOT RangePilot is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2297.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim",
+        "testnet_observation"
+      ],
+      "scope": {
+        "service": "RangePilot",
+        "category": "rebalancing",
+        "capability": "analysis",
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "commerceChainId": 97,
+        "executionChainId": null,
+        "mainnetWrites": false,
+        "realFunds": false,
+        "agentId": "2297",
+        "seller": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+        "endpoint": "https://knot-range.truematchx.com/.well-known/agent-card.json"
+      },
+      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/testnet/analysis-sellers-2297-2299.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "identity_registration",
+          "transactionHash": "0xb1c28779be6c64992128a583ce01b0521f6a7afda682f7eea1814bfd5f043d77",
+          "url": "https://testnet.bscscan.com/tx/0xb1c28779be6c64992128a583ce01b0521f6a7afda682f7eea1814bfd5f043d77",
+          "receiptStatus": "success",
+          "blockNumber": "130006791"
+        }
+      ],
+      "limitations": [
+        "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
+        "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
+        "No paid RangePilot job, earnings, position transaction, or performance result is claimed."
+      ]
+    },
+    {
+      "id": "gridquant-public-seller",
+      "claim": "KNOT GridQuant is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2298.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim",
+        "testnet_observation"
+      ],
+      "scope": {
+        "service": "GridQuant",
+        "category": "grid",
+        "capability": "analysis",
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "commerceChainId": 97,
+        "executionChainId": null,
+        "mainnetWrites": false,
+        "realFunds": false,
+        "agentId": "2298",
+        "seller": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+        "endpoint": "https://knot-grid.truematchx.com/.well-known/agent-card.json"
+      },
+      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/testnet/analysis-sellers-2297-2299.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "identity_registration",
+          "transactionHash": "0x0df285de32dc0daa6847e639b32a5bbaaf9b84efc5a480a3c0572b76819e183d",
+          "url": "https://testnet.bscscan.com/tx/0x0df285de32dc0daa6847e639b32a5bbaaf9b84efc5a480a3c0572b76819e183d",
+          "receiptStatus": "success",
+          "blockNumber": "130006932"
+        }
+      ],
+      "limitations": [
+        "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
+        "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
+        "No paid GridQuant job, earnings, order, swap, fill, or performance result is claimed."
+      ]
+    },
+    {
+      "id": "yieldscout-public-seller",
+      "claim": "KNOT YieldScout is an independently callable, self-hosted analysis-only seller with OAuth-protected invocation, signed BSC testnet quotes, durable content-addressed artifacts, and ERC-8004 identity 2299.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim",
+        "testnet_observation"
+      ],
+      "scope": {
+        "service": "YieldScout",
+        "category": "yield",
+        "capability": "analysis",
+        "dataChainId": 56,
+        "identityChainId": 97,
+        "commerceChainId": 97,
+        "executionChainId": null,
+        "mainnetWrites": false,
+        "realFunds": false,
+        "agentId": "2299",
+        "seller": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+        "endpoint": "https://knot-yield.truematchx.com/.well-known/agent-card.json"
+      },
+      "observedAtUtc": "2026-09-09T10:42:15.000Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/testnet/analysis-sellers-2297-2299.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "identity_registration",
+          "transactionHash": "0x5c447e5fb8b541dd1afa0c9662f024b10139baf0ba1eb229886d6584129b3b37",
+          "url": "https://testnet.bscscan.com/tx/0x5c447e5fb8b541dd1afa0c9662f024b10139baf0ba1eb229886d6584129b3b37",
+          "receiptStatus": "success",
+          "blockNumber": "130008434"
+        }
+      ],
+      "limitations": [
+        "These endpoint and index observations cover one verification window and are not uptime or latency benchmarks.",
+        "8004scan discovered the identity but reported is_verified=false even though the standard domain-registration proof returned HTTP 200.",
+        "No paid YieldScout job, earnings, deposit, withdrawal, migration, or performance result is claimed."
       ]
     },
     {

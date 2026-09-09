@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "knot.testnet-analysis-sellers-evidence/1",
+  "recordedAtUtc": "2026-09-09T10:42:15.000Z",
+  "networkBoundary": {
+    "dataReads": {
+      "name": "BSC mainnet",
+      "chainId": 56
+    },
+    "identityAndCommerce": {
+      "name": "BSC testnet",
+      "chainId": 97,
+      "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "rpcUsed": "https://bsc-testnet-rpc.publicnode.com"
+    },
+    "mainnetWrites": false,
+    "realFunds": false,
+    "tokenTransfers": false
+  },
+  "fundingSource": {
+    "address": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "asset": "tBNB",
+    "amountWeiPerSeller": "5000000000000000",
+    "uTransferred": false
+  },
+  "sellers": [
+    {
+      "key": "rangepilot",
+      "category": "rebalancing",
+      "capability": "analysis",
+      "dataScope": "Pinned PancakeSwap v3 position snapshots read from BSC mainnet",
+      "identity": {
+        "agentId": "2297",
+        "owner": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+        "name": "KNOT RangePilot",
+        "description": "KNOT-operated analysis-only seller for pinned PancakeSwap v3 position snapshots. Reads BSC mainnet state; identity and commerce are BSC testnet. Never executes trades.",
+        "service": {
+          "name": "A2A",
+          "version": "0.3.0",
+          "endpoint": "https://knot-range.truematchx.com/.well-known/agent-card.json"
+        },
+        "registration": "eip155:97:0x8004A818BFB912233c491871b3d84c89A494BD9e"
+      },
+      "deployment": {
+        "hosting": "self-hosted VPS",
+        "revision": "ff0b1c8",
+        "containerImage": "knot/rangepilot:ff0b1c8",
+        "containerHealth": "healthy",
+        "rootFilesystemReadOnly": true,
+        "agentCardUrl": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+        "domainRegistrationUrl": "https://knot-range.truematchx.com/.well-known/agent-registration.json"
+      },
+      "endpointVerification": {
+        "agentCardHttpStatus": 200,
+        "domainRegistrationHttpStatus": 200,
+        "operationIds": [
+          "negotiate",
+          "notify_funded"
+        ],
+        "oauthTokenUrl": "https://knot-range.truematchx.com/oauth/token",
+        "oauthScope": "knot:rangepilot:invoke",
+        "oauthTokenHttpStatus": 200,
+        "oauthTokenTtlSeconds": 900,
+        "unauthenticatedInvocationHttpStatus": 401,
+        "authenticatedNegotiation": "accepted",
+        "providerSignaturePresent": true,
+        "quoteChainId": 97
+      },
+      "artifactVerification": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/a89aa8a296b912d69d0f7724552e3a0a43a7a5368f06e1eadf99563bd931d3da.json",
+        "sha256": "a89aa8a296b912d69d0f7724552e3a0a43a7a5368f06e1eadf99563bd931d3da",
+        "httpStatus": 200,
+        "contentAddressed": true
+      },
+      "funding": {
+        "transactionHash": "0x5799e4a6267ecae17e7b0a128a82cf0856f30aba02638d2dda1af23d784d870e",
+        "receiptStatus": "success",
+        "blockNumber": "130006688",
+        "blockHash": "0x5d5ce6a9a936b750e8d8aae43a1b6209ef77c99c08979f99ec3d6636572b03b7",
+        "timestampUtc": "2026-09-09T10:25:32.000Z",
+        "asset": "tBNB",
+        "amountWei": "5000000000000000"
+      },
+      "registrationTransaction": {
+        "transactionHash": "0xb1c28779be6c64992128a583ce01b0521f6a7afda682f7eea1814bfd5f043d77",
+        "receiptStatus": "success",
+        "blockNumber": "130006791",
+        "blockHash": "0x242bf41180cd3ab554b66ebed36a3ccc2ad66f2297e6539f03a5f614e8de5a2d",
+        "timestampUtc": "2026-09-09T10:26:18.000Z",
+        "gasUsed": "644862",
+        "effectiveGasPriceWei": "0",
+        "walletPaidWei": "0"
+      },
+      "indexObservation": {
+        "source": "8004scan/api/v1/agents",
+        "foundByName": true,
+        "foundByAgentId": true,
+        "supportedProtocols": [
+          "A2A"
+        ],
+        "isVerified": false
+      },
+      "balanceObservation": {
+        "nativeWei": "5000000000000000",
+        "uBaseUnits": "0"
+      }
+    },
+    {
+      "key": "gridquant",
+      "category": "grid",
+      "capability": "analysis",
+      "dataScope": "Pinned allowlisted DEX grid snapshots read from BSC mainnet",
+      "identity": {
+        "agentId": "2298",
+        "owner": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+        "name": "KNOT GridQuant",
+        "description": "KNOT-operated analysis-only seller for pinned allowlisted DEX grid snapshots. Reads BSC mainnet state; identity and commerce are BSC testnet. Never executes trades.",
+        "service": {
+          "name": "A2A",
+          "version": "0.3.0",
+          "endpoint": "https://knot-grid.truematchx.com/.well-known/agent-card.json"
+        },
+        "registration": "eip155:97:0x8004A818BFB912233c491871b3d84c89A494BD9e"
+      },
+      "deployment": {
+        "hosting": "self-hosted VPS",
+        "revision": "ff0b1c8",
+        "containerImage": "knot/gridquant:ff0b1c8",
+        "containerHealth": "healthy",
+        "rootFilesystemReadOnly": true,
+        "agentCardUrl": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+        "domainRegistrationUrl": "https://knot-grid.truematchx.com/.well-known/agent-registration.json"
+      },
+      "endpointVerification": {
+        "agentCardHttpStatus": 200,
+        "domainRegistrationHttpStatus": 200,
+        "operationIds": [
+          "negotiate",
+          "notify_funded"
+        ],
+        "oauthTokenUrl": "https://knot-grid.truematchx.com/oauth/token",
+        "oauthScope": "knot:gridquant:invoke",
+        "oauthTokenHttpStatus": 200,
+        "oauthTokenTtlSeconds": 900,
+        "unauthenticatedInvocationHttpStatus": 401,
+        "authenticatedNegotiation": "accepted",
+        "providerSignaturePresent": true,
+        "quoteChainId": 97
+      },
+      "artifactVerification": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/gridquant/sha256/6db397d14cf0bb4acb4defa1a33022ff1acce24fa81988b27aacdb948b9f73cc.json",
+        "sha256": "6db397d14cf0bb4acb4defa1a33022ff1acce24fa81988b27aacdb948b9f73cc",
+        "httpStatus": 200,
+        "contentAddressed": true
+      },
+      "funding": {
+        "transactionHash": "0xb35492e08c448198f9fdd43582437e32c72d46a4456fb6b77c6b9171c2b8ab5e",
+        "receiptStatus": "success",
+        "blockNumber": "130006728",
+        "blockHash": "0x0de7de666b9480c08894aa48c2a6dbd0f8f21a5f98aee5b95eda6583b97fc82c",
+        "timestampUtc": "2026-09-09T10:25:50.000Z",
+        "asset": "tBNB",
+        "amountWei": "5000000000000000"
+      },
+      "registrationTransaction": {
+        "transactionHash": "0x0df285de32dc0daa6847e639b32a5bbaaf9b84efc5a480a3c0572b76819e183d",
+        "receiptStatus": "success",
+        "blockNumber": "130006932",
+        "blockHash": "0xe014ca6359d8d1cf1f6831d9f59a4ad2570738a86b085b31a2d05070759a041c",
+        "timestampUtc": "2026-09-09T10:27:22.000Z",
+        "gasUsed": "644814",
+        "effectiveGasPriceWei": "0",
+        "walletPaidWei": "0"
+      },
+      "indexObservation": {
+        "source": "8004scan/api/v1/agents",
+        "foundByName": true,
+        "foundByAgentId": true,
+        "supportedProtocols": [
+          "A2A"
+        ],
+        "isVerified": false
+      },
+      "balanceObservation": {
+        "nativeWei": "5000000000000000",
+        "uBaseUnits": "0"
+      }
+    },
+    {
+      "key": "yieldscout",
+      "category": "yield",
+      "capability": "analysis",
+      "dataScope": "Pinned same-asset Venus Core and Aave v3 supply-market snapshots read from BSC mainnet",
+      "identity": {
+        "agentId": "2299",
+        "owner": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+        "name": "KNOT YieldScout",
+        "description": "KNOT-operated analysis-only seller comparing pinned, provenance-bound BSC mainnet same-asset supply-market snapshots. Identity and commerce use BSC testnet. Never deposits, withdraws, or migrates funds.",
+        "service": {
+          "name": "A2A",
+          "version": "0.3.0",
+          "endpoint": "https://knot-yield.truematchx.com/.well-known/agent-card.json"
+        },
+        "registration": "eip155:97:0x8004A818BFB912233c491871b3d84c89A494BD9e"
+      },
+      "deployment": {
+        "hosting": "self-hosted VPS",
+        "revision": "87aef28",
+        "containerImage": "knot/yieldscout:87aef28",
+        "containerHealth": "healthy",
+        "rootFilesystemReadOnly": true,
+        "agentCardUrl": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+        "domainRegistrationUrl": "https://knot-yield.truematchx.com/.well-known/agent-registration.json"
+      },
+      "endpointVerification": {
+        "agentCardHttpStatus": 200,
+        "domainRegistrationHttpStatus": 200,
+        "operationIds": [
+          "negotiate",
+          "notify_funded"
+        ],
+        "oauthTokenUrl": "https://knot-yield.truematchx.com/oauth/token",
+        "oauthScope": "knot:yieldscout:invoke",
+        "oauthTokenHttpStatus": 200,
+        "oauthTokenTtlSeconds": 900,
+        "unauthenticatedInvocationHttpStatus": 401,
+        "authenticatedNegotiation": "accepted",
+        "providerSignaturePresent": true,
+        "quoteChainId": 97
+      },
+      "artifactVerification": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/yieldscout/sha256/b892d8e958e4a70bf65c17ac341051135fc4f72b63dd8ada916f14eb99842249.json",
+        "sha256": "b892d8e958e4a70bf65c17ac341051135fc4f72b63dd8ada916f14eb99842249",
+        "httpStatus": 200,
+        "contentAddressed": true
+      },
+      "funding": {
+        "transactionHash": "0x82060c3573246c2c63d4345fd6f8438f4742d775c9c86b3652621f438a049a03",
+        "receiptStatus": "success",
+        "blockNumber": "130008360",
+        "blockHash": "0xc83620082ab493d89540d557f496158ca80da3d6b09a17eac57fd54ae99d55fe",
+        "timestampUtc": "2026-09-09T10:38:04.000Z",
+        "asset": "tBNB",
+        "amountWei": "5000000000000000"
+      },
+      "registrationTransaction": {
+        "transactionHash": "0x5c447e5fb8b541dd1afa0c9662f024b10139baf0ba1eb229886d6584129b3b37",
+        "receiptStatus": "success",
+        "blockNumber": "130008434",
+        "blockHash": "0x1e2cbcb8b64175e74a65eada3831ab01e235405651dde2148a4cfbf9d9fa2cd7",
+        "timestampUtc": "2026-09-09T10:38:38.000Z",
+        "gasUsed": "690721",
+        "effectiveGasPriceWei": "0",
+        "walletPaidWei": "0"
+      },
+      "indexObservation": {
+        "source": "8004scan/api/v1/agents",
+        "foundByName": true,
+        "foundByAgentId": true,
+        "supportedProtocols": [
+          "A2A"
+        ],
+        "isVerified": false
+      },
+      "balanceObservation": {
+        "nativeWei": "5000000000000000",
+        "uBaseUnits": "0"
+      }
+    }
+  ],
+  "verification": {
+    "distinctWallets": true,
+    "directRegistryDecodePassed": true,
+    "ownersMatchRegistrationSenders": true,
+    "serviceEndpointsMatchPublicCards": true,
+    "domainRegistrationProofsLive": true,
+    "oauthRequired": true,
+    "signedQuotesObserved": true,
+    "durableArtifactsRetrieved": true,
+    "allIdentitiesFoundOn8004scan": true,
+    "all8004scanVerifiedFlags": false
+  },
+  "limitations": [
+    "Identity and commerce are BSC testnet only; no mainnet registration, payment, write, or real-fund use is claimed.",
+    "BSC mainnet is read-only data scope for analysis; none of these agents can execute trades, deposits, withdrawals, or migrations.",
+    "Endpoint and container checks cover one verification window and are not uptime or latency benchmarks.",
+    "8004scan discovered all three identities but reported is_verified=false even though each standard domain-registration proof returned HTTP 200.",
+    "No paid-job completion, earnings, return, PnL, win-rate, or comparative-performance result is claimed for these three sellers."
+  ]
+}
