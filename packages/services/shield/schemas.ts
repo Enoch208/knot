@@ -3,7 +3,7 @@ import { address, baseUnits, hexDigest } from "../../contracts/src/primitives.ts
 
 const nonZeroBaseUnits = baseUnits.refine((value) => BigInt(value) > 0n, "expected a positive integer string")
 const sourceLocation = z.string().regex(/^.+:[1-9][0-9]*(-[1-9][0-9]*)?$/, "expected path:start or path:start-end")
-const ruleId = z.enum([
+export const shieldRuleId = z.enum([
   "ERC1967_ADMIN",
   "ERC1967_BEACON",
   "OWNER_MINT",
@@ -123,7 +123,7 @@ const evidence = z
 
 const finding = z
   .object({
-    ruleId,
+    ruleId: shieldRuleId,
     title: z.string().min(1),
     category: z.enum(["VULNERABILITY", "PRIVILEGED_CAPABILITY", "CONFIGURATION_RISK"]),
     severity: z.enum(["critical", "high", "medium", "low", "informational"]),
@@ -174,7 +174,7 @@ export const shieldArtifact = z
       })
       .strict(),
     findings: z.array(finding),
-    negativeControls: z.array(z.object({ ruleId, reason: z.string().min(1) }).strict()),
+    negativeControls: z.array(z.object({ ruleId: shieldRuleId, reason: z.string().min(1) }).strict()),
     unresolved: z.array(unresolved),
     limitations: z.array(z.string().min(1)).min(1),
   })

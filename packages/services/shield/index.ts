@@ -12,6 +12,19 @@ export type {
   ShieldChainReader,
   ShieldCollectionErrorCode,
 } from "./collector.ts"
-export { shieldArtifact, shieldRequest } from "./schemas.ts"
+export {
+  evaluateShieldDataset,
+  hashShieldArtifact,
+  shieldEvaluationReport,
+  shieldEvaluationRuns,
+  shieldGroundTruthDataset,
+  ShieldEvaluationError,
+} from "./evaluate.ts"
+export type {
+  ShieldEvaluationReport,
+  ShieldEvaluationRuns,
+  ShieldGroundTruthDataset,
+} from "./evaluate.ts"
+export { shieldArtifact, shieldRequest, shieldRuleId } from "./schemas.ts"
 export type { ShieldArtifact, ShieldFinding, ShieldRequest, ShieldSnapshot } from "./schemas.ts"
 export { createBscShieldReader, ViemShieldChainReader } from "./viem-reader.ts"
