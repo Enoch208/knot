@@ -1,0 +1,467 @@
+{
+  "schemaVersion": "knot.discovery.third-party-audition/1",
+  "observedAtUtc": "2026-09-09T12:36:29.000Z",
+  "scope": {
+    "chainId": 97,
+    "searchTerm": "health",
+    "discoveryRequestUri": "https://api.8004scan.io/api/v1/agents?limit=100&chain_id=97&search=health",
+    "returnedCount": 68,
+    "matchingTotal": 68,
+    "selectionPolicy": "After excluding KNOT agent 2295 and the separately audited agent 2293, this bounded pass inspected the first five results whose registered name or description explicitly described lending health-factor, Venus, Aave, or liquidation-risk work. Seed-only agent 2292 and range-health agents 2235 and 2234 were not treated as callable lending-health candidates."
+  },
+  "safety": {
+    "walletSignaturesRequested": false,
+    "paymentsAttempted": false,
+    "chainWritesAttempted": false,
+    "purchasesAttempted": false
+  },
+  "candidates": [
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2296",
+        "ownerAddress": "0xb675d67909185f5e983ec51b2aed14667ea31b33",
+        "name": "probation-health-factor-monitor",
+        "registrationTransactionHash": "0xc50d3b0804b8c3a413bf5ef50bdafbeadc43888ea154940addfee9ee97c85689"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner.",
+        "limitation": "Different registry-owner addresses do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "UNVERIFIED",
+        "comparisonToKnotHealthGuard": "UNVERIFIED",
+        "endpointDurability": "UNVERIFIED",
+        "detail": "The registration describes bounded lending health-factor monitoring but supplies no task schema, protocol card, chain, protocol family, or evidence contract that can be normalized against KNOT HealthGuard."
+      },
+      "advertised": {
+        "protocols": [
+          "Web"
+        ],
+        "skillIds": [],
+        "quoteAdvertised": false
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2296",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2296, its owner, registration transaction, and registered metadata."
+        },
+        "endpointLive": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "readiness",
+          "sourceUri": "https://your-agent.example.com",
+          "httpStatus": null,
+          "reasonCode": "PLACEHOLDER_DNS_UNRESOLVED",
+          "detail": "The only registered Web endpoint is the placeholder your-agent.example.com; DNS resolution failed and no service could be reached."
+        },
+        "callable": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2296",
+          "httpStatus": null,
+          "reasonCode": "NO_LIVE_ENDPOINT",
+          "detail": "No protocol task was sent because the registered placeholder endpoint was not live."
+        },
+        "quoteCapable": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2296",
+          "httpStatus": null,
+          "reasonCode": "NO_QUOTE_INTERFACE",
+          "detail": "The registration advertised neither a quote skill nor a quote endpoint."
+        },
+        "hireable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2296",
+          "httpStatus": null,
+          "reasonCode": "PREREQUISITES_UNMET",
+          "detail": "Hireability is not established because no live endpoint, callable task, or quote interface was available."
+        }
+      },
+      "limitations": [
+        "The registered URL is an unresolved placeholder.",
+        "No task, quote, purchase, payment, delivery, or operator independence is claimed."
+      ]
+    },
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2288",
+        "ownerAddress": "0xc211c942946011859ca634f22400d80570ed12a5",
+        "name": "Winnow Sentinel",
+        "registrationTransactionHash": "0x7394ddf4deefd3e445ddbc579d3943c91d7b81ab749d2261625f64f4e8738333"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner.",
+        "limitation": "Different registry-owner addresses do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "UNVERIFIED",
+        "comparisonToKnotHealthGuard": "UNVERIFIED",
+        "endpointDurability": "UNVERIFIED",
+        "detail": "The registration claims live Aave v3 BSC monitoring while KNOT HealthGuard evaluates pinned Venus Core evidence. No endpoint or output schema was present for normalization."
+      },
+      "advertised": {
+        "protocols": [],
+        "skillIds": [],
+        "quoteAdvertised": false
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2288",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2288, its owner, registration transaction, and metadata-only description."
+        },
+        "endpointLive": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2288",
+          "httpStatus": 200,
+          "reasonCode": "NO_ENDPOINT_ADVERTISED",
+          "detail": "The registration contains no service, A2A, MCP, Web, or other callable endpoint."
+        },
+        "callable": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2288",
+          "httpStatus": null,
+          "reasonCode": "NO_ENDPOINT_ADVERTISED",
+          "detail": "No protocol task could be sent because no service endpoint was registered."
+        },
+        "quoteCapable": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2288",
+          "httpStatus": null,
+          "reasonCode": "NO_QUOTE_INTERFACE",
+          "detail": "The registration advertised neither a quote skill nor a quote endpoint."
+        },
+        "hireable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2288",
+          "httpStatus": null,
+          "reasonCode": "PREREQUISITES_UNMET",
+          "detail": "Hireability is not established because the record is metadata-only and exposes no callable or quote interface."
+        }
+      },
+      "limitations": [
+        "The registered claim was not converted into endpoint or task evidence.",
+        "No task, quote, purchase, payment, delivery, or operator independence is claimed."
+      ]
+    },
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2286",
+        "ownerAddress": "0xc5e673e876e65b6746bafe538bfce31693109a16",
+        "name": "Health Factor Guardian V2",
+        "registrationTransactionHash": "0xa64f3f67bddf5a39d86d287aa2e8d9d0d53c7947c8d08ccf5b5faf674e12d31d"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner.",
+        "limitation": "Different registry-owner addresses do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "UNVERIFIED",
+        "comparisonToKnotHealthGuard": "PARTIAL",
+        "endpointDurability": "UNVERIFIED",
+        "detail": "The service describes live BSC-testnet Comptroller reads, while KNOT HealthGuard binds a BSC-mainnet Venus snapshot by block number, block hash, and snapshot ID. The schemas and networks are not equivalent."
+      },
+      "advertised": {
+        "protocols": [
+          "ERC-8183/0.1.0",
+          "HTTP"
+        ],
+        "skillIds": [
+          "risk.live-health-factor"
+        ],
+        "quoteAdvertised": true
+      },
+      "quoteObservation": {
+        "quoteId": "health_guardian_v2-1788957389",
+        "observedAtUtc": "2026-09-09T12:36:29.000Z",
+        "expiresAtUnix": "1788957689",
+        "ttlSeconds": 300,
+        "chainId": 97,
+        "environment": "testnet",
+        "priceBaseUnits": "1000000000000000000",
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "providerAddress": "0xC5e673E876E65b6746bafe538BfCe31693109a16",
+        "providerMatchesRegistryOwner": true,
+        "sellerResponseAccepted": true,
+        "taskDescriptionBound": false,
+        "signaturePresent": false,
+        "signatureVerified": false,
+        "domainBindingPresent": false,
+        "acceptedByKnot": false,
+        "jobCreated": false
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2286",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2286, its owner, registration transaction, and ERC-8183 service URL."
+        },
+        "endpointLive": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "readiness",
+          "sourceUri": "https://health-guardian-v2-render.onrender.com/erc8183",
+          "httpStatus": 200,
+          "reasonCode": "READINESS_HTTP_200",
+          "detail": "The registered ERC-8183 URL returned agent kind health_guardian_v2, chain 97, network bsc-testnet, and its health, status, and quote paths."
+        },
+        "callable": {
+          "outcome": "UNVERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "readiness",
+          "sourceUri": "https://health-guardian-v2-render.onrender.com/erc8183/preflight",
+          "httpStatus": 200,
+          "reasonCode": "HEALTH_TASK_NOT_COMPLETED",
+          "detail": "An unsigned public preflight returned broadcast false and empty target and selector allowlists, but it returned no health assessment. No funded-job-only decision endpoint was invoked."
+        },
+        "quoteCapable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T12:36:29.000Z",
+          "source": "quote_endpoint",
+          "sourceUri": "https://health-guardian-v2-render.onrender.com/erc8183/negotiate",
+          "httpStatus": 200,
+          "reasonCode": "UNSIGNED_UNBOUND_QUOTE",
+          "detail": "The public route returned a 1 U, 300-second testnet response whose provider matches the registry owner, but task_description was empty and no provider signature or signing domain was present. KNOT did not accept it."
+        },
+        "hireable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T12:36:29.000Z",
+          "source": "derived",
+          "sourceUri": "https://health-guardian-v2-render.onrender.com/agent.json",
+          "httpStatus": null,
+          "reasonCode": "PREREQUISITES_UNMET",
+          "detail": "Hireability is not established because no health task completed and the observed quote response was unsigned and unbound to a task."
+        }
+      },
+      "limitations": [
+        "The endpoint is live but 8004scan had not verified its endpoint domain, and the registration document's registrations array was empty.",
+        "The quote response was observed only; it was not accepted, funded, purchased, or used to create a job.",
+        "No callable health result, delivery, or operator independence is claimed."
+      ]
+    },
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2238",
+        "ownerAddress": "0xdf1074a272c53a1a10b96fa0201eb58bbbaafe00",
+        "name": "Keel",
+        "registrationTransactionHash": "0x3fa52b98933368ff19ae01a82aa56c2815938d8658b0933bc2f81bed0117d79b"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner, and the card identified Marque as the provider.",
+        "limitation": "Different registry-owner addresses and a provider label do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "UNVERIFIED",
+        "comparisonToKnotHealthGuard": "PARTIAL",
+        "endpointDurability": "DURABLE",
+        "detail": "Keel completed a Venus Core read for KNOT's borrower and target, but ignored requested block 120862609 and returned later block 120873658 without a block hash or snapshot ID. Its result cannot be treated as the same pinned task."
+      },
+      "advertised": {
+        "protocols": [
+          "A2A/0.3"
+        ],
+        "skillIds": [
+          "health-factor-read",
+          "repay-to-target"
+        ],
+        "quoteAdvertised": true
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2238",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2238, its owner, registration transaction, and A2A card URL."
+        },
+        "endpointLive": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "agent_card",
+          "sourceUri": "https://marque.trade/agents/keel/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "reasonCode": "CARD_SCHEMA_VALID",
+          "detail": "The branded endpoint returned an A2A 0.3 JSON card with JSONRPC transport and two Venus Core health skills."
+        },
+        "callable": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "a2a_message_send",
+          "sourceUri": "https://marque.trade/agents/keel/a2a",
+          "httpStatus": 200,
+          "reasonCode": "HEALTH_TASK_COMPLETED",
+          "detail": "A bounded message/send request for borrower 0x553972e14d7aba642641971074b042aba55ad06e and target 1.5 completed with healthFactor null and a no-debt note at block 120873658."
+        },
+        "quoteCapable": {
+          "outcome": "UNVERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "agent_card",
+          "sourceUri": "https://marque.trade/agents/keel/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "reasonCode": "STATIC_PRICE_ONLY",
+          "detail": "The card stated priceUsd 0.05 and freePreflight true but exposed no quote skill, quote endpoint, signed quote, or ERC-8183 negotiation contract."
+        },
+        "hireable": {
+          "outcome": "UNVERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://marque.trade/agents/keel/.well-known/agent-card.json",
+          "httpStatus": null,
+          "reasonCode": "QUOTE_NOT_VERIFIED",
+          "detail": "A read-only task was callable, but no verifiable quote or compatible pinned-input contract was available, so hireability was not established."
+        }
+      },
+      "limitations": [
+        "The completed task did not honor the requested historical block and is not directly comparable with KNOT's pinned result.",
+        "8004scan reported a healthy card but failed the endpoint domain proof with HTTP 404.",
+        "No quote, purchase, payment, delivery, or operator independence is claimed."
+      ]
+    },
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2233",
+        "ownerAddress": "0x46cbfbddfedddc783d1f58976f91a488710695dc",
+        "name": "smart-money-health-factor-agent",
+        "registrationTransactionHash": "0x64492af9b0afdd67bb65f80bd26525fcac12c022913b82882792a1ed6cc6524c"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner.",
+        "limitation": "Different registry-owner addresses do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "UNVERIFIED",
+        "comparisonToKnotHealthGuard": "UNVERIFIED",
+        "endpointDurability": "UNVERIFIED",
+        "detail": "The registration claims Aave v3 and Venus monitoring, but its card supplies no health input or output schema, protocol version, or pinned evidence contract. No task completed for normalization."
+      },
+      "advertised": {
+        "protocols": [
+          "A2A_VERSION_OMITTED"
+        ],
+        "skillIds": [
+          "negotiate-erc8183-job",
+          "erc8183-job-status"
+        ],
+        "quoteAdvertised": true
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://api.8004scan.io/api/v1/agents/97/2233",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2233, its owner, registration transaction, and A2A card URL."
+        },
+        "endpointLive": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "agent_card",
+          "sourceUri": "https://agent-forge-atdz.onrender.com/.well-known/agent-card.json",
+          "httpStatus": 200,
+          "reasonCode": "CARD_HTTP_200",
+          "detail": "The endpoint returned a JSON card with two commerce-oriented skills, although it omitted the A2A protocol version and named the site root rather than the discovered POST route."
+        },
+        "callable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "a2a_message_send",
+          "sourceUri": "https://agent-forge-atdz.onrender.com/a2a",
+          "httpStatus": 400,
+          "reasonCode": "UNKNOWN_SKILL_RESPONSE",
+          "detail": "A standard message/send request naming the advertised job-status skill in its task text reached the public A2A route but returned unknown skill with an empty skill value; no task completed."
+        },
+        "quoteCapable": {
+          "outcome": "NOT_RUN",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://agent-forge-atdz.onrender.com/.well-known/agent-card.json",
+          "httpStatus": null,
+          "reasonCode": "CALLABLE_GATE_FAILED",
+          "detail": "No quote request was sent because the advertised A2A card did not produce a valid protocol task and exposed no task schema for a bounded quote."
+        },
+        "hireable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:54:48.000Z",
+          "source": "derived",
+          "sourceUri": "https://agent-forge-atdz.onrender.com/.well-known/agent-card.json",
+          "httpStatus": null,
+          "reasonCode": "PREREQUISITES_UNMET",
+          "detail": "Hireability is not established because no advertised skill completed and no quote was safely obtained."
+        }
+      },
+      "limitations": [
+        "A live card and status route do not establish task execution.",
+        "8004scan reported a healthy card but failed the endpoint domain proof with HTTP 404.",
+        "No quote, purchase, payment, delivery, or operator independence is claimed."
+      ]
+    }
+  ],
+  "summary": {
+    "registeredCount": 5,
+    "endpointLiveCount": 3,
+    "callableCount": 1,
+    "quoteCapableCount": 0,
+    "hireableCount": 0,
+    "conclusion": "Five additional registered health candidates were inspected. Keel completed one read-only Venus task but did not honor the requested block; Health Factor Guardian V2 returned an unsigned, task-unbound price response. No candidate passed every gate through verifiable quote capability and hireability."
+  }
+}

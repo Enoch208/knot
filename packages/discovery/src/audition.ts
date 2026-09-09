@@ -31,6 +31,40 @@ const stages = z
   })
   .strict()
 
+const quoteObservation = z
+  .object({
+    quoteId: z.string().min(1),
+    observedAtUtc: z.iso.datetime(),
+    expiresAtUnix: z.string().regex(/^[1-9][0-9]*$/),
+    ttlSeconds: z.number().int().positive(),
+    chainId: z.literal(97),
+    environment: z.literal("testnet"),
+    priceBaseUnits: z.string().regex(/^[1-9][0-9]*$/),
+    currency: address,
+    providerAddress: address,
+    providerMatchesRegistryOwner: z.boolean(),
+    sellerResponseAccepted: z.boolean(),
+    taskDescriptionBound: z.boolean(),
+    signaturePresent: z.boolean(),
+    signatureVerified: z.boolean(),
+    domainBindingPresent: z.boolean(),
+    acceptedByKnot: z.literal(false),
+    jobCreated: z.literal(false),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    const observedAtUnix = BigInt(Math.floor(new Date(value.observedAtUtc).getTime() / 1_000))
+    if (BigInt(value.expiresAtUnix) - observedAtUnix !== BigInt(value.ttlSeconds)) {
+      context.addIssue({ code: "custom", path: ["expiresAtUnix"], message: "quote expiry must match the observed TTL" })
+    }
+    if (value.signatureVerified && !value.signaturePresent) {
+      context.addIssue({ code: "custom", path: ["signatureVerified"], message: "an absent quote signature cannot be verified" })
+    }
+    if (value.domainBindingPresent && !value.signaturePresent) {
+      context.addIssue({ code: "custom", path: ["domainBindingPresent"], message: "an unsigned quote cannot carry a verified signature domain" })
+    }
+  })
+
 const candidate = z
   .object({
     identity: z.object({
@@ -60,6 +94,7 @@ const candidate = z
       skillIds: z.array(z.string().min(1)),
       quoteAdvertised: z.boolean(),
     }).strict(),
+    quoteObservation: quoteObservation.optional(),
     stages,
     limitations: z.array(z.string().min(1)).min(1),
   })
@@ -85,6 +120,15 @@ const candidate = z
     }
     if (value.stages.quoteCapable.outcome === "VERIFIED" && !value.advertised.quoteAdvertised) {
       context.addIssue({ code: "custom", path: ["advertised", "quoteAdvertised"], message: "a verified quote capability must be advertised" })
+    }
+    if (value.quoteObservation && value.quoteObservation.providerMatchesRegistryOwner !== (value.quoteObservation.providerAddress.toLowerCase() === value.identity.ownerAddress.toLowerCase())) {
+      context.addIssue({ code: "custom", path: ["quoteObservation", "providerMatchesRegistryOwner"], message: "quote provider ownership comparison is inconsistent" })
+    }
+    if (value.stages.quoteCapable.outcome === "VERIFIED") {
+      const quote = value.quoteObservation
+      if (!quote || !quote.providerMatchesRegistryOwner || !quote.sellerResponseAccepted || !quote.taskDescriptionBound || !quote.signaturePresent || !quote.signatureVerified || !quote.domainBindingPresent) {
+        context.addIssue({ code: "custom", path: ["quoteObservation"], message: "a verified quote must be task-bound and cryptographically attributable to the registered provider" })
+      }
     }
     if (value.stages.hireable.outcome === "VERIFIED" && value.compatibility.endpointDurability !== "DURABLE") {
       context.addIssue({ code: "custom", path: ["compatibility", "endpointDurability"], message: "a hireable candidate requires a durable endpoint" })
