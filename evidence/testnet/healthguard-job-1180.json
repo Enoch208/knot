@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "knot.testnet-job-evidence/1",
+  "recordedAtUtc": "2026-09-09T09:25:30Z",
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "observationBlockNumber": "129998494",
+    "observationBlockHash": "0x5c1f44f6a5510e043a939948605168dd7d3d9f088fc7e657ed23e8fc61583535",
+    "observationBlockTimestampUtc": "2026-09-09T09:24:04.000Z",
+    "rpcUsed": "https://bsc-testnet-rpc.publicnode.com",
+    "transactionExplorerBaseUrl": "https://testnet.bscscan.com/tx/"
+  },
+  "identity": {
+    "erc8004AgentId": "2295",
+    "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+  },
+  "contracts": {
+    "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+  },
+  "payment": {
+    "symbol": "U",
+    "decimals": 18,
+    "priceBaseUnits": "100000000000000000",
+    "displayPrice": "0.1 U"
+  },
+  "job": {
+    "jobId": "1180",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "budgetBaseUnits": "100000000000000000",
+    "negotiationHash": "0x1f13cf7fb966c577d0a5ea5fc2fd1bff95de006aeac9b24a40f54b8f8f1f6596",
+    "negotiatedAtUtc": "2026-09-09T09:09:45.000Z",
+    "quoteExpiresAtUtc": "2026-09-09T09:24:45.000Z",
+    "jobExpiresAtUtc": "2026-09-09T09:55:22.000Z",
+    "submittedAtUtc": "2026-09-09T09:11:33.000Z",
+    "finalObservedProtocolState": "SUBMITTED",
+    "disputed": true,
+    "settlementTransactionHash": null,
+    "settlementTerminalState": null,
+    "onChainDeliverableHash": "0x18722bb6b158a88c502925e272b657866bb3ce4f2a87e19137cf4806791d6342"
+  },
+  "transactions": {
+    "create": {
+      "hash": "0xc7f4d70dfeaed7cad3a96d9e7379fc31c3be1841c3ba761edfa83343970b423c",
+      "receiptStatus": "success",
+      "blockNumber": "129996689",
+      "blockHash": "0x3ade688714e527197a456682a867af9b73bf2361576606b7e302e535b83ea895",
+      "timestampUtc": "2026-09-09T09:10:32.000Z"
+    },
+    "register": {
+      "hash": "0xa6c028e75c0b011133de1e806af716011e0bb25dcc40788efb52963e7d0fb1a3",
+      "receiptStatus": "success",
+      "blockNumber": "129996698",
+      "blockHash": "0x697320513cca05578ce1a6802c71eb29ff5edc652e8c6d46ad5c87b7288184a2",
+      "timestampUtc": "2026-09-09T09:10:36.000Z"
+    },
+    "setBudget": {
+      "hash": "0x643849aa71ac5395043d8b84c31a3b1dfdfd1d6ceb06f6eaec44ce8cb5f5f1e7",
+      "receiptStatus": "success",
+      "blockNumber": "129996706",
+      "blockHash": "0x01c961d785f308083d8767fce43f0f6ab610833da02540768604ed9b95de0acf",
+      "timestampUtc": "2026-09-09T09:10:40.000Z"
+    },
+    "fund": {
+      "hash": "0x6eacc9d38014d77f519dcefdb56397546e37da21d0201cad782db91111ac3702",
+      "receiptStatus": "success",
+      "blockNumber": "129996732",
+      "blockHash": "0x4e22832e3bf2683493fddd3d352570b1a0895c93f3b51175375cd5cac9cef775",
+      "timestampUtc": "2026-09-09T09:10:51.000Z"
+    },
+    "submit": {
+      "hash": "0x6f45b6d0d3f8c39129237816a7a577fec71f95ab902516f1b981dd52fdbd7951",
+      "receiptStatus": "success",
+      "blockNumber": "129996825",
+      "blockHash": "0xefd223c63941c935dae2425dcfe0cdc07283bfa3f52dc7a86f29822a66801c3e",
+      "timestampUtc": "2026-09-09T09:11:33.000Z"
+    },
+    "dispute": {
+      "hash": "0x62334978fac4fd41bd50f99410464a99036891790855b6e7257ca1a4a8f22418",
+      "receiptStatus": "success",
+      "blockNumber": "129997656",
+      "blockHash": "0xdb7ec8087e0e6f4a6c655e3bc8605780a690dd98e0dae6b42c48703cf604bcd3",
+      "timestampUtc": "2026-09-09T09:17:47.000Z"
+    }
+  },
+  "deliverable": {
+    "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7.json",
+    "retrievedAtUtc": "2026-09-09T09:25:30Z",
+    "httpStatus": 200,
+    "contentLengthBytes": 1124,
+    "rawSha256": "067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7",
+    "rawSha256MatchesUrl": true,
+    "manifestKeccak256": "0x18722bb6b158a88c502925e272b657866bb3ce4f2a87e19137cf4806791d6342",
+    "manifestHashMatchesOnChain": true,
+    "artifact": {
+      "schemaVersion": "knot.health.artifact/1",
+      "status": "INVALID_REQUEST",
+      "reasonCode": "INVALID_JSON",
+      "taskId": null,
+      "snapshot": null,
+      "closedSchemaValidation": "passed",
+      "topLevelKeys": [
+        "assessedAtUtc",
+        "assumptions",
+        "capability",
+        "category",
+        "limitations",
+        "metrics",
+        "minimumEligibleAction",
+        "missingCoverage",
+        "positions",
+        "projectedPostAction",
+        "protocol",
+        "reasonCode",
+        "recommendation",
+        "schemaVersion",
+        "snapshot",
+        "status",
+        "taskId"
+      ]
+    }
+  },
+  "failureAnalysis": {
+    "stage": "signed task decoding",
+    "cause": "The installed @bnbagent/sdk 0.5.5 sanitizeForClaim function replaced JSON square brackets with parentheses before the task was stored in the job description.",
+    "observedTransformation": {
+      "input": "{\"a\":[]}",
+      "output": "{\"a\":()}"
+    },
+    "onChainExamples": [
+      {
+        "path": "task.managedPrincipal",
+        "requiredJson": "[]",
+        "observedInJobDescription": "()"
+      },
+      {
+        "path": "snapshot.sources",
+        "requiredJsonForm": "[{...}]",
+        "observedInJobDescriptionForm": "({...})"
+      }
+    ],
+    "effect": "HealthGuard correctly failed closed and submitted a schema-valid INVALID_REQUEST artifact instead of analyzing malformed input.",
+    "buyerResponse": "The submitted job was disputed."
+  },
+  "verification": {
+    "verifierRevision": "0c01cfe4485d0695a9d9c26f95b738a87400f451",
+    "artifactSchemaPath": "agents/healthguard/app/agent/src/healthSchemas.ts",
+    "manifestIntegrity": "passed",
+    "artifactSchema": "passed",
+    "assessmentOutcome": "invalid input refused"
+  },
+  "limitations": [
+    "Submission and manifest integrity succeeded, but the delivered assessment did not evaluate the requested health snapshot.",
+    "The job remains SUBMITTED and disputed at the observation block; no settlement, refund, rejection, or seller earnings are claimed.",
+    "This is one BSC testnet observation and is not a reliability or performance benchmark."
+  ]
+}

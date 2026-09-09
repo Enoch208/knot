@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T08:52:10.237Z",
+  "updatedAtUtc": "2026-09-09T09:34:12.158Z",
   "revision": {
-    "baseCommit": "56de2ed84ad168c77b689a103eb6ac2b4cad4e6f",
+    "baseCommit": "7cfae39aa57f67b367e7e8babcd594f9f6f4fbfe",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -82,10 +82,10 @@
       ],
       "scope": {
         "service": "healthguard-agent",
-        "deploymentId": "01M22N9QVXY26V7JKXSM2WF4FS",
+        "deploymentId": "01M22QKP0FKW96E9V539D3TF9P",
         "runtimeAgentId": "01M22N9QVXCSAQ8YVH1Z9VGNET"
       },
-      "observedAtUtc": "2026-09-09T08:50:47Z",
+      "observedAtUtc": "2026-09-09T09:28:26Z",
       "sources": [
         {
           "type": "https_probe",
@@ -106,7 +106,7 @@
         }
       ],
       "limitations": [
-        "The deployment is a temporary trial reporting expiry at 2026-09-11T08:42:34Z.",
+        "The deployment is a temporary trial; continuing availability is not claimed.",
         "A reachable agent card does not demonstrate authenticated delivery or an on-chain paid job."
       ]
     },
@@ -178,7 +178,7 @@
       ],
       "limitations": [
         "The exact observation time and full signed response were not archived as a public artifact.",
-        "The quote was not funded and does not prove delivery, verification, settlement, or earnings."
+        "This quote observation alone does not prove funding, delivery, verification, settlement, or earnings; funded jobs are recorded separately."
       ]
     },
     {
@@ -291,26 +291,127 @@
       ]
     },
     {
-      "id": "paid-flow",
-      "claim": "A complete quote-to-funded-job-to-delivery-to-verification-to-settlement flow has not been demonstrated.",
-      "status": "NOT_CLAIMED",
+      "id": "healthguard-job-1180-submitted-invalid",
+      "claim": "BSC testnet HealthGuard job 1180 was funded and reached SUBMITTED with a hash-matched deliverable, but the artifact was INVALID_REQUEST/INVALID_JSON after @bnbagent/sdk 0.5.5 changed JSON array brackets to parentheses; the buyer disputed the job.",
+      "status": "SUPPORTED",
       "evidenceClasses": [
-        "publisher_claim"
+        "testnet_observation",
+        "synthetic_fixture"
       ],
       "scope": {
-        "network": "BSC testnet",
-        "chainId": 97
+        "chainId": 97,
+        "jobId": "1180",
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "priceBaseUnits": "100000000000000000",
+        "artifactStatus": "INVALID_REQUEST",
+        "reasonCode": "INVALID_JSON",
+        "finalObservedProtocolState": "SUBMITTED",
+        "disputed": true
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T09:10:32.000Z",
+        "toUtc": "2026-09-09T09:24:04.000Z"
       },
       "sources": [
         {
-          "type": "submission_disclosure",
-          "path": "README.md",
-          "section": "Submission boundary"
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/healthguard-job-1180.json"
+        },
+        {
+          "type": "deliverable",
+          "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7.json",
+          "sha256": "067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7"
         }
       ],
       "limitations": [
-        "Repository fixtures are not external paid-flow evidence.",
-        "A signed quote is not a funded job."
+        "The submitted artifact correctly refused malformed input but did not assess the requested health snapshot.",
+        "The job was SUBMITTED and disputed, not settled, at the observation block.",
+        "No refund, rejection, settlement, or seller earnings are claimed."
+      ]
+    },
+    {
+      "id": "healthguard-job-1181-verified-delivery",
+      "claim": "BSC testnet HealthGuard job 1181 was funded and submitted; the retrieved deliverable matched its URL digest and on-chain manifest hash, passed the closed artifact schema, matched the signed task and snapshot identity, returned NO_DEBT for that pinned snapshot, and reached COMPLETED in a confirmed settlement that transferred 0.1 U from commerce escrow to the seller.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "dataChainId": 56,
+        "jobId": "1181",
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "priceBaseUnits": "100000000000000000",
+        "taskId": "health_120852687",
+        "snapshotId": "0x103c2d76a4813be296bee0d7da407ae729e8e53a37dfaaf17595dcc9277d0750",
+        "artifactStatus": "NO_DEBT",
+        "settlementTransactionHash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "finalObservedProtocolState": "COMPLETED"
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T09:17:15.000Z",
+        "toUtc": "2026-09-09T09:33:39.000Z"
+      },
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/healthguard-job-1181.json"
+        },
+        {
+          "type": "deliverable",
+          "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80.json",
+          "sha256": "476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80"
+        },
+        {
+          "type": "testnet_transaction",
+          "transactionHash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+          "url": "https://testnet.bscscan.com/tx/0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+          "receiptStatus": "success",
+          "blockNumber": "129999770"
+        }
+      ],
+      "limitations": [
+        "NO_DEBT is a result for one signed, pinned BSC mainnet snapshot and is not a guarantee about later borrower state.",
+        "This claim covers one HealthGuard job on BSC testnet, not mainnet payments or other marketplace services.",
+        "One completed testnet delivery is not a reliability or performance benchmark."
+      ]
+    },
+    {
+      "id": "paid-flow",
+      "claim": "One HealthGuard job on BSC testnet completed the observed flow from a signed 0.1 U quote through funding, verified deliverable submission, and terminal settlement paying 0.1 U from commerce escrow to the seller.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "service": "HealthGuard",
+        "network": "BSC testnet",
+        "chainId": 97,
+        "jobId": "1181",
+        "priceBaseUnits": "100000000000000000",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "terminalProtocolState": "COMPLETED"
+      },
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/healthguard-job-1181.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "transactionHash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+          "url": "https://testnet.bscscan.com/tx/0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+          "receiptStatus": "success",
+          "blockNumber": "129999770"
+        }
+      ],
+      "limitations": [
+        "This claim is limited to one HealthGuard job on BSC testnet.",
+        "It does not establish repeatability, coverage of the other services, mainnet payment readiness, or strategy performance.",
+        "Job 1180 remains separately recorded as a disputed, unsettled invalid-input submission."
       ]
     },
     {

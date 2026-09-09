@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "knot.testnet-job-evidence/1",
+  "recordedAtUtc": "2026-09-09T09:34:12.158Z",
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "observationBlockNumber": "129999770",
+    "observationBlockHash": "0x130ba0957485774a08f69168f2b7cdf6b58a2040851b58eb901bef1d80c1269f",
+    "observationBlockTimestampUtc": "2026-09-09T09:33:39.000Z",
+    "rpcUsed": "https://bsc-testnet-rpc.publicnode.com",
+    "transactionExplorerBaseUrl": "https://testnet.bscscan.com/tx/"
+  },
+  "identity": {
+    "erc8004AgentId": "2295",
+    "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+  },
+  "contracts": {
+    "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+  },
+  "payment": {
+    "symbol": "U",
+    "decimals": 18,
+    "priceBaseUnits": "100000000000000000",
+    "displayPrice": "0.1 U"
+  },
+  "job": {
+    "jobId": "1181",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "budgetBaseUnits": "100000000000000000",
+    "negotiationHash": "0xe8c1a53ba55186d234e78a84167a6a3ba98737d4d4930673eebbba28eb7c0acf",
+    "negotiatedAtUtc": "2026-09-09T09:16:49.000Z",
+    "quoteExpiresAtUtc": "2026-09-09T09:31:49.000Z",
+    "jobExpiresAtUtc": "2026-09-09T10:01:58.000Z",
+    "submittedAtUtc": "2026-09-09T09:18:14.000Z",
+    "finalObservedProtocolState": "COMPLETED",
+    "disputed": false,
+    "settlementTransactionHash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+    "settlementTerminalState": "COMPLETED",
+    "settledAmountBaseUnits": "100000000000000000",
+    "onChainDeliverableHash": "0x7202735dac6232701b65c1a1f9b0ae63d35543c08bfd931e64636c8ef484660d"
+  },
+  "transactions": {
+    "create": {
+      "hash": "0x07f75bb799ccedfac6b0445fa0fc64fb63223677ffd7f574a50669b2b030e6ef",
+      "receiptStatus": "success",
+      "blockNumber": "129997584",
+      "blockHash": "0xa5deb36d97743e09e0626a815679dd3d991388d2542fb7a019aeee5aa033b895",
+      "timestampUtc": "2026-09-09T09:17:15.000Z"
+    },
+    "register": {
+      "hash": "0x315578535c4731ef703c5ce96aedb29c2eec1a49f4577d9a9686eac3d151bd33",
+      "receiptStatus": "success",
+      "blockNumber": "129997597",
+      "blockHash": "0xea6e3b8f92b4c2be55c2ed86f5ae45d3fba72b53e9aff9be5501afcd847b73f6",
+      "timestampUtc": "2026-09-09T09:17:21.000Z"
+    },
+    "setBudget": {
+      "hash": "0x28d849b105ad511e9ff6abb41a9d0d4939a81f748e7276273ca2161f11dd2c29",
+      "receiptStatus": "success",
+      "blockNumber": "129997605",
+      "blockHash": "0x9d4c46898638b97a444a4542925871c7e36a3b7dd5dffac8cbad36524e57c885",
+      "timestampUtc": "2026-09-09T09:17:24.000Z"
+    },
+    "fund": {
+      "hash": "0x793901d5b99431c19cc664de58983d483dab2300d4b4f7009365cb78ceec5346",
+      "receiptStatus": "success",
+      "blockNumber": "129997624",
+      "blockHash": "0xc9ce465d03770c2135b33e1e0c45bf0f913d392e510dfe43defea20b3d235ceb",
+      "timestampUtc": "2026-09-09T09:17:33.000Z"
+    },
+    "submit": {
+      "hash": "0x3c53e3171728cd67667c82ad9d4b021d982b2370b024d21374367164e2f12fe8",
+      "receiptStatus": "success",
+      "blockNumber": "129997716",
+      "blockHash": "0xe44c78a072067e77c7b8bace6657cc3f3ccf487774f4557908d2b65d7aef1cd5",
+      "timestampUtc": "2026-09-09T09:18:14.000Z"
+    },
+    "settle": {
+      "hash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+      "receiptStatus": "success",
+      "blockNumber": "129999770",
+      "blockHash": "0x130ba0957485774a08f69168f2b7cdf6b58a2040851b58eb901bef1d80c1269f",
+      "timestampUtc": "2026-09-09T09:33:39.000Z",
+      "caller": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+      "target": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "gasUsed": "134731",
+      "paymentTransfer": {
+        "logIndex": 3,
+        "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "amountBaseUnits": "100000000000000000"
+      }
+    }
+  },
+  "postSettlementBalances": {
+    "observedAtBlockNumber": "129999770",
+    "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "buyerBaseUnits": "1800000000000000000",
+    "buyerDisplay": "1.8 U",
+    "sellerBaseUnits": "100000000000000000",
+    "sellerDisplay": "0.1 U"
+  },
+  "signedRequestBinding": {
+    "transport": "knot-json-base64url/1",
+    "taskId": "health_120852687",
+    "inputHash": "0x70ae26f7b870144f823665f05a88a800d7b17d73ad4b4d70f4e2f713c0fc2ce6",
+    "snapshotId": "0x103c2d76a4813be296bee0d7da407ae729e8e53a37dfaaf17595dcc9277d0750",
+    "dataChainId": 56,
+    "blockNumber": "120852687",
+    "blockHash": "0xd3a4393d3367dbf389c6e6592297e8125c7600ece77658f9db42d58c0d94c5cb"
+  },
+  "deliverable": {
+    "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80.json",
+    "retrievedAtUtc": "2026-09-09T09:25:32Z",
+    "httpStatus": 200,
+    "contentLengthBytes": 1546,
+    "rawSha256": "476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80",
+    "rawSha256MatchesUrl": true,
+    "manifestKeccak256": "0x7202735dac6232701b65c1a1f9b0ae63d35543c08bfd931e64636c8ef484660d",
+    "manifestHashMatchesOnChain": true,
+    "artifact": {
+      "schemaVersion": "knot.health.artifact/1",
+      "status": "NO_DEBT",
+      "reasonCode": "NO_DEBT",
+      "taskId": "health_120852687",
+      "snapshot": {
+        "snapshotId": "0x103c2d76a4813be296bee0d7da407ae729e8e53a37dfaaf17595dcc9277d0750",
+        "chainId": 56,
+        "blockNumber": "120852687",
+        "blockHash": "0xd3a4393d3367dbf389c6e6592297e8125c7600ece77658f9db42d58c0d94c5cb"
+      },
+      "closedSchemaValidation": "passed",
+      "topLevelKeys": [
+        "assessedAtUtc",
+        "assumptions",
+        "capability",
+        "category",
+        "limitations",
+        "metrics",
+        "minimumEligibleAction",
+        "missingCoverage",
+        "positions",
+        "projectedPostAction",
+        "protocol",
+        "reasonCode",
+        "recommendation",
+        "schemaVersion",
+        "snapshot",
+        "status",
+        "taskId"
+      ],
+      "missingTopLevelKeys": [],
+      "additionalTopLevelKeys": []
+    }
+  },
+  "verification": {
+    "verifierRevision": "7cfae39aa57f67b367e7e8babcd594f9f6f4fbfe",
+    "artifactSchemaPath": "agents/healthguard/app/agent/src/healthSchemas.ts",
+    "manifestIntegrity": "passed",
+    "artifactSchema": "passed",
+    "taskIdMatchesSignedRequest": true,
+    "snapshotIdMatchesSignedRequest": true,
+    "dataChainIdMatchesSignedRequest": true,
+    "blockNumberMatchesSignedRequest": true,
+    "blockHashMatchesSignedRequest": true,
+    "assessmentOutcome": "NO_DEBT",
+    "settlementReceipt": "passed",
+    "settlementPaymentTransfer": "passed",
+    "terminalProtocolState": "COMPLETED"
+  },
+  "limitations": [
+    "NO_DEBT is the result for the signed, pinned BSC mainnet snapshot; it is not a guarantee about later borrower state.",
+    "COMPLETED is the terminal on-chain state for this BSC testnet job; no mainnet payment or broader marketplace coverage is inferred.",
+    "This is one service and one BSC testnet job, not a reliability or performance benchmark."
+  ]
+}
