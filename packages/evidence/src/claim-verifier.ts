@@ -22,10 +22,18 @@ const repositoryTestCommands = new Set([
   "npm run category:parity",
 ])
 const repositoryCommandBindings = new Map([
+  ["npm run chain-recovery-rollout:verify", "scripts/verify-chain-recovery-rollout.ts"],
   ["npm run claims:verify", "scripts/verify-claims.ts"],
+  ["npm run external-paid-job:verify", "scripts/verify-external-paid-job.ts"],
+  ["npm run external-paid-job:verify -- evidence/testnet/external-paid-job-1198.json", "scripts/verify-external-paid-job.ts"],
+  ["npm run external-paid-job:verify -- evidence/testnet/external-paid-job-1203.json", "scripts/verify-external-paid-job.ts"],
+  ["npm run external-paid-job:verify:live", "scripts/verify-external-paid-job-live.ts"],
+  ["npm run external-paid-job:verify:live -- evidence/testnet/external-paid-job-1198.json", "scripts/verify-external-paid-job-live.ts"],
+  ["npm run external-paid-job:verify:live -- evidence/testnet/external-paid-job-1203.json", "scripts/verify-external-paid-job-live.ts"],
   ["npm run manifest:verify", "scripts/verify-manifest.ts"],
   ["npm run sellers:verify:public", "scripts/verify-public-sellers.ts"],
   ["npm run shield:verify", "scripts/verify-shield-measurement.ts"],
+  ["npm run tunnel:verify -- evidence/operations/tunnel-recovery-20260909.json", "scripts/verify-tunnel-recovery.ts"],
 ])
 
 export function verifyClaimLedger(candidate: unknown, repositoryRoot: string): ClaimLedger {

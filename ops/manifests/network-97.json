@@ -2,8 +2,8 @@
   "chainId": 97,
   "label": "BSC testnet",
   "rpcUrl": "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
-  "blockNumber": "130008417",
-  "observedAtUtc": "2026-09-09T10:38:30.841Z",
+  "blockNumber": "130057527",
+  "observedAtUtc": "2026-09-09T16:46:51.135Z",
   "writesPermitted": true,
   "contracts": [
     {
@@ -61,8 +61,8 @@
     "status": "VERIFIED",
     "writeAllowed": true,
     "chainId": 97,
-    "blockNumber": "130008427",
-    "observedAtUtc": "2026-09-09T10:38:30.841Z",
+    "blockNumber": "130057538",
+    "observedAtUtc": "2026-09-09T16:46:51.135Z",
     "sdkVersions": {
       "@altananetwork/sdk": "0.7.1",
       "@bnbagent/sdk": "0.5.5"

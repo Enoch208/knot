@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T12:39:02.000Z",
+  "updatedAtUtc": "2026-09-09T19:54:26.377Z",
   "revision": {
-    "baseCommit": "fe1857951c7c97db47c883acb453ee973b5d0c33",
+    "baseCommit": "a4b092a777ff5bf66f5197e5ac0d06460bf54b8d",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -71,6 +71,136 @@
       "limitations": [
         "Only the health endpoint was exercised in the published deployment observation.",
         "Authenticated task and job operations are not exposed as a public demo."
+      ]
+    },
+    {
+      "id": "chain-action-recovery-kernel",
+      "claim": "The repository-tested no-resubmission recovery kernel was deployed behind an explicitly enabled read-only gate in release 35def38e730e. The API and worker were healthy, five public checks returned HTTP 200, and two worker samples saw an empty chain-action queue with zero claimed, examined, changed, or failed actions. A separate in-memory invocation inside the deployed worker image observed existing BSC testnet transaction 0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf as SUCCESS at block 130060913 with 11022 confirmations through the known-hash observer; it did not use the database, wallet, queue, broadcaster, or any chain-write path.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture",
+        "publisher_claim",
+        "testnet_observation"
+      ],
+      "scope": {
+        "component": "chain-action recovery kernel",
+        "chains": [
+          56,
+          97
+        ],
+        "broadcastInterfacePresent": false,
+        "unknownToSubmittedAllowed": false,
+        "recoveryClaimStrategy": "parent job lease with fencing token and FOR UPDATE SKIP LOCKED",
+        "maximumActionsPerRecoveryLease": 1,
+        "recoveryAttemptScheduling": "durable per action",
+        "transactionLocator": "journaled transaction hash with exact nonce binding",
+        "transactionIntentSchemaVersion": "knot.evm-transaction-intent/1",
+        "receiptObserver": "read-only known-hash direct-EOA legacy transactions",
+        "workerWiring": "opt-in and explicitly enabled in the captured deployment",
+        "deploymentEnvironment": "/etc/knot/chain-read.env mounted only by the worker",
+        "defaultObservationTimeoutMilliseconds": 10000,
+        "minimumLeaseMarginMilliseconds": 1000,
+        "minimumWorkerLeaseHeadroomMilliseconds": 2000,
+        "shutdownBehavior": "abort active observation without outcome rewrite and release the exact fenced job lease",
+        "authoritySchemaVersion": "knot.chain-action-authority/1",
+        "deploymentReleaseTag": "35def38e730e",
+        "deploymentImmutableImageId": "sha256:e2f11219338b090a3b3e8cb6036ad9f7368bc4739ff7de68cca92d3ca4bb3d06",
+        "deployedRecoveryGateEnabled": true,
+        "deployedWorkerSampleCount": 2,
+        "deployedChainActionCount": 0,
+        "deployedQueueRecoveryTransitions": 0,
+        "deployedKnownHashReceiptObservations": 1,
+        "deployedReceiptTransactionHash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+        "transactionBroadcasts": 0,
+        "chainWrites": 0
+      },
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/chain-recovery-rollout-20260909.json"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-chain-recovery-rollout.ts",
+          "command": "npm run chain-recovery-rollout:verify",
+          "observedStatus": "VERIFIED_DEPLOYED_READ_ONLY_RECOVERY"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "deployed read-only receipt probe source",
+          "transactionHash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+          "url": "https://testnet.bscscan.com/tx/0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+          "receiptStatus": "success",
+          "blockNumber": "130060913"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/reliability/chain-recovery-rollout.test.ts",
+          "command": "node --test tests/reliability/chain-recovery-rollout.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/worker/chain-action-reconciler.test.ts",
+          "command": "node --test tests/worker/chain-action-reconciler.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/worker/chain-action-recovery-worker.test.ts",
+          "command": "node --test tests/worker/chain-action-recovery-worker.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/worker/bsc-chain-receipt-observer.test.ts",
+          "command": "node --test tests/worker/bsc-chain-receipt-observer.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/chain/transaction-intent.test.ts",
+          "command": "node --test tests/chain/transaction-intent.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/worker/worker-runtime.test.ts",
+          "command": "node --test tests/worker/worker-runtime.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/db/postgres.integration.ts",
+          "command": "node --test tests/db/postgres.integration.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0005_chain_action_recovery.sql"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0006_chain_action_intent.sql"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0007_chain_action_binding_immutability.sql"
+        },
+        {
+          "type": "repository_file",
+          "path": "ops/backend/compose.yaml"
+        },
+        {
+          "type": "repository_file",
+          "path": "ops/backend/secrets.schema.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/ops/backend-deployment-config.test.ts",
+          "command": "node --test tests/ops/backend-deployment-config.test.ts"
+        }
+      ],
+      "limitations": [
+        "The deployed queue was empty, so no queued receipt observation, lease, reconciliation transition, recovery retry, or recovery effectiveness was exercised.",
+        "One isolated in-memory known-hash probe observed an existing BSC testnet transaction through the deployed observer and safe read transport; it did not use the database, wallet, or queue.",
+        "The receipt probe is one point-in-time testnet observation and does not establish repeatability, provider redundancy, reorg-after-terminal handling, or lost-hash recovery.",
+        "The public checks and two worker samples do not establish uptime, an SLA, load capacity, regional availability, or host recovery.",
+        "No transaction broadcaster or automatic resubmission path exists, and no chain write or fund transfer was performed.",
+        "Relay and account-abstraction recovery remain outside scope."
       ]
     },
     {
@@ -997,6 +1127,500 @@
       ]
     },
     {
+      "id": "external-paid-failure-refund-1191",
+      "claim": "A separate buyer funded BSC testnet job 1191 for ERC-8004 agent 2159 under a task-bound quote. The preserved capture records that ERC-1271 preflight passed before funding, while public-chain verification independently confirms the transaction receipts, lifecycle events, refund transfer, current owner, and current terminal EXPIRED state. The provider acknowledged the funded job but submitted no deliverable, and the exact 0.01 testnet U escrow returned to the buyer.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "agentId": "2159",
+        "candidateName": "Relic BNB Grid Trader",
+        "jobId": "1191",
+        "buyerAndProviderSeparated": true,
+        "providerDistinctFromKnotSellerWallets": true,
+        "operatorIndependence": "NOT_PROVEN",
+        "quoteSignatureMethod": "erc1271",
+        "quoteVerificationBasis": "live-pre-funding",
+        "historicalSignatureRecheck": "UNAVAILABLE_PRUNED_PUBLIC_RPC",
+        "priceBaseUnits": "10000000000000000",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "funded": true,
+        "fundedNotificationAcknowledged": true,
+        "deliveryReceived": false,
+        "submittedAt": "0",
+        "terminalStatus": "EXPIRED",
+        "refundedBaseUnits": "10000000000000000",
+        "providerPaymentBaseUnits": "0",
+        "routerReconciled": true,
+        "mainnetWrites": false,
+        "realFunds": false
+      },
+      "observedAtUtc": "2026-09-09T15:37:08.838Z",
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/external-paid-job-1191.json"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job.ts",
+          "command": "npm run external-paid-job:verify",
+          "observedStatus": "STRUCTURALLY_VERIFIED_FAILURE_EVIDENCE"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job-live.ts",
+          "command": "npm run external-paid-job:verify:live",
+          "observedStatus": "LIVE_CHAIN_VERIFIED_FAILURE"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "fund",
+          "transactionHash": "0x408be0beaf03e55d7d075baaddc4993e994f48f4418cbb6d746531538e2ef0c0",
+          "url": "https://testnet.bscscan.com/tx/0x408be0beaf03e55d7d075baaddc4993e994f48f4418cbb6d746531538e2ef0c0",
+          "receiptStatus": "success",
+          "blockNumber": "130027464"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "refund",
+          "transactionHash": "0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0",
+          "url": "https://testnet.bscscan.com/tx/0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0",
+          "receiptStatus": "success",
+          "blockNumber": "130047367"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "router expiry reconciliation",
+          "transactionHash": "0x81da14040d920eaa7d3fc38d20ee7331dffceb6766e8684e1c68f34b0607e705",
+          "url": "https://testnet.bscscan.com/tx/0x81da14040d920eaa7d3fc38d20ee7331dffceb6766e8684e1c68f34b0607e705",
+          "receiptStatus": "success",
+          "blockNumber": "130047414"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet failure and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+        "No successful delivery or hireability claim is made for agent 2159.",
+        "A distinct ERC-8004 owner and non-KNOT service URL do not prove institutional independence.",
+        "The pre-funding ERC-1271 authorization was not historically rechecked because public RPC historical state was pruned when terminal evidence was captured.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "No real funds or mainnet writes were used, and no position, order, swap, approval, or other execution was authorized."
+      ]
+    },
+    {
+      "id": "external-paid-failure-refund-1198",
+      "claim": "A separate buyer funded BSC testnet job 1198 for ERC-8004 agent 2173 under a task-bound quote. ERC-1271 verification passed before funding and again at funding block 130051329 during the terminal capture. Public-chain verification independently confirms the seven receipts, lifecycle events, refund transfer, current registered owner, and current terminal EXPIRED state. The provider acknowledged funding but submitted no deliverable, and the exact 0.1 testnet U escrow returned to the buyer.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "agentId": "2173",
+        "candidateRegistryName": "Grid Runner",
+        "candidateCardName": "gridbot-agent",
+        "jobId": "1198",
+        "buyerAndProviderSeparated": true,
+        "providerDistinctFromKnotSellerWallets": true,
+        "operatorIndependence": "NOT_PROVEN",
+        "registryNameMatchesCardName": false,
+        "selectedEndpointMatchesPublishedUrl": false,
+        "publishedInvocationUrl": "http://localhost:8080/",
+        "quoteSignatureMethod": "erc1271",
+        "quoteVerificationBasis": "live-pre-funding",
+        "historicalSignatureRecheck": "VERIFIED_AT_FUNDING_BLOCK_CAPTURE",
+        "historicalSignatureRecheckBlock": "130051329",
+        "priceBaseUnits": "100000000000000000",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "funded": true,
+        "fundedNotificationAcknowledged": true,
+        "deliveryReceived": false,
+        "submittedAt": "0",
+        "terminalStatus": "EXPIRED",
+        "refundedBaseUnits": "100000000000000000",
+        "providerPaymentBaseUnits": "0",
+        "routerReconciled": true,
+        "mainnetWrites": false,
+        "realFunds": false
+      },
+      "observedAtUtc": "2026-09-09T17:05:45.835Z",
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/external-paid-job-1198.json"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job.ts",
+          "command": "npm run external-paid-job:verify -- evidence/testnet/external-paid-job-1198.json",
+          "observedStatus": "STRUCTURALLY_VERIFIED_FAILURE_EVIDENCE"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job-live.ts",
+          "command": "npm run external-paid-job:verify:live -- evidence/testnet/external-paid-job-1198.json",
+          "observedStatus": "LIVE_CHAIN_VERIFIED_FAILURE"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "fund",
+          "transactionHash": "0xacc7091dc3b940f96f57f6cc50c8b3cee1aabc4174709ffc86cb9ea9b2eff9b3",
+          "url": "https://testnet.bscscan.com/tx/0xacc7091dc3b940f96f57f6cc50c8b3cee1aabc4174709ffc86cb9ea9b2eff9b3",
+          "receiptStatus": "success",
+          "blockNumber": "130051329"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "refund",
+          "transactionHash": "0xe212da697a038c571e68bd75a6b88e4b944fe6c0ad437ae8e915e1bda0b89d35",
+          "url": "https://testnet.bscscan.com/tx/0xe212da697a038c571e68bd75a6b88e4b944fe6c0ad437ae8e915e1bda0b89d35",
+          "receiptStatus": "success",
+          "blockNumber": "130059505"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "router expiry reconciliation",
+          "transactionHash": "0x32915dd71b2591b470789c89aba74f6ace4e6fdbc297562eaa889ad32fc6a3c0",
+          "url": "https://testnet.bscscan.com/tx/0x32915dd71b2591b470789c89aba74f6ace4e6fdbc297562eaa889ad32fc6a3c0",
+          "receiptStatus": "success",
+          "blockNumber": "130059524"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet failure and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+        "No successful delivery or hireability claim is made for agent 2173.",
+        "A distinct ERC-8004 registry owner and non-KNOT service URL do not prove operator, organizational, or institutional independence.",
+        "Historical ERC-1271 verification at the funding block is a point-in-time public RPC observation that may stop being reproducible after state pruning.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "The registry name and card name did not match, and the card's published localhost invocation URL did not match the selected reachable HTTPS endpoint.",
+        "No real funds or mainnet writes were used, and no position, order, swap, approval, or other execution was authorized."
+      ]
+    },
+    {
+      "id": "external-paid-failure-refund-1203",
+      "claim": "A separate buyer funded BSC testnet job 1203 for ERC-8004 agent 1923 under a RangePilot-compatible, read-only task-bound quote. The preserved EIP-191 signature independently recovers the registered provider address, and public-chain verification confirms all seven receipts, five lifecycle and refund events, the current registered owner, and terminal EXPIRED state. The provider acknowledged funding but submitted no deliverable, the exact 0.1 testnet U escrow returned to the buyer, and the provider received zero.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "agentId": "1923",
+        "candidateName": "weighrange-agent",
+        "jobId": "1203",
+        "buyerAndProviderSeparated": true,
+        "providerDistinctFromKnotSellerWallets": true,
+        "operatorIndependence": "NOT_PROVEN",
+        "registryNameMatchesCardName": true,
+        "selectedEndpointMatchesPublishedUrl": true,
+        "quoteSignatureMethod": "eip191",
+        "quoteSignatureReverification": "OFFLINE_RECOVERED_PROVIDER",
+        "priceBaseUnits": "100000000000000000",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "funded": true,
+        "fundedNotificationAcknowledged": true,
+        "deliveryReceived": false,
+        "submittedAt": "0",
+        "terminalStatus": "EXPIRED",
+        "refundedBaseUnits": "100000000000000000",
+        "providerPaymentBaseUnits": "0",
+        "routerReconciled": true,
+        "mainnetWrites": false,
+        "realFunds": false
+      },
+      "observedAtUtc": "2026-09-09T18:22:13.065Z",
+      "sources": [
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/testnet/external-paid-job-1203.json"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job.ts",
+          "command": "npm run external-paid-job:verify -- evidence/testnet/external-paid-job-1203.json",
+          "observedStatus": "STRUCTURALLY_VERIFIED_FAILURE_EVIDENCE"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-external-paid-job-live.ts",
+          "command": "npm run external-paid-job:verify:live -- evidence/testnet/external-paid-job-1203.json",
+          "observedStatus": "LIVE_CHAIN_VERIFIED_FAILURE"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "fund",
+          "transactionHash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+          "url": "https://testnet.bscscan.com/tx/0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+          "receiptStatus": "success",
+          "blockNumber": "130060913"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "refund",
+          "transactionHash": "0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004",
+          "url": "https://testnet.bscscan.com/tx/0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004",
+          "receiptStatus": "success",
+          "blockNumber": "130069834"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "router expiry reconciliation",
+          "transactionHash": "0x2df0eca643504efd53e97b6d40a9c8868d4d1c8e0fa64e679d45b582da855f9f",
+          "url": "https://testnet.bscscan.com/tx/0x2df0eca643504efd53e97b6d40a9c8868d4d1c8e0fa64e679d45b582da855f9f",
+          "receiptStatus": "success",
+          "blockNumber": "130069851"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet failure and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+        "No successful delivery, useful analysis, comparison result, or hireability claim is made for agent 1923.",
+        "A distinct ERC-8004 registry owner and non-KNOT service URL do not prove operator, organizational, or institutional independence.",
+        "The EIP-191 recovery proves control of the quoted provider key at signing time, not service quality or future control.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "No real funds or mainnet writes were used, and no liquidity, fee collection, mint, approval, swap, or other execution was authorized."
+      ]
+    },
+    {
+      "id": "outbound-fetch-boundary",
+      "claim": "The repository-tested public seller verifier resolves every outbound HTTPS hostname, rejects a resolution set containing any non-public address, pins an accepted address for the TLS connection, refuses redirects at this call site, enforces request and response size limits, and applies one total wall-clock deadline across resolution, redirects, and response transfer.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "requirement": "AT-27",
+        "callSite": "createFetchPublicSellerReader",
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "httpsOnly": true,
+        "dnsPinned": true,
+        "mixedPublicPrivateDnsRejected": true,
+        "privateAndMetadataAddressesRejected": true,
+        "totalWallClockDeadline": true,
+        "redirectsAllowedAtCallSite": 0,
+        "frozenCaseCount": 7
+      },
+      "sources": [
+        {
+          "type": "repository_file",
+          "path": "packages/security/src/safe-fetch.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/security/src/address-policy.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/discovery/src/public-sellers.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "evidence/security/safe-fetch-cases.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/security/safe-fetch.test.ts",
+          "command": "node --test tests/security/safe-fetch.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/discovery/public-sellers.test.ts",
+          "command": "node --test tests/discovery/public-sellers.test.ts"
+        }
+      ],
+      "limitations": [
+        "Only call sites that use this boundary receive these protections; unrelated network clients require separate migration and review.",
+        "The frozen cases are deterministic synthetic controls and do not represent every DNS or network topology.",
+        "Destination controls and byte limits do not establish upstream correctness, availability, or application authorization."
+      ]
+    },
+    {
+      "id": "seller-restart-recovery",
+      "claim": "HealthGuard, RangePilot, GridQuant, and YieldScout each recovered from one controlled sequential container restart with the same immutable image and retained artifact bytes, restored public card and domain-proof responses, fail-closed unauthenticated invocation, and an authenticated BSC-testnet quote response containing a provider signature.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "drillMode": "sequential-container-restart",
+        "sellerCount": 4,
+        "agentIds": [
+          "2295",
+          "2297",
+          "2298",
+          "2299"
+        ],
+        "recoveryDurationMs": {
+          "healthguard": 20091,
+          "rangepilot": 20606,
+          "gridquant": 25192,
+          "yieldscout": 25300
+        },
+        "maximumRecoveryDurationMs": 25300,
+        "restoredChecks": [
+          "container health",
+          "agent card HTTP 200",
+          "domain registration HTTP 200",
+          "unauthenticated invocation HTTP 401",
+          "retained artifact SHA-256",
+          "authenticated quote response with provider signature"
+        ],
+        "quoteChainId": 97,
+        "onlyStateChangingOperation": "seller-container-restart",
+        "networkTrafficInstrumented": false,
+        "commerceMutationCommands": 0,
+        "mainnetWriteCommands": 0,
+        "fundTransferCommands": 0
+      },
+      "observedAtUtc": "2026-09-09T12:55:49.608Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/seller-recovery-20260909.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/reliability/seller-recovery.test.ts",
+          "command": "node --test tests/reliability/seller-recovery.test.ts"
+        }
+      ],
+      "limitations": [
+        "One controlled restart was measured per seller, so repeatability is not established.",
+        "The VPS, Docker daemon, Cloudflare tunnel, object store, and database were not restarted.",
+        "No concurrent-load, regional-availability, uptime, SLA, rollback, or host-failure claim is made.",
+        "Authenticated recovery proves the quote-response path only; the drill issued no commerce mutation, mainnet-write, or fund-transfer command.",
+        "Network traffic was not instrumented, so no claim is made about every background chain read.",
+        "Quote checks replayed retained negotiate requests and establish service recovery, not current input freshness or new commerce."
+      ]
+    },
+    {
+      "id": "seller-short-availability-observation",
+      "claim": "Across one 60.845-second client-side window, five samples for each of the four KNOT sellers returned all 60 expected public responses: agent cards and domain-registration proofs returned HTTP 200, while unauthenticated invocations returned HTTP 401.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "sellerCount": 4,
+        "samplesPerSeller": 5,
+        "intendedCadenceMs": 15000,
+        "observationDurationMs": 60845,
+        "expectedResponseCount": 60,
+        "matchedResponseCount": 60,
+        "minimumObservedRequestLatencyMs": 613,
+        "maximumObservedRequestLatencyMs": 4461,
+        "agentCardHttpStatus": 200,
+        "domainRegistrationHttpStatus": 200,
+        "unauthenticatedInvocationHttpStatus": 401,
+        "transportBoundary": "safeFetch",
+        "authenticatedRequests": 0,
+        "chainRpcRequests": 0,
+        "stateChangingActions": 0,
+        "transactionSubmissions": 0,
+        "fundTransferCommands": 0
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T16:04:09.995Z",
+        "toUtc": "2026-09-09T16:05:10.840Z"
+      },
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/seller-availability-20260909.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "scripts/observe-seller-availability.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/reliability/seller-availability.test.ts",
+          "command": "node --test tests/reliability/seller-availability.test.ts"
+        }
+      ],
+      "limitations": [
+        "One approximately 60-second observation window from one client location was measured.",
+        "Client-observed HTTP responses do not establish uptime, an SLA, or server-side availability.",
+        "No regional, failover, load, authenticated workflow, or sustained-duration behavior was measured.",
+        "Only public cards, registration proofs, and fail-closed unauthenticated invocation responses were sampled."
+      ]
+    },
+    {
+      "id": "cloudflared-controlled-recovery",
+      "claim": "In one operator-triggered Cloudflare tunnel service restart, complete public recovery was verified 12,832 ms after the restart request: the KNOT API and database reported AVAILABLE, all four seller cards and registration proofs returned HTTP 200, unauthenticated seller invocations returned HTTP 401, and all four seller container image IDs and start times remained unchanged.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "publisher_claim"
+      ],
+      "scope": {
+        "drillMode": "controlled-cloudflared-service-restart",
+        "serviceUnit": "cloudflared.service",
+        "recoveryDurationMs": 12832,
+        "recoveryProbeAttempts": 1,
+        "recoveryTimeoutMs": 120000,
+        "httpRequestTimeoutMs": 10000,
+        "serviceStateAfter": "active/running",
+        "unitFileStateAfter": "enabled",
+        "restartPolicy": "on-failure",
+        "restartDelay": "5s",
+        "serviceInvocationChanged": true,
+        "sellerContainerCount": 4,
+        "sellerContainersUnchanged": true,
+        "apiHealthHttpStatus": 200,
+        "apiStatus": "AVAILABLE",
+        "databaseStatus": "AVAILABLE",
+        "sellerCardHttpStatus": 200,
+        "registrationProofHttpStatus": 200,
+        "unauthenticatedInvocationHttpStatus": 401,
+        "retainedArtifactSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+        "onlyRemoteMutation": "systemctl restart cloudflared",
+        "remoteMutationCommandCount": 1,
+        "authenticatedSellerRequests": 0,
+        "commerceMutationCommands": 0,
+        "chainRpcRequests": 0,
+        "transactionSubmissions": 0,
+        "mainnetWriteCommands": 0,
+        "fundTransferCommands": 0
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T16:27:11.698Z",
+        "toUtc": "2026-09-09T16:27:27.121Z"
+      },
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/tunnel-recovery-20260909.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "scripts/run-tunnel-recovery-drill.ts"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/verify-tunnel-recovery.ts",
+          "command": "npm run tunnel:verify -- evidence/operations/tunnel-recovery-20260909.json",
+          "observedStatus": "VERIFIED_CONTROLLED_TUNNEL_RECOVERY"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/reliability/tunnel-recovery.test.ts",
+          "command": "node --test tests/reliability/tunnel-recovery.test.ts"
+        }
+      ],
+      "limitations": [
+        "One operator-triggered cloudflared service restart is measured; repeatability is not established.",
+        "The VPS, Docker daemon, KNOT containers, database, and object store are not restarted.",
+        "One client location and point-in-time HTTP probes do not establish uptime, an SLA, failover, load capacity, host recovery, or regional availability.",
+        "The API database state is its self-reported health value, not an independent database integrity check.",
+        "No authenticated seller request, commerce mutation, chain RPC request, transaction submission, mainnet write, or fund transfer is performed.",
+        "Network traffic is not instrumented, so no claim is made about every background process request."
+      ]
+    },
+    {
       "id": "comparative-benchmarks",
       "claim": "One paid paired experiment is published for each of KNOT's four finance categories. The agent and non-agent reference paths used the same frozen input within each pair, and independent evaluators reproduced four quality ties: HealthGuard across 4 dimensions, RangePilot across 6, GridQuant across 5, and YieldScout across 5.",
       "status": "SUPPORTED",
@@ -1084,6 +1708,129 @@
         "HealthGuard's two paths share the same separately SHA-256-bound committed input, but its TaskSpec input hash does not match those raw bytes; no authentic signed-task preimage binding is claimed for that pair.",
         "All four sellers and reference implementations are operated by KNOT; evaluator independence means scores are recomputed from raw evidence, not independent business ownership.",
         "No speed, human-time, cost, profit, APY, return, savings, PnL, win-rate, execution, or live-trading advantage is claimed."
+      ]
+    },
+    {
+      "id": "service-request-intake-boundary",
+      "claim": "Release bf2738478888 deployed a private byte-exact service-request intake boundary. The API and worker were healthy on the same immutable image, migration 0008 was present in an eight-migration database, the new table was empty at observation time, five public health or agent-card checks returned HTTP 200, and an unauthenticated service-request attempt returned HTTP 401.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture",
+        "publisher_claim"
+      ],
+      "scope": {
+        "releaseTag": "bf2738478888",
+        "immutableImageId": "sha256:7a3aa1e7ad961af3b295110194f605fe91f226824dfc0bade891abb333d60ebb",
+        "databaseMigrationCount": 8,
+        "serviceRequestRowsObserved": 0,
+        "publicHttp200Checks": 5,
+        "unauthenticatedServiceRequestStatus": 401,
+        "rootTests": 392,
+        "sellerCompatibilityTests": 16,
+        "sellerTests": 73,
+        "postgresIntegrationTests": 16
+      },
+      "observedAtUtc": "2026-09-09T19:54:26.377Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/service-request-rollout-20260909.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/contracts/service-request.test.ts",
+          "command": "node --test tests/contracts/service-request.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/api/api.test.ts",
+          "command": "node --test tests/api/api.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/db/service-request-repository.test.ts",
+          "command": "node --test tests/db/service-request-repository.test.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0008_service_requests.sql"
+        }
+      ],
+      "limitations": [
+        "No authenticated service request was created in the deployed environment, so the live observation does not prove the authenticated write path end to end.",
+        "No seller negotiation, payment, wallet operation, chain RPC call, transaction, mainnet write, or frontend change was performed.",
+        "The seller-schema compatibility gate covers a declared adversarial matrix and exact retained fixtures; the marketplace and seller schemas are not yet one canonical package.",
+        "Raw request bytes are append-only without retention or crypto-erasure, so the deployed intake is limited to bounded testnet and demo inputs rather than production private portfolio data.",
+        "Five point-in-time HTTP responses and service health states do not establish uptime, load capacity, an SLA, regional behavior, or disaster recovery."
+      ]
+    },
+    {
+      "id": "owned-seller-quote-persistence-fence",
+      "claim": "Release ce9bc1f260f1 deploys bounded service-request transport and an append-only, buyer-private persistence fence for strictly verified KNOT-operated EOA seller quotes while keeping quote funding disabled and the vault outside the public API.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture",
+        "publisher_claim"
+      ],
+      "scope": {
+        "releaseTag": "ce9bc1f260f1",
+        "immutableImageId": "sha256:8e8f568e07bc3564fd2583ce473809c8b4cd56500f0fcbd1f18df880e5ec59d7",
+        "deploymentStatus": "code and empty schema deployed; live quote flow unexercised",
+        "sellerRelation": "KNOT_OPERATED",
+        "signatureMethod": "EIP-191 EOA recovery",
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "serviceRequestTransports": [
+          "base64url",
+          "deflate-base64url"
+        ],
+        "databaseMigrationCount": 10,
+        "serviceRequestRowsObserved": 0,
+        "verifiedQuoteRowsObserved": 0,
+        "fundingPermitted": false,
+        "apiRoutePresent": false,
+        "chainReads": 0,
+        "chainWrites": 0
+      },
+      "observedAtUtc": "2026-09-09T20:32:09.000Z",
+      "sources": [
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/operations/verified-quote-rollout-20260909.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/ops/verified-quote-rollout.test.ts",
+          "command": "node --test tests/ops/verified-quote-rollout.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/contracts/service-request.test.ts",
+          "command": "node --test tests/contracts/service-request.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/contracts/service-quote.test.ts",
+          "command": "node --test tests/contracts/service-quote.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/db/verified-quote-repository.test.ts",
+          "command": "node --test tests/db/verified-quote-repository.test.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0010_verified_quotes.sql"
+        }
+      ],
+      "limitations": [
+        "The deployed table was empty and no authenticated live request or quote was created, so this does not prove an end-to-end quote flow.",
+        "No API quote route, wallet action, job creation, funding, notification, settlement, or chain write is connected to this boundary.",
+        "The repository persists only EIP-191 EOA quotes; ERC-1271 remains unresolved until a pinned-block network verifier is implemented.",
+        "The seller owner is read from local agent state, while identity block metadata is caller-supplied and validated for shape and time rather than independently obtained from ERC-8004.",
+        "The successful endpoint observation is pre-existing database context, not a network observation performed by the quote repository.",
+        "GridQuant job 1187, YieldScout job 1188, and RangePilot job 1189 predate mandatory request-ID replay binding and are intentionally rejected by the new verifier.",
+        "Append-only service-request and quote data have no retention or crypto-erasure mechanism."
       ]
     }
   ]
