@@ -13,3 +13,13 @@
   originRequest:
     connectTimeout: 10s
     httpHostHeader: knot-artifacts.truematchx.com
+- hostname: knot-range.truematchx.com
+  service: http://127.0.0.1:3202
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-range.truematchx.com
+- hostname: knot-grid.truematchx.com
+  service: http://127.0.0.1:3203
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-grid.truematchx.com

@@ -1,5 +1,5 @@
 [project]
-name = "rangepilot-agent"
+name = "KNOT RangePilot"
 
 [stack]
 runtime = "agentcore"
@@ -12,6 +12,7 @@ default = "bsc-testnet"
 kind = "evm-local"
 signer = "local"
 keystore_dir = "../../.studio/wallets"
+address = "0xE4feD886b4b9062486d4663c6962E14473Bd7320"
 
 [payments.erc8183]
 currency = "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
@@ -24,4 +25,10 @@ poll_interval_seconds = 30
 auto_settle = false
 
 [storage]
-kind = "local"
+kind = "s3"
+bucket = "knot-deliverables"
+region = "us-east-1"
+key_prefix = "rangepilot"
+public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
+endpoint = "http://object-store:9000"
+credential_mode = "env"

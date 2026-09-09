@@ -1,5 +1,5 @@
 [project]
-name = "gridquant-agent"
+name = "KNOT GridQuant"
 
 [stack]
 runtime = "agentcore"
@@ -12,6 +12,7 @@ default = "bsc-testnet"
 kind = "evm-local"
 signer = "local"
 keystore_dir = "../../.studio/wallets"
+address = "0x3D5355A97352f4D078016342AD117a5E88D5C74f"
 
 [payments.erc8183]
 currency = "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
@@ -24,4 +25,10 @@ poll_interval_seconds = 30
 auto_settle = false
 
 [storage]
-kind = "local"
+kind = "s3"
+bucket = "knot-deliverables"
+region = "us-east-1"
+key_prefix = "gridquant"
+public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
+endpoint = "http://object-store:9000"
+credential_mode = "env"
