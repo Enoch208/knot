@@ -2,6 +2,7 @@ import { healthGuardRequest, type HealthGuardRequest, type HealthMarket } from "
 
 const E18 = 10n ** 18n;
 const BPS = 10_000n;
+export const SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-base64url/1:";
 
 type ArtifactStatus =
   | "ASSESSED"
@@ -37,10 +38,31 @@ export interface HealthGuardArtifact {
   limitations: string[];
 }
 
+export function encodeSignedTaskTransport(text: string): string {
+  return `${SIGNED_TASK_TRANSPORT_PREFIX}${Buffer.from(text, "utf8").toString("base64url")}`;
+}
+
+export function decodeSignedTaskTransport(text: string): string | null {
+  if (!text.startsWith(SIGNED_TASK_TRANSPORT_PREFIX)) return text;
+  const payload = text.slice(SIGNED_TASK_TRANSPORT_PREFIX.length);
+  if (!/^[A-Za-z0-9_-]+$/.test(payload) || payload.length % 4 === 1) return null;
+  try {
+    const bytes = Buffer.from(payload, "base64url");
+    if (bytes.toString("base64url") !== payload) return null;
+    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    return null;
+  }
+}
+
 export function analyzeHealthGuardText(text: string, now = new Date()): string {
+  const decoded = decodeSignedTaskTransport(text);
+  if (decoded === null) {
+    return JSON.stringify(refusal("INVALID_REQUEST", "INVALID_JSON", now, ["request is not valid JSON"]));
+  }
   let input: unknown;
   try {
-    input = JSON.parse(text);
+    input = JSON.parse(decoded);
   } catch {
     return JSON.stringify(refusal("INVALID_REQUEST", "INVALID_JSON", now, ["request is not valid JSON"]));
   }

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { analyzeHealthGuardText } from "../src/healthGuard.js";
+import { analyzeHealthGuardText, encodeSignedTaskTransport } from "../src/healthGuard.js";
 import { SellerCore, type SigningApi } from "../src/sellerCore.js";
 import { healthFixture, NOW } from "./healthFixture.js";
 
@@ -10,8 +10,8 @@ class TestSellerCore extends SellerCore {
   }
 }
 
-test("the funded delivery hook submits the typed artifact from the signed task", async () => {
-  const task = JSON.stringify(healthFixture());
+test("the funded delivery hook submits the typed artifact from an encoded signed task", async () => {
+  const task = encodeSignedTaskTransport(JSON.stringify(healthFixture()));
   let submitted = "";
   const signing: SigningApi = {
     listPrice: () => 1n,

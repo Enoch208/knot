@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { analyzeHealthGuard, analyzeHealthGuardText } from "../src/healthGuard.js";
+import { sanitizeForClaim } from "@bnbagent/sdk/erc8183";
+import {
+  SIGNED_TASK_TRANSPORT_PREFIX,
+  analyzeHealthGuard,
+  analyzeHealthGuardText,
+  encodeSignedTaskTransport,
+} from "../src/healthGuard.js";
 import { healthFixture as fixture, NOW } from "./healthFixture.js";
 
 test("returns a typed solvent assessment with labeled metrics", () => {
@@ -88,6 +94,35 @@ test("near-threshold debt returns the conservative minimum repayment", () => {
 test("the text path is deterministic for a fixed assessment time", () => {
   const input = JSON.stringify(fixture());
   assert.equal(analyzeHealthGuardText(input, NOW), analyzeHealthGuardText(input, NOW));
+});
+
+test("decodes a versioned base64url signed task without square brackets", () => {
+  const input = JSON.stringify(fixture());
+  const encoded = encodeSignedTaskTransport(input);
+  assert.match(input, /[\[\]]/);
+  assert.ok(encoded.startsWith(SIGNED_TASK_TRANSPORT_PREFIX));
+  assert.doesNotMatch(encoded, /[\[\]]/);
+  const sanitized = sanitizeForClaim(encoded);
+  assert.equal(sanitized, encoded);
+  const artifact = JSON.parse(analyzeHealthGuardText(sanitized, NOW)) as Record<string, unknown>;
+  assert.equal(artifact.status, "ASSESSED");
+  assert.equal(artifact.taskId, "health-1");
+});
+
+test("malformed signed task transport fails closed as invalid JSON", () => {
+  const invalidAlphabet = `${SIGNED_TASK_TRANSPORT_PREFIX}%%%`;
+  const invalidUtf8 = `${SIGNED_TASK_TRANSPORT_PREFIX}${Buffer.from([0xc3, 0x28]).toString("base64url")}`;
+  for (const input of [invalidAlphabet, invalidUtf8]) {
+    const artifact = JSON.parse(analyzeHealthGuardText(input, NOW)) as Record<string, unknown>;
+    assert.equal(artifact.status, "INVALID_REQUEST");
+    assert.equal(artifact.reasonCode, "INVALID_JSON");
+  }
+});
+
+test("plain JSON remains compatible with the signed task analyzer", () => {
+  const artifact = JSON.parse(analyzeHealthGuardText(JSON.stringify(fixture()), NOW)) as Record<string, unknown>;
+  assert.equal(artifact.status, "ASSESSED");
+  assert.equal(artifact.taskId, "health-1");
 });
 
 test("unknown request fields fail the closed schema", () => {
