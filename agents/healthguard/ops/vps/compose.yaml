@@ -47,6 +47,7 @@ services:
       - "127.0.0.1:3200:8080"
     networks:
       - backend-private
+      - edge
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/minio/health/live"]
@@ -120,3 +121,5 @@ networks:
   backend-egress:
     external: true
     name: knot_backend_egress
+  edge:
+    name: knot_healthguard_edge
