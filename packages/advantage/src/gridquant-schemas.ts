@@ -3,7 +3,7 @@ import { z } from "zod"
 const address = z.string().regex(/^0x[0-9a-fA-F]{40}$/).transform((value) => value.toLowerCase() as `0x${string}`)
 const units = z.string().regex(/^(0|[1-9][0-9]{0,77})$/)
 const digest = z.string().regex(/^0x[0-9a-fA-F]{64}$/).transform((value) => value.toLowerCase() as `0x${string}`)
-const utc = z.iso.datetime()
+const utc = z.iso.datetime({ offset: true })
 const bps = z.number().int().min(0).max(10_000)
 const token = z
   .object({

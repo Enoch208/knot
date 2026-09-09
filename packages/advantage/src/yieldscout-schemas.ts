@@ -4,7 +4,7 @@ const address = z.string().regex(/^0x[0-9a-fA-F]{40}$/).transform((value) => val
 const baseUnits = z.string().regex(/^(0|[1-9][0-9]{0,77})$/)
 const positiveBaseUnits = baseUnits.refine((value) => BigInt(value) > 0n)
 const digest = z.string().regex(/^0x[0-9a-fA-F]{64}$/).transform((value) => value.toLowerCase() as `0x${string}`)
-const utc = z.iso.datetime()
+const utc = z.iso.datetime({ offset: true })
 const protocol = z.enum(["venus", "aave-v3"])
 const integrationId = z.enum(["venus-core-supply-v1", "aave-v3-bsc-supply-v1"])
 const source = z.object({ uri: z.string().min(1), contentHash: digest, method: z.string().min(1) }).strict()

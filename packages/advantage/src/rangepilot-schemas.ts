@@ -3,7 +3,7 @@ import { z } from "zod"
 const address = z.string().regex(/^0x[0-9a-fA-F]{40}$/).transform((value) => value.toLowerCase() as `0x${string}`)
 const baseUnits = z.string().regex(/^(0|[1-9][0-9]{0,77})$/)
 const digest = z.string().regex(/^0x[0-9a-fA-F]{64}$/).transform((value) => value.toLowerCase() as `0x${string}`)
-const utc = z.iso.datetime()
+const utc = z.iso.datetime({ offset: true })
 const chainId = z.union([z.literal(56), z.literal(97)])
 const tick = z.number().int().min(-887272).max(887272)
 const token = z

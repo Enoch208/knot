@@ -1,10 +1,10 @@
 import { z } from "zod"
-import { address, baseUnits, hexDigest } from "../../contracts/src/primitives.ts"
+import { address, baseUnits, chainId, hexDigest } from "../../contracts/src/primitives.ts"
 import { taskSpec, type TaskSpec } from "../../contracts/src/task.ts"
 import { AdvantageValidationError, canonicalJson, type EvaluatorMaterials, type ExperimentEvaluator } from "./runner.ts"
 import { rawDimensionScore, type RawDimensionScore } from "./schemas.ts"
 
-const utc = z.iso.datetime()
+const utc = z.iso.datetime({ offset: true })
 const source = z.object({ uri: z.string().min(1), contentHash: hexDigest, method: z.string().min(1) }).strict()
 const market = z
   .object({
@@ -27,7 +27,7 @@ const snapshot = z
   .object({
     schemaVersion: z.literal("knot.health.snapshot/1"),
     snapshotId: z.string().min(1),
-    chainId: z.literal(56),
+    chainId,
     blockNumber: baseUnits,
     blockHash: hexDigest,
     blockTimestampUtc: utc,
@@ -47,14 +47,16 @@ const snapshot = z
   .strict()
 
 type HealthTaskSpec = Extract<TaskSpec, { category: "health" }>
-const healthTaskSpec = taskSpec.refine((task) => task.category === "health").transform((task) => task as HealthTaskSpec)
+const healthTaskSpec = taskSpec
+  .refine((task) => task.category === "health" && task.snapshotId !== null)
+  .transform((task) => task as HealthTaskSpec & { snapshotId: string })
 
 export const healthGuardEvaluationInput = z
   .object({
     schemaVersion: z.literal("knot.health.request/1"),
     task: healthTaskSpec,
     snapshot,
-    maxSnapshotAgeSeconds: z.number().int().positive().max(300),
+    maxSnapshotAgeSeconds: z.number().int().positive().max(300).default(15),
   })
   .strict()
 
