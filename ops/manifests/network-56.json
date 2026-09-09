@@ -2,8 +2,8 @@
   "chainId": 56,
   "label": "BSC mainnet",
   "rpcUrl": "https://bsc-dataseed.bnbchain.org",
-  "blockNumber": "120849999",
-  "observedAtUtc": "2026-09-09T08:56:27.306Z",
+  "blockNumber": "120863589",
+  "observedAtUtc": "2026-09-09T10:38:24.625Z",
   "writesPermitted": false,
   "contracts": [
     {
