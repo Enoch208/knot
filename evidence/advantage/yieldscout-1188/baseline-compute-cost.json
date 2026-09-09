@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "knot.advantage.cost-evidence/1",
+  "kind": "compute",
+  "units": "211250",
+  "decimals": 0,
+  "symbol": "ns",
+  "chainId": null,
+  "token": null,
+  "observedAtUtc": "2026-09-09T11:43:12.584Z",
+  "method": "measured_wall_clock",
+  "sourceRecordId": "yieldscout-1188-historical-replay@2026-09-09T11:43:12.584Z"
+}

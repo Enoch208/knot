@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "knot.advantage.cost-evidence/1",
+  "kind": "network_fee",
+  "units": "2168994000000000",
+  "decimals": 18,
+  "symbol": "tBNB",
+  "chainId": 97,
+  "token": null,
+  "observedAtUtc": "2026-09-09T11:17:16.000Z",
+  "method": "transaction_receipt",
+  "sourceRecordId": "0x5d8fa6a6d687915d667448d98da98eb9af5a1a4854eef22fc5078a851ad0b4ec"
+}

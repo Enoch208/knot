@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "knot.yield.baseline-method/1",
+  "id": "direct-yieldscout-pinned-integer-math",
+  "version": "1.0.0",
+  "usesAgentOutput": false,
+  "input": "The exact closed input.json and its embedded confirmed, pinned BSC mainnet snapshot used by paid job 1188.",
+  "evaluationAsOfUtc": "2026-09-09T11:17:48.100Z",
+  "producedAtUtc": "2026-09-09T11:43:12.584Z",
+  "evidenceBoundary": {
+    "classification": "historical_replay",
+    "scopeMismatch": "The reference was computed later against frozen bytes as of the retained agent assessment instant; it was not a contemporaneous service call or human workflow."
+  },
+  "procedure": [
+    "Parse the exact closed YieldScout input without reading the marketplace agent manifest or artifact.",
+    "Evaluate snapshot freshness and every safety gate at the retained agent assessment instant.",
+    "Normalize per-block and per-second RAY rates with deterministic integer arithmetic.",
+    "Compute horizon benefits, disclosed route costs, net benefit, hold improvement, exclusions, and the bounded recommendation.",
+    "Return a closed knot.yield.artifact/1; do not infer APY, returns, savings, human time, or execution outcomes."
+  ],
+  "source": [
+    {
+      "uri": "bsc://56/yield/usdt?block=120868475",
+      "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+      "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+    }
+  ]
+}

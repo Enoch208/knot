@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "knot.advantage.cost-evidence/1",
+  "kind": "service_fee",
+  "units": "100000000000000000",
+  "decimals": 18,
+  "symbol": "U",
+  "chainId": 97,
+  "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+  "observedAtUtc": "2026-09-09T11:33:11.000Z",
+  "method": "transaction_receipt",
+  "sourceRecordId": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af"
+}

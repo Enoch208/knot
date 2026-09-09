@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "knot.advantage.dataset/1",
+  "generatedAtUtc": "2026-09-09T11:43:12.584Z",
+  "experiments": [
+    {
+      "schemaVersion": "knot.advantage.experiment/1",
+      "experimentId": "yieldscout-1188",
+      "evidenceClass": "testnet_observation",
+      "task": {
+        "spec": {
+          "category": "yield",
+          "target": {
+            "asset": "0x55d398326f99059ff775485246999027b3197955",
+            "amountUnits": "1000000000000000000000"
+          },
+          "constraints": {
+            "horizonSeconds": 31536000,
+            "allowedProtocols": [
+              "venus",
+              "aave-v3"
+            ],
+            "allowLpExposure": false,
+            "minMarketLiquidityUnits": "1000000000000000000000",
+            "concentrationCapBps": 9000,
+            "gasAllowanceWei": "1000000000000000000",
+            "minImprovementBps": 10,
+            "mode": "analysis"
+          },
+          "schemaVersion": "knot.task/1",
+          "taskId": "yield-paid-120868475",
+          "capability": "analysis",
+          "identityChainId": 97,
+          "dataChainId": 56,
+          "paymentChainId": 97,
+          "executionChainId": null,
+          "serviceFeeLimit": {
+            "chainId": 97,
+            "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+            "units": "100000000000000000",
+            "decimals": 18
+          },
+          "managedPrincipal": [],
+          "executionSpendLimits": [],
+          "deadlineUtc": "2026-09-09T12:02:10.000Z",
+          "inputHash": "0xb62982a78e2277cd0fbea463ff8e85043b357bb41fb273a24b39007cfb14b849",
+          "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9"
+        },
+        "reference": {
+          "uri": "task.json",
+          "sha256": "b8e706e5bfd5073bc2faa4b5e3476657d24b35925e6055fdee2b0182e126df60",
+          "byteLength": 936,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:15:24.627Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "input": {
+        "uri": "input.json",
+        "sha256": "8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b",
+        "byteLength": 5199,
+        "mediaType": "application/json",
+        "observedAtUtc": "2026-09-09T11:15:08.464Z",
+        "evidenceClass": "mainnet_observation"
+      },
+      "agentPath": {
+        "kind": "agent",
+        "agent": {
+          "chainId": 97,
+          "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+          "agentId": "2299"
+        },
+        "operatorRelationship": "same_operator_reference",
+        "methodId": "yieldscout-erc8183-permanent",
+        "methodVersion": "1.0.0",
+        "inputIdentity": {
+          "taskId": "yield-paid-120868475",
+          "taskInputHash": "0xb62982a78e2277cd0fbea463ff8e85043b357bb41fb273a24b39007cfb14b849",
+          "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9",
+          "inputSha256": "8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:15:24.627Z",
+          "endedAtUtc": "2026-09-09T11:17:53.000Z",
+          "durationMs": 148373
+        },
+        "costs": [
+          {
+            "kind": "service_fee",
+            "amount": {
+              "units": "100000000000000000",
+              "decimals": 18,
+              "symbol": "U",
+              "chainId": 97,
+              "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565"
+            },
+            "provenance": {
+              "uri": "agent-service-cost.json",
+              "sha256": "373c3523d5e644b182020e3fcd96a95978f1d8f241a60c2570563e8b690ddb1a",
+              "byteLength": 395,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:33:11.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          },
+          {
+            "kind": "network_fee",
+            "amount": {
+              "units": "2168994000000000",
+              "decimals": 18,
+              "symbol": "tBNB",
+              "chainId": 97,
+              "token": null
+            },
+            "provenance": {
+              "uri": "agent-network-cost.json",
+              "sha256": "ef6124d86f2e581093bb0db53ff0e36edac924eef825bbc03a957015a0f64a1c",
+              "byteLength": 356,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:17:16.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "agent-manifest.json",
+          "sha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9",
+          "byteLength": 3269,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:34:55.952Z",
+          "evidenceClass": "testnet_observation"
+        },
+        "artifact": {
+          "uri": "agent-artifact.json",
+          "sha256": "615a5208021eee8ae6ac14a8da32b0ba38ce48f07f2486c87220734609fab7b6",
+          "byteLength": 2655,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:17:48.100Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "baselinePath": {
+        "kind": "non_agent_baseline",
+        "methodId": "direct-yieldscout-pinned-integer-math",
+        "methodVersion": "1.0.0",
+        "implementation": {
+          "uri": "baseline-method.json",
+          "sha256": "da7183862e90a9cfdd488c483f71e90ba100cbb73de568163a0a5d59d3148505",
+          "byteLength": 1495,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:43:12.584Z",
+          "evidenceClass": "historical_replay"
+        },
+        "usesSameInput": true,
+        "usesAgentOutput": false,
+        "inputIdentity": {
+          "taskId": "yield-paid-120868475",
+          "taskInputHash": "0xb62982a78e2277cd0fbea463ff8e85043b357bb41fb273a24b39007cfb14b849",
+          "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9",
+          "inputSha256": "8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:17:48.100Z",
+          "endedAtUtc": "2026-09-09T11:17:48.100Z",
+          "durationMs": 0
+        },
+        "costs": [
+          {
+            "kind": "compute",
+            "amount": {
+              "units": "211250",
+              "decimals": 0,
+              "symbol": "ns",
+              "chainId": null,
+              "token": null
+            },
+            "provenance": {
+              "uri": "baseline-compute-cost.json",
+              "sha256": "c1e03a6c7ba9e33c7ca92f4884710e1872d84ba906b586277dd8c489a13911a5",
+              "byteLength": 333,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:43:12.584Z",
+              "evidenceClass": "historical_replay"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "baseline-observation.json",
+          "sha256": "3744d0f095e9d204ababe0b980014e7caad4f3454950e06c25967ad680dbc1ef",
+          "byteLength": 4092,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:43:12.584Z",
+          "evidenceClass": "historical_replay"
+        },
+        "artifact": {
+          "uri": "baseline-artifact.json",
+          "sha256": "e1396594c098dbd62fb5f62e2bf667fa526b91fb3ba21d4a9ce50a930e4f4a6c",
+          "byteLength": 3270,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:43:12.584Z",
+          "evidenceClass": "historical_replay"
+        }
+      },
+      "evaluation": {
+        "evaluator": {
+          "id": "yieldscout-independent",
+          "version": "1.0.0"
+        },
+        "decisionRule": "lexicographic",
+        "dimensions": [
+          {
+            "id": "contract_integrity",
+            "label": "Closed artifact, task, snapshot, and source binding",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity, source URIs, and observation time match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity, source URIs, and observation time match"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "rate_and_horizon_math",
+            "label": "Independent rate normalization and horizon benefit",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "annual rates and horizon benefits match independent integer arithmetic"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "annual rates and horizon benefits match independent integer arithmetic"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "disclosed_cost_math",
+            "label": "Disclosed route costs, net benefit, and hold improvement",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "disclosed costs and net benefits reconcile"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "disclosed costs and net benefits reconcile"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "market_exclusions",
+            "label": "Liquidity, capacity, concentration, protocol, and risk exclusions",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "market exclusions match independently derived safety gates"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "market exclusions match independently derived safety gates"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "bounded_selection",
+            "label": "Selected migration or hold decision",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "recommendation and selected market match the independent decision"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "recommendation and selected market match the independent decision"
+            },
+            "result": "tie"
+          }
+        ]
+      },
+      "comparison": {
+        "winner": "tie",
+        "agentWins": 0,
+        "baselineWins": 0,
+        "ties": 5,
+        "decisiveDimensionId": null
+      }
+    }
+  ]
+}

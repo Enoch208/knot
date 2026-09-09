@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "knot.yield.snapshot-evidence/1",
+  "extractedWithoutMutationFrom": "input.json",
+  "snapshot": {
+    "schemaVersion": "knot.yield.snapshot/2",
+    "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9",
+    "chainId": 56,
+    "blockNumber": "120868475",
+    "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+    "blockTimestampUtc": "2026-09-09T11:15:03.000Z",
+    "capturedAtUtc": "2026-09-09T11:15:08.464Z",
+    "canonicality": "confirmed",
+    "sources": [
+      {
+        "uri": "bsc://56/yield/usdt?block=120868475",
+        "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+        "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+      }
+    ],
+    "asset": {
+      "chainId": 56,
+      "address": "0x55d398326f99059ff775485246999027b3197955",
+      "symbol": "USDT",
+      "decimals": 18,
+      "mechanics": "plain_erc20"
+    },
+    "costValuation": {
+      "status": "current",
+      "asset": {
+        "chainId": 56,
+        "address": "0x55d398326f99059ff775485246999027b3197955",
+        "symbol": "USDT",
+        "decimals": 18,
+        "mechanics": "plain_erc20"
+      },
+      "observedAtUtc": "2026-09-09T11:15:08.464Z",
+      "source": {
+        "uri": "bsc://56/yield/usdt?block=120868475",
+        "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+        "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+      }
+    },
+    "markets": [
+      {
+        "marketId": "venus-usdt-core",
+        "integrationId": "venus-core-supply-v1",
+        "protocol": "venus",
+        "marketAddress": "0xfd5840cd36d94d7229439859c0112a4185bc0255",
+        "asset": {
+          "chainId": 56,
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "symbol": "USDT",
+          "decimals": 18,
+          "mechanics": "plain_erc20"
+        },
+        "dataStatus": "current",
+        "observedAtUtc": "2026-09-09T11:15:08.464Z",
+        "dataSource": {
+          "uri": "bsc://56/yield/usdt?block=120868475",
+          "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+          "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+        },
+        "periodBasis": {
+          "kind": "per_block",
+          "periodsPerYear": "70080000",
+          "source": {
+            "uri": "bsc://56/yield/usdt?block=120868475",
+            "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+            "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+          }
+        },
+        "baseRatePerPeriodRay": "394415053000000000",
+        "incentiveRate": {
+          "status": "none"
+        },
+        "availableLiquidityUnits": "61857863548219395555998131",
+        "capacity": {
+          "kind": "capped",
+          "supplyCapUnits": "600000000000000000000000000"
+        },
+        "totalSuppliedUnits": "196295677915765105397117549",
+        "supplyState": "active",
+        "withdrawalState": "active",
+        "exposure": "same_asset",
+        "leverage": false,
+        "concentrationBps": 213,
+        "entryCostUnits": "16851204239142566",
+        "exitCostUnits": "16851204239142566",
+        "riskFlags": [],
+        "uncertainty": [
+          "block cadence is annualized from the preceding 100 confirmed blocks",
+          "risk flags cover the queried on-chain pause and configuration fields only"
+        ]
+      },
+      {
+        "marketId": "aave-v3-usdt",
+        "integrationId": "aave-v3-bsc-supply-v1",
+        "protocol": "aave-v3",
+        "marketAddress": "0xa9251ca9de909cb71783723713b21e4233fbf1b1",
+        "asset": {
+          "chainId": 56,
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "symbol": "USDT",
+          "decimals": 18,
+          "mechanics": "plain_erc20"
+        },
+        "dataStatus": "current",
+        "observedAtUtc": "2026-09-09T11:15:08.464Z",
+        "dataSource": {
+          "uri": "bsc://56/yield/usdt?block=120868475",
+          "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+          "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+        },
+        "periodBasis": {
+          "kind": "per_second",
+          "periodsPerYear": "31536000",
+          "source": {
+            "uri": "bsc://56/yield/usdt?block=120868475",
+            "contentHash": "0xfd5ded4c23855e9f7b3acf923686e23daed3e98a52974de9d08e317adb1e847d",
+            "method": "eth_call across pinned Venus, Aave, token, and PancakeSwap contracts; block hash rechecked after the read set"
+          }
+        },
+        "baseRatePerPeriodRay": "925158902896617659",
+        "incentiveRate": {
+          "status": "none"
+        },
+        "availableLiquidityUnits": "10423852453441127599041108",
+        "capacity": {
+          "kind": "capped",
+          "supplyCapUnits": "90000000000000000000000000"
+        },
+        "totalSuppliedUnits": "59120018669148230626197111",
+        "supplyState": "active",
+        "withdrawalState": "active",
+        "exposure": "same_asset",
+        "leverage": false,
+        "concentrationBps": 64,
+        "entryCostUnits": "16851204239142566",
+        "exitCostUnits": "16851204239142566",
+        "riskFlags": [],
+        "uncertainty": [
+          "Aave liquidityRate is converted from annual RAY to a floored per-second RAY",
+          "risk flags cover the queried on-chain pause and configuration fields only"
+        ]
+      }
+    ]
+  }
+}

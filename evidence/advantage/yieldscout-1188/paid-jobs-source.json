@@ -1,0 +1,473 @@
+{
+  "schemaVersion": "knot.analysis-paid-jobs-evidence/1",
+  "recordedAtUtc": "2026-09-09T11:34:55.952Z",
+  "networkBoundary": {
+    "dataReads": {
+      "name": "BSC mainnet",
+      "chainId": 56
+    },
+    "identityAndCommerce": {
+      "name": "BSC testnet",
+      "chainId": 97
+    },
+    "executionChainId": null,
+    "mode": "analysis",
+    "mainnetWrites": false,
+    "realFunds": false
+  },
+  "commerce": {
+    "contract": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "paymentTokenSymbol": "U",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "jobCount": 3,
+    "priceBaseUnitsPerJob": "100000000000000000",
+    "totalPaidBaseUnits": "300000000000000000"
+  },
+  "aggregateBalances": {
+    "buyerBeforeFirstJob": "1800000000000000000",
+    "buyerAfterAllJobs": "1500000000000000000",
+    "buyerDecreaseBaseUnits": "300000000000000000"
+  },
+  "jobs": [
+    {
+      "category": "gridquant",
+      "jobId": "1187",
+      "agentId": "2298",
+      "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+      "seller": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+      "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "priceBaseUnits": "100000000000000000",
+      "terminalStatus": "COMPLETED",
+      "scope": {
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "dataChainId": 56,
+        "executionChainId": null,
+        "mode": "analysis"
+      },
+      "outcome": {
+        "status": "ANALYZED",
+        "reasonCode": "PLAN"
+      },
+      "signedQuote": {
+        "valid": true,
+        "method": "eip191",
+        "signer": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+        "chainId": 97,
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "verifyingContract": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "onChainDescriptionMatches": true,
+        "transport": "deflate-base64url",
+        "compressedByteLength": 1084,
+        "decompressedByteLength": 2572,
+        "taskBytesMatch": true
+      },
+      "taskBinding": {
+        "schema": "knot.task/1",
+        "closedSchema": "passed",
+        "taskId": "grid-paid-120868475",
+        "category": "grid",
+        "inputHash": "0x043bcd8d3a62679e2cd88150dd55eb271436e99b8aabbbbe8d3d09e6af807a3f",
+        "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117"
+      },
+      "mainnetSnapshot": {
+        "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117",
+        "blockNumber": "120868475",
+        "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+        "canonicalAtVerification": true
+      },
+      "deliverable": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/gridquant/sha256/0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152.json",
+        "rawSha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152",
+        "rawByteLength": 3582,
+        "manifestKeccak256": "0xa85e65d09fcf5566ecb62397d311605e4080df29fcf71d115f9897fca443ac77",
+        "checks": {
+          "sha256MatchesUrl": true,
+          "manifestHashMatchesOnChain": true,
+          "manifestSchema": "passed",
+          "artifactSchema": "passed",
+          "taskAndSnapshotIdentity": "passed",
+          "assessedWithinFundedDeliveryLifecycle": true
+        }
+      },
+      "disputePolicy": {
+        "address": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "disputeWindowSeconds": "900",
+        "settlementEligibleAt": "1788953518"
+      },
+      "transactions": {
+        "create": {
+          "hash": "0x7d7319e764850f529e34c3ac6719a77f9b5ad20a8d514b7c629e49b0e43a26f7",
+          "receiptStatus": "success",
+          "blockNumber": "130013450",
+          "blockHash": "0x82339c79e36dd6c6ad44c3abf7facb916f77909b5f573feea2fb105905391676",
+          "timestampUtc": "2026-09-09T11:16:15.000Z",
+          "gasUsed": "1783262",
+          "effectiveGasPriceWei": "1000000000",
+          "walletPaidWei": "1783262000000000"
+        },
+        "register": {
+          "hash": "0x9685ea3b3795f1602d2bd98ade238c727d25b545b5c1c73c4bce12edc01bb87a",
+          "receiptStatus": "success",
+          "blockNumber": "130013458",
+          "blockHash": "0x2ed86398d809ec4e33eea866d21a91ab3be10a46a3fd9a1583d6b92beceba7d3",
+          "timestampUtc": "2026-09-09T11:16:18.000Z",
+          "gasUsed": "249274",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "setBudget": {
+          "hash": "0x5626930433d2e8313b2d8d57026b00e796d6209172f2f36fb3a963982f9e892e",
+          "receiptStatus": "success",
+          "blockNumber": "130013472",
+          "blockHash": "0x0120647e4a700ea19cbbc4e9fff2c52512a821f9382ae512eb4aa7d041747292",
+          "timestampUtc": "2026-09-09T11:16:25.000Z",
+          "gasUsed": "96162",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "fund": {
+          "hash": "0xede1f94ccc720ebc260cd691ef9dd2a95f24245318faa9710f8280c371642e96",
+          "receiptStatus": "success",
+          "blockNumber": "130013496",
+          "blockHash": "0x64c313c80d8851aed64e3dcdcffd7dc978744d08cd92c21d2f2c91b057ece528",
+          "timestampUtc": "2026-09-09T11:16:35.000Z",
+          "gasUsed": "102529",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "submit": {
+          "hash": "0xc11edcdbd2291ae45a5088d68fa3cd123337921f01438325516b01fbdf271775",
+          "receiptStatus": "success",
+          "blockNumber": "130013547",
+          "blockHash": "0xe16c5427fab425519a1950912759f7aefff1cda9e9d72b22974b6669e3c9ab2f",
+          "timestampUtc": "2026-09-09T11:16:58.000Z",
+          "gasUsed": "304491",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "settle": {
+          "hash": "0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "receiptStatus": "success",
+          "blockNumber": "130015588",
+          "blockHash": "0x7ed7322703ea6bf88547045c1ec5870ce5b10de3838656259b5766e8ff43896c",
+          "timestampUtc": "2026-09-09T11:32:17.000Z",
+          "gasUsed": "134731",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0",
+          "paymentTransfer": {
+            "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+            "to": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+            "amountBaseUnits": "100000000000000000"
+          }
+        }
+      },
+      "balances": {
+        "beforeBlock": "130013449",
+        "buyerBefore": "1800000000000000000",
+        "sellerBefore": "0",
+        "afterBlock": "130015895",
+        "buyerAfter": "1500000000000000000",
+        "sellerAfter": "100000000000000000"
+      }
+    },
+    {
+      "category": "yieldscout",
+      "jobId": "1188",
+      "agentId": "2299",
+      "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+      "seller": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+      "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "priceBaseUnits": "100000000000000000",
+      "terminalStatus": "COMPLETED",
+      "scope": {
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "dataChainId": 56,
+        "executionChainId": null,
+        "mode": "analysis"
+      },
+      "outcome": {
+        "status": "ASSESSED",
+        "reasonCode": null,
+        "recommendation": "MIGRATE"
+      },
+      "signedQuote": {
+        "valid": true,
+        "method": "eip191",
+        "signer": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+        "chainId": 97,
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "verifyingContract": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "onChainDescriptionMatches": true,
+        "transport": "deflate-base64url",
+        "compressedByteLength": 1463,
+        "decompressedByteLength": 5199,
+        "taskBytesMatch": true
+      },
+      "taskBinding": {
+        "schema": "knot.task/1",
+        "closedSchema": "passed",
+        "taskId": "yield-paid-120868475",
+        "category": "yield",
+        "inputHash": "0xb62982a78e2277cd0fbea463ff8e85043b357bb41fb273a24b39007cfb14b849",
+        "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9"
+      },
+      "mainnetSnapshot": {
+        "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9",
+        "blockNumber": "120868475",
+        "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+        "canonicalAtVerification": true
+      },
+      "deliverable": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/yieldscout/sha256/c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9.json",
+        "rawSha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9",
+        "rawByteLength": 3269,
+        "manifestKeccak256": "0x461090a6c99dc7634567657a948d7c23f23299a5bffc8615f7839c5492ee92a8",
+        "checks": {
+          "sha256MatchesUrl": true,
+          "manifestHashMatchesOnChain": true,
+          "manifestSchema": "passed",
+          "artifactSchema": "passed",
+          "taskAndSnapshotIdentity": "passed",
+          "assessedWithinFundedDeliveryLifecycle": true
+        }
+      },
+      "disputePolicy": {
+        "address": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "disputeWindowSeconds": "900",
+        "settlementEligibleAt": "1788953573"
+      },
+      "transactions": {
+        "create": {
+          "hash": "0x5d8fa6a6d687915d667448d98da98eb9af5a1a4854eef22fc5078a851ad0b4ec",
+          "receiptStatus": "success",
+          "blockNumber": "130013586",
+          "blockHash": "0x4029e183f20e64da8eb5668af309488045d416e1d972d6ded05ec50449c19524",
+          "timestampUtc": "2026-09-09T11:17:16.000Z",
+          "gasUsed": "2168994",
+          "effectiveGasPriceWei": "1000000000",
+          "walletPaidWei": "2168994000000000"
+        },
+        "register": {
+          "hash": "0x07e0fd25b78b563351a76694677219874eeb7ec52fe73b94bed95333c2c7783a",
+          "receiptStatus": "success",
+          "blockNumber": "130013594",
+          "blockHash": "0xac25dd0b2e3e56f56e831a8ba618795acaf469d5a63b31a37f5f98c2f9c99d02",
+          "timestampUtc": "2026-09-09T11:17:20.000Z",
+          "gasUsed": "287087",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "setBudget": {
+          "hash": "0x8ee13b8601cc8e0a5268bed09d25e605e1f944fdcc463030248470a3bd85170c",
+          "receiptStatus": "success",
+          "blockNumber": "130013602",
+          "blockHash": "0x1b663a8124843aa5d094f72253be095b1b1a22cc529ca2dc5d1aa3e9101882c2",
+          "timestampUtc": "2026-09-09T11:17:23.000Z",
+          "gasUsed": "96162",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "fund": {
+          "hash": "0xdb7a3426f63a4972161ee448421fb3110cdd9b87a9b22f4f3cf9f880ada3dbee",
+          "receiptStatus": "success",
+          "blockNumber": "130013640",
+          "blockHash": "0xe7f729fd0178d4ecc0bb639ac4b3b828a68898fde61374c6089e69de0559a016",
+          "timestampUtc": "2026-09-09T11:17:40.000Z",
+          "gasUsed": "102529",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "submit": {
+          "hash": "0xa6e86b9b5fb10a4968d21fdda3cdc5291dd8fbf5be41268c0ff334c75e536d61",
+          "receiptStatus": "success",
+          "blockNumber": "130013668",
+          "blockHash": "0x4830415e83443eecb641735507c39dba714b81b84132590b651cc866259f6646",
+          "timestampUtc": "2026-09-09T11:17:53.000Z",
+          "gasUsed": "342318",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "settle": {
+          "hash": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "receiptStatus": "success",
+          "blockNumber": "130015708",
+          "blockHash": "0xa7e748121f39746500596655d13dd126e09d6faddd474e3d45a562c36e1c0124",
+          "timestampUtc": "2026-09-09T11:33:11.000Z",
+          "gasUsed": "134731",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0",
+          "paymentTransfer": {
+            "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+            "to": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+            "amountBaseUnits": "100000000000000000"
+          }
+        }
+      },
+      "balances": {
+        "beforeBlock": "130013585",
+        "buyerBefore": "1700000000000000000",
+        "sellerBefore": "0",
+        "afterBlock": "130015911",
+        "buyerAfter": "1500000000000000000",
+        "sellerAfter": "100000000000000000"
+      }
+    },
+    {
+      "category": "rangepilot",
+      "jobId": "1189",
+      "agentId": "2297",
+      "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+      "seller": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+      "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "priceBaseUnits": "100000000000000000",
+      "terminalStatus": "COMPLETED",
+      "scope": {
+        "identityChainId": 97,
+        "paymentChainId": 97,
+        "dataChainId": 56,
+        "executionChainId": null,
+        "mode": "analysis"
+      },
+      "outcome": {
+        "status": "ANALYZED",
+        "reasonCode": "IN_RANGE_HOLD",
+        "decision": "HOLD"
+      },
+      "signedQuote": {
+        "valid": true,
+        "method": "eip191",
+        "signer": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+        "chainId": 97,
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "verifyingContract": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "onChainDescriptionMatches": true,
+        "transport": "deflate-base64url",
+        "compressedByteLength": 1389,
+        "decompressedByteLength": 3552,
+        "taskBytesMatch": true
+      },
+      "taskBinding": {
+        "schema": "knot.task/1",
+        "closedSchema": "passed",
+        "taskId": "range-paid-120868475",
+        "category": "rebalancing",
+        "inputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+        "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09"
+      },
+      "mainnetSnapshot": {
+        "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+        "blockNumber": "120868475",
+        "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+        "canonicalAtVerification": true
+      },
+      "deliverable": {
+        "url": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a.json",
+        "rawSha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+        "rawByteLength": 2181,
+        "manifestKeccak256": "0xdc56e86a67d947da546e21c901a9e03eb9cb3889bbe2bb3b480e1257b28bb20d",
+        "checks": {
+          "sha256MatchesUrl": true,
+          "manifestHashMatchesOnChain": true,
+          "manifestSchema": "passed",
+          "artifactSchema": "passed",
+          "taskAndSnapshotIdentity": "passed",
+          "assessedWithinFundedDeliveryLifecycle": true
+        }
+      },
+      "disputePolicy": {
+        "address": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "disputeWindowSeconds": "900",
+        "settlementEligibleAt": "1788953628"
+      },
+      "transactions": {
+        "create": {
+          "hash": "0x0e73022383b1d9cd58e0804b374278334442fdbe8bd3272abd1c7899ad617bf1",
+          "receiptStatus": "success",
+          "blockNumber": "130013714",
+          "blockHash": "0x7cc0a47d4126d56232c6fbb1a36cf9f8164f734edb653c54e63872caef9dad3c",
+          "timestampUtc": "2026-09-09T11:18:14.000Z",
+          "gasUsed": "2078536",
+          "effectiveGasPriceWei": "1000000000",
+          "walletPaidWei": "2078536000000000"
+        },
+        "register": {
+          "hash": "0x7c93d480741c982f3182060cf93e4d6c7f0cb85ecfa09b4818058ea503f8063a",
+          "receiptStatus": "success",
+          "blockNumber": "130013722",
+          "blockHash": "0xe5794694b5186dec1d8253786e0b322d5ca505868383daaad86569148719bdd7",
+          "timestampUtc": "2026-09-09T11:18:17.000Z",
+          "gasUsed": "278189",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "setBudget": {
+          "hash": "0x59ff75f2381882bdce42bee7f0c39a6e80d92df44b1fa5c7054a63d7e6590a1e",
+          "receiptStatus": "success",
+          "blockNumber": "130013730",
+          "blockHash": "0xf446127f7c5575e4da1b151b7c987432c12612bc480635397cca9ed89bc33c03",
+          "timestampUtc": "2026-09-09T11:18:21.000Z",
+          "gasUsed": "96162",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "fund": {
+          "hash": "0x1e72e81a9fc7553db83ee692cc5b341a1aa763058de0e5dea3dd2fd8fb9fcff8",
+          "receiptStatus": "success",
+          "blockNumber": "130013760",
+          "blockHash": "0xb84024777ed2763300df95077b32091de7539538cb8bb27b5a660c3d4d827e5a",
+          "timestampUtc": "2026-09-09T11:18:34.000Z",
+          "gasUsed": "102529",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "submit": {
+          "hash": "0x570568e8d4e474b652ec19af07d56ee38c27a243697251bf445efb97943d450d",
+          "receiptStatus": "success",
+          "blockNumber": "130013791",
+          "blockHash": "0xff38bef6b7ccdb091a29d1db47286a737f24ea270e2e5b09b4fc4064db5a7d4f",
+          "timestampUtc": "2026-09-09T11:18:48.000Z",
+          "gasUsed": "333420",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0"
+        },
+        "settle": {
+          "hash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "receiptStatus": "success",
+          "blockNumber": "130015848",
+          "blockHash": "0x15437b8a1adc86e8a5e6d9e66891f491fddc04f7affaef5279fd15f95d54cd1a",
+          "timestampUtc": "2026-09-09T11:34:14.000Z",
+          "gasUsed": "134731",
+          "effectiveGasPriceWei": "0",
+          "walletPaidWei": "0",
+          "paymentTransfer": {
+            "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+            "to": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+            "amountBaseUnits": "100000000000000000"
+          }
+        }
+      },
+      "balances": {
+        "beforeBlock": "130013713",
+        "buyerBefore": "1600000000000000000",
+        "sellerBefore": "0",
+        "afterBlock": "130015927",
+        "buyerAfter": "1500000000000000000",
+        "sellerAfter": "100000000000000000"
+      }
+    }
+  ],
+  "limitations": [
+    "Each observation covers one analysis-only BSC testnet commerce job and does not establish repeatability, uptime, or latency.",
+    "BSC mainnet was read only; no position, order, swap, deposit, withdrawal, migration, or other domain transaction was executed.",
+    "The outcomes are bounded analyses of one pinned input per category, not performance history, earnings, or promised returns.",
+    "U and tBNB are testnet assets; no real funds or mainnet payments were used."
+  ]
+}
