@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { HealthGuardIndependentEvaluator } from "./healthguard.ts"
+import { GridQuantIndependentEvaluator } from "./gridquant.ts"
 import { RangePilotIndependentEvaluator } from "./rangepilot.ts"
 import { validateExperimentDataset, type EvidenceResolver } from "./runner.ts"
 import { YieldScoutIndependentEvaluator } from "./yieldscout.ts"
@@ -20,6 +21,7 @@ const resolver: EvidenceResolver = async (reference) => {
 const source = await readFile(datasetPath, "utf8")
 const dataset = await validateExperimentDataset(JSON.parse(source) as unknown, resolver, [
   new HealthGuardIndependentEvaluator(),
+  new GridQuantIndependentEvaluator(),
   new RangePilotIndependentEvaluator(),
   new YieldScoutIndependentEvaluator(),
 ])
