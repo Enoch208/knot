@@ -1,0 +1,38 @@
+{
+  "category": "rebalancing",
+  "target": {
+    "positionManager": "0x46a15b0b27311cedf172ab29e4f4766fbe7f4364",
+    "positionTokenId": "7391321",
+    "controllingAccount": "0x13a1edacbcb03dfecdfdde6cea29ab95827676eb",
+    "pool": "0x172fcd41e0913e95784454622d1c3724f546f849"
+  },
+  "constraints": {
+    "token0BudgetUnits": "100000000000000000000000000000000000000000000000000000000000",
+    "token1BudgetUnits": "100000000000000000000000000000000000000000000000000000000000",
+    "minimumRangeWidthTicks": 100,
+    "targetRangeWidthTicks": 1200,
+    "maximumRangeWidthTicks": 5000,
+    "maximumSlippageBps": 50,
+    "gasBudgetWei": "100000000000000000",
+    "cooldownSeconds": 300,
+    "executionMode": "analysis"
+  },
+  "schemaVersion": "knot.task/1",
+  "taskId": "range-paid-120868475",
+  "capability": "analysis",
+  "identityChainId": 97,
+  "dataChainId": 56,
+  "paymentChainId": 97,
+  "executionChainId": null,
+  "serviceFeeLimit": {
+    "chainId": 97,
+    "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+    "units": "100000000000000000",
+    "decimals": 18
+  },
+  "managedPrincipal": [],
+  "executionSpendLimits": [],
+  "deadlineUtc": "2026-09-09T12:03:01.000Z",
+  "inputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+  "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09"
+}

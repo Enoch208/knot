@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "knot.rangepilot.baseline-method/1",
+  "id": "range-direct-reference-historical-replay",
+  "version": "1.0.0",
+  "evidenceClass": "historical_replay",
+  "usesAgentOutput": false,
+  "input": "The exact closed knot.rangepilot.request/1 supplied to the paid seller, including its hash-pinned BSC mainnet position and pool snapshot.",
+  "referenceAssessmentAtUtc": "2026-09-09T11:18:42.525Z",
+  "measurementScope": "One in-process deriveRangePilotExpected call measured later with process.hrtime.bigint; file loading, process startup, upstream snapshot collection, human work, and paid-agent lifecycle are excluded.",
+  "procedure": [
+    "Parse the exact closed request without reading the paid agent artifact.",
+    "Replay the deterministic reference at the paid artifact's retained assessment instant so the frozen 300-second freshness rule is applied fairly.",
+    "Recompute snapshot binding, position identity, tick condition, token amounts, feasibility gates, and bounded decision from the pinned input.",
+    "Return a closed knot.rangepilot.artifact/1 and preserve the later real compute measurement separately from the replay clock."
+  ],
+  "snapshotSource": [
+    {
+      "uri": "bsc://56/pancakeswap-v3/position/7391321?block=120868475",
+      "contentHash": "0x70292ccd21128420c6aca99d5a8be8b73ea755fd5e6cc7e4e9ff29cdf85f9916",
+      "method": "eth_call at one confirmed block; block hash rechecked after the read set"
+    }
+  ]
+}

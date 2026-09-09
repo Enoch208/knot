@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "knot.rangepilot.artifact/1",
+  "category": "rebalancing",
+  "capability": "analysis",
+  "taskId": "range-paid-120868475",
+  "assessedAtUtc": "2026-09-09T11:18:42.525Z",
+  "status": "ANALYZED",
+  "reasonCode": "IN_RANGE_HOLD",
+  "evidence": {
+    "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+    "chainId": 56,
+    "blockNumber": "120868475",
+    "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+    "blockTimestampUtc": "2026-09-09T11:15:03.000Z",
+    "capturedAtUtc": "2026-09-09T11:15:09.026Z",
+    "gasEstimatedAtUtc": "2026-09-09T11:15:09.026Z"
+  },
+  "currentState": {
+    "owner": "0x13a1edacbcb03dfecdfdde6cea29ab95827676eb",
+    "pool": "0x172fcd41e0913e95784454622d1c3724f546f849",
+    "token0": {
+      "address": "0x55d398326f99059ff775485246999027b3197955",
+      "symbol": "USDT",
+      "decimals": 18,
+      "mechanics": "plain_erc20"
+    },
+    "token1": {
+      "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "symbol": "WBNB",
+      "decimals": 18,
+      "mechanics": "plain_erc20"
+    },
+    "currentTick": -66190,
+    "tickLower": -66872,
+    "tickUpper": -65515,
+    "tickSpacing": 1,
+    "liquidity": "544153352979157758629",
+    "activeLiquidity": "3523023282640235720735878",
+    "amount0Units": "494135075224899201366",
+    "amount1Units": "666638121649256120",
+    "tokensOwed0": "0",
+    "tokensOwed1": "0",
+    "condition": "IN_RANGE"
+  },
+  "decision": "HOLD",
+  "proposal": null,
+  "assumptions": [
+    "all position, pool, price, liquidity, ownership, and balance fields share the identified block",
+    "proposal amounts preserve current position liquidity and use conservative token0 rounding",
+    "no future return or narrower-range yield advantage is inferred"
+  ],
+  "unavailableMetrics": [
+    "realized fees",
+    "historical time in range",
+    "future yield",
+    "swap price impact"
+  ]
+}

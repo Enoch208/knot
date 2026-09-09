@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "knot.advantage.cost-evidence/1",
+  "kind": "compute",
+  "units": "448958",
+  "decimals": 0,
+  "symbol": "ns",
+  "chainId": null,
+  "token": null,
+  "observedAtUtc": "2026-09-09T11:42:13.990Z",
+  "method": "measured_wall_clock",
+  "sourceRecordId": "rangepilot-1189-reference-replay-one-derive-call"
+}

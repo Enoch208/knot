@@ -1,0 +1,305 @@
+{
+  "schemaVersion": "knot.advantage.dataset/1",
+  "generatedAtUtc": "2026-09-09T11:45:40.173Z",
+  "experiments": [
+    {
+      "schemaVersion": "knot.advantage.experiment/1",
+      "experimentId": "rangepilot-1189",
+      "evidenceClass": "testnet_observation",
+      "task": {
+        "spec": {
+          "category": "rebalancing",
+          "target": {
+            "positionManager": "0x46a15b0b27311cedf172ab29e4f4766fbe7f4364",
+            "positionTokenId": "7391321",
+            "controllingAccount": "0x13a1edacbcb03dfecdfdde6cea29ab95827676eb",
+            "pool": "0x172fcd41e0913e95784454622d1c3724f546f849"
+          },
+          "constraints": {
+            "token0BudgetUnits": "100000000000000000000000000000000000000000000000000000000000",
+            "token1BudgetUnits": "100000000000000000000000000000000000000000000000000000000000",
+            "minimumRangeWidthTicks": 100,
+            "targetRangeWidthTicks": 1200,
+            "maximumRangeWidthTicks": 5000,
+            "maximumSlippageBps": 50,
+            "gasBudgetWei": "100000000000000000",
+            "cooldownSeconds": 300,
+            "executionMode": "analysis"
+          },
+          "schemaVersion": "knot.task/1",
+          "taskId": "range-paid-120868475",
+          "capability": "analysis",
+          "identityChainId": 97,
+          "dataChainId": 56,
+          "paymentChainId": 97,
+          "executionChainId": null,
+          "serviceFeeLimit": {
+            "chainId": 97,
+            "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+            "units": "100000000000000000",
+            "decimals": 18
+          },
+          "managedPrincipal": [],
+          "executionSpendLimits": [],
+          "deadlineUtc": "2026-09-09T12:03:01.000Z",
+          "inputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+          "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09"
+        },
+        "reference": {
+          "uri": "task.json",
+          "sha256": "46470a11f74e9f8bc9a544c2eb0136604dbadc65b4e0a53c751da2af990b0fb1",
+          "byteLength": 1351,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:15:24.978Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "input": {
+        "uri": "input.json",
+        "sha256": "5cab77af274b22378e608ca3c17e902ae7f504b058c242fb99b62185037c0f1d",
+        "byteLength": 3552,
+        "mediaType": "application/json",
+        "observedAtUtc": "2026-09-09T11:15:09.026Z",
+        "evidenceClass": "mainnet_observation"
+      },
+      "agentPath": {
+        "kind": "agent",
+        "agent": {
+          "chainId": 97,
+          "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+          "agentId": "2297"
+        },
+        "operatorRelationship": "same_operator_reference",
+        "methodId": "rangepilot-erc8183-paid",
+        "methodVersion": "1.0.0",
+        "inputIdentity": {
+          "taskId": "range-paid-120868475",
+          "taskInputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+          "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+          "inputSha256": "5cab77af274b22378e608ca3c17e902ae7f504b058c242fb99b62185037c0f1d"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:15:24.600Z",
+          "endedAtUtc": "2026-09-09T11:18:48.000Z",
+          "durationMs": 203400
+        },
+        "costs": [
+          {
+            "kind": "service_fee",
+            "amount": {
+              "units": "100000000000000000",
+              "decimals": 18,
+              "symbol": "U",
+              "chainId": 97,
+              "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565"
+            },
+            "provenance": {
+              "uri": "agent-service-cost.json",
+              "sha256": "7296dcb77ce60d75ccc54b302fcab4fe3a16495d43cc5d1ffdec5726cebf350a",
+              "byteLength": 395,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:18:34.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          },
+          {
+            "kind": "network_fee",
+            "amount": {
+              "units": "2078536000000000",
+              "decimals": 18,
+              "symbol": "tBNB",
+              "chainId": 97,
+              "token": null
+            },
+            "provenance": {
+              "uri": "agent-network-cost.json",
+              "sha256": "4a96f5ee3121e588ea0a315d5c8c9bbeb7a195fd7aabb8d45c28d641617a43c3",
+              "byteLength": 691,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:34:14.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "agent-manifest.json",
+          "sha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+          "byteLength": 2181,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:34:51.663Z",
+          "evidenceClass": "testnet_observation"
+        },
+        "artifact": {
+          "uri": "agent-artifact.json",
+          "sha256": "17d9a7793864e110c175719fe72ebb8a247a3dfe4e22ccfe6c14f957b09e0298",
+          "byteLength": 1633,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:18:42.525Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "baselinePath": {
+        "kind": "non_agent_baseline",
+        "methodId": "range-direct-reference-historical-replay",
+        "methodVersion": "1.0.0",
+        "implementation": {
+          "uri": "baseline-method.json",
+          "sha256": "6144811b464187d89a53d888a84a237ed69922193cd3529555b82188eb5e8bbb",
+          "byteLength": 1462,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:42:13.990Z",
+          "evidenceClass": "historical_replay"
+        },
+        "usesSameInput": true,
+        "usesAgentOutput": false,
+        "inputIdentity": {
+          "taskId": "range-paid-120868475",
+          "taskInputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+          "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+          "inputSha256": "5cab77af274b22378e608ca3c17e902ae7f504b058c242fb99b62185037c0f1d"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:18:42.525Z",
+          "endedAtUtc": "2026-09-09T11:18:42.525Z",
+          "durationMs": 0
+        },
+        "costs": [
+          {
+            "kind": "compute",
+            "amount": {
+              "units": "448958",
+              "decimals": 0,
+              "symbol": "ns",
+              "chainId": null,
+              "token": null
+            },
+            "provenance": {
+              "uri": "baseline-compute-cost.json",
+              "sha256": "01f61e2f9e0332ccbb415a71fd8a0541effb752fafac22fb8980767a503bfe3a",
+              "byteLength": 323,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:42:13.990Z",
+              "evidenceClass": "historical_replay"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "baseline-observation.json",
+          "sha256": "c4b23ed37f95ca7b210fd0f512e896a3c2fc63930c8a35dfbcd743ccc53b98a5",
+          "byteLength": 2715,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:42:13.990Z",
+          "evidenceClass": "historical_replay"
+        },
+        "artifact": {
+          "uri": "baseline-artifact.json",
+          "sha256": "9b5285fdd8a15ee7a86ae43d71b12853020bcf843b3c542fc35700f64366f1a5",
+          "byteLength": 1940,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:42:13.990Z",
+          "evidenceClass": "historical_replay"
+        }
+      },
+      "evaluation": {
+        "evaluator": {
+          "id": "rangepilot-independent",
+          "version": "1.0.0"
+        },
+        "decisionRule": "lexicographic",
+        "dimensions": [
+          {
+            "id": "contract_integrity",
+            "label": "Closed artifact, task, snapshot, and source binding",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity, provenance, limitations, and observation time match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity, provenance, limitations, and observation time match"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "position_classification",
+            "label": "Independent in-range or out-of-range classification",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "position state and range condition match independent derivation"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "position state and range condition match independent derivation"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "tick_range_feasibility",
+            "label": "Aligned bounded range derivation",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "ticks are independently aligned and bounded"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "ticks are independently aligned and bounded"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "amount_and_budget_math",
+            "label": "Conservative token rounding, availability, and budgets",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "token amounts use conservative rounding and reconcile to budgets"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "token amounts use conservative rounding and reconcile to budgets"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "constraint_refusals",
+            "label": "Gas, slippage, cooldown, and feasibility gates",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "feasibility and refusal gates match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "feasibility and refusal gates match"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "bounded_decision",
+            "label": "Hold, proposal, or refusal outcome",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "hold, proposal, or refusal matches the independent result"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "hold, proposal, or refusal matches the independent result"
+            },
+            "result": "tie"
+          }
+        ]
+      },
+      "comparison": {
+        "winner": "tie",
+        "agentWins": 0,
+        "baselineWins": 0,
+        "ties": 6,
+        "decisiveDimensionId": null
+      }
+    }
+  ]
+}

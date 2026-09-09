@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "knot.rangepilot.advantage-job-evidence/1",
+  "recordedAtUtc": "2026-09-09T11:34:55.952Z",
+  "sourceEvidence": "evidence/testnet/analysis-paid-jobs-1187-1189.json",
+  "network": {
+    "identityChainId": 97,
+    "paymentChainId": 97,
+    "dataChainId": 56,
+    "executionChainId": null,
+    "mode": "analysis",
+    "mainnetWrites": false,
+    "realFunds": false
+  },
+  "dataInput": {
+    "blockNumber": "120868475",
+    "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+    "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+    "capturedAtUtc": "2026-09-09T11:15:09.026Z",
+    "canonicalAtVerification": true
+  },
+  "identity": {
+    "agentId": "2297",
+    "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "seller": "0xE4feD886b4b9062486d4663c6962E14473Bd7320"
+  },
+  "contracts": {
+    "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+  },
+  "payment": {
+    "exactPriceBaseUnits": "100000000000000000",
+    "symbol": "U",
+    "decimals": 18,
+    "mainnetFundsUsed": false
+  },
+  "job": {
+    "id": "1189",
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budgetBaseUnits": "100000000000000000",
+    "expiredAt": "1788955381",
+    "terminalStatus": "COMPLETED",
+    "submittedAt": "1788952728",
+    "deliverable": "0xdc56e86a67d947da546e21c901a9e03eb9cb3889bbe2bb3b480e1257b28bb20d"
+  },
+  "agentLifecycle": {
+    "scope": "Authenticated negotiation start through confirmed on-chain submission block timestamp; settlement challenge-window time is excluded.",
+    "startedAtUtc": "2026-09-09T11:15:24.600Z",
+    "endedAtUtc": "2026-09-09T11:18:48.000Z",
+    "durationMs": 203400,
+    "artifactAssessedAtUtc": "2026-09-09T11:18:42.525Z",
+    "authenticatedNotifyStartedAtUtc": "2026-09-09T11:18:39.179Z",
+    "authenticatedNotifyAcceptedAtUtc": "2026-09-09T11:18:42.560Z"
+  },
+  "signedNegotiation": {
+    "evidenceFile": "signed-negotiation.json",
+    "signedJobDescriptionFile": "signed-job-description.json",
+    "signedJobDescriptionSha256": "2aa5af5b1eda712cdd44da2215884cb87cd132e9d689e13ea8856ab5e3742471",
+    "negotiationHash": "0x5e58ab30b96930d4db552898ee19e2cf4268eb7f446c97049d8db1ab9c9cca51",
+    "decodedRequestHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+    "sellerSignatureValid": true
+  },
+  "transactions": {
+    "create": {
+      "hash": "0x0e73022383b1d9cd58e0804b374278334442fdbe8bd3272abd1c7899ad617bf1",
+      "receiptStatus": "success",
+      "blockNumber": "130013714",
+      "blockHash": "0x7cc0a47d4126d56232c6fbb1a36cf9f8164f734edb653c54e63872caef9dad3c",
+      "timestampUtc": "2026-09-09T11:18:14.000Z",
+      "gasUsed": "2078536",
+      "effectiveGasPriceWei": "1000000000",
+      "walletPaidWei": "2078536000000000"
+    },
+    "register": {
+      "hash": "0x7c93d480741c982f3182060cf93e4d6c7f0cb85ecfa09b4818058ea503f8063a",
+      "receiptStatus": "success",
+      "blockNumber": "130013722",
+      "blockHash": "0xe5794694b5186dec1d8253786e0b322d5ca505868383daaad86569148719bdd7",
+      "timestampUtc": "2026-09-09T11:18:17.000Z",
+      "gasUsed": "278189",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "setBudget": {
+      "hash": "0x59ff75f2381882bdce42bee7f0c39a6e80d92df44b1fa5c7054a63d7e6590a1e",
+      "receiptStatus": "success",
+      "blockNumber": "130013730",
+      "blockHash": "0xf446127f7c5575e4da1b151b7c987432c12612bc480635397cca9ed89bc33c03",
+      "timestampUtc": "2026-09-09T11:18:21.000Z",
+      "gasUsed": "96162",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "fund": {
+      "hash": "0x1e72e81a9fc7553db83ee692cc5b341a1aa763058de0e5dea3dd2fd8fb9fcff8",
+      "receiptStatus": "success",
+      "blockNumber": "130013760",
+      "blockHash": "0xb84024777ed2763300df95077b32091de7539538cb8bb27b5a660c3d4d827e5a",
+      "timestampUtc": "2026-09-09T11:18:34.000Z",
+      "gasUsed": "102529",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "submit": {
+      "hash": "0x570568e8d4e474b652ec19af07d56ee38c27a243697251bf445efb97943d450d",
+      "receiptStatus": "success",
+      "blockNumber": "130013791",
+      "blockHash": "0xff38bef6b7ccdb091a29d1db47286a737f24ea270e2e5b09b4fc4064db5a7d4f",
+      "timestampUtc": "2026-09-09T11:18:48.000Z",
+      "gasUsed": "333420",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "settle": {
+      "hash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+      "receiptStatus": "success",
+      "blockNumber": "130015848",
+      "blockHash": "0x15437b8a1adc86e8a5e6d9e66891f491fddc04f7affaef5279fd15f95d54cd1a",
+      "timestampUtc": "2026-09-09T11:34:14.000Z",
+      "gasUsed": "134731",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0",
+      "paymentTransfer": {
+        "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+        "amountBaseUnits": "100000000000000000"
+      }
+    }
+  },
+  "paymentBalances": {
+    "beforeBlock": "130013713",
+    "buyerBefore": "1600000000000000000",
+    "sellerBefore": "0",
+    "afterBlock": "130015927",
+    "buyerAfter": "1500000000000000000",
+    "sellerAfter": "100000000000000000"
+  },
+  "deliverable": {
+    "url": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a.json",
+    "rawSha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+    "rawByteLength": 2181,
+    "manifestKeccak256": "0xdc56e86a67d947da546e21c901a9e03eb9cb3889bbe2bb3b480e1257b28bb20d",
+    "artifactStatus": "ANALYZED",
+    "artifactReasonCode": "IN_RANGE_HOLD",
+    "artifactDecision": "HOLD"
+  },
+  "verification": {
+    "signedQuote": "passed",
+    "contentAddress": "passed",
+    "onChainManifestHash": "passed",
+    "closedArtifactSchema": "passed",
+    "signedTaskIdentity": "passed",
+    "snapshotCanonicality": "passed",
+    "settlementReceipt": "passed",
+    "terminalState": "COMPLETED"
+  },
+  "limitations": [
+    "The paid flow and settlement used testnet U on BSC testnet; no real funds or mainnet writes were used.",
+    "The service is analysis only and did not rebalance liquidity or execute any position transaction.",
+    "The agent observation covers negotiation through confirmed submission; it excludes the dispute window and settlement wait.",
+    "The non-agent path is a later deterministic historical replay at the retained assessment instant, not a contemporaneous human or live-service baseline.",
+    "The replay compute duration excludes process startup, file loading, upstream snapshot collection, network access, and human work.",
+    "One in-range hold result does not establish repeatability, superior performance, profit, fee capture, or future yield."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "knot.rangepilot.signed-negotiation-evidence/1",
+  "observedAtUtc": "2026-09-09T11:15:24.978Z",
+  "observation": {
+    "startedAtUtc": "2026-09-09T11:15:24.600Z",
+    "endedAtUtc": "2026-09-09T11:15:24.978Z",
+    "reportedDurationMs": 377,
+    "timestampIntervalMs": 378
+  },
+  "identity": {
+    "chainId": 97,
+    "agentId": "2297",
+    "seller": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+    "verifyingContract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+  },
+  "request": {
+    "signedJobDescriptionFile": "signed-job-description.json",
+    "signedJobDescriptionByteLength": 2624,
+    "signedJobDescriptionSha256": "2aa5af5b1eda712cdd44da2215884cb87cd132e9d689e13ea8856ab5e3742471",
+    "transport": "knot-json-deflate-base64url/1",
+    "compressedByteLength": 1389,
+    "decompressedByteLength": 3552,
+    "transportSha256": "76d82be800e61e4ee67a2623040d75c3c4ec35691b74d82f3bc1740ed70f626e",
+    "decodedSha256": "5cab77af274b22378e608ca3c17e902ae7f504b058c242fb99b62185037c0f1d",
+    "decodedKeccak256": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+    "requestHash": "0x1be6bbbde558ee008a7bb2fedb0ea1858311050ff01ff460b78dee06fed86d63"
+  },
+  "response": {
+    "accepted": true,
+    "priceBaseUnits": "100000000000000000",
+    "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "estimatedCompletionSeconds": 600,
+    "negotiatedAtUnix": "1788952524",
+    "quoteExpiresAtUnix": "1788953424",
+    "responseHash": "0xbe7573f389ee78a1f3f69aee2d1287187319af3c8eeeb21d5192d85f8539de6c",
+    "negotiationHash": "0x5e58ab30b96930d4db552898ee19e2cf4268eb7f446c97049d8db1ab9c9cca51",
+    "providerSignature": "0x2fdf4ba8da4d70b51a68a9727e1f3cac39f7dd8ed117e1f152076eb06da3c8295dd809cf4cda66ee5bb608b1abd4c6f0712e963a836ace0f87f9e04ccb965ace1c",
+    "signatureMethod": "eip191"
+  },
+  "verification": {
+    "recoveredSigner": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+    "signatureValid": true,
+    "decodedRequestMatchesInputFile": true,
+    "onChainDescriptionMatches": true,
+    "jobDescriptionParsesWithPinnedSdk": true
+  }
+}
