@@ -1,5 +1,5 @@
 import assert from "node:assert/strict"
-import { after, before, describe, it } from "node:test"
+import { after, before, describe, it, test } from "node:test"
 import { randomUUID } from "node:crypto"
 import {
   ChainActionRepository,
@@ -11,10 +11,15 @@ import {
   migrateDatabase,
 } from "../../packages/db/src/index.ts"
 
-const connectionString = process.env.KNOT_TEST_DATABASE_URL
-const integration = connectionString ? describe : describe.skip
+const connectionString = process.env.KNOT_TEST_DATABASE_URL?.trim()
 const address = "0x1111111111111111111111111111111111111111"
 const digest = `0x${"1".repeat(64)}`
+
+if (!connectionString) {
+  test("PostgreSQL persistence", { skip: "KNOT_TEST_DATABASE_URL is required" }, () => undefined)
+}
+
+const integration = connectionString ? describe : describe.skip
 
 integration("PostgreSQL persistence", () => {
   const pool = createDatabasePool(connectionString as string, { max: 4 })

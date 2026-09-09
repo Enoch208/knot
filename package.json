@@ -11,10 +11,15 @@
   "scripts": {
     "api:start": "node apps/api/src/server.ts",
     "build": "tsc -p tsconfig.json",
+    "build:healthguard": "npm --prefix agents/healthguard/app/agent run build",
     "db:migrate": "node packages/db/src/migrate-cli.ts",
-    "test": "node --test tests/**/*.test.ts tests/services/**/*.test.ts",
+    "test": "npm run test:root && npm run test:healthguard",
+    "test:root": "node --test tests/**/*.test.ts tests/services/**/*.test.ts",
+    "test:healthguard": "npm --prefix agents/healthguard/app/agent test",
+    "test:live:venus": "node --test tests/chain/venus-health.live.ts",
+    "test:integration:postgres": "node --test tests/db/postgres.integration.ts",
     "manifest:verify": "node scripts/verify-manifest.ts",
-    "check": "npm run build && npm test",
+    "check": "npm run build && npm run build:healthguard && npm test",
     "worker:start": "node apps/worker/src/main.ts"
   },
   "dependencies": {
