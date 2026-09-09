@@ -5,7 +5,7 @@ const schema = JSON.parse(readFileSync(schemaPath, "utf8"))
 const values = new Map()
 
 for (const [file, rule] of Object.entries(schema.files)) {
-  const mode = (statSync(file).mode & 0o777).toString(8).padStart(3, "0")
+  const mode = (statSync(file).mode & 0o777).toString(8).padStart(4, "0")
   if (mode !== rule.mode) throw new Error(`${file} mode is ${mode}, expected ${rule.mode}`)
   for (const line of readFileSync(file, "utf8").split(/\r?\n/).filter(Boolean)) {
     const split = line.indexOf("=")
