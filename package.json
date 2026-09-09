@@ -15,6 +15,7 @@
     "build:healthguard": "npm --prefix agents/healthguard/app/agent run build",
     "build:sellers": "node scripts/run-seller-command.ts build",
     "category:parity": "npm run test:parity && npm run build:sellers && npm run test:sellers",
+    "claims:verify": "node scripts/verify-claims.ts",
     "db:migrate": "node packages/db/src/migrate-cli.ts",
     "test": "npm run test:root && npm run test:parity && npm run test:sellers",
     "test:root": "node --test tests/**/*.test.ts tests/services/**/*.test.ts",
@@ -32,7 +33,7 @@
     "shield:measure:build": "node scripts/build-shield-measurement.ts",
     "shield:verify": "node scripts/verify-shield-measurement.ts",
     "shield:evaluate": "node scripts/run-shield-evaluation.ts",
-    "check": "npm run build && npm run test:root && npm run category:parity",
+    "check": "npm run build && npm run claims:verify && npm run test:root && npm run category:parity",
     "worker:start": "node apps/worker/src/main.ts"
   },
   "dependencies": {
