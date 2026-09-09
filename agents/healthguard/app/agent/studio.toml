@@ -28,6 +28,7 @@ signer = "local"
 keystore_dir = "../../.studio/wallets"
 # address = "0x..."   # filled by `bag wallet new`
 address = "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+platform_exposed_addresses = ["0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"]
 
 [llm]
 provider = "openai"
@@ -80,3 +81,19 @@ acknowledged_at = "2026-09-08T09:12:50Z"
 max_per_topup_usd = 1.0
 max_per_day_usd = 3.0
 max_per_month_usd = 15.0
+
+[deploy.platform]
+slug = "healthguard"
+deployment_id = "01M22N9QVXY26V7JKXSM2WF4FS"
+backend = "aws"
+agent_id = "01M22N9QVXCSAQ8YVH1Z9VGNET"
+invoke_url = "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json"
+last_deploy_at = "2026-09-09T08:42:36Z"
+
+[deploy]
+packaging = "zip"
+
+[identity]
+endpoint = "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json"
+registered_at = "2026-09-09T08:43:25.181Z"
+agent_id = 2295
