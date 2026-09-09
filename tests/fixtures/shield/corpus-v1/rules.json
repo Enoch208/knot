@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "knot.shield.rules/1",
+  "policyVersion": "shield-match-v1",
+  "frozenAtUtc": "2026-09-09T10:39:24.000Z",
+  "matchingDimensions": [
+    "ruleId",
+    "category",
+    "affectedAddress",
+    "sourceLocation",
+    "requiredPreconditions"
+  ],
+  "rules": [
+    {
+      "ruleId": "REENTRANCY_EXTERNAL_CALL",
+      "category": "VULNERABILITY",
+      "severityPolicy": [
+        "high",
+        "critical"
+      ]
+    },
+    {
+      "ruleId": "UNCHECKED_LOW_LEVEL_CALL",
+      "category": "VULNERABILITY",
+      "severityPolicy": [
+        "medium",
+        "high"
+      ]
+    },
+    {
+      "ruleId": "CONTROLLED_DELEGATECALL",
+      "category": "CONFIGURATION_RISK",
+      "severityPolicy": [
+        "informational",
+        "low",
+        "medium"
+      ]
+    },
+    {
+      "ruleId": "OWNER_MINT",
+      "category": "PRIVILEGED_CAPABILITY",
+      "severityPolicy": [
+        "informational"
+      ]
+    },
+    {
+      "ruleId": "OWNER_PAUSE",
+      "category": "PRIVILEGED_CAPABILITY",
+      "severityPolicy": [
+        "informational"
+      ]
+    },
+    {
+      "ruleId": "UPGRADE_AUTHORITY",
+      "category": "PRIVILEGED_CAPABILITY",
+      "severityPolicy": [
+        "informational"
+      ]
+    },
+    {
+      "ruleId": "ERC1967_ADMIN",
+      "category": "PRIVILEGED_CAPABILITY",
+      "severityPolicy": [
+        "informational"
+      ]
+    },
+    {
+      "ruleId": "ERC1967_BEACON",
+      "category": "CONFIGURATION_RISK",
+      "severityPolicy": [
+        "informational"
+      ]
+    }
+  ]
+}

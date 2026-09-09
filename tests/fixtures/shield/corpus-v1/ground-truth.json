@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "knot.shield.ground-truth/1",
+  "datasetId": "knot-shield-team-corpus-v1",
+  "rulesFrozenAtUtc": "2026-09-09T10:39:24.000Z",
+  "groundTruthFrozenAtUtc": "2026-09-09T10:41:58.000Z",
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.28",
+    "optimizerEnabled": true,
+    "optimizerRuns": 200,
+    "evmVersion": "paris",
+    "bytecodeHash": "none"
+  },
+  "sourceHashPolicy": {
+    "algorithm": "keccak256",
+    "contentEncoding": "utf8",
+    "bundleEncoding": "JSON.stringify(sourceFiles)",
+    "ordering": "path-ascending"
+  },
+  "rules": {
+    "path": "rules.json",
+    "contentHash": "0x7b67420c060ac95aebcc83fdc1e33ef2b952c8c69e4344091fbccbd93205455e"
+  },
+  "adjudication": {
+    "policyVersion": "shield-match-v1",
+    "assessorRelationship": "All fixtures and labels are team-owned, and adjudication was performed by the KNOT team.",
+    "matchingRule": "rule+category+address+location+preconditions"
+  },
+  "fixtures": [
+    {
+      "fixtureId": "reentrant-vault",
+      "role": "development",
+      "createdAtUtc": "2026-09-09T10:38:00.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0x7845cac5add7a9167af83b542edd77e5dc004dce31298a8fc14aa3674c257a12",
+      "sourceFiles": [
+        {
+          "path": "contracts/ReentrantVault.sol",
+          "contentHash": "0xa10a80c6b35f3dbd797c96876ce1ed487cda7651668fa38c20f419543946ae4e"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000001",
+      "expectedFindings": [
+        {
+          "truthId": "reentrant-vault-external-call-before-accounting",
+          "ruleId": "REENTRANCY_EXTERNAL_CALL",
+          "category": "VULNERABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000001",
+          "sourceLocation": "contracts/ReentrantVault.sol:10-14",
+          "requiredPreconditions": [
+            "the withdrawing recipient is a contract that reenters before its balance is reduced",
+            "the vault holds enough native currency for the repeated withdrawal"
+          ],
+          "allowedSeverities": [
+            "high",
+            "critical"
+          ],
+          "criticalCase": true
+        }
+      ],
+      "negativeControls": []
+    },
+    {
+      "fixtureId": "unchecked-payout",
+      "role": "development",
+      "createdAtUtc": "2026-09-09T10:38:00.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0xe12bfc881a2e84078cc7239aa92e77ebb7b8335c47e1f768399156433c410bfc",
+      "sourceFiles": [
+        {
+          "path": "contracts/UncheckedPayout.sol",
+          "contentHash": "0xc964db340e8ffdfc5b18cb3bb366460172f46a76580777870db8c4874bc5c6cd"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000002",
+      "expectedFindings": [
+        {
+          "truthId": "unchecked-payout-ignores-call-result",
+          "ruleId": "UNCHECKED_LOW_LEVEL_CALL",
+          "category": "VULNERABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000002",
+          "sourceLocation": "contracts/UncheckedPayout.sol:11-14",
+          "requiredPreconditions": [
+            "the owner invokes a target whose low-level call returns false",
+            "downstream accounting treats attemptedPayments as successful execution"
+          ],
+          "allowedSeverities": [
+            "medium",
+            "high"
+          ],
+          "criticalCase": false
+        }
+      ],
+      "negativeControls": []
+    },
+    {
+      "fixtureId": "delegate-router",
+      "role": "development",
+      "createdAtUtc": "2026-09-09T10:38:00.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0xa511398c5184747e5c230506a24a5148899b57d2e12008d3c36b1cf848ae7138",
+      "sourceFiles": [
+        {
+          "path": "contracts/DelegateRouter.sol",
+          "contentHash": "0x3375fbd341bf844c15dfd7a67f9be7b5f33eeb3de0c70aa792ef601fcd3c48f2"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000003",
+      "expectedFindings": [
+        {
+          "truthId": "delegate-router-owner-selects-implementation",
+          "ruleId": "UPGRADE_AUTHORITY",
+          "category": "PRIVILEGED_CAPABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000003",
+          "sourceLocation": "contracts/DelegateRouter.sol:12-15",
+          "requiredPreconditions": [
+            "the owner calls setImplementation"
+          ],
+          "allowedSeverities": [
+            "informational"
+          ],
+          "criticalCase": false
+        },
+        {
+          "truthId": "delegate-router-controlled-delegatecall",
+          "ruleId": "CONTROLLED_DELEGATECALL",
+          "category": "CONFIGURATION_RISK",
+          "affectedAddress": "0x1000000000000000000000000000000000000003",
+          "sourceLocation": "contracts/DelegateRouter.sol:17-25",
+          "requiredPreconditions": [
+            "the configured implementation receives caller-controlled calldata through fallback",
+            "the owner can change the implementation address"
+          ],
+          "allowedSeverities": [
+            "informational",
+            "low",
+            "medium"
+          ],
+          "criticalCase": false
+        }
+      ],
+      "negativeControls": []
+    },
+    {
+      "fixtureId": "owner-controls",
+      "role": "development",
+      "createdAtUtc": "2026-09-09T10:38:00.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0xaf065b6524cef414572ae50603166c75b8326e6e1b512d7f184ccf0f1dfa26cf",
+      "sourceFiles": [
+        {
+          "path": "contracts/OwnerControls.sol",
+          "contentHash": "0x5e98d68abf23c0a9fac34e96389c1a7bbac03ec0dede58c526593b7d79ff7230"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000004",
+      "expectedFindings": [
+        {
+          "truthId": "owner-controls-mint",
+          "ruleId": "OWNER_MINT",
+          "category": "PRIVILEGED_CAPABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000004",
+          "sourceLocation": "contracts/OwnerControls.sol:12-15",
+          "requiredPreconditions": [
+            "the owner calls mint"
+          ],
+          "allowedSeverities": [
+            "informational"
+          ],
+          "criticalCase": false
+        },
+        {
+          "truthId": "owner-controls-pause",
+          "ruleId": "OWNER_PAUSE",
+          "category": "PRIVILEGED_CAPABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000004",
+          "sourceLocation": "contracts/OwnerControls.sol:17-20",
+          "requiredPreconditions": [
+            "the owner calls pause"
+          ],
+          "allowedSeverities": [
+            "informational"
+          ],
+          "criticalCase": false
+        }
+      ],
+      "negativeControls": []
+    },
+    {
+      "fixtureId": "safe-vault",
+      "role": "development",
+      "createdAtUtc": "2026-09-09T10:38:00.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0xd8d842e065eb452dc03f47db6939cb8a6e362910347ac139dff45eee6c6998fe",
+      "sourceFiles": [
+        {
+          "path": "contracts/SafeVault.sol",
+          "contentHash": "0xc4680207835c6d45b7666c52d6583e07bf57516e6ff6f8a7440f8021a244ca13"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000005",
+      "expectedFindings": [],
+      "negativeControls": [
+        {
+          "ruleId": "REENTRANCY_EXTERNAL_CALL",
+          "category": "VULNERABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000005",
+          "sourceLocation": "contracts/SafeVault.sol:11-18",
+          "reason": "The guard is set and the balance is reduced before the checked external call."
+        },
+        {
+          "ruleId": "UNCHECKED_LOW_LEVEL_CALL",
+          "category": "VULNERABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000005",
+          "sourceLocation": "contracts/SafeVault.sol:16-17",
+          "reason": "The low-level call result is required to be true."
+        }
+      ]
+    },
+    {
+      "fixtureId": "transparent-proxy-holdout",
+      "role": "holdout",
+      "createdAtUtc": "2026-09-09T10:39:55.000Z",
+      "relationship": "team-owned",
+      "sourceBundleHash": "0x26c49744421386e1c9164cbafad0d9395e1b4a3a53cb37980fabd2452032deeb",
+      "sourceFiles": [
+        {
+          "path": "contracts/TransparentProxyHoldout.sol",
+          "contentHash": "0x314cbcc7eb218de1a67a705b9b693e98ee3b4d1b74d7dc7340a31369a5f53d6d"
+        }
+      ],
+      "sourceLicense": "MIT",
+      "targetAddress": "0x1000000000000000000000000000000000000006",
+      "expectedFindings": [
+        {
+          "truthId": "transparent-proxy-admin-slot",
+          "ruleId": "ERC1967_ADMIN",
+          "category": "PRIVILEGED_CAPABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000006",
+          "sourceLocation": null,
+          "requiredPreconditions": [
+            "the ERC-1967 admin slot is configured"
+          ],
+          "allowedSeverities": [
+            "informational"
+          ],
+          "criticalCase": false
+        },
+        {
+          "truthId": "transparent-proxy-upgrade-authority",
+          "ruleId": "UPGRADE_AUTHORITY",
+          "category": "PRIVILEGED_CAPABILITY",
+          "affectedAddress": "0x1000000000000000000000000000000000000006",
+          "sourceLocation": "contracts/TransparentProxyHoldout.sol:14-26",
+          "requiredPreconditions": [
+            "the configured ERC-1967 administrator calls upgradeToAndCall"
+          ],
+          "allowedSeverities": [
+            "informational"
+          ],
+          "criticalCase": false
+        },
+        {
+          "truthId": "transparent-proxy-controlled-delegatecall",
+          "ruleId": "CONTROLLED_DELEGATECALL",
+          "category": "CONFIGURATION_RISK",
+          "affectedAddress": "0x1000000000000000000000000000000000000006",
+          "sourceLocation": "contracts/TransparentProxyHoldout.sol:29-38",
+          "requiredPreconditions": [
+            "the proxy forwards caller-controlled calldata to the configured implementation"
+          ],
+          "allowedSeverities": [
+            "informational",
+            "low",
+            "medium"
+          ],
+          "criticalCase": false
+        }
+      ],
+      "negativeControls": [
+        {
+          "ruleId": "ERC1967_BEACON",
+          "category": "CONFIGURATION_RISK",
+          "affectedAddress": "0x1000000000000000000000000000000000000006",
+          "sourceLocation": null,
+          "reason": "The fixture implements direct ERC-1967 implementation and admin slots and has no beacon path."
+        }
+      ]
+    }
+  ]
+}

@@ -21,6 +21,24 @@ function dataset(): ShieldGroundTruthDataset {
     datasetId: "shield-fixtures-v1",
     rulesFrozenAtUtc: "2026-09-09T08:00:00.000Z",
     groundTruthFrozenAtUtc: "2026-09-09T09:00:00.000Z",
+    compiler: {
+      name: "solc",
+      version: "0.8.28",
+      optimizerEnabled: true,
+      optimizerRuns: 200,
+      evmVersion: "paris",
+      bytecodeHash: "none",
+    },
+    sourceHashPolicy: {
+      algorithm: "keccak256",
+      contentEncoding: "utf8",
+      bundleEncoding: "JSON.stringify(sourceFiles)",
+      ordering: "path-ascending",
+    },
+    rules: {
+      path: "rules.json",
+      contentHash: `0x${"f".repeat(64)}`,
+    },
     adjudication: {
       policyVersion: "shield-match-v1",
       assessorRelationship: "fixtures are team-owned and assessor is a team member",
@@ -29,7 +47,10 @@ function dataset(): ShieldGroundTruthDataset {
     fixtures: HASHES.map((sourceBundleHash, index) => ({
       fixtureId: `fixture-${index + 1}`,
       role: index === 5 ? "holdout" : "development",
+      createdAtUtc: index === 5 ? "2026-09-09T08:30:00.000Z" : "2026-09-09T07:00:00.000Z",
+      relationship: "team-owned",
       sourceBundleHash,
+      sourceFiles: [{ path: `contracts/Fixture${index + 1}.sol`, contentHash: sourceBundleHash }],
       sourceLicense: "MIT",
       targetAddress: TARGET,
       expectedFindings: [{
@@ -192,5 +213,9 @@ describe("Shield frozen-fixture evaluation", () => {
     const noHoldout = dataset()
     noHoldout.fixtures.forEach((item) => { item.role = "development" })
     assert.equal(shieldGroundTruthDataset.safeParse(noHoldout).success, false)
+
+    const earlyHoldout = dataset()
+    earlyHoldout.fixtures[5]!.createdAtUtc = "2026-09-09T08:00:00.000Z"
+    assert.equal(shieldGroundTruthDataset.safeParse(earlyHoldout).success, false)
   })
 })

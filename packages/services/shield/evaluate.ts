@@ -6,6 +6,14 @@ import { shieldArtifact, shieldRuleId, type ShieldArtifact } from "./schemas.ts"
 const findingCategory = z.enum(["VULNERABILITY", "PRIVILEGED_CAPABILITY", "CONFIGURATION_RISK"])
 const severity = z.enum(["critical", "high", "medium", "low", "informational"])
 const location = z.string().regex(/^.+:[1-9][0-9]*(-[1-9][0-9]*)?$/)
+const sourcePath = z.string().regex(/^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))(?!.*\\)[A-Za-z0-9._/-]+$/)
+
+const sourceFile = z
+  .object({
+    path: sourcePath,
+    contentHash: hexDigest,
+  })
+  .strict()
 
 const expectedFinding = z
   .object({
@@ -34,7 +42,10 @@ const fixture = z
   .object({
     fixtureId: z.string().min(1),
     role: z.enum(["development", "holdout"]),
+    createdAtUtc: z.iso.datetime(),
+    relationship: z.enum(["team-owned", "external-permissive"]),
     sourceBundleHash: hexDigest,
+    sourceFiles: z.array(sourceFile).min(1),
     sourceLicense: z.string().min(1),
     targetAddress: address,
     expectedFindings: z.array(expectedFinding),
@@ -45,6 +56,13 @@ const fixture = z
     const truthIds = value.expectedFindings.map((item) => item.truthId)
     if (new Set(truthIds).size !== truthIds.length) {
       context.addIssue({ code: "custom", path: ["expectedFindings"], message: "truth IDs must be unique within a fixture" })
+    }
+    const sourcePaths = value.sourceFiles.map((item) => item.path)
+    if (new Set(sourcePaths).size !== sourcePaths.length) {
+      context.addIssue({ code: "custom", path: ["sourceFiles"], message: "source paths must be unique within a fixture" })
+    }
+    if (sourcePaths.some((path, index) => index > 0 && path < sourcePaths[index - 1]!)) {
+      context.addIssue({ code: "custom", path: ["sourceFiles"], message: "source paths must be sorted" })
     }
     for (const finding of value.expectedFindings) {
       if (new Set(finding.allowedSeverities).size !== finding.allowedSeverities.length) {
@@ -59,6 +77,30 @@ export const shieldGroundTruthDataset = z
     datasetId: z.string().min(1),
     rulesFrozenAtUtc: z.iso.datetime(),
     groundTruthFrozenAtUtc: z.iso.datetime(),
+    compiler: z
+      .object({
+        name: z.literal("solc"),
+        version: z.string().regex(/^0\.[0-9]+\.[0-9]+$/),
+        optimizerEnabled: z.boolean(),
+        optimizerRuns: z.number().int().positive(),
+        evmVersion: z.string().min(1),
+        bytecodeHash: z.literal("none"),
+      })
+      .strict(),
+    sourceHashPolicy: z
+      .object({
+        algorithm: z.literal("keccak256"),
+        contentEncoding: z.literal("utf8"),
+        bundleEncoding: z.literal("JSON.stringify(sourceFiles)"),
+        ordering: z.literal("path-ascending"),
+      })
+      .strict(),
+    rules: z
+      .object({
+        path: sourcePath,
+        contentHash: hexDigest,
+      })
+      .strict(),
     adjudication: z
       .object({
         policyVersion: z.string().min(1),
@@ -77,8 +119,18 @@ export const shieldGroundTruthDataset = z
     if (value.fixtures.every((item) => item.role !== "holdout")) {
       context.addIssue({ code: "custom", path: ["fixtures"], message: "at least one frozen holdout fixture is required" })
     }
+    const ruleFreeze = Date.parse(value.rulesFrozenAtUtc)
+    if (value.fixtures.some((item) => item.role === "development" && Date.parse(item.createdAtUtc) > ruleFreeze)) {
+      context.addIssue({ code: "custom", path: ["fixtures"], message: "development fixtures must predate or match the rule freeze" })
+    }
+    if (value.fixtures.some((item) => item.role === "holdout" && Date.parse(item.createdAtUtc) <= ruleFreeze)) {
+      context.addIssue({ code: "custom", path: ["fixtures"], message: "holdout fixtures must postdate the rule freeze" })
+    }
     if (Date.parse(value.groundTruthFrozenAtUtc) < Date.parse(value.rulesFrozenAtUtc)) {
       context.addIssue({ code: "custom", path: ["groundTruthFrozenAtUtc"], message: "ground truth cannot predate the rule freeze" })
+    }
+    if (value.fixtures.some((item) => Date.parse(item.createdAtUtc) > Date.parse(value.groundTruthFrozenAtUtc))) {
+      context.addIssue({ code: "custom", path: ["groundTruthFrozenAtUtc"], message: "ground truth cannot predate a fixture" })
     }
   })
 

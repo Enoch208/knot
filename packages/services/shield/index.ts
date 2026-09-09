@@ -1,5 +1,13 @@
 export { analyzeShield, analyzeShieldText } from "./analyze.ts"
 export {
+  hashShieldSourceBundle,
+  hashShieldSourceContent,
+  shieldRules,
+  ShieldCorpusError,
+  verifyShieldCorpus,
+} from "./corpus.ts"
+export type { ShieldCorpusVerification, ShieldRules } from "./corpus.ts"
+export {
   collectShieldSnapshot,
   ERC1967_ADMIN_SLOT,
   ERC1967_BEACON_SLOT,
