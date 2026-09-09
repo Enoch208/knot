@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "knot.advantage.cost-evidence/1",
+  "kind": "compute",
+  "units": "650000",
+  "decimals": 0,
+  "symbol": "ns",
+  "chainId": null,
+  "token": null,
+  "observedAtUtc": "2026-09-09T11:41:31.794Z",
+  "method": "measured_wall_clock",
+  "sourceRecordId": "gridquant-1187-reference-derive-2026-09-09T11:41:31.788Z"
+}

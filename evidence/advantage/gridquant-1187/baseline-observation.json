@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "knot.advantage.gridquant-baseline-observation/1",
+  "methodId": "gridquant-independent-historical-replay",
+  "producedAtUtc": "2026-09-09T11:41:31.794Z",
+  "replayAsOfUtc": "2026-09-09T11:16:53.445Z",
+  "input": {
+    "requestSha256": "a5080988db61ec66269eecc135c869bf827020bccee616e127d6c50d38209980",
+    "taskSha256": "33a611544787e151a05049cf6aa3cb3fb73ed3f6fdb4c330727487cab55c21b4",
+    "sourceContentHash": "0x5a720fbd778437dd39ae56b8801718a5795ceb270eb2d9427320740ea7e84282",
+    "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117"
+  },
+  "measurement": {
+    "startedAtUtc": "2026-09-09T11:41:31.788Z",
+    "endedAtUtc": "2026-09-09T11:41:31.794Z",
+    "functionElapsedNanoseconds": "650000",
+    "wallClockEnvelopeMilliseconds": 6,
+    "scope": "one deriveGridQuantExpected call; module loading, input parsing, serialization, network access, and human time excluded"
+  },
+  "artifact": {
+    "sha256": "75a2c1e276dad8bf06d6b0f3854e2807171b3084032f7729fd735d134133f5ca",
+    "status": "ANALYZED",
+    "reasonCode": "PLAN"
+  },
+  "evidenceClass": "historical_replay",
+  "limitations": [
+    "the replay used the paid agent's assessment instant so the pinned snapshot and task conditions remain identical",
+    "the actual compute measurement occurred later and is not a contemporaneous user workflow",
+    "the compute timing cannot be compared directly with the paid agent lifecycle timing",
+    "no human completion time, profit, fill, or future performance is measured"
+  ]
+}

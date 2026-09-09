@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "knot.advantage.gridquant-baseline-method/1",
+  "methodId": "gridquant-independent-historical-replay",
+  "methodVersion": "1.0.0",
+  "relationship": "same_operator_reference",
+  "inputPolicy": "exact retained request bytes and exact marketplace TaskSpec bytes",
+  "replayAsOfUtc": "2026-09-09T11:16:53.445Z",
+  "implementation": [
+    {
+      "path": "packages/advantage/src/gridquant-reference.ts",
+      "sha256": "6a3e907696b82f1a7ce99c9943fb681814bbc67efc125ed41cff141e6df130d9"
+    },
+    {
+      "path": "packages/advantage/src/gridquant-math.ts",
+      "sha256": "974490ece5f7dc797dee108f769a3803ad7c378f3181fd42dd1fa036dabb9b04"
+    },
+    {
+      "path": "packages/advantage/src/gridquant.ts",
+      "sha256": "06a114dd594ab7c5c149db9753480ee74cc346342fa5170f3941f06a58b49872"
+    }
+  ],
+  "measurement": {
+    "producedAtUtc": "2026-09-09T11:41:31.794Z",
+    "functionElapsedNanoseconds": "650000",
+    "wallClockEnvelopeMilliseconds": 6,
+    "scope": "one deriveGridQuantExpected call; module loading, input parsing, serialization, network access, and human time excluded"
+  },
+  "evidenceBoundary": {
+    "agent": "testnet_observation",
+    "baseline": "historical_replay",
+    "snapshot": "the exact pinned BSC mainnet input used by the paid agent"
+  },
+  "limitations": [
+    "the replay was produced later than the paid delivery and is not contemporaneous or live",
+    "the measured compute duration is not comparable to the agent lifecycle duration",
+    "the replay excludes network, human, discovery, payment, and settlement time",
+    "the comparison makes no performance, PnL, or future-return claim"
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "knot.advantage.dataset/1",
+  "generatedAtUtc": "2026-09-09T11:41:31.794Z",
+  "experiments": [
+    {
+      "schemaVersion": "knot.advantage.experiment/1",
+      "experimentId": "gridquant-1187",
+      "evidenceClass": "testnet_observation",
+      "task": {
+        "spec": {
+          "category": "grid",
+          "target": {
+            "baseToken": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+            "quoteToken": "0x55d398326f99059ff775485246999027b3197955",
+            "pool": "0x172fcd41e0913e95784454622d1c3724f546f849"
+          },
+          "constraints": {
+            "lowerPriceUnits": "71149",
+            "upperPriceUnits": "78638",
+            "gridCount": 5,
+            "spacing": "arithmetic",
+            "principalUnits": "1000000000000000000000",
+            "orderSizeFloorUnits": "100000000000000000000",
+            "maxInventoryExposureUnits": "10000000000000000000",
+            "slippageBps": 5,
+            "cooldownSeconds": 300,
+            "expiryUtc": "2026-09-09T11:45:08.246Z",
+            "mode": "analysis"
+          },
+          "schemaVersion": "knot.task/1",
+          "taskId": "grid-paid-120868475",
+          "capability": "analysis",
+          "identityChainId": 97,
+          "dataChainId": 56,
+          "paymentChainId": 97,
+          "executionChainId": null,
+          "serviceFeeLimit": {
+            "chainId": 97,
+            "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+            "units": "100000000000000000",
+            "decimals": 18
+          },
+          "managedPrincipal": [],
+          "executionSpendLimits": [],
+          "deadlineUtc": "2026-09-09T12:01:01.000Z",
+          "inputHash": "0x043bcd8d3a62679e2cd88150dd55eb271436e99b8aabbbbe8d3d09e6af807a3f",
+          "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117"
+        },
+        "reference": {
+          "uri": "task.json",
+          "sha256": "33a611544787e151a05049cf6aa3cb3fb73ed3f6fdb4c330727487cab55c21b4",
+          "byteLength": 1084,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:15:24.648Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "input": {
+        "uri": "input.json",
+        "sha256": "a5080988db61ec66269eecc135c869bf827020bccee616e127d6c50d38209980",
+        "byteLength": 2572,
+        "mediaType": "application/json",
+        "observedAtUtc": "2026-09-09T11:15:08.245Z",
+        "evidenceClass": "mainnet_observation"
+      },
+      "agentPath": {
+        "kind": "agent",
+        "agent": {
+          "chainId": 97,
+          "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+          "agentId": "2298"
+        },
+        "operatorRelationship": "same_operator_reference",
+        "methodId": "gridquant-erc8183-permanent",
+        "methodVersion": "1.0.0",
+        "inputIdentity": {
+          "taskId": "grid-paid-120868475",
+          "taskInputHash": "0x043bcd8d3a62679e2cd88150dd55eb271436e99b8aabbbbe8d3d09e6af807a3f",
+          "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117",
+          "inputSha256": "a5080988db61ec66269eecc135c869bf827020bccee616e127d6c50d38209980"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:15:24.382Z",
+          "endedAtUtc": "2026-09-09T11:16:58.000Z",
+          "durationMs": 93618
+        },
+        "costs": [
+          {
+            "kind": "service_fee",
+            "amount": {
+              "units": "100000000000000000",
+              "decimals": 18,
+              "symbol": "U",
+              "chainId": 97,
+              "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565"
+            },
+            "provenance": {
+              "uri": "agent-service-cost.json",
+              "sha256": "e43b0f1faa63927e4ae28dca5a36548d29b691ce1db309ab9b3cd9d031f38748",
+              "byteLength": 395,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:32:17.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          },
+          {
+            "kind": "network_fee",
+            "amount": {
+              "units": "1783262000000000",
+              "decimals": 18,
+              "symbol": "tBNB",
+              "chainId": 97,
+              "token": null
+            },
+            "provenance": {
+              "uri": "agent-network-cost.json",
+              "sha256": "4c0049d3bcd9b71c2d77c2d9ef93c834b094311d933fe228f780d3d50e57500d",
+              "byteLength": 356,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:16:15.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "agent-manifest.json",
+          "sha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152",
+          "byteLength": 3582,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:34:36.935Z",
+          "evidenceClass": "testnet_observation"
+        },
+        "artifact": {
+          "uri": "agent-artifact.json",
+          "sha256": "e56c384e06e9db8a7c0be38b4675aee74bffbc263a1af02e2d1fc6dc5db79277",
+          "byteLength": 2901,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:16:53.445Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "baselinePath": {
+        "kind": "non_agent_baseline",
+        "methodId": "gridquant-independent-historical-replay",
+        "methodVersion": "1.0.0",
+        "implementation": {
+          "uri": "baseline-method.json",
+          "sha256": "14a38af688ff88670c21f539e08583fad7571c46d3932c77c732e2aa43304e9a",
+          "byteLength": 1649,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:41:31.794Z",
+          "evidenceClass": "historical_replay"
+        },
+        "usesSameInput": true,
+        "usesAgentOutput": false,
+        "inputIdentity": {
+          "taskId": "grid-paid-120868475",
+          "taskInputHash": "0x043bcd8d3a62679e2cd88150dd55eb271436e99b8aabbbbe8d3d09e6af807a3f",
+          "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117",
+          "inputSha256": "a5080988db61ec66269eecc135c869bf827020bccee616e127d6c50d38209980"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T11:16:53.445Z",
+          "endedAtUtc": "2026-09-09T11:16:53.451Z",
+          "durationMs": 6
+        },
+        "costs": [
+          {
+            "kind": "compute",
+            "amount": {
+              "units": "650000",
+              "decimals": 0,
+              "symbol": "ns",
+              "chainId": null,
+              "token": null
+            },
+            "provenance": {
+              "uri": "baseline-compute-cost.json",
+              "sha256": "2f40c54105f13a688ed61881fcf989151ad01e0a32c36a15df25dc0894c2c5ae",
+              "byteLength": 331,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T11:41:31.794Z",
+              "evidenceClass": "historical_replay"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "baseline-observation.json",
+          "sha256": "944107500b6f57a58be56d361d325fc9afac0bff17e168868ff64e29c741e44d",
+          "byteLength": 1540,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:41:31.794Z",
+          "evidenceClass": "historical_replay"
+        },
+        "artifact": {
+          "uri": "baseline-artifact.json",
+          "sha256": "75a2c1e276dad8bf06d6b0f3854e2807171b3084032f7729fd735d134133f5ca",
+          "byteLength": 3720,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T11:41:31.794Z",
+          "evidenceClass": "historical_replay"
+        }
+      },
+      "evaluation": {
+        "evaluator": {
+          "id": "gridquant-independent",
+          "version": "1.0.0"
+        },
+        "decisionRule": "lexicographic",
+        "dimensions": [
+          {
+            "id": "contract_integrity",
+            "label": "Closed task, manifest, artifact, snapshot, and source binding",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "manifest content, artifact identity, sources, and observation time match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "manifest content, artifact identity, sources, and observation time match"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "grid_level_math",
+            "label": "Independent arithmetic or geometric level construction",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "grid levels match independent integer construction"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "grid levels match independent integer construction"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "allocation_and_inventory",
+            "label": "Capital allocation, base rounding, and inventory bounds",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "allocation, rounding, capital, and inventory reconcile"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "allocation, rounding, capital, and inventory reconcile"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "fee_and_spread_feasibility",
+            "label": "Pinned gas, fee, slippage, and adjacent-spread checks",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "gas, fees, slippage, and break-even spread reconcile"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "gas, fees, slippage, and break-even spread reconcile"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "bounded_decision",
+            "label": "Plan, no-action, or refusal outcome",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "plan, no-action, or refusal matches"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "plan, no-action, or refusal matches"
+            },
+            "result": "tie"
+          }
+        ]
+      },
+      "comparison": {
+        "winner": "tie",
+        "agentWins": 0,
+        "baselineWins": 0,
+        "ties": 5,
+        "decisiveDimensionId": null
+      }
+    }
+  ]
+}

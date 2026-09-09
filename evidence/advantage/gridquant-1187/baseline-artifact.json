@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "knot.gridquant.artifact/1",
+  "category": "grid",
+  "capability": "analysis",
+  "taskId": "grid-paid-120868475",
+  "status": "ANALYZED",
+  "reasonCode": "PLAN",
+  "assessedAtUtc": "2026-09-09T11:16:53.445Z",
+  "evidence": {
+    "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117",
+    "chainId": 56,
+    "blockNumber": "120868475",
+    "blockHash": "0x03fe680e1d669e4e3f05d7284e342a0867c093bf7c13bc196b75eadd26f6418a",
+    "blockTimestampUtc": "2026-09-09T11:15:03.000Z",
+    "capturedAtUtc": "2026-09-09T11:15:08.245Z",
+    "gasEstimatedAtUtc": "2026-09-09T11:15:08.245Z",
+    "sources": [
+      "bsc://56/pancakeswap-v3/pool/0x172fcd41e0913e95784454622d1c3724f546f849?block=120868475"
+    ]
+  },
+  "timing": {
+    "evaluatedAtUtc": "2026-09-09T11:16:53.445Z",
+    "expiryUtc": "2026-09-09T11:45:08.246Z",
+    "cooldownSeconds": 300,
+    "lastActionUtc": null
+  },
+  "result": {
+    "outcome": "PLAN",
+    "pairId": "bsc:WBNB/USDT:pancakeswap-v3",
+    "spacing": "arithmetic",
+    "levels": [
+      {
+        "index": 0,
+        "priceUnits": "71149",
+        "priceDecimals": 2,
+        "allocatedQuoteUnits": "200000000000000000000",
+        "estimatedBaseUnits": "281100226285682159",
+        "amountRounding": "DOWN"
+      },
+      {
+        "index": 1,
+        "priceUnits": "73021",
+        "priceDecimals": 2,
+        "allocatedQuoteUnits": "200000000000000000000",
+        "estimatedBaseUnits": "273893811369332109",
+        "amountRounding": "DOWN"
+      },
+      {
+        "index": 2,
+        "priceUnits": "74893",
+        "priceDecimals": 2,
+        "allocatedQuoteUnits": "200000000000000000000",
+        "estimatedBaseUnits": "267047654653973001",
+        "amountRounding": "DOWN"
+      },
+      {
+        "index": 3,
+        "priceUnits": "76765",
+        "priceDecimals": 2,
+        "allocatedQuoteUnits": "200000000000000000000",
+        "estimatedBaseUnits": "260535400247508630",
+        "amountRounding": "DOWN"
+      },
+      {
+        "index": 4,
+        "priceUnits": "78638",
+        "priceDecimals": 2,
+        "allocatedQuoteUnits": "200000000000000000000",
+        "estimatedBaseUnits": "254329967700094102",
+        "amountRounding": "DOWN"
+      }
+    ],
+    "capital": {
+      "principalQuoteUnits": "1000000000000000000000",
+      "maximumCommittedQuoteUnits": "1000000000000000000000",
+      "maximumBaseInventoryUnits": "1336907060256590001",
+      "baseInventoryLimitUnits": "10000000000000000000"
+    },
+    "fees": {
+      "buyFeeBps": 1,
+      "sellFeeBps": 1,
+      "slippageBpsPerSwap": 5,
+      "estimatedRoundTripNetworkFeeQuoteUnits": "22468272318856754",
+      "minimumGrossAdjacentSpreadBpsFloor": "243",
+      "conservativeBreakEvenBps": "14"
+    },
+    "parameterChecks": [
+      "SUPPORTED_PAIR",
+      "SUPPORTED_DECIMALS",
+      "ANALYSIS_ONLY",
+      "PINNED_SNAPSHOT",
+      "AUTHORIZED_ANALYSIS",
+      "ORDERED_BOUNDS",
+      "GRID_COUNT",
+      "UNIQUE_LEVELS",
+      "CAPITAL_CONSERVED",
+      "INVENTORY_EXPOSURE",
+      "FEES_BELOW_SPREAD",
+      "COOLDOWN_ELAPSED"
+    ]
+  },
+  "fillPolicy": {
+    "executionModel": "OFFCHAIN_CONDITIONAL_SWAP_ANALYSIS",
+    "ambiguousFill": "NO_FILL",
+    "sameSideRetrigger": "REFUSED",
+    "requiresObservedReceiptForFill": true
+  },
+  "historicalEvaluation": null,
+  "performance": {
+    "realizedPnlQuoteUnits": null,
+    "openInventoryMarkToMarketQuoteUnits": null,
+    "completedTradeCount": 0,
+    "basis": "NO_OBSERVED_FILLS"
+  },
+  "limitations": [
+    "analysis only; no order, swap, or liquidity transaction is signed",
+    "historical performance and future return are unavailable",
+    "a grid level is not a fill without an observed transaction receipt"
+  ]
+}
