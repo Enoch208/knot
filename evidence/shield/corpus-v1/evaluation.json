@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "knot.shield.measured-evaluation/1",
+  "evaluatedAtUtc": "2026-09-09T10:57:29.000Z",
+  "datasetId": "knot-shield-team-corpus-v1",
+  "relationship": "The fixtures, ground truth, and manual signal validation are team-owned and were reviewed by the KNOT team.",
+  "groundTruthSuppliedToAnalyzer": false,
+  "tooling": {
+    "analyzer": {
+      "name": "slither",
+      "version": "0.11.3",
+      "detectorCount": 100
+    },
+    "compiler": {
+      "name": "solc",
+      "version": "0.8.28",
+      "optimizerEnabled": true,
+      "optimizerRuns": 200,
+      "evmVersion": "paris"
+    }
+  },
+  "preservedEvidence": {
+    "capturePath": "evidence/shield/corpus-v1/raw/capture.json",
+    "manualValidationPath": "evidence/shield/corpus-v1/manual-validation.json",
+    "runsPath": "evidence/shield/corpus-v1/runs.json",
+    "runsContentHash": "0x9d9206f275a224722287592a839c0fe1e25e7c319418b1c83aebaaa5b1dbe0c0"
+  },
+  "rawSignalCounts": {
+    "total": 19,
+    "confirmed": 2,
+    "rejected": 2,
+    "outOfScope": 15
+  },
+  "report": {
+    "schemaVersion": "knot.shield.evaluation/1",
+    "datasetId": "knot-shield-team-corpus-v1",
+    "datasetHash": "0x9fc45598b5962e5021a223952c1f9dbfea8ec28e83de2b06c78d38f346a7804c",
+    "completedFixtureCount": 6,
+    "holdoutFixtureCount": 1,
+    "counts": {
+      "truePositives": 2,
+      "falsePositives": 0,
+      "falseNegatives": 7,
+      "criticalCaseMisses": 0,
+      "severityValid": 2,
+      "severityInvalid": 0,
+      "negativeControlViolations": 0
+    },
+    "precision": {
+      "numerator": 2,
+      "denominator": 2,
+      "decimal": "1.000000"
+    },
+    "recall": {
+      "numerator": 2,
+      "denominator": 9,
+      "decimal": "0.222222"
+    },
+    "severityValidity": {
+      "numerator": 2,
+      "denominator": 2,
+      "decimal": "1.000000"
+    },
+    "fixtures": [
+      {
+        "fixtureId": "reentrant-vault",
+        "role": "development",
+        "counts": {
+          "truePositives": 1,
+          "falsePositives": 0,
+          "falseNegatives": 0,
+          "criticalCaseMisses": 0,
+          "severityValid": 1,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [
+          "reentrant-vault-external-call-before-accounting"
+        ],
+        "missedTruthIds": [],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      },
+      {
+        "fixtureId": "unchecked-payout",
+        "role": "development",
+        "counts": {
+          "truePositives": 1,
+          "falsePositives": 0,
+          "falseNegatives": 0,
+          "criticalCaseMisses": 0,
+          "severityValid": 1,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [
+          "unchecked-payout-ignores-call-result"
+        ],
+        "missedTruthIds": [],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      },
+      {
+        "fixtureId": "delegate-router",
+        "role": "development",
+        "counts": {
+          "truePositives": 0,
+          "falsePositives": 0,
+          "falseNegatives": 2,
+          "criticalCaseMisses": 0,
+          "severityValid": 0,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [],
+        "missedTruthIds": [
+          "delegate-router-owner-selects-implementation",
+          "delegate-router-controlled-delegatecall"
+        ],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      },
+      {
+        "fixtureId": "owner-controls",
+        "role": "development",
+        "counts": {
+          "truePositives": 0,
+          "falsePositives": 0,
+          "falseNegatives": 2,
+          "criticalCaseMisses": 0,
+          "severityValid": 0,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [],
+        "missedTruthIds": [
+          "owner-controls-mint",
+          "owner-controls-pause"
+        ],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      },
+      {
+        "fixtureId": "safe-vault",
+        "role": "development",
+        "counts": {
+          "truePositives": 0,
+          "falsePositives": 0,
+          "falseNegatives": 0,
+          "criticalCaseMisses": 0,
+          "severityValid": 0,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [],
+        "missedTruthIds": [],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      },
+      {
+        "fixtureId": "transparent-proxy-holdout",
+        "role": "holdout",
+        "counts": {
+          "truePositives": 0,
+          "falsePositives": 0,
+          "falseNegatives": 3,
+          "criticalCaseMisses": 0,
+          "severityValid": 0,
+          "severityInvalid": 0,
+          "negativeControlViolations": 0
+        },
+        "matchedTruthIds": [],
+        "missedTruthIds": [
+          "transparent-proxy-admin-slot",
+          "transparent-proxy-upgrade-authority",
+          "transparent-proxy-controlled-delegatecall"
+        ],
+        "unsupportedFindingIndexes": [],
+        "negativeControlFindingIndexes": []
+      }
+    ],
+    "limitations": [
+      "results apply only to the frozen fixtures and exact source hashes",
+      "precision and recall on this set do not establish comprehensive audit coverage",
+      "a holdout fixture count is disclosed but is not statistical evidence of generalization"
+    ]
+  },
+  "limitations": [
+    "all six fixtures, labels, and manual validation decisions are team-owned",
+    "manual validation is part of the measured pipeline and rejected mapped analyzer signals before scoring",
+    "the corpus is too small and synthetic to establish comprehensive audit quality",
+    "the holdout result was scored without changing frozen sources, rules, labels, detector mappings, or Shield logic"
+  ]
+}

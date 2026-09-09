@@ -1,0 +1,398 @@
+{
+  "schemaVersion": "knot.shield.manual-validation/1",
+  "datasetId": "knot-shield-team-corpus-v1",
+  "analyzer": {
+    "name": "slither",
+    "version": "0.11.3",
+    "detectorCount": 100
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.28",
+    "optimizerEnabled": true,
+    "optimizerRuns": 200,
+    "evmVersion": "paris"
+  },
+  "assessorRelationship": "The fixtures, ground truth, and manual signal validation are team-owned and were reviewed by the KNOT team.",
+  "groundTruthSuppliedToAnalyzer": false,
+  "fixtures": [
+    {
+      "fixtureId": "reentrant-vault",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/reentrant-vault.json",
+      "targetAddress": "0x1000000000000000000000000000000000000001",
+      "sourceBundleHash": "0x7845cac5add7a9167af83b542edd77e5dc004dce31298a8fc14aa3674c257a12",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "reentrancy-eth",
+          "detectorImpact": "High",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/ReentrantVault.sol",
+          "sourceLines": [10, 11, 12, 13, 14, 15],
+          "rationale": "The recipient receives native currency on line 12 before its balance is reduced on line 14, so a recipient contract can reenter withdraw while the old balance remains visible.",
+          "decision": "confirmed",
+          "mappedRuleId": "REENTRANCY_EXTERNAL_CALL",
+          "finding": {
+            "ruleId": "REENTRANCY_EXTERNAL_CALL",
+            "title": "External value transfer precedes balance reduction",
+            "category": "VULNERABILITY",
+            "severity": "high",
+            "severityRationale": "A recipient contract can repeat withdrawals before the original balance reduction executes.",
+            "confidence": "medium",
+            "affectedAddress": "0x1000000000000000000000000000000000000001",
+            "affectedFunction": "withdraw(uint256)",
+            "sourceLocation": "contracts/ReentrantVault.sol:10-14",
+            "evidence": [
+              {
+                "kind": "static_analyzer",
+                "reference": "slither@0.11.3:reentrancy-eth:contracts/ReentrantVault.sol:10-15",
+                "contentHash": "0x7845cac5add7a9167af83b542edd77e5dc004dce31298a8fc14aa3674c257a12"
+              }
+            ],
+            "preconditions": [
+              "the withdrawing recipient is a contract that reenters before its balance is reduced",
+              "the vault holds enough native currency for the repeated withdrawal"
+            ],
+            "potentialConsequence": "The recipient can withdraw more native currency than its recorded balance.",
+            "mitigation": "Reduce the balance before the external call and enforce a reentrancy guard.",
+            "validationMethod": "Manual control-flow review of the frozen source confirmed the Slither signal."
+          }
+        },
+        {
+          "signalIndex": 1,
+          "detectorCheck": "low-level-calls",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/ReentrantVault.sol",
+          "sourceLines": [10, 11, 12, 13, 14, 15],
+          "rationale": "The generic presence of a low-level call is outside the frozen Shield rule set; its return value is checked on line 13.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [],
+      "limitations": [
+        "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+        "Only Slither signals mapped to the frozen Shield rules were eligible for promotion."
+      ]
+    },
+    {
+      "fixtureId": "unchecked-payout",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/unchecked-payout.json",
+      "targetAddress": "0x1000000000000000000000000000000000000002",
+      "sourceBundleHash": "0xe12bfc881a2e84078cc7239aa92e77ebb7b8335c47e1f768399156433c410bfc",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "unchecked-lowlevel",
+          "detectorImpact": "Medium",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/UncheckedPayout.sol",
+          "sourceLines": [11, 12, 13, 14, 15],
+          "rationale": "The call result on line 13 is discarded while attemptedPayments is incremented on line 14, so failed calls are recorded as attempts without any failure branch.",
+          "decision": "confirmed",
+          "mappedRuleId": "UNCHECKED_LOW_LEVEL_CALL",
+          "finding": {
+            "ruleId": "UNCHECKED_LOW_LEVEL_CALL",
+            "title": "Low-level payout result is ignored",
+            "category": "VULNERABILITY",
+            "severity": "medium",
+            "severityRationale": "A failed target call does not prevent the contract from advancing its payment-attempt accounting.",
+            "confidence": "medium",
+            "affectedAddress": "0x1000000000000000000000000000000000000002",
+            "affectedFunction": "pay(address,bytes)",
+            "sourceLocation": "contracts/UncheckedPayout.sol:11-14",
+            "evidence": [
+              {
+                "kind": "static_analyzer",
+                "reference": "slither@0.11.3:unchecked-lowlevel:contracts/UncheckedPayout.sol:11-15",
+                "contentHash": "0xe12bfc881a2e84078cc7239aa92e77ebb7b8335c47e1f768399156433c410bfc"
+              }
+            ],
+            "preconditions": [
+              "the owner invokes a target whose low-level call returns false",
+              "downstream accounting treats attemptedPayments as successful execution"
+            ],
+            "potentialConsequence": "Off-chain or downstream logic can mistake a failed external call for a completed payment attempt.",
+            "mitigation": "Require the low-level call to succeed before updating accounting.",
+            "validationMethod": "Manual control-flow review of the frozen source confirmed the Slither signal."
+          }
+        },
+        {
+          "signalIndex": 1,
+          "detectorCheck": "missing-zero-check",
+          "detectorImpact": "Low",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/UncheckedPayout.sol",
+          "sourceLines": [11],
+          "rationale": "Zero-address validation is not one of the frozen Shield rule IDs.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 2,
+          "detectorCheck": "reentrancy-benign",
+          "detectorImpact": "Low",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/UncheckedPayout.sol",
+          "sourceLines": [11, 12, 13, 14, 15],
+          "rationale": "A target reentering pay becomes msg.sender and fails the owner check; attemptedPayments is monotonic telemetry and does not gate value or authorization.",
+          "decision": "rejected",
+          "mappedRuleId": "REENTRANCY_EXTERNAL_CALL",
+          "finding": null
+        },
+        {
+          "signalIndex": 3,
+          "detectorCheck": "low-level-calls",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/UncheckedPayout.sol",
+          "sourceLines": [11, 12, 13, 14, 15],
+          "rationale": "The generic low-level-call detector is outside the frozen rules; the mapped unchecked-lowlevel signal already captures the validated defect.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [],
+      "limitations": [
+        "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+        "Manual validation rejected one mapped reentrancy signal and retained the independently supported unchecked-call finding."
+      ]
+    },
+    {
+      "fixtureId": "delegate-router",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/delegate-router.json",
+      "targetAddress": "0x1000000000000000000000000000000000000003",
+      "sourceBundleHash": "0xa511398c5184747e5c230506a24a5148899b57d2e12008d3c36b1cf848ae7138",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "locked-ether",
+          "detectorImpact": "Medium",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/DelegateRouter.sol",
+          "sourceLines": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+          "rationale": "Locked ether is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 1,
+          "detectorCheck": "missing-zero-check",
+          "detectorImpact": "Low",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/DelegateRouter.sol",
+          "sourceLines": [7],
+          "rationale": "Zero-address validation is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 2,
+          "detectorCheck": "missing-zero-check",
+          "detectorImpact": "Low",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/DelegateRouter.sol",
+          "sourceLines": [12],
+          "rationale": "Zero-address validation is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 3,
+          "detectorCheck": "assembly",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/DelegateRouter.sol",
+          "sourceLines": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
+          "rationale": "Assembly use alone is outside the frozen rules and does not identify the configured delegatecall authority as a mapped signal.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 4,
+          "detectorCheck": "immutable-states",
+          "detectorImpact": "Optimization",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/DelegateRouter.sol",
+          "sourceLines": [4],
+          "rationale": "An optimization suggestion is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [
+        {
+          "check": "frozen delegatecall and upgrade-authority coverage",
+          "reason": "Slither produced no signal mapped to CONTROLLED_DELEGATECALL or UPGRADE_AUTHORITY for this source.",
+          "consequence": "The absence of converted findings does not establish that the configured delegatecall or owner-selected implementation is safe."
+        }
+      ],
+      "limitations": [
+        "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+        "Generic assembly findings were not relabeled as frozen Shield rules after the holdout was observed."
+      ]
+    },
+    {
+      "fixtureId": "owner-controls",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/owner-controls.json",
+      "targetAddress": "0x1000000000000000000000000000000000000004",
+      "sourceBundleHash": "0xaf065b6524cef414572ae50603166c75b8326e6e1b512d7f184ccf0f1dfa26cf",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "immutable-states",
+          "detectorImpact": "Optimization",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/OwnerControls.sol",
+          "sourceLines": [4],
+          "rationale": "An optimization suggestion is outside the frozen Shield rule set and does not identify the mint or pause authority.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [
+        {
+          "check": "frozen owner-capability coverage",
+          "reason": "Slither produced no signal mapped to OWNER_MINT or OWNER_PAUSE for this source.",
+          "consequence": "The absence of converted findings does not establish that privileged mint and pause controls are absent."
+        }
+      ],
+      "limitations": [
+        "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+        "No privilege finding was manufactured from the ground-truth labels."
+      ]
+    },
+    {
+      "fixtureId": "safe-vault",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/safe-vault.json",
+      "targetAddress": "0x1000000000000000000000000000000000000005",
+      "sourceBundleHash": "0xd8d842e065eb452dc03f47db6939cb8a6e362910347ac139dff45eee6c6998fe",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "reentrancy-eth",
+          "detectorImpact": "High",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/SafeVault.sol",
+          "sourceLines": [11, 12, 13, 14, 15, 16, 17, 18, 19],
+          "rationale": "The entry guard is set and the balance is reduced before the external call; the only later write clears the guard, and a recipient cannot reenter withdraw while entered is true.",
+          "decision": "rejected",
+          "mappedRuleId": "REENTRANCY_EXTERNAL_CALL",
+          "finding": null
+        },
+        {
+          "signalIndex": 1,
+          "detectorCheck": "low-level-calls",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/SafeVault.sol",
+          "sourceLines": [11, 12, 13, 14, 15, 16, 17, 18, 19],
+          "rationale": "The generic low-level-call detector is outside the frozen rules, and the call result is required to be true on line 17.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [],
+      "limitations": [
+        "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+        "Manual review rejected the mapped reentrancy signal rather than promoting a false positive."
+      ]
+    },
+    {
+      "fixtureId": "transparent-proxy-holdout",
+      "rawOutputPath": "evidence/shield/corpus-v1/raw/transparent-proxy-holdout.json",
+      "targetAddress": "0x1000000000000000000000000000000000000006",
+      "sourceBundleHash": "0x26c49744421386e1c9164cbafad0d9395e1b4a3a53cb37980fabd2452032deeb",
+      "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+      "signals": [
+        {
+          "signalIndex": 0,
+          "detectorCheck": "missing-zero-check",
+          "detectorImpact": "Low",
+          "detectorConfidence": "Medium",
+          "sourcePath": "contracts/TransparentProxyHoldout.sol",
+          "sourceLines": [14],
+          "rationale": "Zero-address validation is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 1,
+          "detectorCheck": "assembly",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/TransparentProxyHoldout.sol",
+          "sourceLines": [7, 8, 9, 10, 11, 12],
+          "rationale": "Assembly use in the constructor is outside the frozen Shield rule set.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 2,
+          "detectorCheck": "assembly",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/TransparentProxyHoldout.sol",
+          "sourceLines": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+          "rationale": "Assembly use in fallback is outside the frozen rules and was not relabeled as CONTROLLED_DELEGATECALL after the holdout was observed.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 3,
+          "detectorCheck": "assembly",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/TransparentProxyHoldout.sol",
+          "sourceLines": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
+          "rationale": "Assembly use in upgradeToAndCall is outside the frozen Shield rule set and does not independently identify upgrade authority.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        },
+        {
+          "signalIndex": 4,
+          "detectorCheck": "low-level-calls",
+          "detectorImpact": "Informational",
+          "detectorConfidence": "High",
+          "sourcePath": "contracts/TransparentProxyHoldout.sol",
+          "sourceLines": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
+          "rationale": "The generic low-level-call detector is outside the frozen rules, and the delegatecall result is required to be true on line 25.",
+          "decision": "out_of_scope",
+          "mappedRuleId": null,
+          "finding": null
+        }
+      ],
+      "unresolved": [
+        {
+          "check": "frozen ERC-1967, delegatecall, and upgrade-authority coverage",
+          "reason": "Slither produced no signal mapped to ERC1967_ADMIN, CONTROLLED_DELEGATECALL, or UPGRADE_AUTHORITY for the holdout.",
+          "consequence": "The absence of converted holdout findings does not establish that proxy administration, delegatecall routing, or upgrade authority is absent."
+        }
+      ],
+      "limitations": [
+        "This is the team-owned holdout created after the rule freeze, not a deployed-contract audit.",
+        "No detector mapping, Shield logic, fixture source, rule, or label was changed after observing the holdout output."
+      ]
+    }
+  ]
+}

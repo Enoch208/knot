@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "knot.shield.runs/1",
+  "datasetId": "knot-shield-team-corpus-v1",
+  "runs": [
+    {
+      "fixtureId": "reentrant-vault",
+      "artifactHash": "0x962fb3b62dd187896b02c8466b49cec2c53092d313b3201adc296de355486148",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/reentrant-vault",
+        "status": "ASSESSED",
+        "reasonCode": null,
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000001"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0x7845cac5add7a9167af83b542edd77e5dc004dce31298a8fc14aa3674c257a12"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [
+          {
+            "ruleId": "REENTRANCY_EXTERNAL_CALL",
+            "title": "External value transfer precedes balance reduction",
+            "category": "VULNERABILITY",
+            "severity": "high",
+            "severityRationale": "A recipient contract can repeat withdrawals before the original balance reduction executes.",
+            "confidence": "medium",
+            "affectedAddress": "0x1000000000000000000000000000000000000001",
+            "affectedFunction": "withdraw(uint256)",
+            "sourceLocation": "contracts/ReentrantVault.sol:10-14",
+            "evidence": [
+              {
+                "kind": "static_analyzer",
+                "reference": "slither@0.11.3:reentrancy-eth:contracts/ReentrantVault.sol:10-15",
+                "contentHash": "0x7845cac5add7a9167af83b542edd77e5dc004dce31298a8fc14aa3674c257a12"
+              }
+            ],
+            "preconditions": [
+              "the withdrawing recipient is a contract that reenters before its balance is reduced",
+              "the vault holds enough native currency for the repeated withdrawal"
+            ],
+            "potentialConsequence": "The recipient can withdraw more native currency than its recorded balance.",
+            "mitigation": "Reduce the balance before the external call and enforce a reentrancy guard.",
+            "validationMethod": "Manual control-flow review of the frozen source confirmed the Slither signal."
+          }
+        ],
+        "negativeControls": [],
+        "unresolved": [],
+        "limitations": [
+          "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+          "Only Slither signals mapped to the frozen Shield rules were eligible for promotion."
+        ]
+      }
+    },
+    {
+      "fixtureId": "unchecked-payout",
+      "artifactHash": "0x45a3daf472d3c2954b97abcaf223f284742e85b8fa54cdb6e1c4ee6736174648",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/unchecked-payout",
+        "status": "ASSESSED",
+        "reasonCode": null,
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000002"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0xe12bfc881a2e84078cc7239aa92e77ebb7b8335c47e1f768399156433c410bfc"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [
+          {
+            "ruleId": "UNCHECKED_LOW_LEVEL_CALL",
+            "title": "Low-level payout result is ignored",
+            "category": "VULNERABILITY",
+            "severity": "medium",
+            "severityRationale": "A failed target call does not prevent the contract from advancing its payment-attempt accounting.",
+            "confidence": "medium",
+            "affectedAddress": "0x1000000000000000000000000000000000000002",
+            "affectedFunction": "pay(address,bytes)",
+            "sourceLocation": "contracts/UncheckedPayout.sol:11-14",
+            "evidence": [
+              {
+                "kind": "static_analyzer",
+                "reference": "slither@0.11.3:unchecked-lowlevel:contracts/UncheckedPayout.sol:11-15",
+                "contentHash": "0xe12bfc881a2e84078cc7239aa92e77ebb7b8335c47e1f768399156433c410bfc"
+              }
+            ],
+            "preconditions": [
+              "the owner invokes a target whose low-level call returns false",
+              "downstream accounting treats attemptedPayments as successful execution"
+            ],
+            "potentialConsequence": "Off-chain or downstream logic can mistake a failed external call for a completed payment attempt.",
+            "mitigation": "Require the low-level call to succeed before updating accounting.",
+            "validationMethod": "Manual control-flow review of the frozen source confirmed the Slither signal."
+          }
+        ],
+        "negativeControls": [
+          {
+            "ruleId": "REENTRANCY_EXTERNAL_CALL",
+            "reason": "A target reentering pay becomes msg.sender and fails the owner check; attemptedPayments is monotonic telemetry and does not gate value or authorization."
+          }
+        ],
+        "unresolved": [],
+        "limitations": [
+          "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+          "Manual validation rejected one mapped reentrancy signal and retained the independently supported unchecked-call finding."
+        ]
+      }
+    },
+    {
+      "fixtureId": "delegate-router",
+      "artifactHash": "0x16ccf94da8ac85ce2b66fba78b5c1452d68efd464d33efe712cfc612dce0e701",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/delegate-router",
+        "status": "PARTIAL",
+        "reasonCode": "UNRESOLVED_CHECKS",
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000003"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0xa511398c5184747e5c230506a24a5148899b57d2e12008d3c36b1cf848ae7138"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [],
+        "negativeControls": [],
+        "unresolved": [
+          {
+            "check": "frozen delegatecall and upgrade-authority coverage",
+            "reason": "Slither produced no signal mapped to CONTROLLED_DELEGATECALL or UPGRADE_AUTHORITY for this source.",
+            "consequence": "The absence of converted findings does not establish that the configured delegatecall or owner-selected implementation is safe."
+          }
+        ],
+        "limitations": [
+          "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+          "Generic assembly findings were not relabeled as frozen Shield rules after the holdout was observed."
+        ]
+      }
+    },
+    {
+      "fixtureId": "owner-controls",
+      "artifactHash": "0x9bdfa8a50db1664c79ecd826320cde7628a660cfca69989c7d81d29c5238374b",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/owner-controls",
+        "status": "PARTIAL",
+        "reasonCode": "UNRESOLVED_CHECKS",
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000004"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0xaf065b6524cef414572ae50603166c75b8326e6e1b512d7f184ccf0f1dfa26cf"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [],
+        "negativeControls": [],
+        "unresolved": [
+          {
+            "check": "frozen owner-capability coverage",
+            "reason": "Slither produced no signal mapped to OWNER_MINT or OWNER_PAUSE for this source.",
+            "consequence": "The absence of converted findings does not establish that privileged mint and pause controls are absent."
+          }
+        ],
+        "limitations": [
+          "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+          "No privilege finding was manufactured from the ground-truth labels."
+        ]
+      }
+    },
+    {
+      "fixtureId": "safe-vault",
+      "artifactHash": "0x78481b1b789c37bcc7597839b68d43e268b63e881993c91841b23d82fc723a18",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/safe-vault",
+        "status": "ASSESSED",
+        "reasonCode": null,
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000005"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0xd8d842e065eb452dc03f47db6939cb8a6e362910347ac139dff45eee6c6998fe"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [],
+        "negativeControls": [
+          {
+            "ruleId": "REENTRANCY_EXTERNAL_CALL",
+            "reason": "The entry guard is set and the balance is reduced before the external call; the only later write clears the guard, and a recipient cannot reenter withdraw while entered is true."
+          }
+        ],
+        "unresolved": [],
+        "limitations": [
+          "This is a team-owned offline Solidity fixture, not a deployed-contract audit.",
+          "Manual review rejected the mapped reentrancy signal rather than promoting a false positive."
+        ]
+      }
+    },
+    {
+      "fixtureId": "transparent-proxy-holdout",
+      "artifactHash": "0xde976e3ca9468adad084397b67aaea9542d02821cdb166462a54b65ca1fc1d58",
+      "artifact": {
+        "schemaVersion": "knot.shield.artifact/1",
+        "category": "security",
+        "capability": "analysis",
+        "taskId": "shield-corpus-v1/transparent-proxy-holdout",
+        "status": "PARTIAL",
+        "reasonCode": "UNRESOLVED_CHECKS",
+        "assessedAtUtc": "2026-09-09T10:57:29.000Z",
+        "target": {
+          "chainId": 56,
+          "address": "0x1000000000000000000000000000000000000006"
+        },
+        "snapshot": {
+          "blockNumber": null,
+          "blockHash": null,
+          "sourceBundleHash": "0x26c49744421386e1c9164cbafad0d9395e1b4a3a53cb37980fabd2452032deeb"
+        },
+        "proxy": {
+          "standard": "ERC-1967",
+          "implementation": null,
+          "admin": null,
+          "beacon": null
+        },
+        "findings": [],
+        "negativeControls": [],
+        "unresolved": [
+          {
+            "check": "frozen ERC-1967, delegatecall, and upgrade-authority coverage",
+            "reason": "Slither produced no signal mapped to ERC1967_ADMIN, CONTROLLED_DELEGATECALL, or UPGRADE_AUTHORITY for the holdout.",
+            "consequence": "The absence of converted holdout findings does not establish that proxy administration, delegatecall routing, or upgrade authority is absent."
+          }
+        ],
+        "limitations": [
+          "This is the team-owned holdout created after the rule freeze, not a deployed-contract audit.",
+          "No detector mapping, Shield logic, fixture source, rule, or label was changed after observing the holdout output."
+        ]
+      }
+    }
+  ]
+}

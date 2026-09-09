@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "knot.shield.slither-capture/1",
+  "analyzer": {
+    "name": "slither",
+    "version": "0.11.3",
+    "detectorCount": 100
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.28",
+    "optimizerEnabled": true,
+    "optimizerRuns": 200,
+    "evmVersion": "paris"
+  },
+  "commandTemplate": "slither contracts/<fixture>.sol --solc <solc-0.8.28> --solc-args '--evm-version paris --optimize --optimize-runs 200' --json <output>",
+  "pathNormalization": "filename_absolute values under the corpus root are replaced with $CORPUS_ROOT/<relative-path>",
+  "outputs": [
+    {
+      "fixtureId": "reentrant-vault",
+      "path": "evidence/shield/corpus-v1/raw/reentrant-vault.json",
+      "contentHash": "0x792a91b09b6ac3493292d1b3bd5ac68228bb501ec9625b4c5b7d1f357a2af80a",
+      "detectorCount": 2,
+      "processExitStatus": 255
+    },
+    {
+      "fixtureId": "unchecked-payout",
+      "path": "evidence/shield/corpus-v1/raw/unchecked-payout.json",
+      "contentHash": "0x73ed0725c9765bd0d4e4eea60e81e4e1bb523741ee93a984708c5000df3d5ebd",
+      "detectorCount": 4,
+      "processExitStatus": 255
+    },
+    {
+      "fixtureId": "delegate-router",
+      "path": "evidence/shield/corpus-v1/raw/delegate-router.json",
+      "contentHash": "0x44416731de5ecc2c379b5e74a2e918af11e7e48bbf1c0d72ec649ead4bd0ee47",
+      "detectorCount": 5,
+      "processExitStatus": 255
+    },
+    {
+      "fixtureId": "owner-controls",
+      "path": "evidence/shield/corpus-v1/raw/owner-controls.json",
+      "contentHash": "0x705d05d859a10194e80fe25c9d0eeee097207eb0f187af6e607eb0bb1a20b6e9",
+      "detectorCount": 1,
+      "processExitStatus": 255
+    },
+    {
+      "fixtureId": "safe-vault",
+      "path": "evidence/shield/corpus-v1/raw/safe-vault.json",
+      "contentHash": "0x9d95ea9275e55a02cdc93a1258d36897bc456df60433a5da555e836325ed27a9",
+      "detectorCount": 2,
+      "processExitStatus": 255
+    },
+    {
+      "fixtureId": "transparent-proxy-holdout",
+      "path": "evidence/shield/corpus-v1/raw/transparent-proxy-holdout.json",
+      "contentHash": "0xf7d59b96c0df28d698334c8db3d1206fd324a458cf5cc3ec4491e507717268fa",
+      "detectorCount": 5,
+      "processExitStatus": 255
+    }
+  ]
+}

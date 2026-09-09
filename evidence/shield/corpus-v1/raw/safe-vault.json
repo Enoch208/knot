@@ -1,0 +1,404 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "reentrancy-eth",
+        "impact": "High",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/SafeVault.sol",
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "start": 218,
+              "length": 337,
+              "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+              "filename_short": "contracts/SafeVault.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "withdraw",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "SafeVault",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 532,
+                  "filename_relative": "contracts/SafeVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                  "filename_short": "contracts/SafeVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/SafeVault.sol",
+              "lines": [
+                16
+              ],
+              "start": 433,
+              "length": 52,
+              "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+              "filename_short": "contracts/SafeVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 218,
+                  "length": 337,
+                  "filename_relative": "contracts/SafeVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                  "filename_short": "contracts/SafeVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "SafeVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 532,
+                      "filename_relative": "contracts/SafeVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                      "filename_short": "contracts/SafeVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/SafeVault.sol",
+              "lines": [
+                18
+              ],
+              "start": 533,
+              "length": 15,
+              "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+              "filename_short": "contracts/SafeVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 24
+            },
+            "type": "node",
+            "name": "entered = false",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 218,
+                  "length": 337,
+                  "filename_relative": "contracts/SafeVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                  "filename_short": "contracts/SafeVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "SafeVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 532,
+                      "filename_relative": "contracts/SafeVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                      "filename_short": "contracts/SafeVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "variables_written",
+              "variable_name": "entered"
+            }
+          }
+        ],
+        "description": "Reentrancy in SafeVault.withdraw(uint256) (contracts/SafeVault.sol#11-19):\n\tExternal calls:\n\t- (success,None) = msg.sender.call{value: amount}() (contracts/SafeVault.sol#16)\n\tState variables written after the call(s):\n\t- entered = false (contracts/SafeVault.sol#18)\n\tSafeVault.entered (contracts/SafeVault.sol#5) can be used in cross function reentrancies:\n\t- SafeVault.withdraw(uint256) (contracts/SafeVault.sol#11-19)\n",
+        "markdown": "Reentrancy in [SafeVault.withdraw(uint256)](contracts/SafeVault.sol#L11-L19):\n\tExternal calls:\n\t- [(success,None) = msg.sender.call{value: amount}()](contracts/SafeVault.sol#L16)\n\tState variables written after the call(s):\n\t- [entered = false](contracts/SafeVault.sol#L18)\n\t[SafeVault.entered](contracts/SafeVault.sol#L5) can be used in cross function reentrancies:\n\t- [SafeVault.withdraw(uint256)](contracts/SafeVault.sol#L11-L19)\n",
+        "first_markdown_element": "contracts/SafeVault.sol#L11-L19",
+        "id": "4b2d3f9fcf7de3d9342f7f6a7c245941b0ef42e812a6e8442955a27476fa9adb"
+      },
+      {
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/SafeVault.sol",
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "start": 218,
+              "length": 337,
+              "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+              "filename_short": "contracts/SafeVault.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "withdraw",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "SafeVault",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 532,
+                  "filename_relative": "contracts/SafeVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                  "filename_short": "contracts/SafeVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/SafeVault.sol",
+              "lines": [
+                16
+              ],
+              "start": 433,
+              "length": 52,
+              "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+              "filename_short": "contracts/SafeVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 218,
+                  "length": 337,
+                  "filename_relative": "contracts/SafeVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                  "filename_short": "contracts/SafeVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "SafeVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 532,
+                      "filename_relative": "contracts/SafeVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/SafeVault.sol",
+                      "filename_short": "contracts/SafeVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in SafeVault.withdraw(uint256) (contracts/SafeVault.sol#11-19):\n\t- (success,None) = msg.sender.call{value: amount}() (contracts/SafeVault.sol#16)\n",
+        "markdown": "Low level call in [SafeVault.withdraw(uint256)](contracts/SafeVault.sol#L11-L19):\n\t- [(success,None) = msg.sender.call{value: amount}()](contracts/SafeVault.sol#L16)\n",
+        "first_markdown_element": "contracts/SafeVault.sol#L11-L19",
+        "id": "ea636f4e2d249383eb0df10f786e3f6779d61d690a9d33f99a61d312137185cc"
+      }
+    ]
+  }
+}

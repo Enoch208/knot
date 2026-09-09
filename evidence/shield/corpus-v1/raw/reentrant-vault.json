@@ -1,0 +1,369 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "reentrancy-eth",
+        "impact": "High",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/ReentrantVault.sol",
+              "lines": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "start": 197,
+              "length": 250,
+              "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+              "filename_short": "contracts/ReentrantVault.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "withdraw",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ReentrantVault",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 424,
+                  "filename_relative": "contracts/ReentrantVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                  "filename_short": "contracts/ReentrantVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/ReentrantVault.sol",
+              "lines": [
+                12
+              ],
+              "start": 310,
+              "length": 52,
+              "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+              "filename_short": "contracts/ReentrantVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 197,
+                  "length": 250,
+                  "filename_relative": "contracts/ReentrantVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                  "filename_short": "contracts/ReentrantVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ReentrantVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 424,
+                      "filename_relative": "contracts/ReentrantVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                      "filename_short": "contracts/ReentrantVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/ReentrantVault.sol",
+              "lines": [
+                14
+              ],
+              "start": 410,
+              "length": 30,
+              "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+              "filename_short": "contracts/ReentrantVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 39
+            },
+            "type": "node",
+            "name": "balances[msg.sender] -= amount",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 197,
+                  "length": 250,
+                  "filename_relative": "contracts/ReentrantVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                  "filename_short": "contracts/ReentrantVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ReentrantVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 424,
+                      "filename_relative": "contracts/ReentrantVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                      "filename_short": "contracts/ReentrantVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "variables_written",
+              "variable_name": "balances"
+            }
+          }
+        ],
+        "description": "Reentrancy in ReentrantVault.withdraw(uint256) (contracts/ReentrantVault.sol#10-15):\n\tExternal calls:\n\t- (success,None) = msg.sender.call{value: amount}() (contracts/ReentrantVault.sol#12)\n\tState variables written after the call(s):\n\t- balances[msg.sender] -= amount (contracts/ReentrantVault.sol#14)\n\tReentrantVault.balances (contracts/ReentrantVault.sol#4) can be used in cross function reentrancies:\n\t- ReentrantVault.balances (contracts/ReentrantVault.sol#4)\n\t- ReentrantVault.deposit() (contracts/ReentrantVault.sol#6-8)\n\t- ReentrantVault.withdraw(uint256) (contracts/ReentrantVault.sol#10-15)\n",
+        "markdown": "Reentrancy in [ReentrantVault.withdraw(uint256)](contracts/ReentrantVault.sol#L10-L15):\n\tExternal calls:\n\t- [(success,None) = msg.sender.call{value: amount}()](contracts/ReentrantVault.sol#L12)\n\tState variables written after the call(s):\n\t- [balances[msg.sender] -= amount](contracts/ReentrantVault.sol#L14)\n\t[ReentrantVault.balances](contracts/ReentrantVault.sol#L4) can be used in cross function reentrancies:\n\t- [ReentrantVault.balances](contracts/ReentrantVault.sol#L4)\n\t- [ReentrantVault.deposit()](contracts/ReentrantVault.sol#L6-L8)\n\t- [ReentrantVault.withdraw(uint256)](contracts/ReentrantVault.sol#L10-L15)\n",
+        "first_markdown_element": "contracts/ReentrantVault.sol#L10-L15",
+        "id": "4f36fd9143c67ec2b6d833f9a36834d5e3098dae6ee51c2603f994825c73c2dc"
+      },
+      {
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/ReentrantVault.sol",
+              "lines": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "start": 197,
+              "length": 250,
+              "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+              "filename_short": "contracts/ReentrantVault.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "withdraw",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ReentrantVault",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 424,
+                  "filename_relative": "contracts/ReentrantVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                  "filename_short": "contracts/ReentrantVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/ReentrantVault.sol",
+              "lines": [
+                12
+              ],
+              "start": 310,
+              "length": 52,
+              "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+              "filename_short": "contracts/ReentrantVault.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 197,
+                  "length": 250,
+                  "filename_relative": "contracts/ReentrantVault.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                  "filename_short": "contracts/ReentrantVault.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ReentrantVault",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 424,
+                      "filename_relative": "contracts/ReentrantVault.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/ReentrantVault.sol",
+                      "filename_short": "contracts/ReentrantVault.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in ReentrantVault.withdraw(uint256) (contracts/ReentrantVault.sol#10-15):\n\t- (success,None) = msg.sender.call{value: amount}() (contracts/ReentrantVault.sol#12)\n",
+        "markdown": "Low level call in [ReentrantVault.withdraw(uint256)](contracts/ReentrantVault.sol#L10-L15):\n\t- [(success,None) = msg.sender.call{value: amount}()](contracts/ReentrantVault.sol#L12)\n",
+        "first_markdown_element": "contracts/ReentrantVault.sol#L10-L15",
+        "id": "ca3c6ff4173e8ee18869b3cf940bc46833226f45eceb742f9115a8dc3d093573"
+      }
+    ]
+  }
+}

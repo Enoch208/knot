@@ -1,0 +1,1159 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                14
+              ],
+              "start": 535,
+              "length": 26,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 31,
+              "ending_column": 57
+            },
+            "type": "variable",
+            "name": "nextImplementation",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "upgradeToAndCall",
+                "source_mapping": {
+                  "start": 509,
+                  "length": 505,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "upgradeToAndCall(address,bytes)"
+                }
+              }
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                24
+              ],
+              "start": 894,
+              "length": 55,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 13,
+              "ending_column": 68
+            },
+            "type": "node",
+            "name": "(success,None) = nextImplementation.delegatecall(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "upgradeToAndCall",
+                "source_mapping": {
+                  "start": 509,
+                  "length": 505,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "upgradeToAndCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "TransparentProxyHoldout.upgradeToAndCall(address,bytes).nextImplementation (contracts/TransparentProxyHoldout.sol#14) lacks a zero-check on :\n\t\t- (success,None) = nextImplementation.delegatecall(data) (contracts/TransparentProxyHoldout.sol#24)\n",
+        "markdown": "[TransparentProxyHoldout.upgradeToAndCall(address,bytes).nextImplementation](contracts/TransparentProxyHoldout.sol#L14) lacks a zero-check on :\n\t\t- [(success,None) = nextImplementation.delegatecall(data)](contracts/TransparentProxyHoldout.sol#L24)\n",
+        "first_markdown_element": "contracts/TransparentProxyHoldout.sol#L14",
+        "id": "a645ca33d9442ad14d4cf52bca10c5702d4c9e99dd540455920249faa04da618"
+      },
+      {
+        "check": "assembly",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "start": 294,
+              "length": 209,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "constructor",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "TransparentProxyHoldout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 1485,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "constructor(address,address)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                8,
+                9,
+                10,
+                11
+              ],
+              "start": 369,
+              "length": 128,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 10
+            },
+            "type": "node",
+            "name": "",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "constructor",
+                "source_mapping": {
+                  "start": 294,
+                  "length": 209,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "constructor(address,address)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "TransparentProxyHoldout.constructor(address,address) (contracts/TransparentProxyHoldout.sol#7-12) uses assembly\n\t- INLINE ASM (contracts/TransparentProxyHoldout.sol#8-11)\n",
+        "markdown": "[TransparentProxyHoldout.constructor(address,address)](contracts/TransparentProxyHoldout.sol#L7-L12) uses assembly\n\t- [INLINE ASM](contracts/TransparentProxyHoldout.sol#L8-L11)\n",
+        "first_markdown_element": "contracts/TransparentProxyHoldout.sol#L7-L12",
+        "id": "4b4978c94c76d04e4f1dd03262ff975252b9c205f33ac1bdc435aa2b7cbb75ee"
+      },
+      {
+        "check": "assembly",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40
+              ],
+              "start": 1020,
+              "length": 488,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "fallback",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "TransparentProxyHoldout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 1485,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "fallback()"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ],
+              "start": 1097,
+              "length": 405,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 10
+            },
+            "type": "node",
+            "name": "",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "fallback",
+                "source_mapping": {
+                  "start": 1020,
+                  "length": 488,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "fallback()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "TransparentProxyHoldout.fallback() (contracts/TransparentProxyHoldout.sol#29-40) uses assembly\n\t- INLINE ASM (contracts/TransparentProxyHoldout.sol#31-39)\n",
+        "markdown": "[TransparentProxyHoldout.fallback()](contracts/TransparentProxyHoldout.sol#L29-L40) uses assembly\n\t- [INLINE ASM](contracts/TransparentProxyHoldout.sol#L31-L39)\n",
+        "first_markdown_element": "contracts/TransparentProxyHoldout.sol#L29-L40",
+        "id": "ad1aaddf1b7ab0820dbac45a9fef9a1d0d3873b0a16977970bf90264695f195d"
+      },
+      {
+        "check": "assembly",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "start": 509,
+              "length": 505,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "upgradeToAndCall",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "TransparentProxyHoldout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 1485,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "upgradeToAndCall(address,bytes)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                16,
+                17,
+                18
+              ],
+              "start": 641,
+              "length": 66,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 10
+            },
+            "type": "node",
+            "name": "",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "upgradeToAndCall",
+                "source_mapping": {
+                  "start": 509,
+                  "length": 505,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "upgradeToAndCall(address,bytes)"
+                }
+              }
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                20,
+                21,
+                22
+              ],
+              "start": 770,
+              "length": 80,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 10
+            },
+            "type": "node",
+            "name": "",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "upgradeToAndCall",
+                "source_mapping": {
+                  "start": 509,
+                  "length": 505,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "upgradeToAndCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "TransparentProxyHoldout.upgradeToAndCall(address,bytes) (contracts/TransparentProxyHoldout.sol#14-27) uses assembly\n\t- INLINE ASM (contracts/TransparentProxyHoldout.sol#16-18)\n\t- INLINE ASM (contracts/TransparentProxyHoldout.sol#20-22)\n",
+        "markdown": "[TransparentProxyHoldout.upgradeToAndCall(address,bytes)](contracts/TransparentProxyHoldout.sol#L14-L27) uses assembly\n\t- [INLINE ASM](contracts/TransparentProxyHoldout.sol#L16-L18)\n\t- [INLINE ASM](contracts/TransparentProxyHoldout.sol#L20-L22)\n",
+        "first_markdown_element": "contracts/TransparentProxyHoldout.sol#L14-L27",
+        "id": "d2a8f5cd5a72497cd53ad5418f1102740eb7f83c82f472b4edeb4d35c353dcb4"
+      },
+      {
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "start": 509,
+              "length": 505,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "upgradeToAndCall",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "TransparentProxyHoldout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 1485,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "upgradeToAndCall(address,bytes)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/TransparentProxyHoldout.sol",
+              "lines": [
+                24
+              ],
+              "start": 894,
+              "length": 55,
+              "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+              "filename_short": "contracts/TransparentProxyHoldout.sol",
+              "is_dependency": false,
+              "starting_column": 13,
+              "ending_column": 68
+            },
+            "type": "node",
+            "name": "(success,None) = nextImplementation.delegatecall(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "upgradeToAndCall",
+                "source_mapping": {
+                  "start": 509,
+                  "length": 505,
+                  "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                  "filename_short": "contracts/TransparentProxyHoldout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "TransparentProxyHoldout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 1485,
+                      "filename_relative": "contracts/TransparentProxyHoldout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/TransparentProxyHoldout.sol",
+                      "filename_short": "contracts/TransparentProxyHoldout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "upgradeToAndCall(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in TransparentProxyHoldout.upgradeToAndCall(address,bytes) (contracts/TransparentProxyHoldout.sol#14-27):\n\t- (success,None) = nextImplementation.delegatecall(data) (contracts/TransparentProxyHoldout.sol#24)\n",
+        "markdown": "Low level call in [TransparentProxyHoldout.upgradeToAndCall(address,bytes)](contracts/TransparentProxyHoldout.sol#L14-L27):\n\t- [(success,None) = nextImplementation.delegatecall(data)](contracts/TransparentProxyHoldout.sol#L24)\n",
+        "first_markdown_element": "contracts/TransparentProxyHoldout.sol#L14-L27",
+        "id": "3e9fc2682d01a7532a1e308296fd3342084465d58a4f95f97690597735c3359c"
+      }
+    ]
+  }
+}

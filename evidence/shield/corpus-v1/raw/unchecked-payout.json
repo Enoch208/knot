@@ -1,0 +1,735 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "unchecked-lowlevel",
+        "impact": "Medium",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "start": 186,
+              "length": 172,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "pay",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "UncheckedPayout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 335,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "pay(address,bytes)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                13
+              ],
+              "start": 302,
+              "length": 17,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 26
+            },
+            "type": "node",
+            "name": "target.call(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "UncheckedPayout.pay(address,bytes) (contracts/UncheckedPayout.sol#11-15) ignores return value by target.call(data) (contracts/UncheckedPayout.sol#13)\n",
+        "markdown": "[UncheckedPayout.pay(address,bytes)](contracts/UncheckedPayout.sol#L11-L15) ignores return value by [target.call(data)](contracts/UncheckedPayout.sol#L13)\n",
+        "first_markdown_element": "contracts/UncheckedPayout.sol#L11-L15",
+        "id": "74c650cb6312a61a1147fb95dd4467b6ce3c6ee8641be30ba90cbb2134db634c"
+      },
+      {
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                11
+              ],
+              "start": 199,
+              "length": 14,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 18,
+              "ending_column": 32
+            },
+            "type": "variable",
+            "name": "target",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                13
+              ],
+              "start": 302,
+              "length": 17,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 26
+            },
+            "type": "node",
+            "name": "target.call(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "UncheckedPayout.pay(address,bytes).target (contracts/UncheckedPayout.sol#11) lacks a zero-check on :\n\t\t- target.call(data) (contracts/UncheckedPayout.sol#13)\n",
+        "markdown": "[UncheckedPayout.pay(address,bytes).target](contracts/UncheckedPayout.sol#L11) lacks a zero-check on :\n\t\t- [target.call(data)](contracts/UncheckedPayout.sol#L13)\n",
+        "first_markdown_element": "contracts/UncheckedPayout.sol#L11",
+        "id": "cf5596b3eec4c9511cedaf33d819bc2b6403a09998990dea0bee5aa0c7d51ccd"
+      },
+      {
+        "check": "reentrancy-benign",
+        "impact": "Low",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "start": 186,
+              "length": 172,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "pay",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "UncheckedPayout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 335,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "pay(address,bytes)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                13
+              ],
+              "start": 302,
+              "length": 17,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 26
+            },
+            "type": "node",
+            "name": "target.call(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                13
+              ],
+              "start": 302,
+              "length": 17,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 26
+            },
+            "type": "node",
+            "name": "target.call(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls_sending_eth"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                14
+              ],
+              "start": 329,
+              "length": 22,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 31
+            },
+            "type": "node",
+            "name": "attemptedPayments += 1",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "variables_written",
+              "variable_name": "attemptedPayments"
+            }
+          }
+        ],
+        "description": "Reentrancy in UncheckedPayout.pay(address,bytes) (contracts/UncheckedPayout.sol#11-15):\n\tExternal calls:\n\t- target.call(data) (contracts/UncheckedPayout.sol#13)\n\tState variables written after the call(s):\n\t- attemptedPayments += 1 (contracts/UncheckedPayout.sol#14)\n",
+        "markdown": "Reentrancy in [UncheckedPayout.pay(address,bytes)](contracts/UncheckedPayout.sol#L11-L15):\n\tExternal calls:\n\t- [target.call(data)](contracts/UncheckedPayout.sol#L13)\n\tState variables written after the call(s):\n\t- [attemptedPayments += 1](contracts/UncheckedPayout.sol#L14)\n",
+        "first_markdown_element": "contracts/UncheckedPayout.sol#L11-L15",
+        "id": "f3887f5159ae43e8b222330acbd5a1df566cb3971ecd73d8b8f13453a7655e97"
+      },
+      {
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "start": 186,
+              "length": 172,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "pay",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "UncheckedPayout",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 335,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "pay(address,bytes)"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/UncheckedPayout.sol",
+              "lines": [
+                13
+              ],
+              "start": 302,
+              "length": 17,
+              "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+              "filename_short": "contracts/UncheckedPayout.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 26
+            },
+            "type": "node",
+            "name": "target.call(data)",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "pay",
+                "source_mapping": {
+                  "start": 186,
+                  "length": 172,
+                  "filename_relative": "contracts/UncheckedPayout.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                  "filename_short": "contracts/UncheckedPayout.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "UncheckedPayout",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 335,
+                      "filename_relative": "contracts/UncheckedPayout.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/UncheckedPayout.sol",
+                      "filename_short": "contracts/UncheckedPayout.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "pay(address,bytes)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in UncheckedPayout.pay(address,bytes) (contracts/UncheckedPayout.sol#11-15):\n\t- target.call(data) (contracts/UncheckedPayout.sol#13)\n",
+        "markdown": "Low level call in [UncheckedPayout.pay(address,bytes)](contracts/UncheckedPayout.sol#L11-L15):\n\t- [target.call(data)](contracts/UncheckedPayout.sol#L13)\n",
+        "first_markdown_element": "contracts/UncheckedPayout.sol#L11-L15",
+        "id": "ea017d04caa88f63f32b9013ab2e52dfbca39689f97f1d47d292cd5ab97b07eb"
+      }
+    ]
+  }
+}

@@ -166,7 +166,7 @@ const ratio = z
   .object({
     numerator: z.number().int().nonnegative(),
     denominator: z.number().int().nonnegative(),
-    decimal: z.string().regex(/^(0|1|0\.[0-9]{6})$/).nullable(),
+    decimal: z.string().regex(/^(0|1|0\.[0-9]{6}|1\.000000)$/).nullable(),
   })
   .strict()
 

@@ -33,6 +33,13 @@ export type {
   ShieldEvaluationRuns,
   ShieldGroundTruthDataset,
 } from "./evaluate.ts"
-export { shieldArtifact, shieldRequest, shieldRuleId } from "./schemas.ts"
+export {
+  buildValidatedShieldRuns,
+  shieldManualValidation,
+  shieldSlitherOutput,
+  ShieldMeasurementError,
+} from "./measurement.ts"
+export type { ShieldManualValidation } from "./measurement.ts"
+export { shieldArtifact, shieldFinding, shieldRequest, shieldRuleId } from "./schemas.ts"
 export type { ShieldArtifact, ShieldFinding, ShieldRequest, ShieldSnapshot } from "./schemas.ts"
 export { createBscShieldReader, ViemShieldChainReader } from "./viem-reader.ts"

@@ -1,0 +1,744 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "locked-ether",
+        "impact": "Medium",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28
+              ],
+              "start": 25,
+              "length": 806,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 1,
+              "ending_column": 2
+            },
+            "type": "contract",
+            "name": "DelegateRouter"
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "start": 418,
+              "length": 411,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "fallback",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DelegateRouter",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 806,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "fallback()"
+            }
+          }
+        ],
+        "description": "Contract locking ether found:\n\tContract DelegateRouter (contracts/DelegateRouter.sol#3-28) has payable functions:\n\t - DelegateRouter.fallback() (contracts/DelegateRouter.sol#17-27)\n\tBut does not have a function to withdraw the ether\n",
+        "markdown": "Contract locking ether found:\n\tContract [DelegateRouter](contracts/DelegateRouter.sol#L3-L28) has payable functions:\n\t - [DelegateRouter.fallback()](contracts/DelegateRouter.sol#L17-L27)\n\tBut does not have a function to withdraw the ether\n",
+        "first_markdown_element": "contracts/DelegateRouter.sol#L3-L28",
+        "id": "1f238c97755e82a314ddfdd7e538d55d37d7fe6b9425670ccd0fb2e79e6fc8e5"
+      },
+      {
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                7
+              ],
+              "start": 129,
+              "length": 29,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 17,
+              "ending_column": 46
+            },
+            "type": "variable",
+            "name": "initialImplementation",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "constructor",
+                "source_mapping": {
+                  "start": 117,
+                  "length": 126,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DelegateRouter",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 806,
+                      "filename_relative": "contracts/DelegateRouter.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                      "filename_short": "contracts/DelegateRouter.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "constructor(address)"
+                }
+              }
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                9
+              ],
+              "start": 198,
+              "length": 38,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 47
+            },
+            "type": "node",
+            "name": "implementation = initialImplementation",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "constructor",
+                "source_mapping": {
+                  "start": 117,
+                  "length": 126,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DelegateRouter",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 806,
+                      "filename_relative": "contracts/DelegateRouter.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                      "filename_short": "contracts/DelegateRouter.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "constructor(address)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DelegateRouter.constructor(address).initialImplementation (contracts/DelegateRouter.sol#7) lacks a zero-check on :\n\t\t- implementation = initialImplementation (contracts/DelegateRouter.sol#9)\n",
+        "markdown": "[DelegateRouter.constructor(address).initialImplementation](contracts/DelegateRouter.sol#L7) lacks a zero-check on :\n\t\t- [implementation = initialImplementation](contracts/DelegateRouter.sol#L9)\n",
+        "first_markdown_element": "contracts/DelegateRouter.sol#L7",
+        "id": "6ae57cf9f09ead1c8cb01913c6c557d27465616775bf62cce0026fedb4868403"
+      },
+      {
+        "check": "missing-zero-check",
+        "impact": "Low",
+        "confidence": "Medium",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                12
+              ],
+              "start": 276,
+              "length": 26,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 32,
+              "ending_column": 58
+            },
+            "type": "variable",
+            "name": "nextImplementation",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "setImplementation",
+                "source_mapping": {
+                  "start": 249,
+                  "length": 163,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DelegateRouter",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 806,
+                      "filename_relative": "contracts/DelegateRouter.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                      "filename_short": "contracts/DelegateRouter.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "setImplementation(address)"
+                }
+              }
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                14
+              ],
+              "start": 370,
+              "length": 35,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 44
+            },
+            "type": "node",
+            "name": "implementation = nextImplementation",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "setImplementation",
+                "source_mapping": {
+                  "start": 249,
+                  "length": 163,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    12,
+                    13,
+                    14,
+                    15
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DelegateRouter",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 806,
+                      "filename_relative": "contracts/DelegateRouter.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                      "filename_short": "contracts/DelegateRouter.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "setImplementation(address)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DelegateRouter.setImplementation(address).nextImplementation (contracts/DelegateRouter.sol#12) lacks a zero-check on :\n\t\t- implementation = nextImplementation (contracts/DelegateRouter.sol#14)\n",
+        "markdown": "[DelegateRouter.setImplementation(address).nextImplementation](contracts/DelegateRouter.sol#L12) lacks a zero-check on :\n\t\t- [implementation = nextImplementation](contracts/DelegateRouter.sol#L14)\n",
+        "first_markdown_element": "contracts/DelegateRouter.sol#L12",
+        "id": "76ff12c6eb2613accb3f72fc5590f8518a5e38dfba6d023a83a9e4c9daa740ff"
+      },
+      {
+        "check": "assembly",
+        "impact": "Informational",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "start": 418,
+              "length": 411,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type": "function",
+            "name": "fallback",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DelegateRouter",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 806,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "fallback()"
+            }
+          },
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26
+              ],
+              "start": 497,
+              "length": 326,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 9,
+              "ending_column": 10
+            },
+            "type": "node",
+            "name": "",
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "fallback",
+                "source_mapping": {
+                  "start": 418,
+                  "length": 411,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "DelegateRouter",
+                    "source_mapping": {
+                      "start": 25,
+                      "length": 806,
+                      "filename_relative": "contracts/DelegateRouter.sol",
+                      "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                      "filename_short": "contracts/DelegateRouter.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "fallback()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "DelegateRouter.fallback() (contracts/DelegateRouter.sol#17-27) uses assembly\n\t- INLINE ASM (contracts/DelegateRouter.sol#19-26)\n",
+        "markdown": "[DelegateRouter.fallback()](contracts/DelegateRouter.sol#L17-L27) uses assembly\n\t- [INLINE ASM](contracts/DelegateRouter.sol#L19-L26)\n",
+        "first_markdown_element": "contracts/DelegateRouter.sol#L17-L27",
+        "id": "d5bb453d37399b3d0e3464caedbd04f496711dc6a8d7d3d2f510f35aea518102"
+      },
+      {
+        "check": "immutable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/DelegateRouter.sol",
+              "lines": [
+                4
+              ],
+              "start": 55,
+              "length": 20,
+              "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+              "filename_short": "contracts/DelegateRouter.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 25
+            },
+            "type": "variable",
+            "name": "owner",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "DelegateRouter",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 806,
+                  "filename_relative": "contracts/DelegateRouter.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/DelegateRouter.sol",
+                  "filename_short": "contracts/DelegateRouter.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              }
+            }
+          }
+        ],
+        "description": "DelegateRouter.owner (contracts/DelegateRouter.sol#4) should be immutable \n",
+        "markdown": "[DelegateRouter.owner](contracts/DelegateRouter.sol#L4) should be immutable \n",
+        "first_markdown_element": "contracts/DelegateRouter.sol#L4",
+        "id": "acd8bb9f7d67964d584070fb3e1fe2b5f2ef59a2f36e5bd2da359d9b73244be8"
+      }
+    ]
+  }
+}

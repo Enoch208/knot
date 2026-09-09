@@ -1,0 +1,73 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "check": "immutable-states",
+        "impact": "Optimization",
+        "confidence": "High",
+        "elements": [
+          {
+            "source_mapping": {
+              "filename_relative": "contracts/OwnerControls.sol",
+              "lines": [
+                4
+              ],
+              "start": 54,
+              "length": 20,
+              "filename_absolute": "$CORPUS_ROOT/contracts/OwnerControls.sol",
+              "filename_short": "contracts/OwnerControls.sol",
+              "is_dependency": false,
+              "starting_column": 5,
+              "ending_column": 25
+            },
+            "type": "variable",
+            "name": "owner",
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "OwnerControls",
+                "source_mapping": {
+                  "start": 25,
+                  "length": 446,
+                  "filename_relative": "contracts/OwnerControls.sol",
+                  "filename_absolute": "$CORPUS_ROOT/contracts/OwnerControls.sol",
+                  "filename_short": "contracts/OwnerControls.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              }
+            }
+          }
+        ],
+        "description": "OwnerControls.owner (contracts/OwnerControls.sol#4) should be immutable \n",
+        "markdown": "[OwnerControls.owner](contracts/OwnerControls.sol#L4) should be immutable \n",
+        "first_markdown_element": "contracts/OwnerControls.sol#L4",
+        "id": "45955e834b60ad7d86841833b40a209960be0fff4755f41583bbfb74d4341bb9"
+      }
+    ]
+  }
+}

@@ -121,7 +121,7 @@ const evidence = z
   })
   .strict()
 
-const finding = z
+export const shieldFinding = z
   .object({
     ruleId: shieldRuleId,
     title: z.string().min(1),
@@ -173,7 +173,7 @@ export const shieldArtifact = z
         beacon: address.nullable(),
       })
       .strict(),
-    findings: z.array(finding),
+    findings: z.array(shieldFinding),
     negativeControls: z.array(z.object({ ruleId: shieldRuleId, reason: z.string().min(1) }).strict()),
     unresolved: z.array(unresolved),
     limitations: z.array(z.string().min(1)).min(1),
