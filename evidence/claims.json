@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T09:57:00.000Z",
+  "updatedAtUtc": "2026-09-09T10:06:54.000Z",
   "revision": {
-    "baseCommit": "7cfae39aa57f67b367e7e8babcd594f9f6f4fbfe",
+    "baseCommit": "125da8070f083a8ba8cf696c3491cd8330364431",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -75,21 +75,22 @@
     },
     {
       "id": "healthguard-card-live",
-      "claim": "The deployed HealthGuard public agent card returned HTTP 200 and advertised negotiate and notify_funded operations.",
+      "claim": "The self-hosted HealthGuard public agent card returned HTTP 200, advertised negotiate and notify_funded operations plus OAuth client-credentials authentication, rejected unauthenticated invocation, and accepted an authenticated signed-quote request.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim"
       ],
       "scope": {
         "service": "healthguard-agent",
-        "deploymentId": "01M22QKP0FKW96E9V539D3TF9P",
-        "runtimeAgentId": "01M22N9QVXCSAQ8YVH1Z9VGNET"
+        "hosting": "self-hosted VPS",
+        "endpoint": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+        "deploymentRevision": "841c510"
       },
-      "observedAtUtc": "2026-09-09T09:28:26Z",
+      "observedAtUtc": "2026-09-09T10:04:29Z",
       "sources": [
         {
           "type": "https_probe",
-          "url": "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json",
+          "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
           "httpStatus": 200,
           "observation": {
             "name": "healthguard-agent",
@@ -103,16 +104,20 @@
         {
           "type": "repository_file",
           "path": "agents/healthguard/app/agent/studio.toml"
+        },
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/testnet/healthguard-agent-2295.json"
         }
       ],
       "limitations": [
-        "The deployment is a temporary trial; continuing availability is not claimed.",
-        "A reachable agent card does not demonstrate authenticated delivery or an on-chain paid job."
+        "These availability and authentication observations cover one verification window and are not a long-term uptime measurement.",
+        "The authenticated smoke proves signed quote issuance; completed and recovered paid jobs are recorded separately."
       ]
     },
     {
       "id": "healthguard-erc8004-registration",
-      "claim": "HealthGuard is registered as ERC-8004 agent 2295 on BSC testnet for seller address 0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389.",
+      "claim": "KNOT HealthGuard is registered as ERC-8004 agent 2295 on BSC testnet for seller address 0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389, with analysis-only metadata pointing to the self-hosted agent card.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation"
@@ -123,7 +128,7 @@
         "agentId": "2295",
         "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
       },
-      "observedAtUtc": "2026-09-09T08:43:25.181Z",
+      "observedAtUtc": "2026-09-09T10:05:33.000Z",
       "sources": [
         {
           "type": "testnet_identity_read",
@@ -137,11 +142,22 @@
         {
           "type": "repository_file",
           "path": "agents/healthguard/app/agent/studio.toml"
+        },
+        {
+          "type": "testnet_transaction",
+          "transactionHash": "0xe088ee98104bc577093a9ad2d6f1131138b84e87436f895da9f7a967cce12c9e",
+          "url": "https://testnet.bscscan.com/tx/0xe088ee98104bc577093a9ad2d6f1131138b84e87436f895da9f7a967cce12c9e",
+          "receiptStatus": "success",
+          "blockNumber": "130004023"
+        },
+        {
+          "type": "deployment_evidence",
+          "path": "evidence/testnet/healthguard-agent-2295.json"
         }
       ],
       "limitations": [
         "This is a testnet identity, not a mainnet registration.",
-        "Registration does not prove a completed commercial job."
+        "Registration and metadata do not by themselves prove reliability or a completed commercial job."
       ]
     },
     {

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "knot.testnet-agent-evidence/1",
+  "recordedAtUtc": "2026-09-09T10:06:54.000Z",
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "observationBlockNumber": "130004023",
+    "observationBlockHash": "0xdcd6eb737276bce46385dd3ed1226bc9ab21aa82f139a2a7f2a0877d09ff8c01",
+    "observationBlockTimestampUtc": "2026-09-09T10:05:33.000Z",
+    "rpcUsed": "https://bsc-testnet-rpc.publicnode.com"
+  },
+  "identity": {
+    "agentId": "2295",
+    "owner": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "name": "KNOT HealthGuard",
+    "description": "KNOT-operated lending health analysis agent. Reads pinned Venus Protocol positions on BNB Chain mainnet, returns typed evidence with explicit no-action outcomes, and accepts service payment through ERC-8183 on BSC testnet. Analysis only; it cannot execute lending transactions.",
+    "service": {
+      "name": "A2A",
+      "endpoint": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+      "version": "0.3.0"
+    },
+    "registration": "eip155:97:0x8004A818BFB912233c491871b3d84c89A494BD9e"
+  },
+  "metadataUpdate": {
+    "transactionHash": "0xe088ee98104bc577093a9ad2d6f1131138b84e87436f895da9f7a967cce12c9e",
+    "receiptStatus": "success",
+    "blockNumber": "130004023",
+    "blockHash": "0xdcd6eb737276bce46385dd3ed1226bc9ab21aa82f139a2a7f2a0877d09ff8c01",
+    "timestampUtc": "2026-09-09T10:05:33.000Z",
+    "from": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "to": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "gasUsed": "370509",
+    "effectiveGasPriceWei": "0",
+    "walletPaidWei": "0"
+  },
+  "endpointVerification": {
+    "observedAtUtc": "2026-09-09T10:04:29.000Z",
+    "agentCardHttpStatus": 200,
+    "agentCardName": "healthguard-agent",
+    "operationIds": [
+      "negotiate",
+      "notify_funded"
+    ],
+    "oauthTokenUrl": "https://knot-health.truematchx.com/oauth/token",
+    "oauthScope": "knot:healthguard:invoke",
+    "unauthenticatedInvocationHttpStatus": 401,
+    "invalidClientHttpStatus": 401,
+    "authenticatedTokenHttpStatus": 200,
+    "authenticatedNegotiation": "accepted",
+    "providerSignaturePresent": true,
+    "artifactOriginHealthHttpStatus": 200
+  },
+  "verification": {
+    "directRegistryDecode": "passed",
+    "ownerMatchesTransactionSender": true,
+    "serviceEndpointMatchesPublicCard": true,
+    "metadataStatesAnalysisOnly": true,
+    "deploymentRevision": "841c510"
+  },
+  "limitations": [
+    "This identity and commerce surface are on BSC testnet; no mainnet registration or payment is claimed.",
+    "Endpoint checks cover one verification window and are not an uptime or latency benchmark.",
+    "Registry metadata is a publisher statement; paid-job evidence is recorded separately."
+  ]
+}
