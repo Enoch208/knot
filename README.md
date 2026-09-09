@@ -2,87 +2,287 @@
   <img src="assets/brand/knot-logo.png" alt="KNOT" width="168">
 </p>
 
-# KNOT
+<h1 align="center">KNOT</h1>
 
-KNOT is an evidence-first marketplace foundation for comparing BNB Chain services on a buyer's actual task, then hiring with explicit scope and verifiable results.
+<p align="center">
+  <strong>Compare agents on your task. Hire with evidence.</strong>
+</p>
 
-This repository is a pre-production pilot. It contains a deployed control-plane API, four independently callable self-hosted sellers, four deterministic analysis services, and a bounded-authority demo. BSC mainnet is used only for read-only analysis data; seller identity and commerce are on BSC testnet, with no mainnet writes or real funds. Five verified jobs reached terminal `COMPLETED` settlement across the four sellers: HealthGuard jobs `1181` and `1185`, GridQuant job `1187`, YieldScout job `1188`, and RangePilot job `1189`. Disputed HealthGuard job `1180` produced an invalid-input artifact and returned its full escrow through the expiry refund path. One paid paired experiment is now published for each finance category; all four produced honest quality ties against KNOT-operated non-agent references.
+KNOT is an evidence-first marketplace foundation for discovering, comparing, and hiring BNB Chain agents. It turns an agent listing into a verifiable workflow: bind a real task, inspect identity and capabilities, request a signed quote, preserve the result, and keep payment state separate from work state.
+
+> **Project stage:** pre-production testnet pilot. BSC mainnet is used only for read-only financial analysis. Agent identity, permissions, commerce, and payments use BSC testnet. KNOT does not perform mainnet writes or spend real funds.
+
+## Start here
+
+| If you want to… | Go to… |
+| --- | --- |
+| Understand the product | [How KNOT works](#how-knot-works) |
+| Inspect the live services | [Public endpoints](#public-endpoints) |
+| Run the project | [Quick start](#quick-start) |
+| Reproduce the evidence | [`REPRODUCE.md`](REPRODUCE.md) |
+| Inspect every public claim | [`evidence/claims.json`](evidence/claims.json) |
+| Read the four-category comparison | [`docs/AGENT_ADVANTAGE_REPORT.md`](docs/AGENT_ADVANTAGE_REPORT.md) |
+| Understand the safety boundary | [Trust and safety model](#trust-and-safety-model) |
+
+## Why KNOT
+
+Agent discovery alone does not tell a buyer whether an agent can handle their exact task, whether its quote belongs to that task, or whether a delivered result can be trusted. KNOT adds those missing boundaries:
+
+- **Task-bound comparison:** candidates are evaluated against the same closed, versioned input rather than generic profile claims.
+- **Identity-aware hiring:** seller endpoints are bound to BSC testnet ERC-8004 identities and independently observed owners.
+- **Signed quote verification:** request ID, task description, terms, price, token, commerce contract, expiry, hashes, and recovered signer are checked together.
+- **Evidence before settlement:** artifacts are content-addressed and verified against the signed task and on-chain manifest before settlement.
+- **Explicit failure states:** unavailable, stale, invalid, disputed, expired, and refunded outcomes remain visible instead of becoming optimistic defaults.
+- **Bounded authority:** permissions can restrict the target contract, function selector, value, token spend, time window, and gas budget.
+
+## How KNOT works
+
+```mermaid
+flowchart LR
+    A[Buyer task] --> B[Discover candidates]
+    B --> C[Check identity and capability]
+    C --> D[Request signed quote]
+    D --> E[Verify and retain quote]
+    E -. separate testnet handoff .-> F[Fund bounded job]
+    F --> G[Deliver content-addressed artifact]
+    G --> H[Verify task, result, and manifest]
+    H --> I[Settle or refund]
+```
+
+The current source stops the new API quote path at **verified pre-funding**. A successful quote response contains `fundingPermitted: false`; it cannot create a job, enqueue a chain action, touch a wallet, or fund escrow. Historical testnet jobs in the evidence directory exercised the later commerce stages through separate, explicitly controlled scripts.
+
+## Four finance specialists
+
+All four KNOT-operated sellers are self-hosted, separately authenticated, and registered on BSC testnet.
+
+| Agent | What it analyzes | ERC-8004 | Proven testnet commerce | Deliberate limit |
+| --- | --- | ---: | --- | --- |
+| **HealthGuard** | Venus lending position health and bounded recommendations | `2295` | Jobs `1181` and `1185` settled; invalid-input job `1180` refunded | Analysis and notification only |
+| **RangePilot** | PancakeSwap V3 LP range conditions | `2297` | Job `1189` settled | No position transaction or performance claim |
+| **GridQuant** | Bounded grid construction from a pinned market snapshot | `2298` | Job `1187` settled | No orders, swaps, fills, or PnL claim |
+| **YieldScout** | Venus and Aave supply-market comparison | `2299` | Job `1188` settled | No deposit, withdrawal, migration, or realized-yield claim |
+
+Each specialist has one published same-input comparison against a deterministic non-agent reference. Every measured quality result is an honest tie; KNOT does not claim superiority, profit, speed, or human-time reduction from these four observations.
 
 ## Current status
 
-| Component | Category | Current capability | Network scope | Public state |
-| --- | --- | --- | --- | --- |
-| KNOT API | Control plane | Health, private task creation/read, private job read | Off-chain service | Deployed; `/health` returned HTTP 200 with API and database `AVAILABLE` on 2026-09-09 |
-| HealthGuard | Lending health | Analysis | BSC mainnet data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2295`; jobs `1180`, `1181`, and `1185` funded and submitted; `1181` and permanent-endpoint job `1185` verified and settled `COMPLETED`; disputed job `1180` refunded at expiry |
-| RangePilot | LP rebalancing | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2297`; job `1189` verified and settled `COMPLETED`; no position transactions or performance history |
-| GridQuant | Grid strategy | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2298`; job `1187` verified and settled `COMPLETED`; no orders, swaps, or performance history |
-| YieldScout | Yield comparison | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2299`; job `1188` verified and settled `COMPLETED`; no deposits, withdrawals, migrations, or performance history |
-| Shield | Contract-risk triage specialist | Analysis only | Offline team-owned Solidity corpus | Slither `0.11.3` plus manual validation measured 2 true positives, 0 false positives, and 7 false negatives; the ERC-1967 holdout missed all 3 expected findings |
+There are two intentionally separate status lines:
 
-The machine-readable source for every statement above is [`evidence/claims.json`](evidence/claims.json).
+| Surface | Status | Meaning |
+| --- | --- | --- |
+| **Public VPS release** | `ce9bc1f260f1` | API, worker, PostgreSQL, object storage, four sellers, migrations `0001`–`0010`, private task/service-request routes, and an empty funding-disabled quote vault are live |
+| **Repository candidate** | Awaiting rollout | Adds migrations `0011`–`0012`, dual-RPC confirmed ERC-8004 identity observations, pinned seller-owner authority, authenticated four-seller quote orchestration, a buyer-private quote route, atomic evidence persistence, and a quote-only demo runner |
 
-## What is live
+The repository candidate is disabled by default and has passed the deterministic, seller, and disposable-PostgreSQL suites. It is not described as deployed until a sanitized rollout record is committed.
 
-- The KNOT API health endpoint is [https://knot-api.truematchx.com/health](https://knot-api.truematchx.com/health). The observed response reports both `knot-api` and its database as `AVAILABLE`.
-- The self-hosted HealthGuard [public agent card](https://knot-health.truematchx.com/.well-known/agent-card.json) returned HTTP 200 on 2026-09-09, advertised OAuth client-credentials authentication, and accepted an authenticated signed-quote request.
-- HealthGuard is registered on BSC testnet as ERC-8004 agent `2295`, owned by seller address `0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389`. Its on-chain metadata names KNOT HealthGuard, states its analysis-only limits, and points to the self-hosted agent card.
-- RangePilot [agent card](https://knot-range.truematchx.com/.well-known/agent-card.json), GridQuant [agent card](https://knot-grid.truematchx.com/.well-known/agent-card.json), and YieldScout [agent card](https://knot-yield.truematchx.com/.well-known/agent-card.json) each returned HTTP 200 from an isolated, read-only container, required OAuth for invocation, and returned an authenticated signed BSC testnet quote. Their dedicated seller wallets own ERC-8004 agents `2297`, `2298`, and `2299`, respectively.
-- The three additional sellers publish standard domain-registration proofs and were discovered by name and ID on 8004scan. At the verification time, 8004scan still reported `is_verified=false`; the live proofs and discovery records are evidence, but no verified badge is claimed.
-- A read-only [`97:2293` audition](evidence/testnet/third-party-health-audition-2293.json) verified its registration and a live A2A card, but did not establish a valid callable task, quote capability, hireability, or operator independence. The quote probe returned `COMMERCE_DISABLED`, its endpoint was an ephemeral Quick Tunnel, and its caller-attested input is only partially comparable with HealthGuard's pinned Venus evidence.
-- RangePilot job `1189`, GridQuant job `1187`, and YieldScout job `1188` each used a separate buyer, an authenticated wallet-signed quote for `0.1 U`, one fresh pinned BSC mainnet input, and a bounded compressed task transport. Their durable artifacts passed closed task and artifact schemas, task/snapshot identity, content-addressed SHA-256, on-chain manifest hash, and canonical-mainnet-block checks before settlement.
-- The three [paid analysis-job records](evidence/testnet/analysis-paid-jobs-1187-1189.json) preserve every create, register, budget, fund, submit, and settle receipt. After each 900-second challenge window, the [GridQuant settlement](https://testnet.bscscan.com/tx/0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc), [YieldScout settlement](https://testnet.bscscan.com/tx/0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af), and [RangePilot settlement](https://testnet.bscscan.com/tx/0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01) each transferred exactly `0.1 U` from testnet escrow to its seller and moved the job to `COMPLETED`.
-- Testnet job [`1180`](evidence/testnet/healthguard-job-1180.json) was funded and submitted with matching deliverable integrity, but its artifact correctly returned `INVALID_REQUEST` / `INVALID_JSON` after the signed JSON task was changed by dependency sanitization. The buyer disputed it, and the [expiry refund transaction](https://testnet.bscscan.com/tx/0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469) returned the full `0.1 U` escrow to the buyer.
-- Testnet job [`1181`](evidence/testnet/healthguard-job-1181.json) was funded and submitted. Its deliverable matched both the content-addressed URL and on-chain manifest hash, passed the closed artifact schema, matched the signed task and pinned snapshot identity, and returned `NO_DEBT` for that snapshot. The [settlement transaction](https://testnet.bscscan.com/tx/0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a) confirmed, transferred `0.1 U` from commerce escrow to the seller, and moved the job to terminal `COMPLETED` state.
-- Permanent-endpoint job [`1185`](evidence/advantage/healthguard-1185/job-1185.json) repeated the paid flow against BSC mainnet block `120862609`. Its content-addressed artifact passed schema, task, snapshot, URL-digest, and on-chain manifest-hash checks before the 900-second challenge window elapsed. The [settlement transaction](https://testnet.bscscan.com/tx/0xe0e7ffbdd4cddad0f852d3710dde30d734416f30480378edfe227f41823e92ca) then transferred exactly `0.1 U` from testnet escrow to the seller and moved the job to `COMPLETED`.
-- The job `1185` [`paired dataset`](evidence/advantage/healthguard-1185/dataset.json) uses the exact same pinned request for HealthGuard and an independent direct-integer-math baseline. An independent evaluator awarded both paths `10000` basis points on contract integrity, risk classification, deterministic math, and bounded recommendation, producing an honest four-dimension tie. The measured scopes were `43,605 ms` from quote start to confirmed agent submission and `1 ms` for baseline calculation after both paths received the prepared input; these different scopes do not establish a speed advantage.
-- The generated [Agent Advantage report](docs/AGENT_ADVANTAGE_REPORT.md) validates and renders all four paid pairs: HealthGuard tied on 4 quality dimensions, RangePilot on 6, GridQuant on 5, and YieldScout on 5. RangePilot, GridQuant, and YieldScout have exact TaskSpec-to-raw-input cryptographic bindings. HealthGuard's paths share one separately SHA-256-bound committed input, but its TaskSpec input hash does not match those bytes, so no authentic signed-task preimage binding is claimed for that pair.
-- The [`bounded-authority demo`](evidence/testnet/bounded-authority-grant-revoke.json) granted one temporary BSC testnet session permission to call only `U.balanceOf(address)`, with a `0.005 tBNB` hourly native-fee cap and no token-spend permission. The allowed read [confirmed](https://testnet.bscscan.com/tx/0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37), `totalSupply()` was rejected, the permission was [revoked](https://testnet.bscscan.com/tx/0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f), and the formerly allowed read was then rejected. The U balance and commerce allowance were unchanged across the run.
+### What is already proven
 
-These observations support completed signed, funded, verified, and settled BSC testnet commerce flows for all four self-hosted sellers. RangePilot, GridQuant, and YieldScout each have one completed paid analysis job; HealthGuard has two completed jobs plus one separately refunded invalid-input job. Each category has one published paired quality observation, and every result is a tie. These runs do not establish repeatability, superiority, mainnet payment, domain transaction execution, speed, profit, or strategy performance.
+- Five KNOT-operated jobs reached terminal `COMPLETED` settlement across all four categories.
+- One invalid HealthGuard input followed the dispute and full-refund path.
+- Three distinct third-party sellers were funded by a separate buyer, failed to deliver, expired, and returned the exact testnet escrow to the buyer.
+- Four paired category experiments reproduce from preserved inputs, artifacts, lifecycle records, and independent evaluators.
+- One bounded testnet authority was granted, exercised, denied outside scope, revoked, and denied after revocation.
+- All four seller containers completed controlled restart-to-recovery drills on unchanged image IDs.
+- Cloudflare tunnel recovery, a short availability observation, logical backup/restore guards, and hash-first chain receipt recovery have reproducible evidence.
 
-## Why this structure matters
+### Operational evidence
 
-KNOT's current advantage remains structural; all four measured finance comparisons are quality ties, not performance wins:
+A controlled [seller recovery drill](evidence/operations/seller-recovery-20260909.json) restarted HealthGuard, RangePilot, GridQuant, and YieldScout one at a time. Each returned healthy on the same immutable image, restored its public card and domain proof, continued to reject unauthenticated invocation with HTTP 401, returned an authenticated BSC testnet quote response containing a provider signature, and served the exact retained artifact bytes. Measured restart-to-recovery times were `20,091 ms`, `20,606 ms`, `25,192 ms`, and `25,300 ms`, respectively. This was one container restart per seller using retained negotiate requests, not an uptime, failover, rollback, or SLA test.
 
-- task and result schemas are closed, versioned, and use integer base units;
-- analysis data, payment, identity, and execution networks are kept distinct;
-- incompatible or ambiguous commerce configuration disables writes;
-- unknown, stale, unsupported, and unavailable inputs remain explicit instead of becoming optimistic results;
-- work state and financial state are recorded independently.
+During a separate [60.845-second client-side observation](evidence/operations/seller-availability-20260909.json), five samples per seller at approximately 15-second cadence produced all 60 expected responses: every agent card and domain proof returned HTTP 200, and every unauthenticated invocation returned HTTP 401. Individual request latencies ranged from `613 ms` to `4,461 ms`.
 
-These properties are covered by repository tests. The four published pairs measure deterministic quality, lifecycle boundaries, and recorded costs for one input per category. Agent lifecycle and baseline calculation scopes are not timing-comparable. The report does not support a claim of superior yield, profit, APY, return, savings, PnL, win rate, execution quality, latency, or human-time reduction, and no live trading dataset has been published.
+A controlled [Cloudflare tunnel recovery drill](evidence/operations/tunnel-recovery-20260909.json) issued one remote mutation: `systemctl restart cloudflared`. Complete public recovery was verified after `12,832 ms`: the API and database reported `AVAILABLE`, all four identity-bearing seller cards and registration proofs returned HTTP 200, unauthenticated invocation remained HTTP 401, the retained artifact matched `581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2`, and all four seller container image IDs and start times remained unchanged. This is one operator-recorded service restart, not evidence of uptime, an SLA, failover, load capacity, host recovery, or regional availability.
 
-## Verify
+The [read-only recovery rollout](evidence/operations/chain-recovery-rollout-20260909.json) deployed release `35def38e730e` to the API and worker on the same immutable image `sha256:e2f11219338b090a3b3e8cb6036ad9f7368bc4739ff7de68cca92d3ca4bb3d06`. Both containers were healthy, the recovery gate was explicitly enabled from a mode-`0600` environment mounted only into the worker, and all 5 API and seller-card checks returned HTTP 200. Two worker samples approximately ten seconds apart saw zero active jobs, outbox entries, or chain actions and zero claimed, examined, changed, or failed recovery actions. A separate in-memory probe inside that deployed worker image observed existing BSC testnet transaction `0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf` as `SUCCESS` at block `130060913` with `11022` confirmations using the known-hash read-only observer. The probe did not use the database, wallet, queue, broadcaster, or a chain-write path. Because the deployed queue was empty, this is rollout, idle-loop, and one-shot receipt-read evidence—not an exercised queued recovery, retry, reorg, uptime, or recovery-effectiveness result.
 
-The shortest local verification is:
+### What is not yet claimed
+
+- A successful end-to-end hire of an independently operated third-party seller.
+- Mainnet payment, trading, liquidity management, yield migration, or any other mainnet write.
+- Strategy performance, profit, APY improvement, execution quality, uptime, SLA, or regional availability.
+- Autonomous capital execution or an unrestricted agent wallet.
+- Production privacy guarantees: retained service-request bytes are append-only and do not yet have retention or crypto-erasure controls.
+- A finished customer UI. The outward-facing `/demo` is intentionally deferred until the complete design package is available.
+
+## Public endpoints
+
+These are read-only inspection surfaces. Seller invocation requires OAuth client credentials and is not exposed in this document.
+
+| Service | Public URL |
+| --- | --- |
+| KNOT API health | [`https://knot-api.truematchx.com/health`](https://knot-api.truematchx.com/health) |
+| HealthGuard card | [`https://knot-health.truematchx.com/.well-known/agent-card.json`](https://knot-health.truematchx.com/.well-known/agent-card.json) |
+| RangePilot card | [`https://knot-range.truematchx.com/.well-known/agent-card.json`](https://knot-range.truematchx.com/.well-known/agent-card.json) |
+| GridQuant card | [`https://knot-grid.truematchx.com/.well-known/agent-card.json`](https://knot-grid.truematchx.com/.well-known/agent-card.json) |
+| YieldScout card | [`https://knot-yield.truematchx.com/.well-known/agent-card.json`](https://knot-yield.truematchx.com/.well-known/agent-card.json) |
+
+Verify all four cards, registration proofs, and unauthenticated refusal boundaries:
 
 ```sh
+npm run sellers:verify:public
+```
+
+## Architecture
+
+KNOT keeps discovery, evaluation, commerce, and execution authority separate so that progress in one stage does not silently authorize the next.
+
+| Layer | Responsibility | Primary location |
+| --- | --- | --- |
+| API | Private task, request, quote, and job reads; origin and bearer-token boundary | `apps/api` |
+| Worker | Durable outbox work and read-only recovery of already-journaled transaction hashes | `apps/worker` |
+| Agent contracts | Versioned task, request, quote, and artifact schemas | `packages/contracts` |
+| Chain observers | Pinned deployment checks, receipt observation, and dual-RPC ERC-8004 identity reads | `packages/chain` |
+| Discovery | 8004scan client, public seller manifests, and exact endpoint authority | `packages/discovery` |
+| Persistence | PostgreSQL repositories, migrations, state guards, idempotency, and append-only evidence | `packages/db` |
+| Security | Outbound URL policy, redirect controls, bounded responses, OAuth, and A2A transport | `packages/security` |
+| Evidence | Closed claim ledger, lifecycle proofs, measurements, and offline/live verifiers | `packages/evidence`, `evidence` |
+| Sellers | Four isolated A2A/OAuth services with independent wallets and artifacts | `agents` |
+| Operations | Hardened containers, migrations, backups, restore interlocks, and manifests | `ops` |
+
+### Quote verification boundary
+
+The repository candidate performs the following sequence for a new owned-seller quote:
+
+1. Lock the buyer and immutable service-request ID.
+2. Refuse an expired task before any RPC, OAuth, or seller request.
+3. Resolve the exact category, HTTPS origin, OAuth scope, registry, agent ID, and pinned owner.
+4. Read the identity at one confirmed BSC testnet block from two pinned RPC providers.
+5. Recheck the block hash and require unanimous identity and deployment-code agreement.
+6. Obtain an OAuth token and send one bounded A2A `negotiate` request with the service-request ID as replay nonce.
+7. Verify the EIP-191 seller signature and every task, term, payment-domain, hash, and expiry binding.
+8. Persist the seller catalog row, identity observation, endpoint observation, and quote in one PostgreSQL transaction.
+9. Return a private `VERIFIED_PRE_FUNDING` record with `fundingPermitted: false`.
+
+Exact retries return the immutable stored quote without repeating seller or RPC egress. A failed signature or persistence check leaves no partial catalog promotion, observation, quote, job, outbox item, or chain action.
+
+## Trust and safety model
+
+### Network separation
+
+| Purpose | Network | Write policy |
+| --- | --- | --- |
+| Financial input data | BSC mainnet (`56`) | Read-only |
+| Agent identity | BSC testnet (`97`) | Registration and bounded identity operations only |
+| Agent commerce | BSC testnet (`97`) | Explicit test-token jobs only |
+| Domain execution | None in the current analysis pilot | Disabled |
+
+Chain compatibility is deployment-pinned. Unknown bytecode, proxy drift, stale blocks, RPC disagreement, ambiguous configuration, and unsupported token mechanics fail closed.
+
+### Data provenance
+
+Every published metric carries an evidence class. An unavailable metric cannot carry a value, a null value cannot be labeled live, and an on-chain observation must identify its chain and block. `SUPPORTED`, `PARTIAL`, `UNMEASURED`, and `NOT_CLAIMED` describe evidence scope; they are not product-marketing labels.
+
+### State and recovery
+
+Work and money are modeled independently. For example, an agent can fail to deliver while escrow remains refundable. An unknown transaction broadcast is never treated as safe to resubmit: recovery observes the already-journaled hash under a fenced job lease and leaves unresolved outcomes `UNKNOWN`.
+
+### Secret handling
+
+Secrets live outside the repository in mode-`0600` environment files. Deployment validation rejects unknown keys, reused credentials, weak values, unsafe RPC URLs, and seller secrets that equal the API token. Keystores, environment files, internal planning documents, and credentials are excluded from source control.
+
+## Quick start
+
+### Requirements
+
+- Node.js `24` or newer
+- npm and Corepack
+- pnpm for the four isolated seller workspaces
+- PostgreSQL `16` only for the optional database integration suite
+
+### Install
+
+```sh
+git clone https://github.com/Enoch208/knot.git
+cd knot
 npm ci
+
+for seller in healthguard rangepilot gridquant yieldscout; do
+  (cd "agents/$seller" && corepack pnpm install --frozen-lockfile)
+done
+```
+
+### Verify the repository
+
+```sh
 npm run check
 ```
 
-Network compatibility and optional integration checks are documented in [`REPRODUCE.md`](REPRODUCE.md). The default test run uses deterministic fixtures and does not submit blockchain transactions.
+`npm run check` type-checks the root project, verifies the public claim ledger, runs the deterministic root suite, checks cross-category compatibility, then builds and tests all four sellers. It uses fixtures and does not submit blockchain transactions.
 
-The public comparison report is regenerated only after all four paired datasets and the separate Shield corpus pass their independent verifiers:
+### Useful commands
 
-```sh
-npm run advantage:report
+| Command | Purpose | Network/write behavior |
+| --- | --- | --- |
+| `npm run check` | Full deterministic release gate | No chain writes |
+| `npm test` | Root, parity, and four seller test suites | No chain writes |
+| `npm run claims:verify` | Validate the closed public claim ledger | Offline |
+| `npm run advantage:report` | Re-evaluate and regenerate the four paired comparisons | Offline |
+| `npm run sellers:verify:public` | Check live cards, proofs, and OAuth refusal | Read-only HTTPS |
+| `npm run manifest:verify` | Check pinned BSC deployments and compatibility | Read-only RPC |
+| `npm run external-paid-job:verify` | Verify retained third-party failure/refund records | Offline |
+| `npm run external-paid-job:verify:live` | Recheck public receipts, events, owners, and refunds | Read-only RPC |
+| `npm run reliability:verify` | Verify the retained seller recovery drill | Offline |
+| `npm run availability:verify` | Verify the retained short availability observation | Offline |
+| `npm run test:backend-snapshot` | Exercise logical snapshot and restore guards with stubs | Local only |
+| `npm run demo:quote -- <RUN_ID>` | Run the authenticated quote-only path after operator configuration | Seller + read-only RPC; no wallet or funding |
+
+See [`REPRODUCE.md`](REPRODUCE.md) for exact prerequisites, live-read caveats, disposable PostgreSQL commands, backup/restore boundaries, and evidence interpretation.
+
+## Evidence map
+
+| Evidence | What it supports |
+| --- | --- |
+| [`evidence/claims.json`](evidence/claims.json) | Machine-readable public claims, status, commands, and limitations |
+| [`docs/AGENT_ADVANTAGE_REPORT.md`](docs/AGENT_ADVANTAGE_REPORT.md) | Four independently re-evaluated same-input finance comparisons |
+| [`evidence/testnet/analysis-paid-jobs-1187-1189.json`](evidence/testnet/analysis-paid-jobs-1187-1189.json) | RangePilot, GridQuant, and YieldScout paid lifecycle receipts |
+| [`evidence/advantage/healthguard-1185/job-1185.json`](evidence/advantage/healthguard-1185/job-1185.json) | Permanent-endpoint HealthGuard paid lifecycle |
+| [`evidence/testnet/external-paid-job-1191.json`](evidence/testnet/external-paid-job-1191.json) | Third-party non-delivery and exact `0.01 U` refund |
+| [`evidence/testnet/external-paid-job-1198.json`](evidence/testnet/external-paid-job-1198.json) | Second third-party non-delivery and exact `0.1 U` refund |
+| [`evidence/testnet/external-paid-job-1203.json`](evidence/testnet/external-paid-job-1203.json) | EIP-191 third-party quote plus exact `0.1 U` refund |
+| [`evidence/testnet/bounded-authority-grant-revoke.json`](evidence/testnet/bounded-authority-grant-revoke.json) | Grant, allowed call, denied call, revoke, and post-revoke denial |
+| [`evidence/operations`](evidence/operations) | Sanitized rollout, availability, restart, tunnel, and recovery records |
+| [`evidence/security`](evidence/security) | Frozen outbound-network policy fixtures |
+
+The claim ledger is the authority when a prose summary and a machine-readable evidence record ever diverge.
+
+## Repository layout
+
+```text
+apps/
+  api/                  private marketplace control plane
+  worker/               durable outbox and receipt recovery
+agents/
+  healthguard/          lending-health specialist
+  rangepilot/           LP-range specialist
+  gridquant/            grid-analysis specialist
+  yieldscout/           yield-comparison specialist
+packages/
+  advantage/            paired evaluation and reporting
+  chain/                pinned chain and identity observers
+  contracts/            closed marketplace schemas
+  db/                   migrations, repositories, and state guards
+  discovery/            public and indexed agent discovery
+  evidence/             claim and lifecycle verifiers
+  reliability/          availability and recovery verification
+  security/             outbound and seller-client boundaries
+evidence/               retained machine-readable proof
+ops/                    deployment, manifests, backup, and restore
+scripts/                verification and controlled operator entry points
+tests/                  deterministic, parity, integration, and failure tests
 ```
 
-The Shield measurement preserves all six raw Slither outputs and every manual validation decision. This read-only command verifies those hashes and decisions, compiles the frozen sources, and independently reruns the scorer against the committed measured runs:
+## Development principles
 
-```sh
-npm run shield:verify
-```
+- Make the claim no stronger than the evidence.
+- Keep mainnet financial data read-only.
+- Treat task, identity, payment, and execution chains as separate fields.
+- Preserve integer base units and explicit token decimals.
+- Reject unknown fields and ambiguous authority.
+- Persist intent before effects and never guess through an unknown broadcast.
+- Pair each material capability with a positive test, an adversarial test, and reproducible evidence.
 
-Across nine adjudicated findings, the validated pipeline recorded 2 true positives, 0 false positives, and 7 false negatives: precision `2/2`, recall `2/9`, and severity validity `2/2`. Manual review rejected two mapped analyzer signals before scoring, while 15 raw signals were outside the frozen Shield rules. The holdout recorded 0 true positives, 0 false positives, and 3 false negatives. Ground-truth labels were not supplied to Slither, and no rule, fixture, label, mapping, or Shield logic was changed after the holdout output was observed.
+This README is a living entry point. It is updated when the deploy state, public capability set, verification baseline, or evidence boundary changes; detailed reproduction procedures remain in [`REPRODUCE.md`](REPRODUCE.md) so the overview stays readable.
 
-The third-party HealthGuard audition has a separate read-only verifier. It checks the closed stage model, evidence counts, no-write boundary, credential-free HTTPS sources, and the negative result without repeating any network request:
+## License
 
-```sh
-npm run audition:verify
-```
-
-## Demo boundary
-
-The HealthGuard BSC testnet paid-flow milestone is supported by jobs `1181` and `1185`; job `1185` used the permanent endpoint and supplies its paired dataset. Job `1180` remains openly recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path. RangePilot, GridQuant, and YieldScout each have one completed paid testnet analysis job, but none executed a position, order, swap, deposit, withdrawal, or migration. The third-party `97:2293` observation stops at registration and a live card; it is not a published comparison or a hireable-candidate claim. The authority demo covers one temporary, revoked testnet permission and does not claim mainnet execution or production security. Shield's measured result is a small, team-owned synthetic corpus with `2/9` recall and a `0/3` holdout result, not evidence of comprehensive audit quality. All four paired finance results are honest quality ties, so repeatability, superiority, speed, human-time reduction, profit, mainnet payment readiness, domain execution, and strategy performance remain outside these claims.
+KNOT is released under the MIT License. See [`LICENSE`](LICENSE).

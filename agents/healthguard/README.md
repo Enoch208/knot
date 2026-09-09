@@ -1,10 +1,15 @@
-# healthguard
+# HealthGuard
 
-A BNB Chain seller agent workspace scaffolded by `bag init` (bnbagent-studio).
+HealthGuard is KNOT's analysis-only Venus lending-health seller. It accepts a signed, pinned BSC mainnet position snapshot and returns a closed-schema assessment, `NO_DEBT` result, or explicit refusal. It never signs repay, borrow, or collateral transactions.
 
-- `app/agent/` — the valuable Agent + SOLE on-chain signer (TypeScript, `src/`).
-- `.studio/` — secrets (encrypted keystore + .env.local); NEVER commit it.
-- `bag dev` — run the agent locally; `bag doctor` — readiness checks.
-- `bag deploy --provider aws` — deploy to AWS Bedrock AgentCore (uses the self-rendered `agentcore/` descriptor).
+The seller uses ERC-8183 on BSC testnet for quotes, funding, submission, and settlement. The fixed quote path and on-chain submission path remain separate from deterministic analysis.
 
-In Claude Code / Cursor, type `/bnbagent-studio` — the skill drives every step.
+Run from this directory:
+
+```bash
+pnpm --dir app/agent build
+pnpm --dir app/agent test
+bag doctor
+```
+
+The encrypted signer must remain under `.studio/wallets/`, outside the deployed `app/agent/` package. Durable storage, a dedicated wallet, and the selected hosting provider are required before deployment.
