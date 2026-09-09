@@ -9,6 +9,13 @@ import {
 } from "../../../packages/services/shield/index.ts"
 
 const ROOT = resolve("tests/fixtures/shield/corpus-v1")
+type JsonObject = Record<string, unknown>
+
+function assertObject(value: unknown): asserts value is JsonObject {
+  assert.equal(typeof value, "object")
+  assert.notEqual(value, null)
+  assert.equal(Array.isArray(value), false)
+}
 
 function corpusInputs(): {
   groundTruth: unknown
@@ -105,5 +112,32 @@ describe("Shield frozen corpus", () => {
       () => verifyShieldCorpus(changed, inputs.rulesText, inputs.sources),
       (error: unknown) => error instanceof ShieldCorpusError && error.code === "GROUND_TRUTH_MISMATCH",
     )
+  })
+
+  test("claim ledger keeps the prepared corpus unmeasured", () => {
+    const input: unknown = JSON.parse(readFileSync("evidence/claims.json", "utf8"))
+    assertObject(input)
+    assert.ok(Array.isArray(input.claims))
+    const claim = input.claims.find((value) => {
+      assertObject(value)
+      return value.id === "shield-frozen-evaluation-corpus"
+    })
+    assertObject(claim)
+    assertObject(claim.scope)
+    assert.ok(Array.isArray(claim.sources))
+
+    assert.equal(claim.status, "UNMEASURED")
+    assert.deepEqual(claim.evidenceClasses, ["synthetic_fixture"])
+    assert.equal(claim.scope.fixtureCount, 6)
+    assert.equal(claim.scope.holdoutFixtureCount, 1)
+    assert.equal(claim.scope.relationship, "team-owned")
+    assert.equal(claim.scope.analyzerRunPublished, false)
+    assert.equal(claim.scope.onchainDeploymentClaimed, false)
+    assert.equal("precision" in claim.scope, false)
+    assert.equal("recall" in claim.scope, false)
+    assert.ok(claim.sources.some((value) => {
+      assertObject(value)
+      return value.command === "npm run shield:evaluate" && value.observedStatus === "UNMEASURED"
+    }))
   })
 })

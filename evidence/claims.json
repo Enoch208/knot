@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T10:47:52.979Z",
+  "updatedAtUtc": "2026-09-09T10:50:48.000Z",
   "revision": {
-    "baseCommit": "36edd0b4200b18b387c2c90da1cb63f1c1b9b35b",
+    "baseCommit": "94d588f2fb5e343f4a12d3be7d97ba3d8aedc7cd",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -711,6 +711,57 @@
         "The native spend cap covered testnet relay fees and did not authorize ERC-20 spending.",
         "Rejected calls failed during simulation and therefore have no transaction hashes.",
         "One completed grant-and-revoke cycle is not a production-security or reliability guarantee."
+      ]
+    },
+    {
+      "id": "shield-frozen-evaluation-corpus",
+      "claim": "Shield has a compile-verified, hash-frozen six-fixture team-owned Solidity corpus with one ERC-1967 holdout created after the rules freeze, but precision, recall, severity validity, and critical-miss rate are unmeasured because no analyzer-produced and manually validated artifact set has been supplied.",
+      "status": "UNMEASURED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "service": "Shield",
+        "category": "security",
+        "capability": "analysis",
+        "datasetId": "knot-shield-team-corpus-v1",
+        "fixtureCount": 6,
+        "developmentFixtureCount": 5,
+        "holdoutFixtureCount": 1,
+        "relationship": "team-owned",
+        "compiler": "solc 0.8.28",
+        "rulesFrozenAtUtc": "2026-09-09T10:39:24.000Z",
+        "rulesContentHash": "0x7b67420c060ac95aebcc83fdc1e33ef2b952c8c69e4344091fbccbd93205455e",
+        "analyzerRunPublished": false,
+        "onchainDeploymentClaimed": false
+      },
+      "sources": [
+        {
+          "type": "frozen_ground_truth",
+          "path": "tests/fixtures/shield/corpus-v1/ground-truth.json"
+        },
+        {
+          "type": "frozen_rules",
+          "path": "tests/fixtures/shield/corpus-v1/rules.json",
+          "contentHash": "0x7b67420c060ac95aebcc83fdc1e33ef2b952c8c69e4344091fbccbd93205455e"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/services/shield/corpus.test.ts",
+          "command": "node --test tests/services/shield/corpus.test.ts"
+        },
+        {
+          "type": "repository_command",
+          "path": "scripts/run-shield-evaluation.ts",
+          "command": "npm run shield:evaluate",
+          "observedStatus": "UNMEASURED"
+        }
+      ],
+      "limitations": [
+        "All fixtures and adjudicated labels are team-owned, so this is not an independent external benchmark.",
+        "Ground-truth labels are never supplied to Shield as analysis input; the evaluator accepts separately produced and hash-preserved artifacts.",
+        "Slither was unavailable in the verification environment and no analyzer-produced, manually validated run artifact set was published.",
+        "No precision, recall, severity-validity, critical-miss, production-security, deployment, or on-chain execution result is claimed."
       ]
     },
     {
