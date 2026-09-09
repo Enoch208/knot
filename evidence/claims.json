@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T10:42:15.000Z",
+  "updatedAtUtc": "2026-09-09T10:47:52.979Z",
   "revision": {
-    "baseCommit": "1e6cd0631b5f97875c7bf280b71e684c9ff75009",
+    "baseCommit": "36edd0b4200b18b387c2c90da1cb63f1c1b9b35b",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -575,6 +575,77 @@
       ]
     },
     {
+      "id": "healthguard-job-1185-paired-experiment",
+      "claim": "Permanent-endpoint BSC testnet HealthGuard job 1185 completed a signed 0.1 U paid flow against one pinned BSC mainnet Venus input; its content-addressed artifact passed integrity, closed-schema, task, and snapshot verification, terminal settlement transferred 0.1 U from escrow to the seller, and the paired independent evaluator found a four-dimension quality tie with the non-agent baseline on the exact same input.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "mainnet_observation",
+        "testnet_observation"
+      ],
+      "scope": {
+        "jobId": "1185",
+        "taskId": "health_120862609",
+        "dataChainId": 56,
+        "dataBlockNumber": "120862609",
+        "dataBlockHash": "0x6379a22b7eff758dbde2e219de3c2cabb395ae89c297cc19f01fc3388dee4d08",
+        "paymentChainId": 97,
+        "priceBaseUnits": "100000000000000000",
+        "paymentTokenSymbol": "U",
+        "buyerNetworkFeeWei": "2555089000000000",
+        "artifactStatus": "NO_DEBT",
+        "agentDurationMs": 43605,
+        "baselineCalculationDurationMs": 1,
+        "qualityResult": "tie",
+        "qualityDimensionTies": 4,
+        "qualityDimensionCount": 4,
+        "settlementTransactionHash": "0xe0e7ffbdd4cddad0f852d3710dde30d734416f30480378edfe227f41823e92ca",
+        "settlementTransferBaseUnits": "100000000000000000",
+        "finalObservedProtocolState": "COMPLETED",
+        "mainnetWrites": false,
+        "realFunds": false
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T10:31:08.375Z",
+        "toUtc": "2026-09-09T10:47:53.000Z"
+      },
+      "sources": [
+        {
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/healthguard-1185/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/healthguard-1185/dataset.json"
+        },
+        {
+          "type": "testnet_job_evidence",
+          "path": "evidence/advantage/healthguard-1185/job-1185.json"
+        },
+        {
+          "type": "deliverable",
+          "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json",
+          "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "settlement",
+          "transactionHash": "0xe0e7ffbdd4cddad0f852d3710dde30d734416f30480378edfe227f41823e92ca",
+          "url": "https://testnet.bscscan.com/tx/0xe0e7ffbdd4cddad0f852d3710dde30d734416f30480378edfe227f41823e92ca",
+          "receiptStatus": "success",
+          "blockNumber": "130009656"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/advantage/healthguard-1185.test.ts",
+          "command": "node --test tests/advantage/healthguard-1185.test.ts"
+        }
+      ],
+      "limitations": [
+        "Both paths received the same prepared pinned input; the baseline calculation timing does not include upstream input collection or human research.",
+        "The agent timing runs from quote start to confirmed submission, while the baseline timing covers calculation only, so the values do not establish a speed advantage.",
+        "HealthGuard and the reference baseline are operated by KNOT; the evaluator recomputes the expected outcome independently from raw evidence.",
+        "One no-debt input and one completed paid job do not establish repeatability, superiority, broader position coverage, or an uptime claim.",
+        "Payment used testnet U on BSC testnet; no real funds or mainnet writes were used."
+      ]
+    },
+    {
       "id": "bounded-authority-grant-revoke",
       "claim": "One BSC testnet session was granted only U.balanceOf(address) call authority plus a 0.005 tBNB hourly native spend cap, successfully exercised that read, rejected totalSupply(), was revoked, and then rejected the formerly allowed read without changing the U balance or commerce allowance.",
       "status": "SUPPORTED",
@@ -644,28 +715,36 @@
     },
     {
       "id": "comparative-benchmarks",
-      "claim": "No comparative quality, return, win-rate, execution, latency, or cost benchmark has been published.",
-      "status": "UNMEASURED",
+      "claim": "One paired HealthGuard experiment has been published: the paid agent path and independent direct-calculation baseline used the exact same pinned no-debt input and tied across all four independently recomputed quality dimensions; no comparative result is published for the other three analysis categories.",
+      "status": "SUPPORTED",
       "evidenceClasses": [
-        "publisher_claim"
+        "mainnet_observation",
+        "testnet_observation"
       ],
       "scope": {
-        "components": [
-          "HealthGuard",
+        "measuredComponents": [
+          "HealthGuard"
+        ],
+        "unmeasuredComponents": [
           "RangePilot",
           "GridQuant",
           "YieldScout"
-        ]
+        ],
+        "experimentId": "healthguard-1185",
+        "qualityResult": "tie",
+        "qualityDimensionTies": 4
       },
       "sources": [
         {
-          "type": "submission_disclosure",
-          "path": "README.md",
-          "section": "Why this structure matters"
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/healthguard-1185/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/healthguard-1185/dataset.json"
         }
       ],
       "limitations": [
-        "No superiority or performance claim should be inferred from implementation tests."
+        "The quality tie is one no-debt HealthGuard observation, not a superiority or repeatability result.",
+        "The differently scoped timing and cost observations do not establish a speed or cost advantage.",
+        "No comparative return, win-rate, execution, or live-trading result is claimed."
       ]
     }
   ]
