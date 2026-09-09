@@ -127,11 +127,13 @@ test("coverage reports the filtered total and never implies a full index", async
 test("the api key travels in a header and never in the request uri", async () => {
   let seenUrl = ""
   let seenHeaders: Record<string, string> = {}
+  let seenRedirect = ""
   const client = new ScanClient({
     apiKey: "secret-key-value",
     fetchImpl: async (url, init) => {
       seenUrl = url
       seenHeaders = init.headers
+      seenRedirect = init.redirect
       return jsonResponse(page([]))
     },
   })
@@ -139,6 +141,72 @@ test("the api key travels in a header and never in the request uri", async () =>
   assert.equal(seenHeaders["x-api-key"], "secret-key-value")
   assert.ok(!seenUrl.includes("secret-key-value"))
   assert.ok(seenUrl.includes("search=healthguard"))
+  assert.equal(seenRedirect, "manual")
+})
+
+test("a redirect response is refused without a second api-key request", async () => {
+  let calls = 0
+  const client = new ScanClient({
+    apiKey: "secret-key-value",
+    fetchImpl: async (_url, init) => {
+      calls += 1
+      assert.equal(init.headers["x-api-key"], "secret-key-value")
+      assert.equal(init.redirect, "manual")
+      return new Response("", {
+        status: 302,
+        headers: { location: "https://collector.example/steal" },
+      })
+    },
+  })
+  await assert.rejects(
+    () => client.listAgents(),
+    (error) => error instanceof ScanUnavailableError && error.statusCode === 302,
+  )
+  assert.equal(calls, 1)
+})
+
+test("a hung discovery transport is aborted by the total deadline", async () => {
+  let aborted = false
+  const client = new ScanClient({
+    maxAttempts: 1,
+    timeoutMs: 100,
+    fetchImpl: async (_url, init) => await new Promise<Response>((_resolve, reject) => {
+      init.signal.addEventListener("abort", () => {
+        aborted = true
+        reject(new Error("aborted"))
+      }, { once: true })
+    }),
+  })
+  await assert.rejects(() => client.listAgents(), ScanUnavailableError)
+  assert.equal(aborted, true)
+})
+
+test("an oversized streamed response is refused before JSON parsing", async () => {
+  const client = new ScanClient({
+    maxResponseBytes: 32,
+    fetchImpl: async () => new Response("x".repeat(64), { status: 200 }),
+  })
+  await assert.rejects(
+    () => client.listAgents(),
+    (error) => error instanceof ScanUnavailableError && /configured limit/.test(error.message),
+  )
+})
+
+test("a retry-after beyond the total deadline is refused without sleeping", async () => {
+  let sleeps = 0
+  const client = new ScanClient({
+    timeoutMs: 100,
+    sleep: async () => { sleeps += 1 },
+    fetchImpl: async () => new Response("", {
+      status: 429,
+      headers: { "retry-after": "3600" },
+    }),
+  })
+  await assert.rejects(
+    () => client.listAgents(),
+    (error) => error instanceof ScanUnavailableError && /deadline/.test(error.message),
+  )
+  assert.equal(sleeps, 0)
 })
 
 test("a rate-limited response is retried after the advertised delay", async () => {

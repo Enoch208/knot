@@ -1,45 +1,75 @@
 import { z } from "zod"
+import { safeFetch } from "../../security/src/index.ts"
+import type { TaskSpec } from "../../contracts/src/task.ts"
 
-const registrationRegistry = "eip155:97:0x8004A818BFB912233c491871b3d84c89A494BD9e"
+export const BSC_TESTNET_ERC8004_REGISTRY = "0x8004A818BFB912233c491871b3d84c89A494BD9e" as const
+const registrationRegistry = `eip155:97:${BSC_TESTNET_ERC8004_REGISTRY}`
+export type OwnedSellerCategory = Exclude<TaskSpec["category"], "security">
 
 export interface ExpectedPublicSeller {
   key: "healthguard" | "rangepilot" | "gridquant" | "yieldscout"
+  category: OwnedSellerCategory
   origin: `https://${string}`
   cardName: string
   oauthScope: string
+  registry: typeof BSC_TESTNET_ERC8004_REGISTRY
   agentId: number
+  owner: `0x${string}`
 }
 
-export const expectedPublicSellers: readonly ExpectedPublicSeller[] = [
-  {
+export const expectedPublicSellers: readonly ExpectedPublicSeller[] = Object.freeze([
+  Object.freeze({
     key: "healthguard",
+    category: "health",
     origin: "https://knot-health.truematchx.com",
     cardName: "healthguard-agent",
     oauthScope: "knot:healthguard:invoke",
+    registry: BSC_TESTNET_ERC8004_REGISTRY,
     agentId: 2295,
-  },
-  {
+    owner: "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+  }),
+  Object.freeze({
     key: "rangepilot",
+    category: "rebalancing",
     origin: "https://knot-range.truematchx.com",
     cardName: "KNOT RangePilot",
     oauthScope: "knot:rangepilot:invoke",
+    registry: BSC_TESTNET_ERC8004_REGISTRY,
     agentId: 2297,
-  },
-  {
+    owner: "0xe4fed886b4b9062486d4663c6962e14473bd7320",
+  }),
+  Object.freeze({
     key: "gridquant",
+    category: "grid",
     origin: "https://knot-grid.truematchx.com",
     cardName: "KNOT GridQuant",
     oauthScope: "knot:gridquant:invoke",
+    registry: BSC_TESTNET_ERC8004_REGISTRY,
     agentId: 2298,
-  },
-  {
+    owner: "0x3d5355a97352f4d078016342ad117a5e88d5c74f",
+  }),
+  Object.freeze({
     key: "yieldscout",
+    category: "yield",
     origin: "https://knot-yield.truematchx.com",
     cardName: "KNOT YieldScout",
     oauthScope: "knot:yieldscout:invoke",
+    registry: BSC_TESTNET_ERC8004_REGISTRY,
     agentId: 2299,
-  },
-]
+    owner: "0x6fd04720c7fccb6dcebf6cf08dd6f5c764c7d8e3",
+  }),
+])
+
+export function resolveOwnedSellerAuthority(
+  category: TaskSpec["category"],
+  storedEndpoint: string,
+): ExpectedPublicSeller | null {
+  if (category === "security") return null
+  const expected = expectedPublicSellers.find((seller) => seller.category === category)
+  if (expected === undefined) return null
+  if (storedEndpoint !== expected.origin && storedEndpoint !== `${expected.origin}/`) return null
+  return expected
+}
 
 const card = z
   .object({
@@ -161,28 +191,29 @@ export async function verifyPublicSeller(
 export function createFetchPublicSellerReader(timeoutMs = 15_000): PublicSellerHttpReader {
   return {
     async getJson(url) {
-      const response = await fetch(url, {
+      const response = await safeFetch(url, {
         headers: { accept: "application/json" },
-        redirect: "error",
-        signal: AbortSignal.timeout(timeoutMs),
+        maxBytes: 131_072,
+        maxRedirects: 0,
+        timeoutMs,
       })
       let body: unknown = null
       try {
-        body = await response.json()
+        body = JSON.parse(Buffer.from(response.body).toString("utf8")) as unknown
       } catch {
         body = null
       }
       return { status: response.status, body }
     },
     async postUnauthenticated(url) {
-      const response = await fetch(url, {
+      const response = await safeFetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ jsonrpc: "2.0", id: "public-verifier", method: "message/send", params: {} }),
-        redirect: "error",
-        signal: AbortSignal.timeout(timeoutMs),
+        maxBytes: 65_536,
+        maxRedirects: 0,
+        timeoutMs,
       })
-      await response.body?.cancel()
       return response.status
     },
   }
