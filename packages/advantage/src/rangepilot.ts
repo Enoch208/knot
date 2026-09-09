@@ -58,9 +58,6 @@ function scoreCandidate(bytes: Uint8Array, input: RangePilotEvaluationInput, obs
 
 function assertRangeTaskBinding(task: RebalancingTask, input: RangePilotEvaluationInput, bytes: Uint8Array): void {
   const internal = input.task
-  if (internal.constraints.token0BudgetUnits !== internal.constraints.token1BudgetUnits) {
-    throw new AdvantageValidationError("INPUT_MISMATCH", "the shared task cannot bind unequal per-token RangePilot budgets")
-  }
   const expected = {
     taskId: internal.taskId,
     capability: internal.capability,
@@ -74,11 +71,15 @@ function assertRangeTaskBinding(task: RebalancingTask, input: RangePilotEvaluati
     positionTokenId: internal.positionTokenId,
     controllingAccount: internal.controllingAccount,
     pool: internal.allowedPool.address,
-    tokenBudgetUnits: internal.constraints.token0BudgetUnits,
-    rangeWidthBps: internal.constraints.targetRangeWidthTicks,
-    slippageBps: internal.constraints.maximumSlippageBps,
+    token0BudgetUnits: internal.constraints.token0BudgetUnits,
+    token1BudgetUnits: internal.constraints.token1BudgetUnits,
+    minimumRangeWidthTicks: internal.constraints.minimumRangeWidthTicks,
+    targetRangeWidthTicks: internal.constraints.targetRangeWidthTicks,
+    maximumRangeWidthTicks: internal.constraints.maximumRangeWidthTicks,
+    maximumSlippageBps: internal.constraints.maximumSlippageBps,
+    gasBudgetWei: internal.constraints.gasBudgetWei,
     cooldownSeconds: internal.constraints.cooldownSeconds,
-    mode: internal.constraints.executionMode === "analysis" ? "analysis" : "execute",
+    executionMode: internal.constraints.executionMode,
   }
   const actual = {
     taskId: task.taskId,
@@ -93,11 +94,15 @@ function assertRangeTaskBinding(task: RebalancingTask, input: RangePilotEvaluati
     positionTokenId: task.target.positionTokenId,
     controllingAccount: task.target.controllingAccount,
     pool: task.target.pool,
-    tokenBudgetUnits: task.constraints.tokenBudgetUnits,
-    rangeWidthBps: task.constraints.rangeWidthBps,
-    slippageBps: task.constraints.slippageBps,
+    token0BudgetUnits: task.constraints.token0BudgetUnits,
+    token1BudgetUnits: task.constraints.token1BudgetUnits,
+    minimumRangeWidthTicks: task.constraints.minimumRangeWidthTicks,
+    targetRangeWidthTicks: task.constraints.targetRangeWidthTicks,
+    maximumRangeWidthTicks: task.constraints.maximumRangeWidthTicks,
+    maximumSlippageBps: task.constraints.maximumSlippageBps,
+    gasBudgetWei: task.constraints.gasBudgetWei,
     cooldownSeconds: task.constraints.cooldownSeconds,
-    mode: task.constraints.mode,
+    executionMode: task.constraints.executionMode,
   }
   if (canonicalJson(actual) !== canonicalJson(expected)) throw new AdvantageValidationError("INPUT_MISMATCH", "RangePilot task fields or cryptographic request binding do not match")
 }

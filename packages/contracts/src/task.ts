@@ -21,7 +21,7 @@ const envelopeShape = {
   snapshotId: z.string().min(1).nullable(),
 } as const
 
-const withEnvelope = categoryPayload.options.map((option) => option.extend(envelopeShape))
+const withEnvelope = categoryPayload.options.map((option) => option.safeExtend(envelopeShape))
 
 export const taskSpec = z
   .discriminatedUnion("category", withEnvelope as [(typeof withEnvelope)[number], ...typeof withEnvelope])

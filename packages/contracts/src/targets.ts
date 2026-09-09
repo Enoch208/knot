@@ -3,6 +3,7 @@ import { address, baseUnits, chainId } from "./primitives.ts"
 
 const bps = z.number().int().min(0).max(10_000)
 const positiveSeconds = z.number().int().positive()
+const rangeWidthTicks = z.number().int().positive().max(1_774_544)
 
 const health = z
   .object({
@@ -44,13 +45,20 @@ const rebalancing = z
       .strict(),
     constraints: z
       .object({
-        tokenBudgetUnits: baseUnits,
-        rangeWidthBps: bps,
-        slippageBps: bps,
-        cooldownSeconds: positiveSeconds,
-        mode: z.enum(["analysis", "execute"]),
+        token0BudgetUnits: baseUnits,
+        token1BudgetUnits: baseUnits,
+        minimumRangeWidthTicks: rangeWidthTicks,
+        targetRangeWidthTicks: rangeWidthTicks,
+        maximumRangeWidthTicks: rangeWidthTicks,
+        maximumSlippageBps: bps,
+        gasBudgetWei: baseUnits,
+        cooldownSeconds: z.number().int().min(0).max(31_536_000),
+        executionMode: z.enum(["analysis", "reviewed", "unattended"]),
       })
-      .strict(),
+      .strict()
+      .refine((value) => value.minimumRangeWidthTicks <= value.targetRangeWidthTicks && value.targetRangeWidthTicks <= value.maximumRangeWidthTicks, {
+        message: "targetRangeWidthTicks must be between minimumRangeWidthTicks and maximumRangeWidthTicks",
+      }),
   })
   .strict()
 

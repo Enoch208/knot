@@ -90,16 +90,30 @@ test("RangePilot rejects a changed source hash that is no longer task-bound", as
   )
 })
 
-test("RangePilot rejects marketplace constraints that do not match the raw seller request", async () => {
-  const fixture = rangeExperimentFixture()
-  const task = readJson(fixture.store, fixture.input.task)
-  const constraints = task.constraints as Record<string, unknown>
-  constraints.rangeWidthBps = 201
-  replace(fixture.store, fixture.input.task, task)
-  await assert.rejects(
-    runPairedExperiment(fixture.input, fixture.store.resolver, [evaluator]),
-    (error) => error instanceof AdvantageValidationError && error.code === "INPUT_MISMATCH",
-  )
+test("RangePilot binds every marketplace constraint to the raw seller request without aliases", async () => {
+  const mutations: Array<[string, unknown]> = [
+    ["token0BudgetUnits", "1"],
+    ["token1BudgetUnits", "2"],
+    ["minimumRangeWidthTicks", 50],
+    ["targetRangeWidthTicks", 250],
+    ["maximumRangeWidthTicks", 350],
+    ["maximumSlippageBps", 51],
+    ["gasBudgetWei", "499999999999999"],
+    ["cooldownSeconds", 301],
+    ["executionMode", "reviewed"],
+  ]
+  for (const [field, value] of mutations) {
+    const fixture = rangeExperimentFixture()
+    const task = readJson(fixture.store, fixture.input.task)
+    const constraints = task.constraints as Record<string, unknown>
+    constraints[field] = value
+    replace(fixture.store, fixture.input.task, task)
+    await assert.rejects(
+      runPairedExperiment(fixture.input, fixture.store.resolver, [evaluator]),
+      (error) => error instanceof AdvantageValidationError && error.code === "INPUT_MISMATCH",
+      field,
+    )
+  }
 })
 
 test("RangePilot fails malformed artifacts closed", async () => {
