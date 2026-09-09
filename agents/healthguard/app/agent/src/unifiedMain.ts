@@ -94,6 +94,11 @@ import express from "express";
 import { buildAgentCard } from "./agentCard.js";
 import { SellerAgentExecutor } from "./executor.js";
 import { analyzeHealthGuardText } from "./healthGuard.js";
+import {
+  loadOAuthConfig,
+  oauthTokenHandler,
+  requireOAuth,
+} from "./oauth.js";
 import { requestLimitContext } from "./requestLimits.js";
 import type { RunWork } from "./sellerCore.js";
 
@@ -412,6 +417,7 @@ async function main(): Promise<void> {
   await ensureAltanaSessionLoaded();
 
   const cfg = loadStudioToml();
+  const oauth = loadOAuthConfig(process.env);
   const rails = { erc8183: hasErc8183Rail(cfg) };
   const sellPath = b402SellPath(cfg);
   const host = process.env.AGENT_BIND_HOST || "0.0.0.0";
@@ -484,6 +490,14 @@ async function main(): Promise<void> {
     res.json({ status: "READY" });
   });
 
+  if (oauth !== null) {
+    app.post(
+      "/oauth/token",
+      express.urlencoded({ extended: false, limit: "16kb" }),
+      oauthTokenHandler(oauth),
+    );
+  }
+
   if (seller.state !== "disabled") {
     app.all(
       sellPath,
@@ -507,6 +521,7 @@ async function main(): Promise<void> {
 
   app.use(express.json({ limit: "8mb" }));
   app.use(createEnvelopeMiddleware({ port }));
+  if (oauth !== null) app.use(requireOAuth(oauth));
 
   // Foundry Invocations is a pass-through JSON contract. bnbagent-deploy's
   // positional invoke helper normalizes text to {"input":"..."}; advanced

@@ -49,9 +49,13 @@ poll_interval_seconds = 30
 auto_settle = false                            # opt-in: detect dispute-window-elapsed → settle
 
 [storage]
-# Deliverables written to local disk (file://). Offline-dev only —
-# does NOT survive deploy. Path from STORAGE_LOCAL_PATH.
-kind = "local"
+kind = "s3"
+bucket = "knot-deliverables"
+region = "us-east-1"
+key_prefix = "healthguard"
+public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
+endpoint = "http://object-store:9000"
+credential_mode = "env"
 
 
 [payments.b402_seller]

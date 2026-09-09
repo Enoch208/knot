@@ -3,4 +3,13 @@
   originRequest:
     connectTimeout: 10s
     httpHostHeader: knot-api.truematchx.com
-
+- hostname: knot-health.truematchx.com
+  service: http://127.0.0.1:3201
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-health.truematchx.com
+- hostname: knot-artifacts.truematchx.com
+  service: http://127.0.0.1:3200
+  originRequest:
+    connectTimeout: 10s
+    httpHostHeader: knot-artifacts.truematchx.com
