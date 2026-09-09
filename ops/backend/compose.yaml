@@ -2,9 +2,6 @@ name: knot-backend
 
 x-app: &app
   image: knot/backend:${KNOT_IMAGE_TAG:-local}
-  build:
-    context: .
-    dockerfile: ops/backend/Dockerfile
   init: true
   read_only: true
   tmpfs:
@@ -117,6 +114,9 @@ services:
 
   migrate:
     <<: *app
+    build:
+      context: .
+      dockerfile: ops/backend/Dockerfile
     command: ["node", "dist/packages/db/src/migrate-cli.js"]
     env_file:
       - /etc/knot/database-client.env
