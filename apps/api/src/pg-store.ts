@@ -1,5 +1,12 @@
 import type { Pool } from "pg"
+import type { ServiceRequestEnvelope } from "../../../packages/contracts/src/service-request.ts"
 import type { TaskSpec } from "../../../packages/contracts/src/task.ts"
+import {
+  ServiceRequestRepository,
+  type ServiceRequestCreation,
+  type ServiceRequestRecord,
+  type VerifiedQuoteCreation,
+} from "../../../packages/db/src/index.ts"
 import { mapArtifact, mapEvent, mapJob, mapTask } from "./db-mappers.ts"
 import type {
   AccessScope,
@@ -26,17 +33,41 @@ const canonicalJson = (value: unknown): string => {
 
 export class PgApiStore implements ApiStore {
   private readonly pool: Pool
+  private readonly serviceRequests: ServiceRequestRepository
+  private readonly verifiedQuoteCreator: VerifiedQuoteCreator | null
 
-  constructor(pool: Pool) {
+  constructor(pool: Pool, verifiedQuoteCreator: VerifiedQuoteCreator | null = null) {
     this.pool = pool
+    this.serviceRequests = new ServiceRequestRepository(pool)
+    this.verifiedQuoteCreator = verifiedQuoteCreator
   }
 
   async status(): Promise<void> {
-    const result = await this.pool.query<{ artifacts: string | null; jobs: string | null; tasks: string | null }>(
-      "SELECT to_regclass('public.artifacts')::text AS artifacts, to_regclass('public.jobs')::text AS jobs, to_regclass('public.tasks')::text AS tasks",
+    const result = await this.pool.query<{
+      artifacts: string | null
+      identity_observations: string | null
+      identity_observation_column: boolean
+      jobs: string | null
+      migration_0011: boolean
+      migration_0012: boolean
+      service_requests: string | null
+      tasks: string | null
+      verified_quotes: string | null
+    }>(
+      "SELECT to_regclass('public.artifacts')::text AS artifacts, to_regclass('public.erc8004_identity_observations')::text AS identity_observations, EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'verified_quotes' AND column_name = 'identity_observation_id') AS identity_observation_column, to_regclass('public.jobs')::text AS jobs, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0011_erc8004_identity_observations.sql') AS migration_0011, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0012_verified_quote_identity_observation.sql') AS migration_0012, to_regclass('public.service_requests')::text AS service_requests, to_regclass('public.tasks')::text AS tasks, to_regclass('public.verified_quotes')::text AS verified_quotes",
     )
     const row = result.rows[0]
-    if (!row?.artifacts || !row.jobs || !row.tasks) {
+    if (
+      !row?.artifacts ||
+      !row.identity_observations ||
+      !row.identity_observation_column ||
+      !row.jobs ||
+      !row.migration_0011 ||
+      !row.migration_0012 ||
+      !row.service_requests ||
+      !row.tasks ||
+      !row.verified_quotes
+    ) {
       throw new Error("required database schema is unavailable")
     }
   }
@@ -85,6 +116,25 @@ export class PgApiStore implements ApiStore {
     return task?.buyer === buyer.toLowerCase() ? task : null
   }
 
+  async createServiceRequest(input: {
+    id: string
+    buyer: string
+    endpoint: string
+    idempotencyKey: string
+    envelope: ServiceRequestEnvelope
+  }): Promise<ServiceRequestCreation> {
+    return this.serviceRequests.create(input)
+  }
+
+  async getServiceRequest(id: string, buyer: string): Promise<ServiceRequestRecord | null> {
+    return this.serviceRequests.get(id, buyer)
+  }
+
+  async createVerifiedQuote(serviceRequestId: string, buyer: string): Promise<VerifiedQuoteCreation> {
+    if (this.verifiedQuoteCreator === null) throw new VerifiedQuoteCreationUnavailableError()
+    return this.verifiedQuoteCreator.create(serviceRequestId, buyer)
+  }
+
   async getJob(jobId: string, buyer: string): Promise<StoredJob | null> {
     const result = await this.pool.query("SELECT id, buyer, task_id, quote_id, chain_id, commerce, chain_job_id, work_state, financial_state, protocol_state, version, created_at, updated_at FROM jobs WHERE id = $1 AND buyer = lower($2)", [jobId, buyer])
     const value = result.rows[0] as unknown
@@ -108,6 +158,17 @@ export class PgApiStore implements ApiStore {
     )
     const value = result.rows[0] as unknown
     return value ? mapTask(value) : null
+  }
+}
+
+export interface VerifiedQuoteCreator {
+  create(serviceRequestId: string, buyer: string): Promise<VerifiedQuoteCreation>
+}
+
+export class VerifiedQuoteCreationUnavailableError extends Error {
+  constructor() {
+    super("owned seller quote orchestration is unavailable")
+    this.name = "VerifiedQuoteCreationUnavailableError"
   }
 }
 

@@ -1,5 +1,12 @@
 import type { TaskSpec } from "../../../packages/contracts/src/task.ts"
-import type { FinancialState, WorkState } from "../../../packages/db/src/index.ts"
+import type { ServiceRequestEnvelope } from "../../../packages/contracts/src/service-request.ts"
+import type {
+  FinancialState,
+  ServiceRequestCreation,
+  ServiceRequestRecord,
+  VerifiedQuoteCreation,
+  WorkState,
+} from "../../../packages/db/src/index.ts"
 
 export interface AccessScope {
   visibility: "PRIVATE"
@@ -57,6 +64,15 @@ export interface ApiStore {
   status(): Promise<void>
   createTask(buyer: string, task: TaskSpec, accessScope: AccessScope): Promise<TaskCreation>
   getTask(taskId: string, buyer: string): Promise<StoredTask | null>
+  createServiceRequest(input: {
+    id: string
+    buyer: string
+    endpoint: string
+    idempotencyKey: string
+    envelope: ServiceRequestEnvelope
+  }): Promise<ServiceRequestCreation>
+  getServiceRequest(id: string, buyer: string): Promise<ServiceRequestRecord | null>
+  createVerifiedQuote(serviceRequestId: string, buyer: string): Promise<VerifiedQuoteCreation>
   getJob(jobId: string, buyer: string): Promise<StoredJob | null>
 }
 

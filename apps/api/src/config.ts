@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { address } from "../../../packages/contracts/src/primitives.ts"
+import { loadOwnedSellerConfig, type OwnedSellerConfig } from "./owned-seller-config.ts"
 import type { ApiConfig } from "./types.ts"
 
 const environment = z.object({
@@ -9,7 +10,7 @@ const environment = z.object({
   KNOT_API_ALLOWED_ORIGIN: z.url(),
   KNOT_API_HOST: z.string().min(1).default("127.0.0.1"),
   KNOT_API_PORT: z.coerce.number().int().min(1).max(65_535).default(8787),
-  KNOT_API_MAX_BODY_BYTES: z.coerce.number().int().min(1_024).max(1_048_576).default(65_536),
+  KNOT_API_MAX_BODY_BYTES: z.coerce.number().int().min(1_024).max(1_048_576).default(131_072),
 })
 
 export interface ServerConfig {
@@ -17,6 +18,7 @@ export interface ServerConfig {
   host: string
   port: number
   api: ApiConfig
+  ownedSellers: OwnedSellerConfig
 }
 
 export const loadServerConfig = (source: NodeJS.ProcessEnv): ServerConfig => {
@@ -36,5 +38,6 @@ export const loadServerConfig = (source: NodeJS.ProcessEnv): ServerConfig => {
       maxBodyBytes: parsed.KNOT_API_MAX_BODY_BYTES,
       now: () => new Date(),
     },
+    ownedSellers: loadOwnedSellerConfig(source),
   }
 }

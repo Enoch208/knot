@@ -5,6 +5,8 @@ import { createApiHandler } from "./app.ts"
 import { loadServerConfig } from "./config.ts"
 import { PgApiStore } from "./pg-store.ts"
 import type { ApiRequest, ApiResponse } from "./types.ts"
+import { VerifiedQuoteOrchestrator } from "./verified-quote-orchestrator.ts"
+import { PgVerifiedQuotePersistence } from "./verified-quote-persistence.ts"
 
 const headerValue = (headers: IncomingHttpHeaders, name: string): string | undefined => {
   const value = headers[name]
@@ -47,7 +49,10 @@ const run = async (): Promise<void> => {
     connectionTimeoutMillis: 5_000,
     statement_timeout: 10_000,
   })
-  const store = new PgApiStore(pool)
+  const verifiedQuoteCreator = config.ownedSellers.enabled
+    ? new VerifiedQuoteOrchestrator(new PgVerifiedQuotePersistence(pool), config.ownedSellers, { now: config.api.now })
+    : null
+  const store = new PgApiStore(pool, verifiedQuoteCreator)
   await store.status()
   const handle = createApiHandler(store, config.api)
   const server = createServer((request, response) => {
