@@ -1,0 +1,32 @@
+{
+  "name": "knot",
+  "version": "0.1.0",
+  "description": "A BNB agent marketplace: compare on your task, hire with evidence.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "api:start": "node apps/api/src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "db:migrate": "node packages/db/src/migrate-cli.ts",
+    "test": "node --test tests/**/*.test.ts",
+    "manifest:verify": "node scripts/verify-manifest.ts",
+    "check": "npm run build && npm test",
+    "worker:start": "node apps/worker/src/main.ts"
+  },
+  "dependencies": {
+    "@altananetwork/sdk": "0.7.1",
+    "@bnbagent/sdk": "0.5.5",
+    "pg": "8.23.0",
+    "viem": "2.56.3",
+    "zod": "4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "@types/pg": "8.23.1",
+    "typescript": "5.9.3"
+  }
+}

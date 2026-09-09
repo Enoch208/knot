@@ -1,0 +1,61 @@
+{
+  "chainId": 97,
+  "label": "BSC testnet",
+  "rpcUrl": "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
+  "blockNumber": "129988431",
+  "observedAtUtc": "2026-09-09T08:08:40.952Z",
+  "writesPermitted": true,
+  "contracts": [
+    {
+      "role": "commerce",
+      "address": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+      "status": "VERIFIED",
+      "codeHash": "0x1f1858db4825be798342d4c094630bf5ddc685bd802a083d8d88f15a6cdb2a89",
+      "codeSize": 130,
+      "implementation": "0x153783ddbdf5233c591965f04644b1df2d1a7815",
+      "implementationCodeHash": "0x949f04b966cde30955d1daca5bf8605eed67db9ddc2b1cf86ac018bf3bf2e08f",
+      "proxyAdmin": null
+    },
+    {
+      "role": "router",
+      "address": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "status": "VERIFIED",
+      "codeHash": "0x1f1858db4825be798342d4c094630bf5ddc685bd802a083d8d88f15a6cdb2a89",
+      "codeSize": 130,
+      "implementation": "0x40c0254610d92f1eb9c2d7d5d2114bc4c99d935e",
+      "implementationCodeHash": "0xb523939a51d980e6bb482b6362806d06b2d75cee4e230d4ccb25f9acf0e44d18",
+      "proxyAdmin": null
+    },
+    {
+      "role": "policy",
+      "address": "0xd6a4217588f6b1f5657a92a3e94e6422ad771cea",
+      "status": "VERIFIED",
+      "codeHash": "0xe06798700c986d4387898a1dfde009d52c75f77c7d8dd1a3e179c02d5138cb9b",
+      "codeSize": 4413,
+      "implementation": null,
+      "implementationCodeHash": null,
+      "proxyAdmin": null
+    },
+    {
+      "role": "registry",
+      "address": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "status": "VERIFIED",
+      "codeHash": "0xd0e45b1d89fa9b6cc7e97c1f155d64180e5c232aaccf9900ef9d4fd738c02b41",
+      "codeSize": 130,
+      "implementation": "0x7274e874ca62410a93bd8bf61c69d8045e399c02",
+      "implementationCodeHash": "0xa5f9624ea85e45b3f4b8558581f03bfb3e6cefab278d7bf0500ec9bd065dc16f",
+      "proxyAdmin": null
+    },
+    {
+      "role": "paymentToken",
+      "address": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+      "status": "VERIFIED",
+      "codeHash": "0xae12b1d61f7ed4febf649ccf319cb49a0e921cca3739dcb01b47d316049d46ff",
+      "codeSize": 2007,
+      "implementation": null,
+      "implementationCodeHash": null,
+      "proxyAdmin": null
+    }
+  ],
+  "suspensions": []
+}
