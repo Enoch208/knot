@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "knot.task/1",
+  "taskId": "health_120862609",
+  "category": "health",
+  "capability": "analysis",
+  "identityChainId": 97,
+  "dataChainId": 56,
+  "paymentChainId": 97,
+  "executionChainId": null,
+  "target": {
+    "borrower": "0x553972e14d7aba642641971074b042aba55ad06e",
+    "comptroller": "0xfd36e2c2a6789db23113685031d7f16329158384",
+    "poolFamily": "venus-core"
+  },
+  "constraints": {
+    "safetyThresholdRatio": 1.5,
+    "actionThresholdRatio": 1.2,
+    "repaymentAsset": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    "maxRepaymentUnits": "1000000000000000000",
+    "gasBudgetWei": "5000000000000000",
+    "pollIntervalSeconds": 300,
+    "mode": "notify"
+  },
+  "serviceFeeLimit": {
+    "chainId": 97,
+    "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+    "units": "100000000000000000",
+    "decimals": 18
+  },
+  "managedPrincipal": [],
+  "executionSpendLimits": [],
+  "deadlineUtc": "2026-09-09T11:01:08.307Z",
+  "inputHash": "0xd13d4ebcbdf270ab724ca782214c900c79451528aab8aaf3e0b657e7cfd29c49",
+  "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3"
+}

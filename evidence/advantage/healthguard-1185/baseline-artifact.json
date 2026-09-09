@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "knot.health.artifact/1",
+  "category": "health",
+  "capability": "analysis",
+  "taskId": "health_120862609",
+  "status": "NO_DEBT",
+  "reasonCode": "NO_DEBT",
+  "assessedAtUtc": "2026-09-09T10:31:08.376Z",
+  "snapshot": {
+    "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3",
+    "chainId": 56,
+    "blockNumber": "120862609",
+    "blockHash": "0x6379a22b7eff758dbde2e219de3c2cabb395ae89c297cc19f01fc3388dee4d08"
+  },
+  "protocol": {
+    "family": "venus-core",
+    "comptroller": "0xfd36e2c2a6789db23113685031d7f16329158384",
+    "status": "active",
+    "forcedLiquidation": "paused"
+  },
+  "positions": [],
+  "metrics": {
+    "collateralValueUsdE18": "0",
+    "borrowingPowerCollateralUsdE18": "0",
+    "liquidationThresholdCollateralUsdE18": "0",
+    "debtValueUsdE18": "0",
+    "healthRatioE18": null
+  },
+  "missingCoverage": [],
+  "recommendation": "NONE",
+  "minimumEligibleAction": null,
+  "projectedPostAction": null,
+  "assumptions": [
+    "prices remain unchanged for projected repayment",
+    "USD values use 18 decimal fixed-point units"
+  ],
+  "limitations": [
+    "analysis only",
+    "does not guarantee liquidation prevention",
+    "does not execute repayment"
+  ]
+}

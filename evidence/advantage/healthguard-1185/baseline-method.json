@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "knot.health.baseline-method/1",
+  "id": "direct-venus-pinned-integer-math",
+  "version": "1.0.0",
+  "usesAgentOutput": false,
+  "input": "The identical closed knot.health.request/1 supplied to the paid seller, including the confirmed pinned BSC mainnet Venus snapshot.",
+  "procedure": [
+    "Read collateral and debt units only from the supplied pinned snapshot.",
+    "Compute collateral values with integer floor division and debt values with integer ceiling division.",
+    "Apply collateral-factor and liquidation-threshold basis points only to collateral-enabled markets.",
+    "Add explicitly supported special debt and classify zero total debt as NO_DEBT.",
+    "Return a closed knot.health.artifact/1 without reading the agent artifact."
+  ],
+  "snapshotSource": [
+    {
+      "uri": "bsc://56/venus-core",
+      "contentHash": "0xbdefc18b56193e24c7443b00132c9a0acf3a5b828371e3d41a31f6b24f76c378",
+      "method": "eth_call@blockNumber+hash-verification"
+    }
+  ]
+}

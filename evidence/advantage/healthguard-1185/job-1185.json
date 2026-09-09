@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "knot.health.advantage-job-evidence/1",
+  "recordedAtUtc": "2026-09-09T10:47:52.979Z",
+  "network": {
+    "chainId": 97,
+    "name": "BSC testnet",
+    "observationBlock": {
+      "number": "130009669",
+      "hash": "0x8df06965f298213cd3059e62232fa7b1973482762def9492b4385d1b12a12aa2",
+      "timestampUtc": "2026-09-09T10:47:53.000Z"
+    }
+  },
+  "dataInput": {
+    "chainId": 56,
+    "blockNumber": "120862609",
+    "blockHash": "0x6379a22b7eff758dbde2e219de3c2cabb395ae89c297cc19f01fc3388dee4d08",
+    "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3",
+    "capturedAtUtc": "2026-09-09T10:31:04.543Z"
+  },
+  "identity": {
+    "agentId": "2295",
+    "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "seller": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389"
+  },
+  "contracts": {
+    "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "paymentToken": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565"
+  },
+  "payment": {
+    "exactPriceBaseUnits": "100000000000000000",
+    "symbol": "U",
+    "decimals": 18,
+    "mainnetFundsUsed": false
+  },
+  "job": {
+    "id": "1185",
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budget": "100000000000000000",
+    "expiredAt": "1788952605",
+    "status": 3,
+    "submittedAt": "1788949939",
+    "deliverable": "0xbb2559bf77bf67beb1ca4a0a0d094fc67c3af53544daa5978a0bb745ccd1030a"
+  },
+  "challenge": {
+    "address": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+    "disputeWindowSeconds": "900",
+    "settlementEligibleAt": "1788950839"
+  },
+  "a2a": {
+    "endpoint": "https://knot-health.truematchx.com/",
+    "negotiation": {
+      "startedAtUtc": "2026-09-09T10:31:35.395Z",
+      "endedAtUtc": "2026-09-09T10:31:35.849Z",
+      "durationMs": 454,
+      "accepted": true,
+      "negotiationHash": "0xd266cfe5cb15f027fd5c3087ab982ce76271499e79749fc0a97b351466f6364c"
+    },
+    "notification": {
+      "startedAtUtc": "2026-09-09T10:32:10.350Z",
+      "endedAtUtc": "2026-09-09T10:32:13.266Z",
+      "durationMs": 2916,
+      "result": {
+        "status": "accepted",
+        "job_id": 1185,
+        "note": "delivery started; poll the chain (SUBMITTED / get_deliverable_url) for the result"
+      }
+    }
+  },
+  "transactions": {
+    "create": {
+      "hash": "0xbb7aef2ce100cb92a8e6d75a791ba1d033d790c36a0ced69682f6b518c73d18c",
+      "receiptStatus": "success",
+      "blockNumber": "130007536",
+      "blockHash": "0x37ab631bb87e289067f88730a28cc890fb8341708919fb3138d8ea2b134fca8b",
+      "timestampUtc": "2026-09-09T10:31:53.000Z",
+      "gasUsed": "2555089",
+      "effectiveGasPriceWei": "1000000000",
+      "walletPaidWei": "2555089000000000"
+    },
+    "register": {
+      "hash": "0xc2bccbd78b6886a72dad5affdb8e21d757305451d7b7006597e8f2315f8caeaf",
+      "receiptStatus": "success",
+      "blockNumber": "130007543",
+      "blockHash": "0xd4e2bde5fe0f3cad0bef3a9d70fba4941e26f6c03373a5762fa7b2dac3326c2c",
+      "timestampUtc": "2026-09-09T10:31:57.000Z",
+      "gasUsed": "324911",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "setBudget": {
+      "hash": "0x8d10f7c2790cbf3d7163cfa3a040cd34a104609df1182c41d3b816fd57714e8a",
+      "receiptStatus": "success",
+      "blockNumber": "130007550",
+      "blockHash": "0xf629633866b800e4abfccc94a6c2c5b574eb9476c783a2a1048b47af0be3411b",
+      "timestampUtc": "2026-09-09T10:32:00.000Z",
+      "gasUsed": "96162",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "fund": {
+      "hash": "0x87a959df782b31fa174443d8fe017751f718cf2b275c1c5660eb0cbf6a04c393",
+      "receiptStatus": "success",
+      "blockNumber": "130007562",
+      "blockHash": "0x521139f8d96254966b2d12da263b6331e5a5a8941c281e3121b5f004f01db29a",
+      "timestampUtc": "2026-09-09T10:32:05.000Z",
+      "gasUsed": "102529",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "submit": {
+      "hash": "0x8b952d4a5a5cd882a65c716b0f15479bf62196207f0dfa57feab2cb78f51f0af",
+      "receiptStatus": "success",
+      "blockNumber": "130007592",
+      "blockHash": "0x0f4891051db1dbbae55e0e93caf106cfd5075160b8ca5bd3fdfdac89e0261c2d",
+      "timestampUtc": "2026-09-09T10:32:19.000Z",
+      "gasUsed": "380156",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0"
+    },
+    "settle": {
+      "hash": "0xe0e7ffbdd4cddad0f852d3710dde30d734416f30480378edfe227f41823e92ca",
+      "receiptStatus": "success",
+      "blockNumber": "130009656",
+      "blockHash": "0x007cb5ced8993c35a426b93a193c70f6c54c2b46f8f6143279497a5a0dd862cb",
+      "timestampUtc": "2026-09-09T10:47:47.000Z",
+      "gasUsed": "117631",
+      "effectiveGasPriceWei": "0",
+      "walletPaidWei": "0",
+      "paymentTransfer": {
+        "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "amountBaseUnits": "100000000000000000",
+        "logIndex": 0
+      }
+    }
+  },
+  "paymentBalances": {
+    "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "beforeBlock": "130007535",
+    "buyerBefore": "1900000000000000000",
+    "sellerBefore": "100000000000000000",
+    "afterBlock": "130009669",
+    "buyerAfter": "1800000000000000000",
+    "sellerAfter": "200000000000000000"
+  },
+  "deliverable": {
+    "url": "https://knot-artifacts.truematchx.com/knot-deliverables/healthguard/sha256/581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2.json",
+    "rawSha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+    "rawByteLength": 1546,
+    "rawSha256MatchesUrl": true,
+    "manifestKeccak256": "0xbb2559bf77bf67beb1ca4a0a0d094fc67c3af53544daa5978a0bb745ccd1030a",
+    "manifestHashMatchesOnChain": true,
+    "artifactSchema": "passed",
+    "taskAndSnapshotIdentity": "passed",
+    "artifact": {
+      "schemaVersion": "knot.health.artifact/1",
+      "category": "health",
+      "capability": "analysis",
+      "taskId": "health_120862609",
+      "status": "NO_DEBT",
+      "reasonCode": "NO_DEBT",
+      "assessedAtUtc": "2026-09-09T10:32:13.318Z",
+      "snapshot": {
+        "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3",
+        "chainId": 56,
+        "blockNumber": "120862609",
+        "blockHash": "0x6379a22b7eff758dbde2e219de3c2cabb395ae89c297cc19f01fc3388dee4d08"
+      },
+      "protocol": {
+        "family": "venus-core",
+        "comptroller": "0xfd36e2c2a6789db23113685031d7f16329158384",
+        "status": "active",
+        "forcedLiquidation": "paused"
+      },
+      "positions": [],
+      "metrics": {
+        "collateralValueUsdE18": "0",
+        "borrowingPowerCollateralUsdE18": "0",
+        "liquidationThresholdCollateralUsdE18": "0",
+        "debtValueUsdE18": "0",
+        "healthRatioE18": null
+      },
+      "missingCoverage": [],
+      "recommendation": "NONE",
+      "minimumEligibleAction": null,
+      "projectedPostAction": null,
+      "assumptions": [
+        "prices remain unchanged for projected repayment",
+        "USD values use 18 decimal fixed-point units"
+      ],
+      "limitations": [
+        "analysis only",
+        "does not guarantee liquidation prevention",
+        "does not execute repayment"
+      ]
+    }
+  },
+  "verification": {
+    "contentAddress": "passed",
+    "onChainManifestHash": "passed",
+    "closedArtifactSchema": "passed",
+    "signedTaskIdentity": "passed",
+    "settlementReceipt": "passed",
+    "terminalState": "COMPLETED"
+  },
+  "limitations": [
+    "The paid flow and settlement use testnet U on BSC testnet; no mainnet funds or writes were used.",
+    "NO_DEBT describes one confirmed pinned BSC mainnet snapshot and does not describe later borrower state.",
+    "This single paired run establishes an observed result, not repeatability or superiority."
+  ]
+}

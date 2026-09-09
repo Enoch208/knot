@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "knot.advantage.dataset/1",
+  "generatedAtUtc": "2026-09-09T10:47:52.979Z",
+  "experiments": [
+    {
+      "schemaVersion": "knot.advantage.experiment/1",
+      "experimentId": "healthguard-1185",
+      "evidenceClass": "testnet_observation",
+      "task": {
+        "spec": {
+          "category": "health",
+          "target": {
+            "borrower": "0x553972e14d7aba642641971074b042aba55ad06e",
+            "comptroller": "0xfd36e2c2a6789db23113685031d7f16329158384",
+            "poolFamily": "venus-core"
+          },
+          "constraints": {
+            "safetyThresholdRatio": 1.5,
+            "actionThresholdRatio": 1.2,
+            "repaymentAsset": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+            "maxRepaymentUnits": "1000000000000000000",
+            "gasBudgetWei": "5000000000000000",
+            "pollIntervalSeconds": 300,
+            "mode": "notify"
+          },
+          "schemaVersion": "knot.task/1",
+          "taskId": "health_120862609",
+          "capability": "analysis",
+          "identityChainId": 97,
+          "dataChainId": 56,
+          "paymentChainId": 97,
+          "executionChainId": null,
+          "serviceFeeLimit": {
+            "chainId": 97,
+            "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565",
+            "units": "100000000000000000",
+            "decimals": 18
+          },
+          "managedPrincipal": [],
+          "executionSpendLimits": [],
+          "deadlineUtc": "2026-09-09T11:01:08.307Z",
+          "inputHash": "0xd13d4ebcbdf270ab724ca782214c900c79451528aab8aaf3e0b657e7cfd29c49",
+          "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3"
+        },
+        "reference": {
+          "uri": "task.json",
+          "sha256": "5434975755f05851f41da33d4e34978f5136bbc4c324f472cb8c45e00a8c3b84",
+          "byteLength": 1127,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:31:35.395Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "input": {
+        "uri": "input.json",
+        "sha256": "08b7712fec37dab5bd65ccee878d2576a8f013dfeb6a0d69345d7f7544944deb",
+        "byteLength": 2374,
+        "mediaType": "application/json",
+        "observedAtUtc": "2026-09-09T10:31:04.543Z",
+        "evidenceClass": "mainnet_observation"
+      },
+      "agentPath": {
+        "kind": "agent",
+        "agent": {
+          "chainId": 97,
+          "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+          "agentId": "2295"
+        },
+        "operatorRelationship": "same_operator_reference",
+        "methodId": "healthguard-erc8183-permanent",
+        "methodVersion": "1.0.0",
+        "inputIdentity": {
+          "taskId": "health_120862609",
+          "taskInputHash": "0xd13d4ebcbdf270ab724ca782214c900c79451528aab8aaf3e0b657e7cfd29c49",
+          "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3",
+          "inputSha256": "08b7712fec37dab5bd65ccee878d2576a8f013dfeb6a0d69345d7f7544944deb"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T10:31:35.395Z",
+          "endedAtUtc": "2026-09-09T10:32:19.000Z",
+          "durationMs": 43605
+        },
+        "costs": [
+          {
+            "kind": "service_fee",
+            "amount": {
+              "units": "100000000000000000",
+              "decimals": 18,
+              "symbol": "U",
+              "chainId": 97,
+              "token": "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565"
+            },
+            "provenance": {
+              "uri": "agent-service-cost.json",
+              "sha256": "8a621a4d739dcc32fc7ac3b3a6eda789f02afc8d3350417fedccd36c9c087dcd",
+              "byteLength": 395,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T10:32:05.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          },
+          {
+            "kind": "network_fee",
+            "amount": {
+              "units": "2555089000000000",
+              "decimals": 18,
+              "symbol": "tBNB",
+              "chainId": 97,
+              "token": null
+            },
+            "provenance": {
+              "uri": "agent-network-cost.json",
+              "sha256": "f3d3d8012713362c2d40c0cf23ceb193cdf82e9b4440f7f48e29e690376ed080",
+              "byteLength": 624,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T10:47:47.000Z",
+              "evidenceClass": "testnet_observation"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "agent-manifest.json",
+          "sha256": "581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2",
+          "byteLength": 1546,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:47:52.979Z",
+          "evidenceClass": "testnet_observation"
+        },
+        "artifact": {
+          "uri": "agent-artifact.json",
+          "sha256": "b2ebb5d8205a8a2e9347420e2374b4ccf4a520769e938444ecb498ad83ac342b",
+          "byteLength": 1240,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:32:13.318Z",
+          "evidenceClass": "testnet_observation"
+        }
+      },
+      "baselinePath": {
+        "kind": "non_agent_baseline",
+        "methodId": "direct-venus-pinned-integer-math",
+        "methodVersion": "1.0.0",
+        "implementation": {
+          "uri": "baseline-method.json",
+          "sha256": "f7792a634c1db8f76b4b24b15b9d20bea35b72673be74fa867becd97ad1c14ba",
+          "byteLength": 998,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:31:08.376Z",
+          "evidenceClass": "mainnet_observation"
+        },
+        "usesSameInput": true,
+        "usesAgentOutput": false,
+        "inputIdentity": {
+          "taskId": "health_120862609",
+          "taskInputHash": "0xd13d4ebcbdf270ab724ca782214c900c79451528aab8aaf3e0b657e7cfd29c49",
+          "snapshotId": "0x97dd61185dc3f8a13c0c36f98642cec566c0fdfa143eecd5b585ce4e98cc79e3",
+          "inputSha256": "08b7712fec37dab5bd65ccee878d2576a8f013dfeb6a0d69345d7f7544944deb"
+        },
+        "observation": {
+          "startedAtUtc": "2026-09-09T10:31:08.375Z",
+          "endedAtUtc": "2026-09-09T10:31:08.376Z",
+          "durationMs": 1
+        },
+        "costs": [
+          {
+            "kind": "compute",
+            "amount": {
+              "units": "1",
+              "decimals": 0,
+              "symbol": "ms",
+              "chainId": null,
+              "token": null
+            },
+            "provenance": {
+              "uri": "baseline-compute-cost.json",
+              "sha256": "6b33d9366fef0c65788407bf8a043735ae3403e0b66e13c556dcfe8fa71f63a2",
+              "byteLength": 307,
+              "mediaType": "application/json",
+              "observedAtUtc": "2026-09-09T10:31:08.376Z",
+              "evidenceClass": "mainnet_observation"
+            }
+          }
+        ],
+        "rawOutput": {
+          "uri": "baseline-observation.json",
+          "sha256": "40f8943c14d42eddc40bdf32de2c1b4745cff486acf526a364764843629ad5a9",
+          "byteLength": 1704,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:31:08.376Z",
+          "evidenceClass": "mainnet_observation"
+        },
+        "artifact": {
+          "uri": "baseline-artifact.json",
+          "sha256": "ac82cc536d7ecffac2374839808a61a7ed2b83c7a274c525eaee02925f635ef9",
+          "byteLength": 1240,
+          "mediaType": "application/json",
+          "observedAtUtc": "2026-09-09T10:31:08.376Z",
+          "evidenceClass": "mainnet_observation"
+        }
+      },
+      "evaluation": {
+        "evaluator": {
+          "id": "healthguard-independent",
+          "version": "1.0.0"
+        },
+        "decisionRule": "lexicographic",
+        "dimensions": [
+          {
+            "id": "contract_integrity",
+            "label": "Closed artifact and input identity",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity and observation time match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "artifact identity and observation time match"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "risk_classification",
+            "label": "Risk-state classification",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "status matches independent classification"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "status matches independent classification"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "deterministic_math",
+            "label": "Collateral, debt, threshold, and health math",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "reported metrics match independent integer arithmetic"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "reported metrics match independent integer arithmetic"
+            },
+            "result": "tie"
+          },
+          {
+            "id": "bounded_recommendation",
+            "label": "Recommendation and bounded repayment",
+            "toleranceBps": 0,
+            "agent": {
+              "scoreBps": 10000,
+              "rationale": "recommendation and repayment bound match"
+            },
+            "baseline": {
+              "scoreBps": 10000,
+              "rationale": "recommendation and repayment bound match"
+            },
+            "result": "tie"
+          }
+        ]
+      },
+      "comparison": {
+        "winner": "tie",
+        "agentWins": 0,
+        "baselineWins": 0,
+        "ties": 4,
+        "decisiveDimensionId": null
+      }
+    }
+  ]
+}
