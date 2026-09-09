@@ -13,6 +13,7 @@ import {
   MIN_TICK,
   sqrtRatioAtTick,
 } from "./rangeMath.js";
+import { deflateRawSync, inflateRawSync } from "node:zlib";
 
 const BASE_ASSUMPTIONS = [
   "all position, pool, price, liquidity, ownership, and balance fields share the identified block",
@@ -21,19 +22,28 @@ const BASE_ASSUMPTIONS = [
 ];
 const UNAVAILABLE = ["realized fees", "historical time in range", "future yield", "swap price impact"];
 export const SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-base64url/1:";
+export const COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX = "knot-json-deflate-base64url/1:";
+const MAX_DECOMPRESSED_TASK_BYTES = 65_536;
 
 export function encodeSignedTaskTransport(text: string): string {
   return `${SIGNED_TASK_TRANSPORT_PREFIX}${Buffer.from(text, "utf8").toString("base64url")}`;
 }
 
+export function encodeCompressedSignedTaskTransport(text: string): string {
+  return `${COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX}${deflateRawSync(Buffer.from(text, "utf8")).toString("base64url")}`;
+}
+
 export function decodeSignedTaskTransport(text: string): string | null {
-  if (!text.startsWith(SIGNED_TASK_TRANSPORT_PREFIX)) return text;
-  const payload = text.slice(SIGNED_TASK_TRANSPORT_PREFIX.length);
+  const compressed = text.startsWith(COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX);
+  if (!compressed && !text.startsWith(SIGNED_TASK_TRANSPORT_PREFIX)) return text;
+  const prefix = compressed ? COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX : SIGNED_TASK_TRANSPORT_PREFIX;
+  const payload = text.slice(prefix.length);
   if (!/^[A-Za-z0-9_-]+$/.test(payload) || payload.length % 4 === 1) return null;
   try {
     const bytes = Buffer.from(payload, "base64url");
     if (bytes.toString("base64url") !== payload) return null;
-    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    const decoded = compressed ? inflateRawSync(bytes, { maxOutputLength: MAX_DECOMPRESSED_TASK_BYTES }) : bytes;
+    return new TextDecoder("utf-8", { fatal: true }).decode(decoded);
   } catch {
     return null;
   }

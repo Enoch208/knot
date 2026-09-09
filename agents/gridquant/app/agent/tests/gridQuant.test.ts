@@ -2,9 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { sanitizeForClaim } from "@bnbagent/sdk/erc8183";
 import {
+  COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX,
   SIGNED_TASK_TRANSPORT_PREFIX,
   analyzeGridQuant,
   analyzeGridQuantText,
+  encodeCompressedSignedTaskTransport,
   encodeSignedTaskTransport,
 } from "../src/gridQuant.js";
 import { gridQuantArtifact } from "../src/gridSchemas.js";
@@ -130,6 +132,19 @@ test("preserves signed JSON through the ERC-8183 claim sanitizer", () => {
   const artifact = JSON.parse(analyzeGridQuantText(encoded, NOW)) as Record<string, unknown>;
   assert.equal(artifact.status, "ANALYZED");
   assert.equal(artifact.taskId, "grid-1");
+});
+
+test("bounded compression preserves a large signed request under the claim limit", () => {
+  const raw = JSON.stringify(gridFixture());
+  const encoded = encodeCompressedSignedTaskTransport(raw);
+  assert.ok(encoded.startsWith(COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX));
+  assert.ok(encoded.length < encodeSignedTaskTransport(raw).length);
+  assert.equal(sanitizeForClaim(encoded), encoded);
+  const artifact = JSON.parse(analyzeGridQuantText(encoded, NOW)) as Record<string, unknown>;
+  assert.equal(artifact.status, "ANALYZED");
+  assert.equal(artifact.taskId, "grid-1");
+  const malformed = `${COMPRESSED_SIGNED_TASK_TRANSPORT_PREFIX}eJw`;
+  assert.equal(JSON.parse(analyzeGridQuantText(malformed, NOW)).reasonCode, "INVALID_JSON");
 });
 
 test("malformed transport and unknown fields fail closed", () => {
