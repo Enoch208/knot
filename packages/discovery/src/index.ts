@@ -21,3 +21,11 @@ export {
   type ScanAgentItem,
   type ScanAgentPage,
 } from "./types.ts"
+export {
+  auditionOutcome,
+  auditionStageName,
+  thirdPartyAuditionReport,
+  ThirdPartyAuditionError,
+  verifyThirdPartyAudition,
+  type ThirdPartyAuditionReport,
+} from "./audition.ts"

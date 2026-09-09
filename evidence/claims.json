@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T11:07:27.000Z",
+  "updatedAtUtc": "2026-09-09T11:27:46.000Z",
   "revision": {
-    "baseCommit": "237a4b8225559db18bb291a003a76aa5df7fdaa3",
+    "baseCommit": "20fb4bf3e2dbcf91fc06b91af65960471fed5f7a",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -794,6 +794,82 @@
         "Ground-truth labels were not supplied to Slither; the evaluator consumed separately produced and hash-preserved artifacts.",
         "The corpus contains only six synthetic fixtures, and its 2/9 recall and 0/3 holdout result do not establish comprehensive audit quality.",
         "No production-security, deployment, or on-chain execution result is claimed."
+      ]
+    },
+    {
+      "id": "third-party-health-audition-2293",
+      "claim": "A read-only preflight verified that BSC testnet agent 2293 was registered and exposed a live A2A card; it did not verify a compatible callable task, quote capability, hireability, or operator independence.",
+      "status": "PARTIAL",
+      "evidenceClasses": [
+        "testnet_observation",
+        "publisher_claim"
+      ],
+      "scope": {
+        "chainId": 97,
+        "agentId": "2293",
+        "category": "health",
+        "searchMatchCount": 68,
+        "selectedCandidateCount": 1,
+        "registeredCount": 1,
+        "endpointLiveCount": 1,
+        "callableCount": 0,
+        "quoteCapableCount": 0,
+        "hireableCount": 0,
+        "inputProvenance": "CALLER_ATTESTED",
+        "comparisonToKnotHealthGuard": "PARTIAL",
+        "operatorIndependence": "NOT_PROVEN",
+        "walletSignaturesRequested": false,
+        "paymentsAttempted": false,
+        "chainWritesAttempted": false,
+        "purchasesAttempted": false
+      },
+      "observedAtUtc": "2026-09-09T11:27:46.000Z",
+      "sources": [
+        {
+          "type": "repository_file",
+          "path": "evidence/testnet/third-party-health-audition-2293.json"
+        },
+        {
+          "type": "https_probe",
+          "url": "https://8004scan.io/api/v1/agents/97/2293",
+          "httpStatus": 200,
+          "observation": {
+            "chainId": 97,
+            "agentId": "2293",
+            "identityMatched": true
+          }
+        },
+        {
+          "type": "https_probe",
+          "url": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/reference-provider/agent-card",
+          "httpStatus": 200,
+          "observation": {
+            "protocol": "A2A/0.3",
+            "skillId": "health_factor_monitor",
+            "endpointDurability": "EPHEMERAL"
+          }
+        },
+        {
+          "type": "https_probe",
+          "url": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/commerce/quote",
+          "httpStatus": 503,
+          "observation": {
+            "reasonCode": "COMMERCE_DISABLED",
+            "quoteIssued": false
+          }
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/discovery/audition.test.ts",
+          "command": "node --test tests/discovery/audition.test.ts"
+        }
+      ],
+      "limitations": [
+        "The selection intentionally covers known candidate 97:2293 first and is not an exhaustive audition of all 68 search matches.",
+        "A JSON-RPC validation error proves that a handler responded, not that a valid compatible task completed.",
+        "The quote endpoint returned COMMERCE_DISABLED, and no quote, purchase, funding, delivery, or comparison result is claimed.",
+        "Different registry-owner addresses do not establish that the controlling people or organizations are independent.",
+        "The candidate accepts caller-attested values while KNOT HealthGuard uses pinned Venus evidence, so their outputs are not directly equivalent without a normalized task."
       ]
     },
     {

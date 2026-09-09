@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "knot.discovery.third-party-audition/1",
+  "observedAtUtc": "2026-09-09T11:27:46.000Z",
+  "scope": {
+    "chainId": 97,
+    "searchTerm": "health",
+    "discoveryRequestUri": "https://8004scan.io/api/v1/agents?limit=100&chain_id=97&search=health",
+    "returnedCount": 68,
+    "matchingTotal": 68,
+    "selectionPolicy": "Known agent 97:2293 was selected first because its registered capability is the closest caller-attested health-factor reference category; this is not an exhaustive audition of all search matches."
+  },
+  "safety": {
+    "walletSignaturesRequested": false,
+    "paymentsAttempted": false,
+    "chainWritesAttempted": false,
+    "purchasesAttempted": false
+  },
+  "candidates": [
+    {
+      "identity": {
+        "chainId": 97,
+        "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+        "agentId": "2293",
+        "ownerAddress": "0x230072625f8090d5271c5f882748ce11134ac2ba",
+        "name": "BNBEra Reference Health-Factor Provider",
+        "registrationTransactionHash": "0xbd884a3225c7c28a838e01cf3a4b4b7d917c6da51ff15d297cb6f9fd344d93bd"
+      },
+      "operatorRelationship": {
+        "status": "NOT_PROVEN",
+        "candidateOwnerDiffersFromKnot": true,
+        "knotOwnerAddress": "0xaf7474d06f171e6fd72fc5af114b34f3d5af8389",
+        "basis": "8004scan reported a candidate owner different from KNOT HealthGuard agent 2295's owner.",
+        "limitation": "Different registry-owner addresses do not prove that the controlling people or organizations are independent."
+      },
+      "compatibility": {
+        "category": "health",
+        "inputProvenance": "CALLER_ATTESTED",
+        "comparisonToKnotHealthGuard": "PARTIAL",
+        "endpointDurability": "EPHEMERAL",
+        "detail": "The capability computes health factor from caller-attested collateral, debt, and threshold inputs; KNOT HealthGuard consumes pinned Venus position evidence, so outputs are not equivalent without an explicitly normalized task."
+      },
+      "advertised": {
+        "protocols": [
+          "A2A/0.3"
+        ],
+        "skillIds": [
+          "health_factor_monitor"
+        ],
+        "quoteAdvertised": false
+      },
+      "stages": {
+        "registered": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:27:46.000Z",
+          "source": "8004scan_detail",
+          "sourceUri": "https://8004scan.io/api/v1/agents/97/2293",
+          "httpStatus": 200,
+          "reasonCode": "IDENTITY_MATCH",
+          "detail": "The live index returned chain 97, agent 2293, its owner, registration transaction, A2A service, and registered metadata."
+        },
+        "endpointLive": {
+          "outcome": "VERIFIED",
+          "observedAtUtc": "2026-09-09T11:27:46.000Z",
+          "source": "agent_card",
+          "sourceUri": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/reference-provider/agent-card",
+          "httpStatus": 200,
+          "reasonCode": "CARD_SCHEMA_VALID",
+          "detail": "The endpoint returned an A2A 0.3 JSON card with JSONRPC transport and the health_factor_monitor capability."
+        },
+        "callable": {
+          "outcome": "UNVERIFIED",
+          "observedAtUtc": "2026-09-09T11:27:46.000Z",
+          "source": "a2a_message_send",
+          "sourceUri": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/reference-provider/agent-card",
+          "httpStatus": 400,
+          "reasonCode": "VALID_TASK_NOT_RUN",
+          "detail": "A read-only message/send probe reached a JSON-RPC handler and returned -32602, but a valid invocation requires a real jobKey and providerBinding; no unpurchased task was represented as a real job."
+        },
+        "quoteCapable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:27:46.000Z",
+          "source": "quote_endpoint",
+          "sourceUri": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/commerce/quote",
+          "httpStatus": 503,
+          "reasonCode": "COMMERCE_DISABLED",
+          "detail": "A read-only caller-attested task quote request returned COMMERCE_DISABLED with retriable false and next action configure_auth_boundary."
+        },
+        "hireable": {
+          "outcome": "FAILED",
+          "observedAtUtc": "2026-09-09T11:27:46.000Z",
+          "source": "derived",
+          "sourceUri": "https://consultation-refugees-proc-encountered.trycloudflare.com/api/commerce/quote",
+          "httpStatus": null,
+          "reasonCode": "PREREQUISITES_UNMET",
+          "detail": "Hireability is not established because no valid task invocation completed, quote issuance failed, and the advertised endpoint is an ephemeral trycloudflare URL."
+        }
+      },
+      "limitations": [
+        "The agent card and readiness response establish endpoint availability, not successful task execution.",
+        "The 8004scan identity is not endpoint-verified and the endpoint uses an ephemeral Quick Tunnel hostname.",
+        "No quote, purchase, funding, delivery, comparison result, or operator independence is claimed."
+      ]
+    }
+  ],
+  "summary": {
+    "registeredCount": 1,
+    "endpointLiveCount": 1,
+    "callableCount": 0,
+    "quoteCapableCount": 0,
+    "hireableCount": 0,
+    "conclusion": "Agent 97:2293 is registered and its card was live, but this observation did not establish a callable compatible task, quote capability, or hireability."
+  }
+}
