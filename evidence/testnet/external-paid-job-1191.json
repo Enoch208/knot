@@ -1,0 +1,278 @@
+{
+  "schemaVersion": "knot.external-paid-job-failure/1",
+  "capturedAtUtc": "2026-09-09T15:37:08.838Z",
+  "outcome": {
+    "classification": "FAILURE",
+    "reason": "EXPIRED_WITHOUT_DELIVERY",
+    "deliveryReceived": false,
+    "providerPaymentBaseUnits": "0"
+  },
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "realFunds": false,
+    "mainnetWrites": false,
+    "contracts": {
+      "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+      "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+    }
+  },
+  "identity": {
+    "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "agentId": "2159",
+    "name": "Relic BNB Grid Trader",
+    "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "ownerObservedBeforeFunding": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "ownerAtTerminal": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "knotSellerAddresses": [
+      "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+      "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+      "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+      "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3"
+    ]
+  },
+  "operatorRelationship": "external_distinct_owner",
+  "taskDescription": "KNOT paid external compatibility test: produce one read-only BNB/USDT grid plan on BNB Chain using a 700 to 800 USDT range, 5 arithmetic levels, 1000 USDT analysis budget, 100 USDT minimum order size, 5 bps maximum slippage, and no transaction execution. State the network, price source, units, constraints, and limitations. No wallet key, capital authority, swap, approval, or mainnet write is authorized.",
+  "quote": {
+    "request": {
+      "task_description": "KNOT paid external compatibility test: produce one read-only BNB/USDT grid plan on BNB Chain using a 700 to 800 USDT range, 5 arithmetic levels, 1000 USDT analysis budget, 100 USDT minimum order size, 5 bps maximum slippage, and no transaction execution. State the network, price source, units, constraints, and limitations. No wallet key, capital authority, swap, approval, or mainnet write is authorized.",
+      "terms": {
+        "deliverables": "One structured read-only BNB/USDT grid analysis artifact.",
+        "quality_standards": "State network, source, observation time, units, constraints, and limitations; no transaction execution.",
+        "evaluation_required": true,
+        "evaluator_type": "uma_oov3"
+      }
+    },
+    "request_hash": "0x1c2ed9fc30cee609426a15643502f9cfb209e03afd3f456489c0ef538c9b9fa9",
+    "response": {
+      "accepted": true,
+      "terms": {
+        "deliverables": "One structured read-only BNB/USDT grid analysis artifact.",
+        "quality_standards": "State network, source, observation time, units, constraints, and limitations; no transaction execution.",
+        "evaluation_required": true,
+        "evaluator_type": "uma_oov3",
+        "price": "10000000000000000",
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+      },
+      "estimated_completion_seconds": 600,
+      "quote_expires_at": 1788959746,
+      "negotiated_at": 1788958846
+    },
+    "response_hash": "0x32e58fd970dbaf054bd1cd10b59c79f7d2d81b6f2868f7c9d71f7c889ef399cd",
+    "negotiation_hash": "0xffde930a41114cabd7b5773f538b34780c6d95323667c2edbd0457e35c4ff511",
+    "provider_sig": "0xc13ee065ee079f94f3d07974962d520c251cf8bab23ed301d525d946f90727f64082d76a49253a4c985683a38f51c4ab2531be443a98d3b306afc6ac337ce5381cf6f7baf1ea06f26520a8965a2f6e02eacc175e0aeb73b2a38ff2648a5798ce4f00",
+    "chain_id": 97,
+    "verifying_contract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+  },
+  "signature": {
+    "valid": true,
+    "method": "erc1271",
+    "signer": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "verificationBasis": "live-pre-funding",
+    "historicalRecheck": "UNAVAILABLE",
+    "historicalRecheckReason": "public RPC historical state pruned"
+  },
+  "safety": {
+    "mainnetWritesAuthorized": false,
+    "executionAuthorized": false,
+    "maximumServicePaymentBaseUnits": "10000000000000000",
+    "paymentNetwork": "BSC testnet",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+  },
+  "observations": {
+    "cardUrl": "https://p01--relic-grid-trader-gateway--b28z25yb24gx.code.run/.well-known/agent-card.json",
+    "endpoint": "https://p01--relic-grid-trader-gateway--b28z25yb24gx.code.run/apex",
+    "cardName": "Relic BNB Grid Trader",
+    "publishedInvocationUrl": "https://p01--relic-grid-trader-gateway--b28z25yb24gx.code.run/apex",
+    "registryNameMatchesCardName": true,
+    "selectedEndpointMatchesPublishedUrl": true,
+    "cardObservedAtUtc": "2026-09-09T13:00:48.022Z",
+    "initialAllowanceBaseUnits": "0",
+    "initialBuyerBalanceBaseUnits": "1500000000000000000"
+  },
+  "onChainDescription": "{\"chain_id\":97,\"currency\":\"0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565\",\"negotiated_at\":1788958846,\"negotiation_hash\":\"0xffde930a41114cabd7b5773f538b34780c6d95323667c2edbd0457e35c4ff511\",\"price\":\"10000000000000000\",\"provider_sig\":\"0xc13ee065ee079f94f3d07974962d520c251cf8bab23ed301d525d946f90727f64082d76a49253a4c985683a38f51c4ab2531be443a98d3b306afc6ac337ce5381cf6f7baf1ea06f26520a8965a2f6e02eacc175e0aeb73b2a38ff2648a5798ce4f00\",\"quote_expires_at\":1788959746,\"task\":\"KNOT paid external compatibility test: produce one read-only BNB/USDT grid plan on BNB Chain using a 700 to 800 USDT range, 5 arithmetic levels, 1000 USDT analysis budget, 100 USDT minimum order size, 5 bps maximum slippage, and no transaction execution. State the network, price source, units, constraints, and limitations. No wallet key, capital authority, swap, approval, or mainnet write is authorized.\",\"terms\":{\"deliverables\":\"One structured read-only BNB/USDT grid analysis artifact.\",\"quality_standards\":\"State network, source, observation time, units, constraints, and limitations; no transaction execution.\"},\"verifying_contract\":\"0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE\",\"version\":1}",
+  "transactions": {
+    "create": {
+      "hash": "0x5192c5d956c90284ac3a702707099f92e115e0d2006df2949d736fa4182aac8f",
+      "status": "success",
+      "blockNumber": "130027415",
+      "blockHash": "0x00f5f79605374fcc8f49b42dbffa758fbac4dd49f2337e0f5b4d99b40a4a4c2b",
+      "timestamp": "1788958859",
+      "timestampUtc": "2026-09-09T13:00:59.000Z",
+      "gasUsed": "1056439",
+      "effectiveGasPriceWei": "0"
+    },
+    "register": {
+      "hash": "0x9df52f374abf0974e2e4995d5f31ebfed9ea60cf449285b47f9f9573c8ed8664",
+      "status": "success",
+      "blockNumber": "130027426",
+      "blockHash": "0xd34a39cbe9cb50dbde301cbeede5f6a4a39c00524953fb4fe68d433c62651cb5",
+      "timestamp": "1788958864",
+      "timestampUtc": "2026-09-09T13:01:04.000Z",
+      "gasUsed": "178122",
+      "effectiveGasPriceWei": "0"
+    },
+    "approve": {
+      "hash": "0xa484006a08b738d85c71edd1056e12b971c3d6ef791d673bd3526232ae01915b",
+      "status": "success",
+      "blockNumber": "130027432",
+      "blockHash": "0xee97525376040087c88fba46efb79b9ffb8f89092a584e757acb967cdcbbf283",
+      "timestamp": "1788958867",
+      "timestampUtc": "2026-09-09T13:01:07.000Z",
+      "gasUsed": "60245",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "setBudget": {
+      "hash": "0x05fe013e589da815606c7e752201ecfa801a2ef270205cd87d8e6ef1f1598fb1",
+      "status": "success",
+      "blockNumber": "130027445",
+      "blockHash": "0x104459bf283a4543a2ae6ffec9e0990761e7dd5b7968da7938f8efc4e4371aa7",
+      "timestamp": "1788958873",
+      "timestampUtc": "2026-09-09T13:01:13.000Z",
+      "gasUsed": "96150",
+      "effectiveGasPriceWei": "0"
+    },
+    "fund": {
+      "hash": "0x408be0beaf03e55d7d075baaddc4993e994f48f4418cbb6d746531538e2ef0c0",
+      "status": "success",
+      "blockNumber": "130027464",
+      "blockHash": "0x0d7b9e0420b959443d5b58094afc7ee25ffcbf8ee3c13f70a30ce28bb06a73cb",
+      "timestamp": "1788958881",
+      "timestampUtc": "2026-09-09T13:01:21.000Z",
+      "gasUsed": "102517",
+      "effectiveGasPriceWei": "0"
+    },
+    "refund": {
+      "hash": "0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0",
+      "status": "success",
+      "blockNumber": "130047367",
+      "blockHash": "0xc4e83feb299edd53a6be4592725eabf4ae6be53cfd733be2b3429f6278927c9e",
+      "timestamp": "1788967838",
+      "timestampUtc": "2026-09-09T15:30:38.000Z",
+      "gasUsed": "75631",
+      "effectiveGasPriceWei": "0"
+    },
+    "markExpired": {
+      "hash": "0x81da14040d920eaa7d3fc38d20ee7331dffceb6766e8684e1c68f34b0607e705",
+      "status": "success",
+      "blockNumber": "130047414",
+      "blockHash": "0x0d3bce00ab1ce8278eb7979d5ab21a49354573ee401a596d3b1154386b70799a",
+      "timestamp": "1788967859",
+      "timestampUtc": "2026-09-09T15:30:59.000Z",
+      "gasUsed": "150871",
+      "effectiveGasPriceWei": "0"
+    }
+  },
+  "events": {
+    "created": [
+      {
+        "jobId": "1191",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "expiredAt": "1788962442",
+        "blockNumber": "130027415",
+        "transactionHash": "0x5192c5d956c90284ac3a702707099f92e115e0d2006df2949d736fa4182aac8f"
+      }
+    ],
+    "registered": [
+      {
+        "jobId": "1191",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "blockNumber": "130027426",
+        "transactionHash": "0x9df52f374abf0974e2e4995d5f31ebfed9ea60cf449285b47f9f9573c8ed8664"
+      }
+    ],
+    "funded": [
+      {
+        "jobId": "1191",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+        "amount": "10000000000000000",
+        "blockNumber": "130027464",
+        "transactionHash": "0x408be0beaf03e55d7d075baaddc4993e994f48f4418cbb6d746531538e2ef0c0"
+      }
+    ],
+    "submitted": [],
+    "finalised": [
+      {
+        "jobId": "1191",
+        "status": 5,
+        "blockNumber": "130047414",
+        "transactionHash": "0x81da14040d920eaa7d3fc38d20ee7331dffceb6766e8684e1c68f34b0607e705"
+      }
+    ],
+    "refundTransfers": [
+      {
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "value": "10000000000000000",
+        "blockNumber": "130047367",
+        "transactionHash": "0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0"
+      }
+    ]
+  },
+  "lifecycle": {
+    "jobId": "1191",
+    "expiredAt": "1788962442",
+    "terminalStatus": "EXPIRED",
+    "terminalStatusCode": 5,
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "hook": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budgetBaseUnits": "10000000000000000",
+    "deliverableHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "submittedAt": "0",
+    "deliverableUrl": null,
+    "policy": "0x0000000000000000000000000000000000000000",
+    "disputeWindowSeconds": "900",
+    "policySubmittedAt": "0",
+    "disputed": false,
+    "inflightJobCountAfterReconciliation": "364"
+  },
+  "notify": {
+    "observedAtUtc": "2026-09-09T13:01:35.224Z",
+    "result": {
+      "status": "accepted",
+      "job_id": 1191,
+      "note": "delivery started; poll the chain (SUBMITTED / get_deliverable_url) for the result"
+    }
+  },
+  "preRefundObservation": {
+    "observedAtUtc": "2026-09-09T15:29:53.244Z",
+    "status": 1,
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "hook": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budgetBaseUnits": "10000000000000000",
+    "expiredAt": "1788962442",
+    "deliverableHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "submittedAt": "0",
+    "deliverableUrl": null
+  },
+  "refund": {
+    "observedAtUtc": "2026-09-09T15:30:38.910Z",
+    "balanceBeforeBaseUnits": "1490000000000000000",
+    "balanceAfterBaseUnits": "1500000000000000000",
+    "refundedBaseUnits": "10000000000000000",
+    "terminalStatus": "EXPIRED",
+    "reconciledAtUtc": "2026-09-09T15:31:00.298Z"
+  },
+  "expectedPriceBaseUnits": "10000000000000000",
+  "limitations": [
+    "This is one point-in-time BSC testnet job and does not establish repeatability, uptime, performance, profit, or mainnet readiness.",
+    "No real funds or mainnet writes were used; the task was analysis-only and authorized no transaction execution.",
+    "A distinct ERC-8004 owner and non-KNOT service URL do not prove institutional independence.",
+    "The pre-funding ERC-1271 authorization was not historically rechecked because public RPC historical state was pruned when terminal evidence was captured.",
+    "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+    "The service accepted the funded notification but produced no on-chain submission or deliverable before expiry.",
+    "The exact testnet escrow was recovered after expiry; the provider received no payment.",
+    "The failure does not establish that the candidate is hireable or reliable for future tasks."
+  ]
+}

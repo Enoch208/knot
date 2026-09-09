@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "knot.external-paid-job-failure/1",
+  "capturedAtUtc": "2026-09-09T18:22:13.065Z",
+  "outcome": {
+    "classification": "FAILURE",
+    "reason": "EXPIRED_WITHOUT_DELIVERY",
+    "deliveryReceived": false,
+    "providerPaymentBaseUnits": "0"
+  },
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "realFunds": false,
+    "mainnetWrites": false,
+    "contracts": {
+      "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+      "router": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+      "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+    }
+  },
+  "identity": {
+    "registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+    "agentId": "1923",
+    "name": "weighrange-agent",
+    "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "ownerObservedBeforeFunding": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "ownerAtTerminal": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "knotSellerAddresses": [
+      "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+      "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+      "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+      "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3"
+    ]
+  },
+  "operatorRelationship": "external_distinct_owner",
+  "taskDescription": "KNOT paid external compatibility audition: analyze PancakeSwap v3 position NFT 7391321 through position manager 0x46a15b0b27311cedf172ab29e4f4766fbe7f4364 in pool 0x172fcd41e0913e95784454622d1c3724f546f849 on BNB Smart Chain mainnet, chain 56. Produce one read-only range-health assessment and bounded re-centering plan using a minimum range width of 100 ticks, target width of 1200 ticks, maximum width of 5000 ticks, maximum slippage of 50 bps, and a 300-second cooldown. Pin evidence to a current canonical block number and block hash. No wallet key, managed capital, liquidity removal, fee collection, mint, approval, swap, or mainnet write is authorized.",
+  "quote": {
+    "request": {
+      "task_description": "KNOT paid external compatibility audition: analyze PancakeSwap v3 position NFT 7391321 through position manager 0x46a15b0b27311cedf172ab29e4f4766fbe7f4364 in pool 0x172fcd41e0913e95784454622d1c3724f546f849 on BNB Smart Chain mainnet, chain 56. Produce one read-only range-health assessment and bounded re-centering plan using a minimum range width of 100 ticks, target width of 1200 ticks, maximum width of 5000 ticks, maximum slippage of 50 bps, and a 300-second cooldown. Pin evidence to a current canonical block number and block hash. No wallet key, managed capital, liquidity removal, fee collection, mint, approval, swap, or mainnet write is authorized.",
+      "terms": {
+        "deliverables": "One structured read-only PancakeSwap v3 assessment for position NFT 7391321, including current range status and a bounded re-centering plan or valid no-action result.",
+        "quality_standards": "Use BSC mainnet chain 56 and identify the exact position manager, token ID, and pool; include canonical block number and hash, observation time, tick and price units, current range, proposed bounds, constraints, reason code, provenance, and limitations; no transaction execution.",
+        "evaluation_required": true,
+        "evaluator_type": "uma_oov3"
+      }
+    },
+    "request_hash": "0xfedc14af7e19368340f87803c0b03de3ab5950784f811276ee883d6adccafaba",
+    "response": {
+      "accepted": true,
+      "terms": {
+        "deliverables": "One structured read-only PancakeSwap v3 assessment for position NFT 7391321, including current range status and a bounded re-centering plan or valid no-action result.",
+        "quality_standards": "Use BSC mainnet chain 56 and identify the exact position manager, token ID, and pool; include canonical block number and hash, observation time, tick and price units, current range, proposed bounds, constraints, reason code, provenance, and limitations; no transaction execution.",
+        "evaluation_required": true,
+        "evaluator_type": "uma_oov3",
+        "price": "100000000000000000",
+        "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+      },
+      "estimated_completion_seconds": 600,
+      "quote_expires_at": 1788974822,
+      "negotiated_at": 1788973922
+    },
+    "response_hash": "0xd53164c90ee68890da1d4bede955166747559e605f54dcb93b70d5e28c716439",
+    "negotiation_hash": "0x88ef1c24cfef230774df9c7f6aef15daa59159b30c4569ac8d95cd7610b93a38",
+    "provider_sig": "0xef70c909dbce609895bb0700dd8faaa37b63af5f91454c38873442ebf2eb8096588942038d387d33403789b947c488bf19b55cef9c7c08b4c0ad6879a5a6c1321c",
+    "chain_id": 97,
+    "verifying_contract": "0xa206c0517b6371c6638cd9e4a42cc9f02a33b0de"
+  },
+  "signature": {
+    "valid": true,
+    "method": "eip191",
+    "signer": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "verificationBasis": "live-pre-funding",
+    "signedMessage": "negotiation_hash_utf8",
+    "historicalRecheck": "NOT_APPLICABLE",
+    "historicalRecheckReason": "EIP-191 signer recovery is independent of historical chain state"
+  },
+  "safety": {
+    "mainnetWritesAuthorized": false,
+    "executionAuthorized": false,
+    "maximumServicePaymentBaseUnits": "100000000000000000",
+    "paymentNetwork": "BSC testnet",
+    "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565"
+  },
+  "observations": {
+    "cardUrl": "https://weigh-range-agent.onrender.com/.well-known/agent-card.json",
+    "endpoint": "https://weigh-range-agent.onrender.com",
+    "cardName": "weighrange-agent",
+    "publishedInvocationUrl": "https://weigh-range-agent.onrender.com",
+    "registryNameMatchesCardName": true,
+    "selectedEndpointMatchesPublishedUrl": true,
+    "cardObservedAtUtc": "2026-09-09T17:12:03.020Z",
+    "initialAllowanceBaseUnits": "0",
+    "initialBuyerBalanceBaseUnits": "1500000000000000000"
+  },
+  "onChainDescription": "{\"chain_id\":97,\"currency\":\"0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565\",\"negotiated_at\":1788973922,\"negotiation_hash\":\"0x88ef1c24cfef230774df9c7f6aef15daa59159b30c4569ac8d95cd7610b93a38\",\"price\":\"100000000000000000\",\"provider_sig\":\"0xef70c909dbce609895bb0700dd8faaa37b63af5f91454c38873442ebf2eb8096588942038d387d33403789b947c488bf19b55cef9c7c08b4c0ad6879a5a6c1321c\",\"quote_expires_at\":1788974822,\"task\":\"KNOT paid external compatibility audition: analyze PancakeSwap v3 position NFT 7391321 through position manager 0x46a15b0b27311cedf172ab29e4f4766fbe7f4364 in pool 0x172fcd41e0913e95784454622d1c3724f546f849 on BNB Smart Chain mainnet, chain 56. Produce one read-only range-health assessment and bounded re-centering plan using a minimum range width of 100 ticks, target width of 1200 ticks, maximum width of 5000 ticks, maximum slippage of 50 bps, and a 300-second cooldown. Pin evidence to a current canonical block number and block hash. No wallet key, managed capital, liquidity removal, fee collection, mint, approval, swap, or mainnet write is authorized.\",\"terms\":{\"deliverables\":\"One structured read-only PancakeSwap v3 assessment for position NFT 7391321, including current range status and a bounded re-centering plan or valid no-action result.\",\"quality_standards\":\"Use BSC mainnet chain 56 and identify the exact position manager, token ID, and pool; include canonical block number and hash, observation time, tick and price units, current range, proposed bounds, constraints, reason code, provenance, and limitations; no transaction execution.\"},\"verifying_contract\":\"0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE\",\"version\":1}",
+  "transactions": {
+    "create": {
+      "hash": "0xa74950d9c6e907f988726d0a1b0a714250b9d21ea6f5a891274bcbc135374f80",
+      "status": "success",
+      "blockNumber": "130060893",
+      "blockHash": "0x960ec7bcfc63e158a6f79894a3ea756d4465c19a2aff36f704c5d9b2b291acbd",
+      "timestamp": "1788973925",
+      "timestampUtc": "2026-09-09T17:12:05.000Z",
+      "gasUsed": "1396968",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "register": {
+      "hash": "0x3e301a1b85bf6f5c253afa72b7e6eac520f4fd726163c397679b78dcbd8b886b",
+      "status": "success",
+      "blockNumber": "130060897",
+      "blockHash": "0x34a11a829e6b50aee7861dfb04e49e473263a19b8f0e4c00bbcf582b6df7860b",
+      "timestamp": "1788973926",
+      "timestampUtc": "2026-09-09T17:12:06.000Z",
+      "gasUsed": "211471",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "approve": {
+      "hash": "0x2cdc33be6afd31c111610540699ca7f0f1f586638feffc692bfcc7a6c6717fb9",
+      "status": "success",
+      "blockNumber": "130060902",
+      "blockHash": "0x77599468da0cace91d2b33b4ca25eeba205925d6fc824422514be19b25590d59",
+      "timestamp": "1788973929",
+      "timestampUtc": "2026-09-09T17:12:09.000Z",
+      "gasUsed": "60257",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "setBudget": {
+      "hash": "0x728a6a7b2b8d8070a41b43b27929b8ac53cc42b013d7d66588ec67b5c1703037",
+      "status": "success",
+      "blockNumber": "130060908",
+      "blockHash": "0x06fc60373b6ef16ce410cf194220351ce2810aa84bf14ae4cb68d7993fae94e1",
+      "timestamp": "1788973931",
+      "timestampUtc": "2026-09-09T17:12:11.000Z",
+      "gasUsed": "96162",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "fund": {
+      "hash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+      "status": "success",
+      "blockNumber": "130060913",
+      "blockHash": "0x22e911b1845dbb81532e7df093dce1faa87ba7f8dbecba72977bc0ed4a7e155b",
+      "timestamp": "1788973934",
+      "timestampUtc": "2026-09-09T17:12:14.000Z",
+      "gasUsed": "102529",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "refund": {
+      "hash": "0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004",
+      "status": "success",
+      "blockNumber": "130069834",
+      "blockHash": "0xb0867484c937a6f0a5c9a3b42627f3b6a4d7eba7f95455bf8e9bbd3dcc1eb33b",
+      "timestamp": "1788977948",
+      "timestampUtc": "2026-09-09T18:19:08.000Z",
+      "gasUsed": "75631",
+      "effectiveGasPriceWei": "1000000000"
+    },
+    "markExpired": {
+      "hash": "0x2df0eca643504efd53e97b6d40a9c8868d4d1c8e0fa64e679d45b582da855f9f",
+      "status": "success",
+      "blockNumber": "130069851",
+      "blockHash": "0x7e0a12c6338a44c6bc7e8a481eb50ee3e0cad652fded409cdc31892b2c74fc34",
+      "timestamp": "1788977956",
+      "timestampUtc": "2026-09-09T18:19:16.000Z",
+      "gasUsed": "184220",
+      "effectiveGasPriceWei": "1000000000"
+    }
+  },
+  "events": {
+    "created": [
+      {
+        "jobId": "1203",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "expiredAt": "1788977521",
+        "blockNumber": "130060893",
+        "transactionHash": "0xa74950d9c6e907f988726d0a1b0a714250b9d21ea6f5a891274bcbc135374f80"
+      }
+    ],
+    "registered": [
+      {
+        "jobId": "1203",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "blockNumber": "130060897",
+        "transactionHash": "0x3e301a1b85bf6f5c253afa72b7e6eac520f4fd726163c397679b78dcbd8b886b"
+      }
+    ],
+    "funded": [
+      {
+        "jobId": "1203",
+        "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+        "amount": "100000000000000000",
+        "blockNumber": "130060913",
+        "transactionHash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf"
+      }
+    ],
+    "submitted": [],
+    "finalised": [
+      {
+        "jobId": "1203",
+        "status": 5,
+        "blockNumber": "130069851",
+        "transactionHash": "0x2df0eca643504efd53e97b6d40a9c8868d4d1c8e0fa64e679d45b582da855f9f"
+      }
+    ],
+    "refundTransfers": [
+      {
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "value": "100000000000000000",
+        "blockNumber": "130069834",
+        "transactionHash": "0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004"
+      }
+    ]
+  },
+  "lifecycle": {
+    "jobId": "1203",
+    "expiredAt": "1788977521",
+    "terminalStatus": "EXPIRED",
+    "terminalStatusCode": 5,
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "hook": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budgetBaseUnits": "100000000000000000",
+    "deliverableHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "submittedAt": "0",
+    "deliverableUrl": null,
+    "policy": "0x0000000000000000000000000000000000000000",
+    "disputeWindowSeconds": "900",
+    "policySubmittedAt": "0",
+    "disputed": false,
+    "inflightJobCountAfterReconciliation": "368"
+  },
+  "notify": {
+    "observedAtUtc": "2026-09-09T17:12:26.320Z",
+    "result": {
+      "status": "accepted",
+      "job_id": 1203,
+      "note": "delivery started; poll the chain (SUBMITTED / get_deliverable_url) for the result"
+    }
+  },
+  "preRefundObservation": {
+    "observedAtUtc": "2026-09-09T18:18:21.365Z",
+    "status": 1,
+    "client": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+    "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "hook": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+    "budgetBaseUnits": "100000000000000000",
+    "expiredAt": "1788977521",
+    "deliverableHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "submittedAt": "0",
+    "deliverableUrl": null
+  },
+  "refund": {
+    "observedAtUtc": "2026-09-09T18:19:09.035Z",
+    "balanceBeforeBaseUnits": "1400000000000000000",
+    "balanceAfterBaseUnits": "1500000000000000000",
+    "refundedBaseUnits": "100000000000000000",
+    "terminalStatus": "EXPIRED",
+    "reconciledAtUtc": "2026-09-09T18:19:16.608Z"
+  },
+  "expectedPriceBaseUnits": "100000000000000000",
+  "limitations": [
+    "This is one point-in-time BSC testnet job and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+    "No real funds or mainnet writes were used; the task was read-only analysis and authorized no transaction execution.",
+    "A distinct ERC-8004 registry owner and non-KNOT service URL do not prove operator, organizational, or institutional independence.",
+    "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+    "The EIP-191 signer was recovered from the signed negotiation hash, but this proves only control of the quoted EOA key at signing time.",
+    "The service accepted the funded notification but produced no on-chain submission or deliverable before expiry.",
+    "The exact testnet escrow was recovered after expiry; the provider received no payment.",
+    "This failure does not establish that the candidate is hireable for future tasks.",
+    "One failed observation does not establish the seller's future reliability."
+  ]
+}
