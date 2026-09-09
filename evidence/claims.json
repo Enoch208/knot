@@ -1,6 +1,6 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T09:34:12.158Z",
+  "updatedAtUtc": "2026-09-09T09:57:00.000Z",
   "revision": {
     "baseCommit": "7cfae39aa57f67b367e7e8babcd594f9f6f4fbfe",
     "branch": "main"
@@ -292,7 +292,7 @@
     },
     {
       "id": "healthguard-job-1180-submitted-invalid",
-      "claim": "BSC testnet HealthGuard job 1180 was funded and reached SUBMITTED with a hash-matched deliverable, but the artifact was INVALID_REQUEST/INVALID_JSON after @bnbagent/sdk 0.5.5 changed JSON array brackets to parentheses; the buyer disputed the job.",
+      "claim": "BSC testnet HealthGuard job 1180 was funded and submitted with a hash-matched deliverable, but the artifact was INVALID_REQUEST/INVALID_JSON after @bnbagent/sdk 0.5.5 changed JSON array brackets to parentheses; the buyer disputed it and recovered the full 0.1 U escrow through claimRefund after expiry.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation",
@@ -306,12 +306,14 @@
         "priceBaseUnits": "100000000000000000",
         "artifactStatus": "INVALID_REQUEST",
         "reasonCode": "INVALID_JSON",
-        "finalObservedProtocolState": "SUBMITTED",
-        "disputed": true
+        "finalObservedProtocolState": "EXPIRED",
+        "disputed": true,
+        "refundTransactionHash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+        "refundedAmountBaseUnits": "100000000000000000"
       },
       "observationWindow": {
         "fromUtc": "2026-09-09T09:10:32.000Z",
-        "toUtc": "2026-09-09T09:24:04.000Z"
+        "toUtc": "2026-09-09T09:55:45.000Z"
       },
       "sources": [
         {
@@ -322,12 +324,19 @@
           "type": "deliverable",
           "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7.json",
           "sha256": "067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7"
+        },
+        {
+          "type": "testnet_transaction",
+          "transactionHash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+          "url": "https://testnet.bscscan.com/tx/0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+          "receiptStatus": "success",
+          "blockNumber": "130002718"
         }
       ],
       "limitations": [
         "The submitted artifact correctly refused malformed input but did not assess the requested health snapshot.",
-        "The job was SUBMITTED and disputed, not settled, at the observation block.",
-        "No refund, rejection, settlement, or seller earnings are claimed."
+        "The job did not assess the requested health snapshot and is not counted as a successful service delivery.",
+        "The full escrow was refunded to the buyer; no seller earnings are claimed for this job."
       ]
     },
     {
@@ -411,7 +420,7 @@
       "limitations": [
         "This claim is limited to one HealthGuard job on BSC testnet.",
         "It does not establish repeatability, coverage of the other services, mainnet payment readiness, or strategy performance.",
-        "Job 1180 remains separately recorded as a disputed, unsettled invalid-input submission."
+        "Job 1180 remains separately recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path."
       ]
     },
     {

@@ -1,12 +1,12 @@
 {
   "schemaVersion": "knot.testnet-job-evidence/1",
-  "recordedAtUtc": "2026-09-09T09:25:30Z",
+  "recordedAtUtc": "2026-09-09T09:57:00Z",
   "network": {
     "name": "BSC testnet",
     "chainId": 97,
-    "observationBlockNumber": "129998494",
-    "observationBlockHash": "0x5c1f44f6a5510e043a939948605168dd7d3d9f088fc7e657ed23e8fc61583535",
-    "observationBlockTimestampUtc": "2026-09-09T09:24:04.000Z",
+    "observationBlockNumber": "130002718",
+    "observationBlockHash": "0x1658f4d185c9a4be877ad0575f4b3734017babf685e591a8cf6f8186a32b6e4c",
+    "observationBlockTimestampUtc": "2026-09-09T09:55:45.000Z",
     "rpcUsed": "https://bsc-testnet-rpc.publicnode.com",
     "transactionExplorerBaseUrl": "https://testnet.bscscan.com/tx/"
   },
@@ -36,10 +36,12 @@
     "quoteExpiresAtUtc": "2026-09-09T09:24:45.000Z",
     "jobExpiresAtUtc": "2026-09-09T09:55:22.000Z",
     "submittedAtUtc": "2026-09-09T09:11:33.000Z",
-    "finalObservedProtocolState": "SUBMITTED",
+    "finalObservedProtocolState": "EXPIRED",
     "disputed": true,
     "settlementTransactionHash": null,
-    "settlementTerminalState": null,
+    "settlementTerminalState": "EXPIRED",
+    "refundTransactionHash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+    "refundedAmountBaseUnits": "100000000000000000",
     "onChainDeliverableHash": "0x18722bb6b158a88c502925e272b657866bb3ce4f2a87e19137cf4806791d6342"
   },
   "transactions": {
@@ -84,7 +86,32 @@
       "blockNumber": "129997656",
       "blockHash": "0xdb7ec8087e0e6f4a6c655e3bc8605780a690dd98e0dae6b42c48703cf604bcd3",
       "timestampUtc": "2026-09-09T09:17:47.000Z"
+    },
+    "claimRefund": {
+      "hash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+      "receiptStatus": "success",
+      "blockNumber": "130002718",
+      "blockHash": "0x1658f4d185c9a4be877ad0575f4b3734017babf685e591a8cf6f8186a32b6e4c",
+      "timestampUtc": "2026-09-09T09:55:45.000Z",
+      "caller": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+      "target": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+      "gasUsed": "75708",
+      "refundTransfer": {
+        "logIndex": 34,
+        "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "from": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "to": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "amountBaseUnits": "100000000000000000"
+      }
     }
+  },
+  "postRefundBalances": {
+    "observedAtBlockNumber": "130002718",
+    "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "buyerBaseUnits": "1900000000000000000",
+    "buyerDisplay": "1.9 U",
+    "sellerBaseUnits": "100000000000000000",
+    "sellerDisplay": "0.1 U"
   },
   "deliverable": {
     "url": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7.json",
@@ -150,11 +177,14 @@
     "artifactSchemaPath": "agents/healthguard/app/agent/src/healthSchemas.ts",
     "manifestIntegrity": "passed",
     "artifactSchema": "passed",
-    "assessmentOutcome": "invalid input refused"
+    "assessmentOutcome": "invalid input refused",
+    "refundReceipt": "passed",
+    "refundPaymentTransfer": "passed",
+    "terminalProtocolState": "EXPIRED"
   },
   "limitations": [
     "Submission and manifest integrity succeeded, but the delivered assessment did not evaluate the requested health snapshot.",
-    "The job remains SUBMITTED and disputed at the observation block; no settlement, refund, rejection, or seller earnings are claimed.",
+    "The disputed job reached EXPIRED after its deadline, and claimRefund returned the full 0.1 U escrow to the buyer; no seller earnings are claimed for this job.",
     "This is one BSC testnet observation and is not a reliability or performance benchmark."
   ]
 }
