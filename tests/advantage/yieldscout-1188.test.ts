@@ -3,7 +3,10 @@ import { createHash } from "node:crypto"
 import { readdir, readFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
 import test from "node:test"
+import { inflateRawSync } from "node:zlib"
+import { recoverMessageAddress, type Hex } from "viem"
 import { AdvantageValidationError, validateExperimentDataset } from "../../packages/advantage/src/runner.ts"
+import type { ExperimentDataset } from "../../packages/advantage/src/schemas.ts"
 import { YieldScoutIndependentEvaluator } from "../../packages/advantage/src/yieldscout.ts"
 
 const datasetPath = resolve("evidence/advantage/yieldscout-1188/dataset.json")
@@ -26,18 +29,21 @@ test("the paid YieldScout experiment is independently reproducible from raw evid
   assert.ok(experiment?.evaluation.dimensions.every((dimension) => dimension.agent.scoreBps === 10_000 && dimension.baseline.scoreBps === 10_000))
 })
 
-test("job 1188, frozen input, task, snapshot, manifest, and artifact remain byte-bound", async () => {
-  const [paidSource, taskBytes, inputBytes, manifestBytes, artifactBytes, snapshotBytes] = await Promise.all([
+test("job 1188, frozen input, task, snapshot, signed quote, manifest, and artifact remain byte-bound", async () => {
+  const [paidSource, taskBytes, inputBytes, negotiationBytes, manifestBytes, artifactBytes, snapshotBytes, dataset] = await Promise.all([
     readFile(resolve(evidenceRoot, "paid-jobs-source.json")),
     readFile(resolve(evidenceRoot, "task.json")),
     readFile(resolve(evidenceRoot, "input.json")),
+    readFile(resolve(evidenceRoot, "agent-negotiate-observation.json")),
     readFile(resolve(evidenceRoot, "agent-manifest.json")),
     readFile(resolve(evidenceRoot, "agent-artifact.json")),
     readFile(resolve(evidenceRoot, "source-market-snapshot.json")),
+    loadDataset(),
   ])
   assert.equal(sha256(paidSource), "902c43995c0b05425c4aa52433b7ae193d839d9f896b0568ce792cf27550c13e")
   assert.equal(sha256(taskBytes), "b8e706e5bfd5073bc2faa4b5e3476657d24b35925e6055fdee2b0182e126df60")
   assert.equal(sha256(inputBytes), "8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b")
+  assert.equal(sha256(negotiationBytes), "6b0193a011a8fa5f369229dbee29743e8407a81d08e765db61b5d4e4e659921c")
   assert.equal(sha256(manifestBytes), "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9")
   assert.equal(sha256(artifactBytes), "615a5208021eee8ae6ac14a8da32b0ba38ce48f07f2486c87220734609fab7b6")
 
@@ -75,6 +81,20 @@ test("job 1188, frozen input, task, snapshot, manifest, and artifact remain byte
   const input = JSON.parse(inputBytes.toString("utf8")) as { taskId: string; snapshot: unknown }
   const snapshot = JSON.parse(snapshotBytes.toString("utf8")) as { extractedWithoutMutationFrom: string; snapshot: unknown }
   const manifest = JSON.parse(manifestBytes.toString("utf8")) as { job_id: number; response: { content: string } }
+  const negotiation = JSON.parse(negotiationBytes.toString("utf8")) as {
+    startedAtUtc: string
+    request: { params: { message: { parts: Array<{ data: { task_description: string } }> } } }
+    response: { result: { parts: Array<{ data: { negotiation_hash: Hex; provider_sig: Hex } }> } }
+  }
+  const signed = negotiation.response.result.parts[0]?.data
+  assert.ok(signed)
+  const description = negotiation.request.params.message.parts[0]?.data.task_description
+  assert.ok(description)
+  assert.ok(description.startsWith("knot-json-deflate-base64url/1:"))
+  assert.deepEqual(inflateRawSync(Buffer.from(description.slice("knot-json-deflate-base64url/1:".length), "base64url")), inputBytes)
+  const recovered = await recoverMessageAddress({ message: signed.negotiation_hash, signature: signed.provider_sig })
+  assert.equal(recovered.toLowerCase(), "0x6fd04720c7fccb6dcebf6cf08dd6f5c764c7d8e3")
+  assert.equal(negotiation.startedAtUtc, dataset.experiments[0]?.agentPath.observation.startedAtUtc)
   assert.equal(task.inputHash, job?.taskBinding.inputHash)
   assert.equal(task.snapshotId, job?.taskBinding.snapshotId)
   assert.equal(manifest.job_id, 1188)
@@ -104,6 +124,7 @@ test("the historical replay records its later measured runtime without posing as
   const baselineArtifact = JSON.parse(baselineArtifactSource) as { assessedAtUtc: string; status: string; recommendation: string; selectedMarketId: string | null }
   const agentArtifact = JSON.parse(agentArtifactSource) as { assessedAtUtc: string; status: string; recommendation: string; selectedMarketId: string | null }
   const experiment = dataset.experiments[0]
+  assert.ok(experiment)
 
   assert.equal(observation.evidenceClass, "historical_replay")
   assert.equal(method.evidenceBoundary.classification, "historical_replay")
@@ -174,8 +195,8 @@ test("the committed YieldScout corpus contains no credential material", async ()
   }
 })
 
-async function loadDataset(): Promise<any> {
-  return JSON.parse(await readFile(datasetPath, "utf8")) as unknown
+async function loadDataset(): Promise<ExperimentDataset> {
+  return JSON.parse(await readFile(datasetPath, "utf8")) as ExperimentDataset
 }
 
 async function localResolver(reference: { uri: string }): Promise<Uint8Array> {

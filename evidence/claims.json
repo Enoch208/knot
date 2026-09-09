@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T11:34:55.952Z",
+  "updatedAtUtc": "2026-09-09T12:39:02.000Z",
   "revision": {
-    "baseCommit": "8a5d734d9b856b22a536eedce6510da388cf165b",
+    "baseCommit": "fe1857951c7c97db47c883acb453ee973b5d0c33",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -998,36 +998,92 @@
     },
     {
       "id": "comparative-benchmarks",
-      "claim": "One paired HealthGuard experiment has been published: the paid agent path and independent direct-calculation baseline used the exact same pinned no-debt input and tied across all four independently recomputed quality dimensions; no comparative result is published for the other three analysis categories.",
+      "claim": "One paid paired experiment is published for each of KNOT's four finance categories. The agent and non-agent reference paths used the same frozen input within each pair, and independent evaluators reproduced four quality ties: HealthGuard across 4 dimensions, RangePilot across 6, GridQuant across 5, and YieldScout across 5.",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "mainnet_observation",
-        "testnet_observation"
+        "testnet_observation",
+        "historical_replay"
       ],
       "scope": {
         "measuredComponents": [
-          "HealthGuard"
-        ],
-        "unmeasuredComponents": [
+          "HealthGuard",
           "RangePilot",
           "GridQuant",
           "YieldScout"
         ],
-        "experimentId": "healthguard-1185",
-        "qualityResult": "tie",
-        "qualityDimensionTies": 4
+        "unmeasuredComponents": [],
+        "experiments": [
+          {
+            "service": "HealthGuard",
+            "experimentId": "healthguard-1185",
+            "qualityResult": "tie",
+            "qualityDimensionTies": 4,
+            "exactTaskToRawInputBinding": false
+          },
+          {
+            "service": "RangePilot",
+            "experimentId": "rangepilot-1189",
+            "qualityResult": "tie",
+            "qualityDimensionTies": 6,
+            "exactTaskToRawInputBinding": true
+          },
+          {
+            "service": "GridQuant",
+            "experimentId": "gridquant-1187",
+            "qualityResult": "tie",
+            "qualityDimensionTies": 5,
+            "exactTaskToRawInputBinding": true
+          },
+          {
+            "service": "YieldScout",
+            "experimentId": "yieldscout-1188",
+            "qualityResult": "tie",
+            "qualityDimensionTies": 5,
+            "exactTaskToRawInputBinding": true
+          }
+        ],
+        "pairedExperimentCount": 4,
+        "qualityResult": "four ties",
+        "exactTaskToRawInputBindingCount": 3
       },
       "sources": [
         {
           "type": "paired_experiment_dataset",
           "path": "evidence/advantage/healthguard-1185/dataset.json",
           "command": "npm run advantage:verify -- evidence/advantage/healthguard-1185/dataset.json"
+        },
+        {
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/rangepilot-1189/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/rangepilot-1189/dataset.json"
+        },
+        {
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/gridquant-1187/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/gridquant-1187/dataset.json"
+        },
+        {
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/yieldscout-1188/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/yieldscout-1188/dataset.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "docs/AGENT_ADVANTAGE_REPORT.md"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/advantage/report.test.ts",
+          "command": "node --test tests/advantage/report.test.ts"
         }
       ],
       "limitations": [
-        "The quality tie is one no-debt HealthGuard observation, not a superiority or repeatability result.",
-        "The differently scoped timing and cost observations do not establish a speed or cost advantage.",
-        "No comparative return, win-rate, execution, or live-trading result is claimed."
+        "Each quality tie covers one input and does not establish superiority or repeatability.",
+        "RangePilot, GridQuant, and YieldScout use later historical-replay baselines; HealthGuard uses calculation-only timing. None of the baseline measurements is timing-comparable to the full agent lifecycle.",
+        "HealthGuard's two paths share the same separately SHA-256-bound committed input, but its TaskSpec input hash does not match those raw bytes; no authentic signed-task preimage binding is claimed for that pair.",
+        "All four sellers and reference implementations are operated by KNOT; evaluator independence means scores are recomputed from raw evidence, not independent business ownership.",
+        "No speed, human-time, cost, profit, APY, return, savings, PnL, win-rate, execution, or live-trading advantage is claimed."
       ]
     }
   ]
