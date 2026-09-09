@@ -1,0 +1,8 @@
+.studio/
+agentcore/.env.local
+node_modules/
+dist/
+.DS_Store
+*.swp
+.idea/
+.vscode/
