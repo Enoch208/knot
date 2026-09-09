@@ -32,3 +32,8 @@ key_prefix = "rangepilot"
 public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
 endpoint = "http://object-store:9000"
 credential_mode = "env"
+
+[identity]
+endpoint = "https://knot-range.truematchx.com/.well-known/agent-card.json"
+registered_at = "2026-09-09T10:26:23.084Z"
+agent_id = 2297

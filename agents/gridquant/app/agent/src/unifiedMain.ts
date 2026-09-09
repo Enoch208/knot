@@ -36,6 +36,7 @@ import {
   oauthTokenHandler,
   requireOAuth,
 } from "./oauth.js";
+import { gridQuantRegistration } from "./registration.js";
 import { requestLimitContext } from "./requestLimits.js";
 import type { RunWork } from "./sellerCore.js";
 
@@ -340,6 +341,9 @@ async function main(): Promise<void> {
 
   app.get("/readiness", (_req, res) => {
     res.json({ status: "READY" });
+  });
+  app.get("/.well-known/agent-registration.json", (_req, res) => {
+    res.json(gridQuantRegistration);
   });
 
   if (oauth !== null) {
