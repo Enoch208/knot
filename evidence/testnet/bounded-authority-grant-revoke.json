@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "knot.testnet-authority-evidence/1",
+  "recordedAtUtc": "2026-09-09T10:32:28.866Z",
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "transactionExplorerBaseUrl": "https://testnet.bscscan.com/tx/"
+  },
+  "scope": {
+    "wallet": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "executionMode": "direct ERC-7821 account execution",
+    "helperGrantUsed": false,
+    "mainnetWrites": false,
+    "realFunds": false,
+    "tokenTransfers": false,
+    "tokenApprovals": false
+  },
+  "contracts": {
+    "permissionedTokenReadTarget": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "keyStore": "0x6b8361C29d05D498b1a12B54A37310f94171E94A",
+    "keyStoreController": "0xb530D1971f5453F3359518343F05D0AedFfF7e12",
+    "orchestrator": "0xcb5cef3c54aa90e9a7ad602a258d3d360cc862b9"
+  },
+  "requestedAuthority": {
+    "allowedCalls": [
+      {
+        "target": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "functionSignature": "balanceOf(address)",
+        "selector": "0x70a08231",
+        "valueWei": "0"
+      }
+    ],
+    "nativeSpendLimits": [
+      {
+        "asset": "native tBNB",
+        "period": "hour",
+        "periodCode": 1,
+        "limitWei": "5000000000000000"
+      }
+    ],
+    "tokenSpendPermissions": [],
+    "expirySeconds": 3600,
+    "expiryUtc": "2026-09-09T11:32:18.000Z",
+    "forbiddenWildcard": {
+      "target": "0xcb5cef3c54aa90e9a7ad602a258d3d360cc862b9",
+      "selector": "0x32323232"
+    }
+  },
+  "grantPreflight": {
+    "observedAtUtc": "2026-09-09T10:32:17.830Z",
+    "blockNumber": "130007589",
+    "registration": {
+      "target": "0xb530D1971f5453F3359518343F05D0AedFfF7e12",
+      "selector": "0xc08eadaa",
+      "feeWei": "665249242281113"
+    },
+    "accountCalls": [
+      {
+        "target": "0x2323232323232323232323232323232323232323",
+        "selector": "0xcebfe336",
+        "functionName": "authorize"
+      },
+      {
+        "target": "0x2323232323232323232323232323232323232323",
+        "selector": "0x136a12f7",
+        "functionName": "setCanExecute"
+      },
+      {
+        "target": "0x2323232323232323232323232323232323232323",
+        "selector": "0x598daac4",
+        "functionName": "setSpendLimit"
+      }
+    ],
+    "decodedTargetMatches": true,
+    "decodedSelectorMatches": true,
+    "decodedCapMatches": true,
+    "decodedExpiryMatches": true,
+    "wildcardSentinelPresent": false
+  },
+  "grant": {
+    "transactionHash": "0x8bd4658b6690088edcefd31decd22128376daa7820910d408822a2be010047c2",
+    "url": "https://testnet.bscscan.com/tx/0x8bd4658b6690088edcefd31decd22128376daa7820910d408822a2be010047c2",
+    "receiptStatus": "success",
+    "blockNumber": "130007593",
+    "timestampUtc": "2026-09-09T10:32:19.000Z",
+    "gasUsed": "533283",
+    "effectiveGasPriceWei": "100000000"
+  },
+  "authorityReadback": {
+    "keyStoreValid": true,
+    "keyStoreKeyPresent": true,
+    "accountKeyPresent": true,
+    "accountKeyType": 2,
+    "accountIsSuperAdmin": false,
+    "canExecuteAllowedSelector": true,
+    "canExecuteWrongSelector": false,
+    "canExecuteOrchestratorWildcard": false,
+    "packedCallPermissions": [
+      "0xc70b8741b8b07a6d61e54fd4b20f22fa648e5565000000000000000070a08231"
+    ],
+    "nativeSpendPermissions": [
+      {
+        "asset": "0x0000000000000000000000000000000000000000",
+        "periodCode": 1,
+        "limitWei": "5000000000000000",
+        "spentWei": "0",
+        "currentSpentWei": "0"
+      }
+    ],
+    "tokenSpendPermissionCount": 0,
+    "callCheckers": [],
+    "globalPackedCallPermissions": [],
+    "globalCallCheckers": []
+  },
+  "allowedCall": {
+    "target": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "functionSignature": "balanceOf(address)",
+    "selector": "0x70a08231",
+    "valueWei": "0",
+    "transactionHash": "0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37",
+    "url": "https://testnet.bscscan.com/tx/0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37",
+    "receiptStatus": "success",
+    "blockNumber": "130007607",
+    "timestampUtc": "2026-09-09T10:32:25.000Z",
+    "gasUsed": "100248",
+    "effectiveGasPriceWei": "100000000"
+  },
+  "activeWrongSelectorCheck": {
+    "target": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "functionSignature": "totalSupply()",
+    "selector": "0x18160ddd",
+    "rejected": true,
+    "revertReason": "UnauthorizedCall",
+    "broadcast": false,
+    "transactionHash": null
+  },
+  "revoke": {
+    "transactionHash": "0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f",
+    "url": "https://testnet.bscscan.com/tx/0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f",
+    "receiptStatus": "success",
+    "blockNumber": "130007611",
+    "timestampUtc": "2026-09-09T10:32:27.000Z",
+    "gasUsed": "115500",
+    "effectiveGasPriceWei": "100000000"
+  },
+  "postRevokeCheck": {
+    "formerAllowedTarget": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+    "formerAllowedSelector": "0x70a08231",
+    "rejected": true,
+    "revertReason": "KeyDoesNotExist",
+    "broadcast": false,
+    "transactionHash": null,
+    "keyStoreValid": false,
+    "keyStoreKeyPresent": false,
+    "accountKeyPresent": false,
+    "onlyAdminKeyRemained": true
+  },
+  "balanceReconciliation": {
+    "nativeWeiBefore": "32966979588594435",
+    "nativeWeiAfter": "32226827246313322",
+    "nativeBalanceDeltaWei": "-740152342281113",
+    "registrationFeeWei": "665249242281113",
+    "transactionGasWei": "74903100000000",
+    "tokenBalanceRawBefore": "1800000000000000000",
+    "tokenBalanceRawAfter": "1800000000000000000",
+    "tokenBalanceUnchanged": true,
+    "commerceAllowanceRawBefore": "0",
+    "commerceAllowanceRawAfter": "0",
+    "commerceAllowanceUnchanged": true
+  },
+  "verification": {
+    "grantReceiptConfirmed": true,
+    "exactAuthorityReadbackPassed": true,
+    "allowedReadConfirmed": true,
+    "wrongSelectorRejected": true,
+    "revokeReceiptConfirmed": true,
+    "formerPermissionRejectedAfterRevoke": true,
+    "sessionAbsentAfterRevoke": true,
+    "offlineInvariantCommand": "node --test tests/evidence/bounded-authority.test.ts"
+  },
+  "limitations": [
+    "This is a bounded-authority demonstration on BSC testnet only; no BSC mainnet transaction was submitted.",
+    "The granted call could only read balanceOf(address) from the named test token and could not transfer or approve tokens.",
+    "The native limit bounded one testnet session's relay fees; it did not authorize ERC-20 spending.",
+    "The active wrong-selector and post-revoke checks reverted during simulation, so no rejected transaction hash exists.",
+    "This single observed run is not an uptime, latency, or production-security guarantee."
+  ]
+}

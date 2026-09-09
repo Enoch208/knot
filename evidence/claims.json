@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T10:06:54.000Z",
+  "updatedAtUtc": "2026-09-09T10:34:33.000Z",
   "revision": {
-    "baseCommit": "125da8070f083a8ba8cf696c3491cd8330364431",
+    "baseCommit": "4b6c6f33e524d11a7c3fcc46879ef1a6cccb15d1",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -437,6 +437,74 @@
         "This claim is limited to one HealthGuard job on BSC testnet.",
         "It does not establish repeatability, coverage of the other services, mainnet payment readiness, or strategy performance.",
         "Job 1180 remains separately recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path."
+      ]
+    },
+    {
+      "id": "bounded-authority-grant-revoke",
+      "claim": "One BSC testnet session was granted only U.balanceOf(address) call authority plus a 0.005 tBNB hourly native spend cap, successfully exercised that read, rejected totalSupply(), was revoked, and then rejected the formerly allowed read without changing the U balance or commerce allowance.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "wallet": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "allowedTarget": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "allowedSelector": "0x70a08231",
+        "allowedFunctionSignature": "balanceOf(address)",
+        "nativeSpendLimitWeiPerHour": "5000000000000000",
+        "expiryUtc": "2026-09-09T11:32:18.000Z",
+        "grantTransactionHash": "0x8bd4658b6690088edcefd31decd22128376daa7820910d408822a2be010047c2",
+        "allowedCallTransactionHash": "0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37",
+        "revokeTransactionHash": "0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f",
+        "tokenSpendPermissionCount": 0,
+        "mainnetWrites": false
+      },
+      "observationWindow": {
+        "fromUtc": "2026-09-09T10:32:17.830Z",
+        "toUtc": "2026-09-09T10:32:28.866Z"
+      },
+      "sources": [
+        {
+          "type": "testnet_authority_evidence",
+          "path": "evidence/testnet/bounded-authority-grant-revoke.json"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "grant",
+          "transactionHash": "0x8bd4658b6690088edcefd31decd22128376daa7820910d408822a2be010047c2",
+          "url": "https://testnet.bscscan.com/tx/0x8bd4658b6690088edcefd31decd22128376daa7820910d408822a2be010047c2",
+          "receiptStatus": "success",
+          "blockNumber": "130007593"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "allowed_call",
+          "transactionHash": "0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37",
+          "url": "https://testnet.bscscan.com/tx/0x3711da4313559f740b6c16823ba1ad3a5274af379c798d80b93049fe9c14db37",
+          "receiptStatus": "success",
+          "blockNumber": "130007607"
+        },
+        {
+          "type": "testnet_transaction",
+          "role": "revoke",
+          "transactionHash": "0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f",
+          "url": "https://testnet.bscscan.com/tx/0x7d966971ec1b4be35c2f6abe49ee0dfb0e2c67d881325e563fa707f80e21872f",
+          "receiptStatus": "success",
+          "blockNumber": "130007611"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/evidence/bounded-authority.test.ts",
+          "command": "node --test tests/evidence/bounded-authority.test.ts"
+        }
+      ],
+      "limitations": [
+        "This claim covers one bounded BSC testnet session and no mainnet transaction or real funds.",
+        "The session could read one test-token function but could not transfer or approve tokens.",
+        "The native spend cap covered testnet relay fees and did not authorize ERC-20 spending.",
+        "Rejected calls failed during simulation and therefore have no transaction hashes.",
+        "One completed grant-and-revoke cycle is not a production-security or reliability guarantee."
       ]
     },
     {
