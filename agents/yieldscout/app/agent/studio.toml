@@ -32,3 +32,8 @@ key_prefix = "yieldscout"
 public_base_url = "https://knot-artifacts.truematchx.com/knot-deliverables"
 endpoint = "http://object-store:9000"
 credential_mode = "env"
+
+[identity]
+endpoint = "https://knot-yield.truematchx.com/.well-known/agent-card.json"
+registered_at = "2026-09-09T10:38:41.572Z"
+agent_id = 2299
