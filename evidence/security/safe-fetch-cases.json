@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "knot.security.safe-fetch-cases/1",
+  "evidenceClass": "synthetic_fixture",
+  "requirementId": "AT-27",
+  "scope": "DNS-pinned HTTPS egress for untrusted public JSON and artifact-style reads",
+  "cases": [
+    {
+      "id": "public-dns-pinned",
+      "url": "https://agent.example/.well-known/agent-card.json",
+      "dns": {
+        "agent.example": [
+          {
+            "address": "93.184.216.34",
+            "family": 4
+          }
+        ]
+      },
+      "responses": [
+        {
+          "url": "https://agent.example/.well-known/agent-card.json",
+          "status": 200,
+          "headers": {},
+          "bodyUtf8": "{\"status\":\"ok\"}"
+        }
+      ],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "ALLOW",
+        "code": null
+      }
+    },
+    {
+      "id": "metadata-ip-literal",
+      "url": "https://169.254.169.254/latest/meta-data/",
+      "dns": {},
+      "responses": [],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "NON_PUBLIC_ADDRESS"
+      }
+    },
+    {
+      "id": "mixed-public-private-dns",
+      "url": "https://mixed.example/card.json",
+      "dns": {
+        "mixed.example": [
+          {
+            "address": "93.184.216.34",
+            "family": 4
+          },
+          {
+            "address": "127.0.0.1",
+            "family": 4
+          }
+        ]
+      },
+      "responses": [],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "NON_PUBLIC_ADDRESS"
+      }
+    },
+    {
+      "id": "redirect-to-metadata",
+      "url": "https://redirect.example/card.json",
+      "dns": {
+        "redirect.example": [
+          {
+            "address": "93.184.216.34",
+            "family": 4
+          }
+        ]
+      },
+      "responses": [
+        {
+          "url": "https://redirect.example/card.json",
+          "status": 302,
+          "headers": {
+            "location": "https://169.254.169.254/latest/meta-data/"
+          },
+          "bodyUtf8": ""
+        }
+      ],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "NON_PUBLIC_ADDRESS"
+      }
+    },
+    {
+      "id": "oversized-response",
+      "url": "https://large.example/artifact.json",
+      "dns": {
+        "large.example": [
+          {
+            "address": "93.184.216.34",
+            "family": 4
+          }
+        ]
+      },
+      "responses": [
+        {
+          "url": "https://large.example/artifact.json",
+          "status": 200,
+          "headers": {},
+          "bodyUtf8": "0123456789ABCDEF"
+        }
+      ],
+      "maxBytes": 8,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "RESPONSE_TOO_LARGE"
+      }
+    },
+    {
+      "id": "embedded-credentials",
+      "url": "https://user:password@agent.example/card.json",
+      "dns": {},
+      "responses": [],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "EMBEDDED_CREDENTIALS"
+      }
+    },
+    {
+      "id": "ipv6-documentation-range",
+      "url": "https://[3fff::1]/artifact.json",
+      "dns": {},
+      "responses": [],
+      "maxBytes": 1024,
+      "maxRedirects": 2,
+      "expected": {
+        "outcome": "DENY",
+        "code": "NON_PUBLIC_ADDRESS"
+      }
+    }
+  ],
+  "limitations": [
+    "These are deterministic synthetic controls, not a claim that every network topology or DNS implementation is covered.",
+    "The control protects call sites that use the safe fetch boundary; unrelated direct network clients require separate migration and review.",
+    "Availability, TLS PKI, upstream correctness, and application-level authorization remain separate properties."
+  ]
+}
