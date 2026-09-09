@@ -84,11 +84,12 @@ max_per_month_usd = 15.0
 
 [deploy.platform]
 slug = "healthguard"
-deployment_id = "01M22N9QVXY26V7JKXSM2WF4FS"
+deployment_id = "01M22QKP0FKW96E9V539D3TF9P"
 backend = "aws"
 agent_id = "01M22N9QVXCSAQ8YVH1Z9VGNET"
 invoke_url = "https://bnbagent-api.bnbchain.world/v1/rt/01M22N9QVXCSAQ8YVH1Z9VGNET/.well-known/agent-card.json"
-last_deploy_at = "2026-09-09T08:42:36Z"
+last_deploy_at = "2026-09-09T09:22:49Z"
+terms_accepted_at = "2026-09-09T09:15:30Z"
 
 [deploy]
 packaging = "zip"
