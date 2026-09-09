@@ -1,32 +1,54 @@
 import { setTimeout as delay } from "node:timers/promises"
-import { z } from "zod"
+import { randomUUID } from "node:crypto"
 import { createDatabasePool } from "../../../packages/db/src/index.ts"
-
-const environment = z.object({
-  DATABASE_URL: z.string().min(1),
-  KNOT_WORKER_POLL_MILLISECONDS: z.coerce.number().int().min(1_000).max(300_000).default(10_000),
-})
+import { parseWorkerConfig } from "./worker-config.ts"
+import {
+  createChainActionRecovery,
+  PostgresWorkerMonitor,
+  runWorkerCycle,
+  type WorkerCycle,
+} from "./worker-runtime.ts"
 
 const run = async (): Promise<void> => {
-  const config = environment.parse(process.env)
-  const pool = createDatabasePool(config.DATABASE_URL, {
+  const config = parseWorkerConfig(process.env)
+  const pool = createDatabasePool(config.databaseUrl, {
     connectionTimeoutMillis: 5_000,
     statement_timeout: 10_000,
   })
+  const monitor = new PostgresWorkerMonitor(pool)
+  const recovery = config.chainRecovery
+    ? createChainActionRecovery(pool, config.chainRecovery, `knot-worker-${randomUUID()}`)
+    : null
   const controller = new AbortController()
   const stop = (): void => controller.abort()
   process.once("SIGINT", stop)
   process.once("SIGTERM", stop)
   try {
     while (!controller.signal.aborted) {
-      const result = await pool.query<{ active_jobs: string; unpublished_outbox: string }>(
-        "SELECT (SELECT count(*) FROM jobs WHERE work_state IN ('PAYMENT_OBSERVED', 'RUNNING', 'OUTPUT_RECEIVED')) AS active_jobs, (SELECT count(*) FROM outbox WHERE published_at IS NULL) AS unpublished_outbox",
-      )
-      const counts = result.rows[0]
-      if (!counts) throw new Error("worker status query returned no result")
-      process.stderr.write(`${JSON.stringify({ service: "knot-worker", status: "monitoring", activeJobs: counts.active_jobs, unpublishedOutbox: counts.unpublished_outbox })}\n`)
+      let cycle: WorkerCycle
       try {
-        await delay(config.KNOT_WORKER_POLL_MILLISECONDS, undefined, { signal: controller.signal })
+        cycle = await runWorkerCycle(
+          monitor,
+          recovery,
+          config.chainRecovery?.scanLimit ?? 1,
+          controller.signal,
+        )
+      } catch (error) {
+        if (controller.signal.aborted) break
+        throw error
+      }
+      const recoveryStatus = cycle.recovery === null ? { enabled: false } : {
+        enabled: true,
+        claimedJobs: cycle.recovery.claimedJobs,
+        examinedActions: cycle.recovery.examinedActions,
+        changedActions: cycle.recovery.changedActions,
+        queueExhausted: cycle.recovery.queueExhausted,
+        loadFailures: cycle.recovery.failures.filter((failure) => failure.phase === "LOAD").length,
+        reconcileFailures: cycle.recovery.failures.filter((failure) => failure.phase === "RECONCILE").length,
+      }
+      process.stderr.write(`${JSON.stringify({ service: "knot-worker", status: "monitoring", activeJobs: cycle.counts.activeJobs, unpublishedOutbox: cycle.counts.unpublishedOutbox, recovery: recoveryStatus })}\n`)
+      try {
+        await delay(config.pollMilliseconds, undefined, { signal: controller.signal })
       } catch (error) {
         if (!controller.signal.aborted) throw error
       }
