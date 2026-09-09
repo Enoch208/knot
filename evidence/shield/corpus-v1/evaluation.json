@@ -20,9 +20,13 @@
   },
   "preservedEvidence": {
     "capturePath": "evidence/shield/corpus-v1/raw/capture.json",
+    "captureContentHash": "0x235b4cea37595d1e79c18a1321c26a23cb6eac0317c0debb710c72fb14927216",
     "manualValidationPath": "evidence/shield/corpus-v1/manual-validation.json",
+    "manualValidationContentHash": "0x8c79a47376f44b6cc4369f2834a41f8b2bca733224f5848509eae38b22954032",
     "runsPath": "evidence/shield/corpus-v1/runs.json",
-    "runsContentHash": "0x9d9206f275a224722287592a839c0fe1e25e7c319418b1c83aebaaa5b1dbe0c0"
+    "runsContentHash": "0x9d9206f275a224722287592a839c0fe1e25e7c319418b1c83aebaaa5b1dbe0c0",
+    "groundTruthPath": "tests/fixtures/shield/corpus-v1/ground-truth.json",
+    "groundTruthContentHash": "0x8a646bfd661b9b60903d2d3114bb765f234f0492eafe62a56ec27c4131a85ce4"
   },
   "rawSignalCounts": {
     "total": 19,

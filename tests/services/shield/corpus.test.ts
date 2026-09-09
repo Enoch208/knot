@@ -114,7 +114,7 @@ describe("Shield frozen corpus", () => {
     )
   })
 
-  test("claim ledger keeps the prepared corpus unmeasured", () => {
+  test("claim ledger reports the measured corpus without hiding its misses", () => {
     const input: unknown = JSON.parse(readFileSync("evidence/claims.json", "utf8"))
     assertObject(input)
     assert.ok(Array.isArray(input.claims))
@@ -126,18 +126,23 @@ describe("Shield frozen corpus", () => {
     assertObject(claim.scope)
     assert.ok(Array.isArray(claim.sources))
 
-    assert.equal(claim.status, "UNMEASURED")
+    assert.equal(claim.status, "SUPPORTED")
     assert.deepEqual(claim.evidenceClasses, ["synthetic_fixture"])
     assert.equal(claim.scope.fixtureCount, 6)
     assert.equal(claim.scope.holdoutFixtureCount, 1)
     assert.equal(claim.scope.relationship, "team-owned")
-    assert.equal(claim.scope.analyzerRunPublished, false)
+    assert.equal(claim.scope.analyzerRunPublished, true)
     assert.equal(claim.scope.onchainDeploymentClaimed, false)
-    assert.equal("precision" in claim.scope, false)
-    assert.equal("recall" in claim.scope, false)
+    assert.equal(claim.scope.truePositives, 2)
+    assert.equal(claim.scope.falsePositives, 0)
+    assert.equal(claim.scope.falseNegatives, 7)
+    assert.equal(claim.scope.precision, "2/2")
+    assert.equal(claim.scope.recall, "2/9")
+    assert.equal(claim.scope.holdoutTruePositives, 0)
+    assert.equal(claim.scope.holdoutFalseNegatives, 3)
     assert.ok(claim.sources.some((value) => {
       assertObject(value)
-      return value.command === "npm run shield:evaluate" && value.observedStatus === "UNMEASURED"
+      return value.command === "npm run shield:verify" && value.observedStatus === "MEASURED"
     }))
   })
 })

@@ -35,9 +35,12 @@ export type {
 } from "./evaluate.ts"
 export {
   buildValidatedShieldRuns,
+  shieldMeasuredEvaluation,
   shieldManualValidation,
+  shieldSlitherCapture,
   shieldSlitherOutput,
   ShieldMeasurementError,
+  verifyPublishedShieldMeasurement,
 } from "./measurement.ts"
 export type { ShieldManualValidation } from "./measurement.ts"
 export { shieldArtifact, shieldFinding, shieldRequest, shieldRuleId } from "./schemas.ts"

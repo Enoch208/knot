@@ -1,8 +1,8 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T10:50:48.000Z",
+  "updatedAtUtc": "2026-09-09T11:07:27.000Z",
   "revision": {
-    "baseCommit": "94d588f2fb5e343f4a12d3be7d97ba3d8aedc7cd",
+    "baseCommit": "237a4b8225559db18bb291a003a76aa5df7fdaa3",
     "branch": "main"
   },
   "statusDefinitions": {
@@ -715,8 +715,8 @@
     },
     {
       "id": "shield-frozen-evaluation-corpus",
-      "claim": "Shield has a compile-verified, hash-frozen six-fixture team-owned Solidity corpus with one ERC-1967 holdout created after the rules freeze, but precision, recall, severity validity, and critical-miss rate are unmeasured because no analyzer-produced and manually validated artifact set has been supplied.",
-      "status": "UNMEASURED",
+      "claim": "Pinned Slither 0.11.3 output plus team manual validation on Shield's hash-frozen six-fixture corpus produced 2 true positives, 0 false positives, and 7 false negatives across 9 adjudicated findings; the ERC-1967 holdout produced 0 true positives, 0 false positives, and 3 false negatives.",
+      "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
       ],
@@ -732,7 +732,22 @@
         "compiler": "solc 0.8.28",
         "rulesFrozenAtUtc": "2026-09-09T10:39:24.000Z",
         "rulesContentHash": "0x7b67420c060ac95aebcc83fdc1e33ef2b952c8c69e4344091fbccbd93205455e",
-        "analyzerRunPublished": false,
+        "analyzer": "slither 0.11.3",
+        "rawSignalCount": 19,
+        "confirmedSignalCount": 2,
+        "rejectedMappedSignalCount": 2,
+        "outOfScopeSignalCount": 15,
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 7,
+        "criticalCaseMisses": 0,
+        "precision": "2/2",
+        "recall": "2/9",
+        "severityValidity": "2/2",
+        "holdoutTruePositives": 0,
+        "holdoutFalsePositives": 0,
+        "holdoutFalseNegatives": 3,
+        "analyzerRunPublished": true,
         "onchainDeploymentClaimed": false
       },
       "sources": [
@@ -746,22 +761,39 @@
           "contentHash": "0x7b67420c060ac95aebcc83fdc1e33ef2b952c8c69e4344091fbccbd93205455e"
         },
         {
+          "type": "raw_analyzer_capture",
+          "path": "evidence/shield/corpus-v1/raw/capture.json"
+        },
+        {
+          "type": "manual_validation",
+          "path": "evidence/shield/corpus-v1/manual-validation.json"
+        },
+        {
+          "type": "preserved_evaluation_runs",
+          "path": "evidence/shield/corpus-v1/runs.json"
+        },
+        {
+          "type": "measured_evaluation",
+          "path": "evidence/shield/corpus-v1/evaluation.json"
+        },
+        {
           "type": "repository_test",
-          "path": "tests/services/shield/corpus.test.ts",
-          "command": "node --test tests/services/shield/corpus.test.ts"
+          "path": "tests/services/shield/measurement.test.ts",
+          "command": "node --test tests/services/shield/measurement.test.ts"
         },
         {
           "type": "repository_command",
-          "path": "scripts/run-shield-evaluation.ts",
-          "command": "npm run shield:evaluate",
-          "observedStatus": "UNMEASURED"
+          "path": "scripts/verify-shield-measurement.ts",
+          "command": "npm run shield:verify",
+          "observedStatus": "MEASURED"
         }
       ],
       "limitations": [
         "All fixtures and adjudicated labels are team-owned, so this is not an independent external benchmark.",
-        "Ground-truth labels are never supplied to Shield as analysis input; the evaluator accepts separately produced and hash-preserved artifacts.",
-        "Slither was unavailable in the verification environment and no analyzer-produced, manually validated run artifact set was published.",
-        "No precision, recall, severity-validity, critical-miss, production-security, deployment, or on-chain execution result is claimed."
+        "Manual validation is part of the measured pipeline and rejected two mapped analyzer signals before scoring, so the reported false-positive count is post-validation.",
+        "Ground-truth labels were not supplied to Slither; the evaluator consumed separately produced and hash-preserved artifacts.",
+        "The corpus contains only six synthetic fixtures, and its 2/9 recall and 0/3 holdout result do not establish comprehensive audit quality.",
+        "No production-security, deployment, or on-chain execution result is claimed."
       ]
     },
     {

@@ -30,6 +30,7 @@
     "sellers:verify:public": "node scripts/verify-public-sellers.ts",
     "shield:slither:capture": "node scripts/capture-shield-slither.ts",
     "shield:measure:build": "node scripts/build-shield-measurement.ts",
+    "shield:verify": "node scripts/verify-shield-measurement.ts",
     "shield:evaluate": "node scripts/run-shield-evaluation.ts",
     "check": "npm run build && npm run test:root && npm run category:parity",
     "worker:start": "node apps/worker/src/main.ts"

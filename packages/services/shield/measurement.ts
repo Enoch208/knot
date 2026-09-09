@@ -1,11 +1,34 @@
+import { keccak256, stringToHex } from "viem"
 import { z } from "zod"
 import { address, hexDigest } from "../../contracts/src/primitives.ts"
 import {
   hashShieldArtifact,
+  shieldEvaluationReport,
   shieldEvaluationRuns,
+  shieldGroundTruthDataset,
+  evaluateShieldDataset,
+  type ShieldEvaluationReport,
   type ShieldEvaluationRuns,
 } from "./evaluate.ts"
 import { shieldFinding, shieldRuleId } from "./schemas.ts"
+
+const analyzerIdentity = z
+  .object({
+    name: z.literal("slither"),
+    version: z.literal("0.11.3"),
+    detectorCount: z.literal(100),
+  })
+  .strict()
+
+const compilerIdentity = z
+  .object({
+    name: z.literal("solc"),
+    version: z.literal("0.8.28"),
+    optimizerEnabled: z.literal(true),
+    optimizerRuns: z.literal(200),
+    evmVersion: z.literal("paris"),
+  })
+  .strict()
 
 const rawSourceMapping = z
   .object({
@@ -77,22 +100,8 @@ export const shieldManualValidation = z
   .object({
     schemaVersion: z.literal("knot.shield.manual-validation/1"),
     datasetId: z.string().min(1),
-    analyzer: z
-      .object({
-        name: z.literal("slither"),
-        version: z.literal("0.11.3"),
-        detectorCount: z.literal(100),
-      })
-      .strict(),
-    compiler: z
-      .object({
-        name: z.literal("solc"),
-        version: z.literal("0.8.28"),
-        optimizerEnabled: z.literal(true),
-        optimizerRuns: z.literal(200),
-        evmVersion: z.literal("paris"),
-      })
-      .strict(),
+    analyzer: analyzerIdentity,
+    compiler: compilerIdentity,
     assessorRelationship: z.string().min(1),
     groundTruthSuppliedToAnalyzer: z.literal(false),
     fixtures: z.array(
@@ -112,16 +121,162 @@ export const shieldManualValidation = z
   })
   .strict()
 
+export const shieldSlitherCapture = z
+  .object({
+    schemaVersion: z.literal("knot.shield.slither-capture/1"),
+    analyzer: analyzerIdentity,
+    compiler: compilerIdentity,
+    commandTemplate: z.string().min(1),
+    pathNormalization: z.string().min(1),
+    outputs: z.array(z.object({
+      fixtureId: z.string().min(1),
+      path: z.string().min(1),
+      contentHash: hexDigest,
+      detectorCount: z.number().int().nonnegative(),
+      processExitStatus: z.number().int().nullable(),
+    }).strict()).min(6),
+  })
+  .strict()
+
+export const shieldMeasuredEvaluation = z
+  .object({
+    schemaVersion: z.literal("knot.shield.measured-evaluation/1"),
+    evaluatedAtUtc: z.iso.datetime(),
+    datasetId: z.string().min(1),
+    relationship: z.string().min(1),
+    groundTruthSuppliedToAnalyzer: z.literal(false),
+    tooling: z.object({ analyzer: analyzerIdentity, compiler: compilerIdentity }).strict(),
+    preservedEvidence: z.object({
+      capturePath: z.literal("evidence/shield/corpus-v1/raw/capture.json"),
+      captureContentHash: hexDigest,
+      manualValidationPath: z.literal("evidence/shield/corpus-v1/manual-validation.json"),
+      manualValidationContentHash: hexDigest,
+      runsPath: z.literal("evidence/shield/corpus-v1/runs.json"),
+      runsContentHash: hexDigest,
+      groundTruthPath: z.literal("tests/fixtures/shield/corpus-v1/ground-truth.json"),
+      groundTruthContentHash: hexDigest,
+    }).strict(),
+    rawSignalCounts: z.object({
+      total: z.number().int().nonnegative(),
+      confirmed: z.number().int().nonnegative(),
+      rejected: z.number().int().nonnegative(),
+      outOfScope: z.number().int().nonnegative(),
+    }).strict(),
+    report: shieldEvaluationReport,
+    limitations: z.array(z.string().min(1)).min(1),
+  })
+  .strict()
+
 export type ShieldManualValidation = z.infer<typeof shieldManualValidation>
 
 export class ShieldMeasurementError extends Error {
-  readonly code: "INVALID_VALIDATION" | "RAW_OUTPUT_MISSING" | "RAW_OUTPUT_MISMATCH" | "VALIDATION_MISMATCH"
+  readonly code: "INVALID_VALIDATION" | "RAW_OUTPUT_MISSING" | "RAW_OUTPUT_MISMATCH" | "VALIDATION_MISMATCH" | "PUBLISHED_EVIDENCE_MISMATCH"
 
   constructor(code: ShieldMeasurementError["code"], message: string) {
     super(message)
     this.name = "ShieldMeasurementError"
     this.code = code
   }
+}
+
+export function verifyPublishedShieldMeasurement(input: {
+  captureText: string
+  validationText: string
+  rawOutputTexts: ReadonlyMap<string, string>
+  runsText: string
+  evaluation: unknown
+  groundTruthText: string
+}): ShieldEvaluationReport {
+  let captureInput: unknown
+  let validationInput: unknown
+  let groundTruthInput: unknown
+  try {
+    captureInput = JSON.parse(input.captureText) as unknown
+    validationInput = JSON.parse(input.validationText) as unknown
+    groundTruthInput = JSON.parse(input.groundTruthText) as unknown
+  } catch {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield source evidence is not JSON")
+  }
+  const capture = shieldSlitherCapture.safeParse(captureInput)
+  const validation = shieldManualValidation.safeParse(validationInput)
+  const evaluation = shieldMeasuredEvaluation.safeParse(input.evaluation)
+  const groundTruth = shieldGroundTruthDataset.safeParse(groundTruthInput)
+  if (!capture.success || !validation.success || !evaluation.success || !groundTruth.success) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield evidence does not match its closed schemas")
+  }
+  if (
+    keccak256(stringToHex(input.captureText)) !== evaluation.data.preservedEvidence.captureContentHash ||
+    keccak256(stringToHex(input.validationText)) !== evaluation.data.preservedEvidence.manualValidationContentHash ||
+    keccak256(stringToHex(input.groundTruthText)) !== evaluation.data.preservedEvidence.groundTruthContentHash
+  ) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield source evidence hash changed")
+  }
+  if (
+    JSON.stringify(capture.data.analyzer) !== JSON.stringify(validation.data.analyzer) ||
+    JSON.stringify(capture.data.compiler) !== JSON.stringify(validation.data.compiler) ||
+    JSON.stringify(evaluation.data.tooling.analyzer) !== JSON.stringify(validation.data.analyzer) ||
+    JSON.stringify(evaluation.data.tooling.compiler) !== JSON.stringify(validation.data.compiler)
+  ) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published analyzer or compiler identity drifted")
+  }
+
+  const rawOutputs = new Map<string, unknown>()
+  for (const output of capture.data.outputs) {
+    const rawText = input.rawOutputTexts.get(output.path)
+    if (rawText === undefined || keccak256(stringToHex(rawText)) !== output.contentHash) {
+      throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", `raw output hash changed for ${output.fixtureId}`)
+    }
+    let rawInput: unknown
+    try {
+      rawInput = JSON.parse(rawText) as unknown
+    } catch {
+      throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", `raw output is not JSON for ${output.fixtureId}`)
+    }
+    const raw = shieldSlitherOutput.safeParse(rawInput)
+    if (!raw.success || raw.data.results.detectors.length !== output.detectorCount) {
+      throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", `raw detector count changed for ${output.fixtureId}`)
+    }
+    rawOutputs.set(output.path, rawInput)
+  }
+  const capturedFixtures = capture.data.outputs.map((output) => ({ fixtureId: output.fixtureId, path: output.path })).sort((left, right) => left.fixtureId.localeCompare(right.fixtureId))
+  const validatedFixtures = validation.data.fixtures.map((fixture) => ({ fixtureId: fixture.fixtureId, path: fixture.rawOutputPath })).sort((left, right) => left.fixtureId.localeCompare(right.fixtureId))
+  if (JSON.stringify(capturedFixtures) !== JSON.stringify(validatedFixtures)) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "capture and manual-validation fixture sets differ")
+  }
+
+  let runsInput: unknown
+  try {
+    runsInput = JSON.parse(input.runsText) as unknown
+  } catch {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield runs are not JSON")
+  }
+  const runs = shieldEvaluationRuns.safeParse(runsInput)
+  if (!runs.success || keccak256(stringToHex(input.runsText)) !== evaluation.data.preservedEvidence.runsContentHash) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield runs or their content hash changed")
+  }
+  const rebuiltRuns = buildValidatedShieldRuns(validation.data, rawOutputs)
+  if (JSON.stringify(rebuiltRuns) !== JSON.stringify(runs.data)) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield runs do not match raw outputs and manual validation")
+  }
+
+  const signals = validation.data.fixtures.flatMap((fixture) => fixture.signals)
+  const counts = {
+    total: signals.length,
+    confirmed: signals.filter((signal) => signal.decision === "confirmed").length,
+    rejected: signals.filter((signal) => signal.decision === "rejected").length,
+    outOfScope: signals.filter((signal) => signal.decision === "out_of_scope").length,
+  }
+  const report = evaluateShieldDataset(groundTruth.data, runs.data)
+  if (
+    evaluation.data.datasetId !== validation.data.datasetId ||
+    evaluation.data.datasetId !== groundTruth.data.datasetId ||
+    evaluation.data.relationship !== validation.data.assessorRelationship ||
+    JSON.stringify(evaluation.data.rawSignalCounts) !== JSON.stringify(counts) ||
+    JSON.stringify(evaluation.data.report) !== JSON.stringify(report)
+  ) {
+    throw new ShieldMeasurementError("PUBLISHED_EVIDENCE_MISMATCH", "published Shield evaluation does not reproduce")
+  }
+  return report
 }
 
 export function buildValidatedShieldRuns(

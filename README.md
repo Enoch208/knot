@@ -17,7 +17,7 @@ This repository is a pre-production pilot. It contains a deployed control-plane 
 | RangePilot | LP rebalancing | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2297`; authenticated signed quote observed; no position transactions or performance history |
 | GridQuant | Grid strategy | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2298`; authenticated signed quote observed; no orders, swaps, or performance history |
 | YieldScout | Yield comparison | Analysis only | BSC mainnet read-only data; BSC testnet identity and commerce | Agent card live; ERC-8004 agent `2299`; authenticated signed quote observed; no deposits, withdrawals, migrations, or performance history |
-| Shield | Contract-risk triage specialist | Analysis only | Offline team-owned Solidity corpus | Six exact sources compile and hash verify, including one post-rule-freeze ERC-1967 holdout; evaluation metrics remain `UNMEASURED` because no analyzer-produced, manually validated artifact set is published |
+| Shield | Contract-risk triage specialist | Analysis only | Offline team-owned Solidity corpus | Slither `0.11.3` plus manual validation measured 2 true positives, 0 false positives, and 7 false negatives; the ERC-1967 holdout missed all 3 expected findings |
 
 The machine-readable source for every statement above is [`evidence/claims.json`](evidence/claims.json).
 
@@ -61,14 +61,14 @@ npm run check
 
 Network compatibility and optional integration checks are documented in [`REPRODUCE.md`](REPRODUCE.md). The default test run uses deterministic fixtures and does not submit blockchain transactions.
 
-The Shield preparation runner compiles all six frozen Solidity sources with `solc 0.8.28`, verifies the rules and source hashes, and reports the missing measurement stage without manufacturing a score:
+The Shield measurement preserves all six raw Slither outputs and every manual validation decision. This read-only command verifies those hashes and decisions, compiles the frozen sources, and independently reruns the scorer against the committed measured runs:
 
 ```sh
-npm run shield:evaluate
+npm run shield:verify
 ```
 
-Without a separately produced and manually validated run artifact, the command returns `UNMEASURED`. Ground-truth labels are used only after artifacts are frozen and are never supplied to Shield as analysis input.
+Across nine adjudicated findings, the validated pipeline recorded 2 true positives, 0 false positives, and 7 false negatives: precision `2/2`, recall `2/9`, and severity validity `2/2`. Manual review rejected two mapped analyzer signals before scoring, while 15 raw signals were outside the frozen Shield rules. The holdout recorded 0 true positives, 0 false positives, and 3 false negatives. Ground-truth labels were not supplied to Slither, and no rule, fixture, label, mapping, or Shield logic was changed after the holdout output was observed.
 
 ## Demo boundary
 
-The HealthGuard BSC testnet paid-flow milestone is supported by jobs `1181` and `1185`; job `1185` used the permanent endpoint and supplies the first paired dataset. Job `1180` remains openly recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path. RangePilot, GridQuant, and YieldScout are live analysis-only sellers, but their current evidence stops at authenticated signed quotes and retrieved artifacts rather than paid commerce. The authority demo covers one temporary, revoked testnet permission and does not claim mainnet execution or production security. Shield has a frozen team-owned evaluation corpus, not a measured analyzer result. The paired result is one honest quality tie, so repeatability, superiority, mainnet payment readiness, domain execution, and strategy performance remain outside these claims.
+The HealthGuard BSC testnet paid-flow milestone is supported by jobs `1181` and `1185`; job `1185` used the permanent endpoint and supplies the first paired dataset. Job `1180` remains openly recorded as a disputed invalid-input submission whose full escrow was recovered through the expiry refund path. RangePilot, GridQuant, and YieldScout are live analysis-only sellers, but their current evidence stops at authenticated signed quotes and retrieved artifacts rather than paid commerce. The authority demo covers one temporary, revoked testnet permission and does not claim mainnet execution or production security. Shield's measured result is a small, team-owned synthetic corpus with `2/9` recall and a `0/3` holdout result, not evidence of comprehensive audit quality. The paired HealthGuard result is one honest quality tie, so repeatability, superiority, mainnet payment readiness, domain execution, and strategy performance remain outside these claims.

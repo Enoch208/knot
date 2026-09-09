@@ -31,28 +31,8 @@ if (compilation.status !== 0) {
   process.stderr.write(compilation.stdout)
   process.exitCode = compilation.status ?? 1
 } else {
-  const runsPath = process.argv[2]
-  if (runsPath === undefined) {
-    const analyzer = spawnSync("slither", ["--version"], { encoding: "utf8" })
-    const result = {
-      schemaVersion: "knot.shield.preparation/1",
-      status: "UNMEASURED",
-      corpus,
-      compilation: {
-        status: "passed",
-        compiler: groundTruth.compiler,
-      },
-      analyzer: {
-        name: "slither",
-        availableInEnvironment: analyzer.status === 0,
-        validatedRunProvided: false,
-      },
-      blocker: "No analyzer-produced and manually validated Shield artifact set was supplied; precision, recall, severity validity, and critical-miss rate are not measured.",
-    }
-    process.stdout.write(`${JSON.stringify(result, null, 2)}\n`)
-  } else {
-    const runsInput: unknown = JSON.parse(readFileSync(resolve(runsPath), "utf8"))
-    const report = evaluateShieldDataset(groundTruth, runsInput)
-    process.stdout.write(`${JSON.stringify({ status: "MEASURED", report }, null, 2)}\n`)
-  }
+  const runsPath = process.argv[2] ?? "evidence/shield/corpus-v1/runs.json"
+  const runsInput: unknown = JSON.parse(readFileSync(resolve(runsPath), "utf8"))
+  const report = evaluateShieldDataset(groundTruth, runsInput)
+  process.stdout.write(`${JSON.stringify({ status: "MEASURED", corpus, compilation: { status: "passed", compiler: groundTruth.compiler }, report }, null, 2)}\n`)
 }

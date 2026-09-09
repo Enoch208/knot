@@ -10,6 +10,7 @@ import {
   shieldManualValidation,
   shieldSlitherOutput,
   ShieldMeasurementError,
+  verifyPublishedShieldMeasurement,
 } from "../../../packages/services/shield/index.ts"
 
 type JsonObject = Record<string, unknown>
@@ -32,6 +33,26 @@ function measurementInputs(): {
   const rawOutputs = new Map<string, unknown>()
   for (const fixture of validation.fixtures) rawOutputs.set(fixture.rawOutputPath, readUnknown(fixture.rawOutputPath))
   return { validation, rawOutputs }
+}
+
+function publishedMeasurementInputs(): Parameters<typeof verifyPublishedShieldMeasurement>[0] {
+  const captureText = readFileSync("evidence/shield/corpus-v1/raw/capture.json", "utf8")
+  const capture: unknown = JSON.parse(captureText)
+  assertObject(capture)
+  assert.ok(Array.isArray(capture.outputs))
+  const rawOutputTexts = new Map<string, string>()
+  for (const output of capture.outputs) {
+    assertObject(output)
+    rawOutputTexts.set(String(output.path), readFileSync(String(output.path), "utf8"))
+  }
+  return {
+    captureText,
+    validationText: readFileSync("evidence/shield/corpus-v1/manual-validation.json", "utf8"),
+    rawOutputTexts,
+    runsText: readFileSync("evidence/shield/corpus-v1/runs.json", "utf8"),
+    evaluation: readUnknown("evidence/shield/corpus-v1/evaluation.json"),
+    groundTruthText: readFileSync("tests/fixtures/shield/corpus-v1/ground-truth.json", "utf8"),
+  }
 }
 
 describe("Shield measured frozen-corpus run", () => {
@@ -130,6 +151,33 @@ describe("Shield measured frozen-corpus run", () => {
     assert.throws(
       () => buildValidatedShieldRuns(incomplete.validation, incomplete.rawOutputs),
       (error: unknown) => error instanceof ShieldMeasurementError && error.code === "VALIDATION_MISMATCH",
+    )
+  })
+
+  test("refuses tampered published runs even when they remain valid JSON", () => {
+    const input = publishedMeasurementInputs()
+    const runs = JSON.parse(input.runsText) as JsonObject
+    assert.ok(Array.isArray(runs.runs))
+    const first = runs.runs[0]
+    assertObject(first)
+    assertObject(first.artifact)
+    first.artifact.status = "PARTIAL"
+    input.runsText = `${JSON.stringify(runs, null, 2)}\n`
+    assert.throws(
+      () => verifyPublishedShieldMeasurement(input),
+      (error: unknown) => error instanceof ShieldMeasurementError && error.code === "PUBLISHED_EVIDENCE_MISMATCH",
+    )
+  })
+
+  test("refuses a flattering edit to the published evaluation report", () => {
+    const input = publishedMeasurementInputs()
+    assertObject(input.evaluation)
+    assertObject(input.evaluation.report)
+    assertObject(input.evaluation.report.counts)
+    input.evaluation.report.counts.falseNegatives = 0
+    assert.throws(
+      () => verifyPublishedShieldMeasurement(input),
+      (error: unknown) => error instanceof ShieldMeasurementError && error.code === "PUBLISHED_EVIDENCE_MISMATCH",
     )
   })
 })

@@ -34,9 +34,11 @@ const captureSchema = z
   .strict()
 
 const evidenceRoot = resolve("evidence/shield/corpus-v1")
-const validationInput: unknown = JSON.parse(readFileSync(resolve(evidenceRoot, "manual-validation.json"), "utf8"))
+const validationText = readFileSync(resolve(evidenceRoot, "manual-validation.json"), "utf8")
+const validationInput: unknown = JSON.parse(validationText)
 const validation = shieldManualValidation.parse(validationInput)
-const captureInput: unknown = JSON.parse(readFileSync(resolve(evidenceRoot, "raw/capture.json"), "utf8"))
+const captureText = readFileSync(resolve(evidenceRoot, "raw/capture.json"), "utf8")
+const captureInput: unknown = JSON.parse(captureText)
 const capture = captureSchema.parse(captureInput)
 const rawOutputs = new Map<string, unknown>()
 
@@ -56,7 +58,8 @@ const runs = buildValidatedShieldRuns(validation, rawOutputs)
 const runsText = `${JSON.stringify(runs, null, 2)}\n`
 writeFileSync(resolve(evidenceRoot, "runs.json"), runsText)
 
-const groundTruthInput: unknown = JSON.parse(readFileSync("tests/fixtures/shield/corpus-v1/ground-truth.json", "utf8"))
+const groundTruthText = readFileSync("tests/fixtures/shield/corpus-v1/ground-truth.json", "utf8")
+const groundTruthInput: unknown = JSON.parse(groundTruthText)
 const groundTruth = shieldGroundTruthDataset.parse(groundTruthInput)
 const report = evaluateShieldDataset(groundTruth, runs)
 const signals = validation.fixtures.flatMap((fixture) => fixture.signals)
@@ -69,9 +72,13 @@ const evaluation = {
   tooling: { analyzer: validation.analyzer, compiler: validation.compiler },
   preservedEvidence: {
     capturePath: "evidence/shield/corpus-v1/raw/capture.json",
+    captureContentHash: keccak256(stringToHex(captureText)),
     manualValidationPath: "evidence/shield/corpus-v1/manual-validation.json",
+    manualValidationContentHash: keccak256(stringToHex(validationText)),
     runsPath: "evidence/shield/corpus-v1/runs.json",
     runsContentHash: keccak256(stringToHex(runsText)),
+    groundTruthPath: "tests/fixtures/shield/corpus-v1/ground-truth.json",
+    groundTruthContentHash: keccak256(stringToHex(groundTruthText)),
   },
   rawSignalCounts: {
     total: signals.length,
