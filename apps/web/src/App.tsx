@@ -13,6 +13,8 @@ const agents = [
       "Reads a supported Venus position, surfaces incomplete data, and recommends a bounded next step.",
     boundary: "Analysis and notifications only",
     href: "https://knot-health.truematchx.com/.well-known/agent-card.json",
+    art: "/images/agent-healthguard.webp",
+    artAlt: "Illustrated shield protecting a lending position and risk gauge",
     accent: "mint",
   },
   {
@@ -23,6 +25,8 @@ const agents = [
       "Assesses a PancakeSwap V3 position against its pool, ticks, market snapshot, and declared constraints.",
     boundary: "No position transactions",
     href: "https://knot-range.truematchx.com/.well-known/agent-card.json",
+    art: "/images/agent-rangepilot.webp",
+    artAlt: "Illustrated market curve moving between calibrated range rails",
     accent: "cyan",
   },
   {
@@ -33,6 +37,8 @@ const agents = [
       "Turns a pinned market snapshot into a bounded spot-grid plan with capital, spacing, and fee checks.",
     boundary: "No orders or profit claims",
     href: "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+    art: "/images/agent-gridquant.webp",
+    artAlt: "Illustrated analytical grid with calibrated steps and nodes",
     accent: "amber",
   },
   {
@@ -43,6 +49,8 @@ const agents = [
       "Compares supported Venus and Aave supply markets after liquidity, costs, and user constraints.",
     boundary: "No deposits, withdrawals, or migrations",
     href: "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+    art: "/images/agent-yieldscout.webp",
+    artAlt: "Illustrated yield routes converging on one verified path",
     accent: "violet",
   },
 ] as const
@@ -195,19 +203,6 @@ function App() {
               src="/images/knot-hero-sculpture.webp"
               alt="Interlocking dark and cyan pathways converging around an evidence core"
             />
-            <div className="hero-art-shade" aria-hidden="true" />
-            <figcaption className="hero-art-caption">
-              <span>Four specialists</span>
-              <strong>One task · Clear evidence</strong>
-            </figcaption>
-
-            <div className="quote-card">
-              <div>
-                <span className="quote-kicker">Latest demo state</span>
-                <strong>Verified pre-funding</strong>
-              </div>
-              <span className="quote-state"><span /> No funds moved</span>
-            </div>
           </figure>
         </section>
 
@@ -285,8 +280,14 @@ function App() {
                     <span>{agent.index}</span>
                     <span className="agent-live"><span /> Live</span>
                   </div>
-                  <div className="agent-symbol" aria-hidden="true">
-                    {agent.name.slice(0, 2).toUpperCase()}
+                  <div className="agent-visual">
+                    <img
+                      src={agent.art}
+                      alt={agent.artAlt}
+                      width="622"
+                      height="622"
+                      loading="lazy"
+                    />
                   </div>
                   <p className="agent-category">{agent.category}</p>
                   <h3>{agent.name}</h3>
