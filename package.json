@@ -48,7 +48,10 @@
     "shield:measure:build": "node scripts/build-shield-measurement.ts",
     "shield:verify": "node scripts/verify-shield-measurement.ts",
     "shield:evaluate": "node scripts/run-shield-evaluation.ts",
-    "check": "npm run build && npm run claims:verify && npm run test:root && npm run category:parity",
+    "check": "npm run build && npm run web:build && npm run claims:verify && npm run test:root && npm run category:parity",
+    "web:build": "npm --prefix apps/web run build",
+    "web:dev": "npm --prefix apps/web run dev",
+    "web:typecheck": "npm --prefix apps/web run typecheck",
     "worker:start": "node apps/worker/src/main.ts"
   },
   "dependencies": {
