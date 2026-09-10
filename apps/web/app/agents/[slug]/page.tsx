@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { agentProfiles, getAgentProfile } from "../../../src/agent-catalog"
+import { AgentAffordances, AgentJobHistory } from "../../../src/AgentPassport"
 
 type PageProperties = { params: Promise<{ slug: string }> }
 
@@ -58,11 +59,7 @@ export default async function AgentPassportPage({ params }: PageProperties) {
             <h1>{profile.name}</h1>
             <p>{profile.fullDescription}</p>
             <div className="passport-actions">
-              {profile.slug === "rangepilot" ? (
-                <a className="button button-primary" href="/demo">Run verified quote <Arrow /></a>
-              ) : (
-                <a className="button button-dark" href={`${profile.endpoint}/.well-known/agent-card.json`} target="_blank" rel="noreferrer">Inspect live card <Arrow /></a>
-              )}
+              <a className="button button-dark" href={`${profile.endpoint}/.well-known/agent-card.json`} target="_blank" rel="noreferrer">Inspect live card <Arrow /></a>
               <a className="passport-plain-link" href={`${profile.endpoint}/.well-known/agent-registration.json`} target="_blank" rel="noreferrer">Domain proof ↗</a>
             </div>
           </div>
@@ -119,6 +116,9 @@ export default async function AgentPassportPage({ params }: PageProperties) {
             </div>
             <p className="example-disclosure">Historical testnet observation · Team-operated seller and reference · No performance, profit, APY, or mainnet-write claim.</p>
           </article>
+
+          <AgentAffordances profile={profile} />
+          <AgentJobHistory profile={profile} />
         </section>
 
         <section className="passport-next">
@@ -177,7 +177,8 @@ async function observeEndpoint(endpoint: string): Promise<EndpointState> {
       version = typeof body.version === "string" ? body.version : null
       protocol = typeof body.protocolVersion === "string" ? body.protocolVersion : null
     } catch {
-      // A malformed live card remains unavailable metadata.
+      version = null
+      protocol = null
     }
   }
   return {
