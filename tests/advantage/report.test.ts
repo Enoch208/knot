@@ -8,6 +8,7 @@ import {
   type AdvantageDatasetSource,
   type ShieldReportSource,
 } from "../../packages/advantage/src/report.ts"
+import type { HumanArmComparison } from "../../packages/advantage/src/human-arm.ts"
 import { AdvantageValidationError } from "../../packages/advantage/src/runner.ts"
 import { ShieldMeasurementError, shieldSlitherCapture } from "../../packages/services/shield/index.ts"
 
@@ -42,11 +43,20 @@ const datasetConfigs = [
   },
 ]
 
+
+const loadHumanArm = async () => {
+  const artifact = JSON.parse(
+    await readFile("evidence/advantage/human-arm/yield-1188.json", "utf8"),
+  ) as { comparison: HumanArmComparison }
+  return artifact.comparison
+}
+
 test("the committed report is deterministic and derived from all four verified finance pairs", async () => {
   const sources = await loadSources()
   const shield = await loadShield()
-  const first = await buildAgentAdvantageReport(sources, shield)
-  const second = await buildAgentAdvantageReport(sources, shield)
+  const humanArm = await loadHumanArm()
+  const first = await buildAgentAdvantageReport(sources, shield, humanArm)
+  const second = await buildAgentAdvantageReport(sources, shield, humanArm)
   const committed = await readFile("docs/AGENT_ADVANTAGE_REPORT.md", "utf8")
   assert.equal(first, second)
   assert.equal(first, committed)
@@ -60,7 +70,11 @@ test("the committed report is deterministic and derived from all four verified f
   assert.match(first, /43,605 ms/)
   assert.match(first, /service_fee 0\.1 U \(100000000000000000 base units, chain 97\)/)
   assert.match(first, /computed later as a historical replay over frozen bytes/)
-  assert.match(first, /do not establish a speed, latency, labor, or human-time advantage/)
+  assert.match(first, /establish no speed, latency, labor, or human-time advantage/)
+  assert.match(first, /## Recorded operator session/)
+  assert.match(first, /participant-1/)
+  assert.match(first, /Observations: 1\./)
+  assert.match(first, /No population claim is supported by a single observation/)
   assert.match(first, /No paired result establishes profit, APY, return, savings, PnL, win rate, execution quality, or future performance/)
   for (const match of first.matchAll(/\]\((\.\.\/[^)]+)\)/g)) {
     const path = match[1]
