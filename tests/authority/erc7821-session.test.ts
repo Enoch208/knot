@@ -4,7 +4,11 @@ import type { Address, Hex } from "viem"
 import {
   ERC7821_BATCH_MODE,
   SessionCallError,
+  SECP256K1_KEY_TYPE,
+  buildAuthorizeCall,
   buildGrantCalls,
+  deriveKeyHash,
+  sessionPublicKeyFromAddress,
   buildRevokeCalls,
   encodeErc7821Execute,
   type AllowedCall,
@@ -126,4 +130,37 @@ test("a malformed key hash is refused by both builders", () => {
 
 test("an empty batch cannot be encoded", () => {
   assert.equal(refusal(() => encodeErc7821Execute([])), "EMPTY_BATCH")
+})
+
+const RECORDED_AUTHORIZE_CALLDATA =
+  "0xcebfe3360000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000006aa143c20000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000bb6633e6f59b2a7a26cf471165c3c32eceb61ab4" as Hex
+const RECORDED_SESSION_ADDRESS = "0xbb6633e6f59b2a7a26cf471165c3c32eceb61ab4" as Address
+const RECORDED_EXPIRY = 1_788_953_538
+const RECORDED_KEY_HASH =
+  "0x484399e86957bad2e06e03b368001538cfa6d5ca7c151f740537c31efb1363f5" as Hex
+
+test("the authorize builder reproduces the calldata this account already accepted", () => {
+  const publicKey = sessionPublicKeyFromAddress(RECORDED_SESSION_ADDRESS)
+  const call = buildAuthorizeCall(ACCOUNT, RECORDED_EXPIRY, publicKey)
+  assert.equal(call.data.toLowerCase(), RECORDED_AUTHORIZE_CALLDATA.toLowerCase())
+})
+
+test("the key hash derivation reproduces the hash setCanExecute referenced on chain", () => {
+  const publicKey = sessionPublicKeyFromAddress(RECORDED_SESSION_ADDRESS)
+  assert.equal(deriveKeyHash(SECP256K1_KEY_TYPE, publicKey), RECORDED_KEY_HASH)
+})
+
+test("a session key is never authorised as a super admin", () => {
+  const publicKey = sessionPublicKeyFromAddress(RECORDED_SESSION_ADDRESS)
+  const call = buildAuthorizeCall(ACCOUNT, RECORDED_EXPIRY, publicKey)
+  assert.ok(call.data.includes("0".repeat(63) + "0"), "isSuperAdmin must encode false")
+  assert.equal(call.value, 0n)
+})
+
+test("a malformed public key or expiry is refused", () => {
+  assert.equal(refusal(() => buildAuthorizeCall(ACCOUNT, RECORDED_EXPIRY, "0xdead" as Hex)), "PUBLIC_KEY_INVALID")
+  assert.equal(
+    refusal(() => buildAuthorizeCall(ACCOUNT, 0, sessionPublicKeyFromAddress(RECORDED_SESSION_ADDRESS))),
+    "EXPIRY_INVALID",
+  )
 })

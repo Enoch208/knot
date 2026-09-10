@@ -1,4 +1,12 @@
-import { encodeAbiParameters, encodeFunctionData, toFunctionSelector, type Address, type Hex } from "viem"
+import {
+  encodeAbiParameters,
+  encodeFunctionData,
+  keccak256,
+  pad,
+  toFunctionSelector,
+  type Address,
+  type Hex,
+} from "viem"
 
 export const ERC7821_BATCH_MODE =
   "0x0100000000007821000100000000000000000000000000000000000000000000" as const
@@ -211,3 +219,63 @@ export function encodeErc7821Execute(calls: readonly InnerCall[]): Hex {
 }
 
 export const selectorOf = (signature: string): Hex => toFunctionSelector(signature)
+
+export const SECP256K1_KEY_TYPE = 2 as const
+
+export function sessionPublicKeyFromAddress(address: Address): Hex {
+  return pad(address.toLowerCase() as Hex, { size: 32 })
+}
+
+export function deriveKeyHash(keyType: number, publicKey: Hex): Hex {
+  return keccak256(
+    encodeAbiParameters(
+      [{ type: "uint8" }, { type: "bytes32" }],
+      [keyType, keccak256(publicKey)],
+    ),
+  )
+}
+
+const authorizeAbi = [
+  {
+    type: "function",
+    name: "authorize",
+    inputs: [
+      {
+        name: "key",
+        type: "tuple",
+        components: [
+          { name: "expiry", type: "uint40" },
+          { name: "keyType", type: "uint8" },
+          { name: "isSuperAdmin", type: "bool" },
+          { name: "publicKey", type: "bytes" },
+        ],
+      },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+] as const
+
+export function buildAuthorizeCall(
+  account: Address,
+  expiryUnix: number,
+  publicKey: Hex,
+): InnerCall {
+  if (!Number.isSafeInteger(expiryUnix) || expiryUnix <= 0) {
+    throw new SessionCallError("EXPIRY_INVALID", "session expiry must be a positive unix timestamp")
+  }
+  if (!/^0x[0-9a-fA-F]{64}$/.test(publicKey)) {
+    throw new SessionCallError("PUBLIC_KEY_INVALID", "a secp256k1 session public key must be 32 bytes")
+  }
+  return {
+    to: account,
+    value: 0n,
+    data: encodeFunctionData({
+      abi: authorizeAbi,
+      functionName: "authorize",
+      args: [
+        { expiry: expiryUnix, keyType: SECP256K1_KEY_TYPE, isSuperAdmin: false, publicKey },
+      ],
+    }),
+  }
+}
