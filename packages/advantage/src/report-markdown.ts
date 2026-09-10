@@ -1,5 +1,6 @@
 import { posix } from "node:path"
 import type { PairedExperimentRecord } from "./schemas.ts"
+import type { HumanArmComparison } from "./human-arm.ts"
 import type { VerifiedReportExperiment, VerifiedShieldReport } from "./report.ts"
 
 const names = {
@@ -12,6 +13,7 @@ const names = {
 export function renderAgentAdvantageReport(
   experiments: readonly VerifiedReportExperiment[],
   shield: VerifiedShieldReport,
+  humanArm: HumanArmComparison | null = null,
 ): string {
   const lines = [
     "# Agent Advantage Report",
@@ -28,13 +30,14 @@ export function renderAgentAdvantageReport(
     "",
   ]
   for (const experiment of experiments) lines.push(...experimentSection(experiment))
+  if (humanArm) lines.push(...humanArmSection(humanArm))
   lines.push(...shieldSection(shield))
   lines.push(
     "## Interpretation limits",
     "",
     "- All four finance results are single-input quality observations. A tie is a tie; none establishes superiority or repeatability.",
     "- Three TaskSpecs cryptographically match their committed raw input bytes. HealthGuard's paired paths share the same separately SHA-256-bound input, but its TaskSpec input hash does not match the committed input bytes; the authentic signed-task preimage binding is therefore not established.",
-    "- Agent lifecycle durations and baseline calculation measurements have different boundaries. They do not establish a speed, latency, labor, or human-time advantage.",
+    "- Agent lifecycle durations and baseline calculation measurements have different boundaries. Across the four deterministic pairs they establish no speed, latency, labor, or human-time advantage; the only human-effort observation in this report is the single recorded operator session below.",
     "- Service fees are testnet U and network fees are tBNB. They are not revenue, dollars, or evidence of production cost advantage.",
     "- No paired result establishes profit, APY, return, savings, PnL, win rate, execution quality, or future performance.",
     "- The finance artifacts are analysis only. No mainnet position, order, swap, deposit, withdrawal, migration, or repayment was executed.",
@@ -170,4 +173,24 @@ function markdownLink(label: string, repositoryPath: string): string {
 
 function fromDocs(repositoryPath: string): string {
   return `../${repositoryPath}`
+}
+
+const minutes = (milliseconds: number): string => (milliseconds / 60_000).toFixed(2)
+
+function humanArmSection(comparison: HumanArmComparison): string[] {
+  return [
+    "## Recorded operator session",
+    "",
+    `One operator worked the frozen \`${comparison.taskId}\` input with no KNOT access and no assistant, while a recorder held the clock. This is the only human-effort measurement in this report.`,
+    "",
+    "| Arm | Measured time | Outcome |",
+    "| --- | ---: | --- |",
+    `| Operator \`${comparison.operatorPseudonym}\` (prior familiarity: ${comparison.priorFamiliarity}) | ${minutes(comparison.humanMilliseconds)} min | ${comparison.answersAgree ? "agreed with the paid agent on every compared field" : `disagreed on ${comparison.disagreeingFields.join(", ")}`} |`,
+    `| Paid ${comparison.category} agent lifecycle | ${minutes(comparison.agentMilliseconds)} min | service fee ${comparison.serviceFeeUnits} ${comparison.serviceFeeSymbol}; network fee ${comparison.networkFeeUnits} ${comparison.networkFeeSymbol} |`,
+    "",
+    `Time ratio ${comparison.timeRatio}x. Absolute difference ${minutes(comparison.absoluteMillisecondsSaved)} minutes. Observations: ${comparison.observations}.`,
+    "",
+    ...comparison.limitations.map((limitation) => `- ${limitation}`),
+    "",
+  ]
 }

@@ -85,6 +85,22 @@ Each paid agent used BSC mainnet read-only input and BSC testnet identity, payme
 | Liquidity, capacity, concentration, protocol, and risk exclusions (`market_exclusions`) | 10000 | 10000 | tie |
 | Selected migration or hold decision (`bounded_selection`) | 10000 | 10000 | tie |
 
+## Recorded operator session
+
+One operator worked the frozen `yield-1188` input with no KNOT access and no assistant, while a recorder held the clock. This is the only human-effort measurement in this report.
+
+| Arm | Measured time | Outcome |
+| --- | ---: | --- |
+| Operator `participant-1` (prior familiarity: none) | 18.51 min | agreed with the paid agent on every compared field |
+| Paid yield agent lifecycle | 2.47 min | service fee 100000000000000000 U; network fee 2168994000000000 tBNB |
+
+Time ratio 7.48x. Absolute difference 16.03 minutes. Observations: 1.
+
+- One operator on one task. No population claim is supported by a single observation.
+- The time boundaries are not identical: the agent window runs from recorded marketplace start through confirmed on-chain submission and includes block inclusion, while the operator window covers task work only.
+- Costs are U and tBNB on BSC testnet. Testnet units are not dollars and no monetary break-even is claimed.
+- The operator worked from the identical frozen input, and the recorder held the clock rather than accepting a stated duration.
+
 ## Shield high-stakes corpus evaluation
 
 Shield is reported separately because it is a measured specialist evaluation, not one of the four paired marketplace experiments.
@@ -109,7 +125,7 @@ Shield is reported separately because it is a measured specialist evaluation, no
 
 - All four finance results are single-input quality observations. A tie is a tie; none establishes superiority or repeatability.
 - Three TaskSpecs cryptographically match their committed raw input bytes. HealthGuard's paired paths share the same separately SHA-256-bound input, but its TaskSpec input hash does not match the committed input bytes; the authentic signed-task preimage binding is therefore not established.
-- Agent lifecycle durations and baseline calculation measurements have different boundaries. They do not establish a speed, latency, labor, or human-time advantage.
+- Agent lifecycle durations and baseline calculation measurements have different boundaries. Across the four deterministic pairs they establish no speed, latency, labor, or human-time advantage; the only human-effort observation in this report is the single recorded operator session below.
 - Service fees are testnet U and network fees are tBNB. They are not revenue, dollars, or evidence of production cost advantage.
 - No paired result establishes profit, APY, return, savings, PnL, win rate, execution quality, or future performance.
 - The finance artifacts are analysis only. No mainnet position, order, swap, deposit, withdrawal, migration, or repayment was executed.

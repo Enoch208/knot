@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
 import { buildAgentAdvantageReport, type AdvantageDatasetSource } from "../packages/advantage/src/report.ts"
+import type { HumanArmComparison } from "../packages/advantage/src/human-arm.ts"
 import { shieldSlitherCapture } from "../packages/services/shield/index.ts"
 
 const repositoryRoot = resolve(import.meta.dirname, "..")
@@ -63,6 +64,10 @@ const rawOutputTexts = new Map<string, string>()
 for (const output of capture.outputs) {
   rawOutputTexts.set(output.path, await readFile(resolve(repositoryRoot, output.path), "utf8"))
 }
+const humanArmArtifact = JSON.parse(
+  await readFile(resolve(repositoryRoot, "evidence/advantage/human-arm/yield-1188.json"), "utf8"),
+) as { comparison: HumanArmComparison }
+
 const report = await buildAgentAdvantageReport(sources, {
   evaluationPath: "evidence/shield/corpus-v1/evaluation.json",
   captureText,
@@ -71,7 +76,7 @@ const report = await buildAgentAdvantageReport(sources, {
   runsText: await readFile(resolve(repositoryRoot, "evidence/shield/corpus-v1/runs.json"), "utf8"),
   evaluation: JSON.parse(await readFile(resolve(repositoryRoot, "evidence/shield/corpus-v1/evaluation.json"), "utf8")) as unknown,
   groundTruthText: await readFile(resolve(repositoryRoot, "tests/fixtures/shield/corpus-v1/ground-truth.json"), "utf8"),
-})
+}, humanArmArtifact.comparison)
 const outputPath = resolve(repositoryRoot, "docs/AGENT_ADVANTAGE_REPORT.md")
 await writeFile(outputPath, report)
 process.stdout.write(`[advantage] verified four finance pairs and Shield; wrote ${outputPath}\n`)

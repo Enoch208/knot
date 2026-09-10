@@ -12,6 +12,7 @@ import {
   verifyPublishedShieldMeasurement,
   type ShieldEvaluationReport,
 } from "../../services/shield/index.ts"
+import type { HumanArmComparison } from "./human-arm.ts"
 import { renderAgentAdvantageReport } from "./report-markdown.ts"
 
 const categories = ["health", "rebalancing", "grid", "yield"] as const
@@ -75,6 +76,7 @@ export class AdvantageReportError extends Error {
 export async function buildAgentAdvantageReport(
   sources: readonly AdvantageDatasetSource[],
   shieldSource: ShieldReportSource,
+  humanArm: HumanArmComparison | null = null,
 ): Promise<string> {
   const experiments: VerifiedReportExperiment[] = []
   const evaluators = [
@@ -136,12 +138,11 @@ export async function buildAgentAdvantageReport(
     evaluation,
     groundTruthText: shieldSource.groundTruthText,
   })
-  return renderAgentAdvantageReport(experiments, {
-    evaluationPath: shieldSource.evaluationPath,
-    evaluation,
-    capture,
-    report,
-  })
+  return renderAgentAdvantageReport(
+    experiments,
+    { evaluationPath: shieldSource.evaluationPath, evaluation, capture, report },
+    humanArm,
+  )
 }
 
 function isFinanceCategory(value: string): value is FinanceCategory {
