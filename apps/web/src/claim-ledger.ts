@@ -1,4 +1,3 @@
-// Display-only projection of evidence/claims.json, bundled for standalone web deployments.
 import ledgerSnapshot from "./claim-ledger.snapshot.json"
 
 export type ClaimStatus = "SUPPORTED" | "PARTIAL" | "UNMEASURED" | "NOT_CLAIMED"

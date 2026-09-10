@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-09-09T19:54:26.377Z",
+  "updatedAtUtc": "2026-09-10T11:59:26.126Z",
   "claims": [
     {
       "id": "knot-api-available",
@@ -14,7 +14,8 @@
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "chain-action-recovery-kernel",
@@ -23,7 +24,8 @@
         "synthetic_fixture",
         "publisher_claim",
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "healthguard-card-live",
@@ -46,35 +48,40 @@
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "healthguard-analysis",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "rangepilot-analysis",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "gridquant-analysis",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "yieldscout-analysis",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "rangepilot-public-seller",
@@ -109,21 +116,24 @@
       "evidenceClasses": [
         "testnet_observation",
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "healthguard-job-1181-verified-delivery",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "paid-flow",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "analysis-seller-paid-flows",
@@ -131,7 +141,8 @@
       "evidenceClasses": [
         "mainnet_observation",
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "healthguard-job-1185-paired-experiment",
@@ -139,21 +150,24 @@
       "evidenceClasses": [
         "mainnet_observation",
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "bounded-authority-grant-revoke",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "testnet_observation"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "shield-frozen-evaluation-corpus",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "third-party-health-audition-2293",
@@ -193,7 +207,8 @@
       "status": "SUPPORTED",
       "evidenceClasses": [
         "synthetic_fixture"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "seller-restart-recovery",
@@ -208,14 +223,16 @@
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "cloudflared-controlled-recovery",
       "status": "SUPPORTED",
       "evidenceClasses": [
         "publisher_claim"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "comparative-benchmarks",
@@ -224,7 +241,8 @@
         "mainnet_observation",
         "testnet_observation",
         "historical_replay"
-      ]
+      ],
+      "observedAtUtc": null
     },
     {
       "id": "service-request-intake-boundary",
