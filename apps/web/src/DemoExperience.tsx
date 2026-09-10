@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from "react"
+import { HirePanel } from "./HirePanel"
 
 type DemoState = "idle" | "running" | "complete" | "failed"
 
 type QuoteResult = {
+  verifiedQuoteId: string
   stage: "VERIFIED_PRE_FUNDING"
   mode: "QUOTE_ONLY"
   agent: {
@@ -304,7 +306,7 @@ export default function DemoExperience() {
                 <div className="boundary-grid">
                   <div><Check /><span>Identity observed</span></div>
                   <div><Check /><span>Quote signature verified</span></div>
-                  <div><span className="boundary-stop">×</span><span>Funding disabled</span></div>
+                  <div><Check /><span>Quote path moved no funds</span></div>
                   <div><span className="boundary-stop">×</span><span>Mainnet writes disabled</span></div>
                 </div>
 
@@ -314,6 +316,8 @@ export default function DemoExperience() {
                     Inspect agent card <Arrow />
                   </a>
                 </div>
+
+                {result.quote.expired ? null : <HirePanel verifiedQuoteId={result.verifiedQuoteId} />}
               </div>
             )}
           </section>

@@ -18,7 +18,10 @@ type Affordance = {
 }
 
 const hireBlockedReason =
-  "No public funding route: this build stops at the verified quote and creates no job."
+  "Hiring starts from a verified quote, and no public quote route is deployed for this agent yet."
+
+const hireAvailableNote =
+  "Review the provider, budget, policy and expiry, then fund the escrow from your own wallet on BSC testnet."
 
 const explorer = "https://testnet.bscscan.com/tx/"
 const artifacts = "https://knot-artifacts.truematchx.com/knot-deliverables/"
@@ -104,7 +107,9 @@ function readAffordances(profile: AgentProfile): readonly Affordance[] {
       action: "Run verified quote",
       note: profile.quoteBlockedReason ?? "A live signed quote, verified against ERC-8004 identity and stopped before funding.",
     },
-    { name: "Hire", href: null, action: "Fund this agent", note: hireBlockedReason },
+    profile.quoteRoute === null
+      ? { name: "Hire", href: null, action: "Fund this agent", note: hireBlockedReason }
+      : { name: "Hire", href: profile.quoteRoute, action: "Fund this agent", note: hireAvailableNote },
   ]
 }
 

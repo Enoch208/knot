@@ -100,6 +100,7 @@ export async function POST(request: Request) {
 
     if (
       quote.stage !== "VERIFIED_PRE_FUNDING" ||
+      typeof quote.id !== "string" ||
       quote.fundingPermitted !== false ||
       quote.taskId !== taskId ||
       typeof quote.negotiationHash !== "string" ||
@@ -112,6 +113,7 @@ export async function POST(request: Request) {
       {
         stage: "VERIFIED_PRE_FUNDING",
         mode: "QUOTE_ONLY",
+        verifiedQuoteId: quote.id,
         agent: {
           name: "RangePilot",
           relation: "KNOT-operated",
