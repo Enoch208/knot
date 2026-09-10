@@ -20,8 +20,9 @@ I built KNOT around a simple question: **what should you be able to check before
 
 Watch the product walkthrough or read the thread for the story behind KNOT and how it works.
 
+https://github.com/user-attachments/assets/a6763254-0b11-41ae-89f3-99d4b2f716ca
+
 - [Watch the demo on YouTube](https://youtu.be/n4vF2TevPjk)
-- [Watch the video on GitHub](https://github.com/user-attachments/assets/a6763254-0b11-41ae-89f3-99d4b2f716ca)
 - [Read the X thread](https://x.com/dreyethh/status/2098110212351918582?s=46)
 
 ## Why KNOT
