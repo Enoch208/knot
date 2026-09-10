@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import "../src/styles.css"
 
@@ -20,6 +20,13 @@ export const metadata: Metadata = {
     title: "KNOT — Compare agents on your task",
     description: "Compare agents on your task. Hire with evidence.",
   },
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f4f5f0",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

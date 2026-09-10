@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type ServiceState = "checking" | "available" | "unavailable"
 
@@ -97,6 +97,66 @@ const Check = () => (
   </svg>
 )
 
+function CustomCursor() {
+  const cursorRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const cursor = cursorRef.current
+    const finePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    )
+
+    if (!cursor || !finePointer.matches) return
+
+    const root = document.documentElement
+    let frame = 0
+    let x = -100
+    let y = -100
+
+    const paint = () => {
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`
+      frame = 0
+    }
+    const move = (event: PointerEvent) => {
+      x = event.clientX
+      y = event.clientY
+      cursor.classList.add("is-visible")
+      if (frame === 0) frame = window.requestAnimationFrame(paint)
+    }
+    const hover = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null
+      cursor.classList.toggle(
+        "is-active",
+        Boolean(target?.closest("a, button, [role='button']")),
+      )
+    }
+    const press = () => cursor.classList.add("is-pressed")
+    const release = () => cursor.classList.remove("is-pressed")
+    const hide = () => cursor.classList.remove("is-visible")
+
+    root.classList.add("custom-cursor-ready")
+    window.addEventListener("pointermove", move, { passive: true })
+    window.addEventListener("pointerover", hover, { passive: true })
+    window.addEventListener("pointerdown", press, { passive: true })
+    window.addEventListener("pointerup", release, { passive: true })
+    window.addEventListener("blur", hide)
+    document.addEventListener("mouseleave", hide)
+
+    return () => {
+      root.classList.remove("custom-cursor-ready")
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener("pointermove", move)
+      window.removeEventListener("pointerover", hover)
+      window.removeEventListener("pointerdown", press)
+      window.removeEventListener("pointerup", release)
+      window.removeEventListener("blur", hide)
+      document.removeEventListener("mouseleave", hide)
+    }
+  }, [])
+
+  return <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
+}
+
 function useBackendStatus(): ServiceState {
   const [state, setState] = useState<ServiceState>("checking")
 
@@ -145,6 +205,7 @@ function App() {
 
   return (
     <>
+      <CustomCursor />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -385,35 +446,46 @@ function App() {
             </div>
 
             <div className="demo-status" id="status" aria-live="polite">
-              <div className="status-topline">
-                <span>Live infrastructure</span>
-                <span className={`status-badge status-${backendStatus}`}>
-                  <span /> {statusText}
-                </span>
+              <div className="status-visual">
+                <img
+                  src="/images/knot-status-system.webp"
+                  alt="Four system signals converging on one availability check"
+                  width="1448"
+                  height="1086"
+                  loading="lazy"
+                />
+                <div className="status-topline">
+                  <span>Live infrastructure</span>
+                  <span className={`status-badge status-${backendStatus}`}>
+                    <span /> {statusText}
+                  </span>
+                </div>
               </div>
-              <div className="status-row">
-                <span>API + database</span>
-                <strong>{backendStatus === "available" ? "Available" : statusText}</strong>
+              <div className="status-details">
+                <div className="status-row">
+                  <span>API + database</span>
+                  <strong>{backendStatus === "available" ? "Available" : statusText}</strong>
+                </div>
+                <div className="status-row">
+                  <span>Quote mode</span>
+                  <strong>Verified pre-funding</strong>
+                </div>
+                <div className="status-row">
+                  <span>Payment network</span>
+                  <strong>BSC testnet</strong>
+                </div>
+                <div className="status-row">
+                  <span>Mainnet writes</span>
+                  <strong>Disabled</strong>
+                </div>
+                <p>Pre-production pilot · No real funds required</p>
               </div>
-              <div className="status-row">
-                <span>Quote mode</span>
-                <strong>Verified pre-funding</strong>
-              </div>
-              <div className="status-row">
-                <span>Payment network</span>
-                <strong>BSC testnet</strong>
-              </div>
-              <div className="status-row">
-                <span>Mainnet writes</span>
-                <strong>Disabled</strong>
-              </div>
-              <p>Pre-production pilot · No real funds required</p>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="site-footer">
+      <footer className="site-footer" id="footer">
         <div className="footer-brand">
           <a className="brand brand-footer" href="#top">
             <span className="brand-mark">

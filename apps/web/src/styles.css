@@ -54,6 +54,70 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+.custom-cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.custom-cursor-ready,
+  html.custom-cursor-ready * {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border: 1px solid rgba(0, 173, 187, 0.72);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      width 160ms ease,
+      height 160ms ease,
+      margin 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease,
+      opacity 120ms ease;
+    will-change: transform;
+  }
+
+  .custom-cursor::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cyan-deep);
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .custom-cursor.is-visible {
+    opacity: 1;
+  }
+
+  .custom-cursor.is-active {
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-color: var(--cyan);
+    background: rgba(2, 215, 215, 0.11);
+  }
+
+  .custom-cursor.is-pressed {
+    width: 26px;
+    height: 26px;
+    margin: -13px 0 0 -13px;
+  }
+}
+
 img,
 svg {
   display: block;
@@ -311,7 +375,7 @@ svg {
   min-height: 590px;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(10, 21, 26, 0.1);
+  border: 0;
   border-radius: var(--radius-lg);
   background: #e9efeb;
   box-shadow: var(--shadow-soft);
@@ -810,11 +874,29 @@ svg {
 }
 
 .demo-status {
-  padding: 24px;
+  overflow: hidden;
   border: 1px solid rgba(10, 21, 26, 0.13);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--paper-bright);
   box-shadow: var(--shadow-soft);
+}
+
+.status-visual {
+  position: relative;
+  aspect-ratio: 1.48;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #f7f5ef;
+}
+
+.status-visual > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.status-details {
+  padding: 0 24px 22px;
 }
 
 .status-topline,
@@ -826,12 +908,20 @@ svg {
 }
 
 .status-topline {
-  padding-bottom: 20px;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  left: 18px;
+  padding: 11px 12px;
+  border: 1px solid rgba(10, 21, 26, 0.09);
+  border-radius: 13px;
+  background: rgba(251, 252, 248, 0.84);
   color: var(--ink-faint);
-  font-size: 0.68rem;
+  font-size: 0.61rem;
   font-weight: 750;
   letter-spacing: 0.09em;
   text-transform: uppercase;
+  backdrop-filter: blur(12px);
 }
 
 .status-badge {
@@ -871,7 +961,7 @@ svg {
   font-size: 0.78rem;
 }
 
-.demo-status > p {
+.status-details > p {
   margin: 18px 0 0;
   color: var(--ink-faint);
   font-size: 0.68rem;
@@ -879,24 +969,43 @@ svg {
 }
 
 .site-footer {
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr 0.8fr 1.1fr;
   align-items: end;
   gap: 40px;
-  padding: 64px 32px 34px;
-  border-top: 1px solid var(--line);
-  background: #e5e8e2;
+  min-height: 360px;
+  overflow: hidden;
+  padding: 88px 48px 38px;
+  border-top: 0;
+  background: var(--night) url("/images/knot-footer-field.webp") center / cover no-repeat;
+  color: white;
+}
+
+.site-footer::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6, 16, 20, 0.82), rgba(6, 16, 20, 0.34) 50%, rgba(6, 16, 20, 0.78)),
+    linear-gradient(180deg, rgba(6, 16, 20, 0.12), rgba(6, 16, 20, 0.72));
+  content: "";
+}
+
+.site-footer > * {
+  position: relative;
+  z-index: 1;
 }
 
 .brand-footer {
   padding-left: 0;
   background: transparent;
+  color: white;
 }
 
 .footer-brand > p,
 .footer-meta p {
   margin: 16px 0 0;
-  color: var(--ink-faint);
+  color: rgba(226, 242, 242, 0.68);
   font-size: 0.72rem;
 }
 
@@ -908,6 +1017,16 @@ svg {
   font-size: 0.75rem;
   font-weight: 720;
   text-transform: uppercase;
+}
+
+.footer-links a {
+  color: rgba(246, 255, 254, 0.82);
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.footer-links a:hover {
+  color: var(--cyan);
+  transform: translateY(-2px);
 }
 
 .footer-meta {
@@ -1053,11 +1172,11 @@ a:focus-visible {
   }
 
   .section-shell {
-    width: min(100% - 28px, 560px);
+    width: min(100% - 48px, 560px);
   }
 
   .site-header {
-    padding: 13px 14px;
+    padding: 13px 20px;
   }
 
   .brand,
@@ -1091,8 +1210,10 @@ a:focus-visible {
   }
 
   .hero h1 {
-    font-size: clamp(2.65rem, 11.5vw, 4.1rem);
-    line-height: 0.98;
+    max-width: 100%;
+    font-size: clamp(2.25rem, 10.5vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.047em;
   }
 
   .hero-intro {
@@ -1122,7 +1243,7 @@ a:focus-visible {
   }
 
   .hero-system {
-    min-height: 500px;
+    min-height: clamp(410px, 125vw, 500px);
     border-radius: 26px;
   }
 
@@ -1203,13 +1324,24 @@ a:focus-visible {
   }
 
   .status-topline {
-    align-items: flex-start;
-    flex-direction: column;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    gap: 8px;
+    padding: 9px 10px;
+    font-size: 0.54rem;
+  }
+
+  .status-badge {
+    padding: 7px 8px;
+    font-size: 0.54rem;
   }
 
   .site-footer {
     grid-template-columns: 1fr;
-    padding: 48px 20px 28px;
+    min-height: 500px;
+    padding: 96px 24px 32px;
+    background-position: 58% center;
   }
 
   .footer-links {
@@ -1218,6 +1350,27 @@ a:focus-visible {
 
   .footer-meta {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .site-header {
+    gap: 10px;
+    padding-inline: 16px;
+  }
+
+  .brand {
+    gap: 8px;
+    font-size: 0.96rem;
+  }
+
+  .button-small {
+    padding-inline: 12px;
+    font-size: 0.64rem;
+  }
+
+  .button-small svg {
+    display: none;
   }
 }
 
