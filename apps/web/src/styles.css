@@ -1211,9 +1211,13 @@ a:focus-visible {
 
   .hero h1 {
     max-width: 100%;
-    font-size: clamp(2.25rem, 10.5vw, 3rem);
+    font-size: clamp(2.15rem, 9.4vw, 2.65rem);
     line-height: 1;
     letter-spacing: -0.047em;
+  }
+
+  .hero h1 > span {
+    white-space: normal;
   }
 
   .hero-intro {
