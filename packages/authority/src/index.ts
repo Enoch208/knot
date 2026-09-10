@@ -29,7 +29,11 @@ export {
 export {
   ERC7821_BATCH_MODE,
   SessionCallError,
+  SECP256K1_KEY_TYPE,
+  buildAuthorizeCall,
   buildGrantCalls,
+  deriveKeyHash,
+  sessionPublicKeyFromAddress,
   buildRevokeCalls,
   encodeErc7821Execute,
   selectorOf,
@@ -38,3 +42,4 @@ export {
   type SpendPeriodCode,
   type TokenLimit,
 } from "./erc7821-session.ts"
+export { decryptKeystore, KeystoreError, type KeystoreV3 } from "./keystore.ts"
