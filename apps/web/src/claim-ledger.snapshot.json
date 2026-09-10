@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-09-10T15:39:13.138Z",
+  "updatedAtUtc": "2026-09-10T16:35:39.967Z",
   "claims": [
     {
       "id": "knot-api-available",
@@ -279,6 +279,22 @@
         "testnet_observation"
       ],
       "observedAtUtc": "2026-09-10T15:39:12.485Z"
+    },
+    {
+      "id": "hire-recovery-regression-boundaries",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "observedAtUtc": "2026-09-10T15:55:17Z"
+    },
+    {
+      "id": "service-request-retention-erasure",
+      "status": "PARTIAL",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "observedAtUtc": "2026-09-10T16:35:39.525Z"
     }
   ]
 }

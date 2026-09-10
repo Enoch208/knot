@@ -61,7 +61,8 @@
     "web:dev": "npm --prefix apps/web run dev",
     "web:typecheck": "npm --prefix apps/web run typecheck",
     "worker:start": "node apps/worker/src/main.ts",
-    "session-hire": "node scripts/run-session-hire.ts"
+    "session-hire": "node scripts/run-session-hire.ts",
+    "test:integration:retention": "node --test tests/db/retention-erasure.integration.ts"
   },
   "dependencies": {
     "@altananetwork/sdk": "0.7.1",

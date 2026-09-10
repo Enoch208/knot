@@ -1,6 +1,6 @@
 {
   "schemaVersion": "knot.claims/1",
-  "updatedAtUtc": "2026-09-09T19:54:26.377Z",
+  "updatedAtUtc": "2026-09-10T15:55:17Z",
   "revision": {
     "baseCommit": "a4b092a777ff5bf66f5197e5ac0d06460bf54b8d",
     "branch": "main"
@@ -1942,6 +1942,99 @@
         "The denied-selector and post-revoke observations were read-only calls; no rejected transaction was broadcast.",
         "BSC testnet only, with no mainnet transaction and no real funds.",
         "The session key was not registered in the Altana KeyStore, so it is not resolvable by third-party lookup."
+      ]
+    },
+    {
+      "id": "hire-recovery-regression-boundaries",
+      "claim": "Controlled regression fixtures verify receipt-derived hire identifiers, wallet buyer and chain binding, retained browser submission progress, private session-grant journaling, spending windows without mid-session resets, and archive-compatible immutable backup metadata.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "chainId": 97,
+        "productionDeploymentVerified": false,
+        "liveFundsMoved": false
+      },
+      "observedAtUtc": "2026-09-10T15:55:17Z",
+      "sources": [
+        {
+          "type": "repository_test",
+          "path": "tests/api/hire-preparation.test.ts",
+          "command": "node --test tests/api/hire-preparation.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/web/hire-recovery.test.ts",
+          "command": "node --test tests/web/hire-recovery.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/web/hire-receipt.test.ts",
+          "command": "node --test tests/web/hire-receipt.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/authority/session-journal.test.ts",
+          "command": "node --test tests/authority/session-journal.test.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/ops/archived-release.test.ts",
+          "command": "node --test tests/ops/archived-release.test.ts"
+        }
+      ],
+      "limitations": [
+        "These are synthetic fixtures, not evidence of a newly completed paid hire, grant, revoke, or production backup.",
+        "Browser recovery is local to the original site origin and browser profile; deleting site data or switching devices is not covered by a server-side submission journal.",
+        "Unknown submissions remain blocked until a matching confirmed transaction is recovered; a timeout never authorizes a retry.",
+        "Session state and backup integrity metadata require a trusted local filesystem; they do not protect a compromised host.",
+        "The deployment remains single-buyer, and only the configured buyer wallet may submit these hires."
+      ]
+    },
+    {
+      "id": "service-request-retention-erasure",
+      "claim": "Service-request payloads carry a retention deadline, and after it elapses the payload can be reduced to a single tombstone byte through one sanctioned database path that preserves the original SHA-256 digest and the request binding. Direct update, delete, truncate, and a forged erasure that keeps the payload are all refused by the append-only guard.",
+      "status": "PARTIAL",
+      "evidenceClasses": [
+        "synthetic_fixture"
+      ],
+      "scope": {
+        "table": "service_requests",
+        "migration": "packages/db/migrations/0013_service_request_retention.sql",
+        "refusalsProven": [
+          "direct update",
+          "delete",
+          "truncate",
+          "forged erasure retaining the payload"
+        ],
+        "deployedRecordsErased": 0
+      },
+      "observedAtUtc": "2026-09-10T16:35:39.525Z",
+      "sources": [
+        {
+          "type": "repository_file",
+          "path": "packages/db/migrations/0013_service_request_retention.sql"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/db/src/retention-policy.ts"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/db/retention-policy.test.ts",
+          "command": "node --test tests/db/retention-policy.test.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "tests/db/retention-erasure.integration.ts"
+        }
+      ],
+      "limitations": [
+        "Proven against a migrated PostgreSQL database, not against the deployed cluster.",
+        "No deployed service request has reached its retention deadline, so no production payload has been erased.",
+        "Erasure removes the stored payload bytes. It does not reach database backups, write-ahead logs, or any copy taken before erasure.",
+        "The retention deadline is set per record at intake and is not yet enforced by a scheduled worker."
       ]
     }
   ]
