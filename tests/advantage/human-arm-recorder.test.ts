@@ -15,7 +15,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..")
 
 const openSession = (startedAtMonotonicMs: number): OpenSession => ({
   schemaVersion: "knot.human-arm.session-open/1",
-  taskId: "health-1185",
+  taskId: "yield-1188",
   operatorPseudonym: "operator-a",
   priorFamiliarity: "none",
   startedAtUtc: "2026-09-10T12:00:00.000Z",
@@ -63,14 +63,14 @@ test("the recorded session preserves the operator pseudonym and prior familiarit
   assert.equal(session.priorFamiliarity, "none")
 })
 
-test("the frozen health task pins the same input the paid agent received", async () => {
-  const task = await readFrozenTask("health-1185")
+test("the frozen yield task pins the same input the paid agent received", async () => {
+  const task = await readFrozenTask("yield-1188")
   const frozenInput = await readFile(
-    join(ROOT, "experiments", "human-arm", "health-1185", "input.json"),
+    join(ROOT, "experiments", "human-arm", "yield-1188", "input.json"),
     "utf8",
   )
   const agentInput = await readFile(
-    join(ROOT, "evidence", "advantage", "healthguard-1185", "input.json"),
+    join(ROOT, "evidence", "advantage", "yieldscout-1188", "input.json"),
     "utf8",
   )
   assert.equal(frozenInput, agentInput, "the human arm must receive byte-identical input to the agent")
@@ -78,10 +78,11 @@ test("the frozen health task pins the same input the paid agent received", async
 })
 
 test("the frozen task forbids reaching for KNOT or a previously seen answer", async () => {
-  const task = await readFrozenTask("health-1185")
+  const task = await readFrozenTask("yield-1188")
   const forbidden = task.forbidden.join(" ").toLowerCase()
   assert.match(forbidden, /knot/)
   assert.match(forbidden, /previously seen answer/)
+  assert.match(forbidden, /ai assistant/)
   assert.ok(task.answerFields.length >= 4)
 })
 

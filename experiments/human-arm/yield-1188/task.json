@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "knot.human-arm.task/1",
+  "taskId": "yield-1188",
+  "category": "yield",
+  "frozenAtUtc": "2026-09-10T13:25:43.727Z",
+  "inputSha256": "0x8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b",
+  "question": "Using only the pinned snapshot in input.json, decide whether this 1,000 USDT position should stay in its current market or move. Account for entry and exit costs, the withdrawal need, the minimum liquidity floor, the concentration cap and the minimum improvement threshold over the stated holding horizon.",
+  "allowedTools": [
+    "the supplied input.json",
+    "a calculator",
+    "public Venus and Aave documentation",
+    "a block explorer"
+  ],
+  "forbidden": [
+    "KNOT",
+    "any KNOT agent or endpoint",
+    "the KNOT baseline implementation",
+    "any AI assistant",
+    "any previously seen answer to this task"
+  ],
+  "answerFields": [
+    "recommendedMarketId",
+    "decision",
+    "netBenefitUnitsOverHorizon",
+    "excludedMarketsAndWhy"
+  ],
+  "agentPairExperiment": "evidence/advantage/yieldscout-1188"
+}
