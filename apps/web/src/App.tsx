@@ -12,10 +12,10 @@ const agents = [
     description:
       "Reads a supported Venus position, surfaces incomplete data, and recommends a bounded next step.",
     boundary: "Analysis and notifications only",
-    href: "https://knot-health.truematchx.com/.well-known/agent-card.json",
     art: "/images/agent-healthguard.webp",
     artAlt: "Illustrated shield protecting a lending position and risk gauge",
     accent: "mint",
+    passport: "/agents/healthguard",
   },
   {
     index: "02",
@@ -24,10 +24,10 @@ const agents = [
     description:
       "Assesses a PancakeSwap V3 position against its pool, ticks, market snapshot, and declared constraints.",
     boundary: "No position transactions",
-    href: "https://knot-range.truematchx.com/.well-known/agent-card.json",
     art: "/images/agent-rangepilot.webp",
     artAlt: "Illustrated market curve moving between calibrated range rails",
     accent: "cyan",
+    passport: "/agents/rangepilot",
   },
   {
     index: "03",
@@ -36,10 +36,10 @@ const agents = [
     description:
       "Turns a pinned market snapshot into a bounded spot-grid plan with capital, spacing, and fee checks.",
     boundary: "No orders or profit claims",
-    href: "https://knot-grid.truematchx.com/.well-known/agent-card.json",
     art: "/images/agent-gridquant.webp",
     artAlt: "Illustrated analytical grid with calibrated steps and nodes",
     accent: "amber",
+    passport: "/agents/gridquant",
   },
   {
     index: "04",
@@ -48,10 +48,10 @@ const agents = [
     description:
       "Compares supported Venus and Aave supply markets after liquidity, costs, and user constraints.",
     boundary: "No deposits, withdrawals, or migrations",
-    href: "https://knot-yield.truematchx.com/.well-known/agent-card.json",
     art: "/images/agent-yieldscout.webp",
     artAlt: "Illustrated yield routes converging on one verified path",
     accent: "violet",
+    passport: "/agents/yieldscout",
   },
 ] as const
 
@@ -295,8 +295,8 @@ function App() {
                   <div className="agent-boundary">
                     <Check /> {agent.boundary}
                   </div>
-                  <a href={agent.href} target="_blank" rel="noreferrer">
-                    Inspect live card <Arrow />
+                  <a href={agent.passport}>
+                    Open agent passport <Arrow />
                   </a>
                 </article>
               ))}
