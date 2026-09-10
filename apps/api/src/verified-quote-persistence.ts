@@ -156,7 +156,7 @@ class LockedPgVerifiedQuotePersistence implements LockedVerifiedQuotePersistence
       const endpointObservation = await new EndpointObservationRepository(this.client).appendNegotiationSuccess({
         id: endpointObservationId,
         agentRecordId: promoted.record.id,
-        endpoint: `${seller.origin}/`,
+        endpoint: current.endpoint,
         latencyMilliseconds: input.negotiationResult.metrics.oauthLatencyMilliseconds + input.negotiationResult.metrics.invocationLatencyMilliseconds,
         safeDetails: {
           schemaVersion: "knot.owned-seller-endpoint-observation/1",

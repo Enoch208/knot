@@ -52,6 +52,9 @@ const normalize = (input: AppendNegotiationEndpointObservationInput): AppendNego
   } catch {
     throw new RangeError("endpoint observation is invalid")
   }
+  const exactEndpoint =
+    input.endpoint === url.href ||
+    (url.pathname === "/" && url.search === "" && input.endpoint === url.origin)
   const details = input.safeDetails
   if (
     !identifier.test(input.id) ||
@@ -61,7 +64,7 @@ const normalize = (input: AppendNegotiationEndpointObservationInput): AppendNego
     url.username !== "" ||
     url.password !== "" ||
     url.hash !== "" ||
-    url.href !== input.endpoint ||
+    !exactEndpoint ||
     !Number.isSafeInteger(input.latencyMilliseconds) ||
     input.latencyMilliseconds < 0 ||
     !(input.observedAt instanceof Date) ||

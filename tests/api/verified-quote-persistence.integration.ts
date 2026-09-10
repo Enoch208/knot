@@ -98,8 +98,8 @@ integration("verified quote orchestration PostgreSQL persistence", () => {
       [retainedTask.taskId, buyer, retainedTask.schemaVersion, retainedTask.category, retainedTask.capability, retainedTask.identityChainId, retainedTask.dataChainId, retainedTask.paymentChainId, retainedTask.executionChainId, retainedTask.inputHash, JSON.stringify(retainedTask), retainedTask.deadlineUtc],
     )
     const requests = new ServiceRequestRepository(pool, () => now)
-    await requests.create({ id: serviceRequestId, buyer, endpoint: "https://knot-range.truematchx.com/", idempotencyKey: serviceRequestId, envelope })
-    await requests.create({ id: failedServiceRequestId, buyer, endpoint: "https://knot-range.truematchx.com/", idempotencyKey: failedServiceRequestId, envelope })
+    await requests.create({ id: serviceRequestId, buyer, endpoint: "https://knot-range.truematchx.com", idempotencyKey: serviceRequestId, envelope })
+    await requests.create({ id: failedServiceRequestId, buyer, endpoint: "https://knot-range.truematchx.com", idempotencyKey: failedServiceRequestId, envelope })
   })
 
   after(async () => {

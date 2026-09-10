@@ -12,7 +12,7 @@ const observedAt = new Date("2026-09-09T20:00:00.000Z")
 const input = (): AppendNegotiationEndpointObservationInput => ({
   id: "endpoint_range_request_1",
   agentRecordId: "owned_rangepilot_2297",
-  endpoint: "https://knot-range.truematchx.com/",
+  endpoint: "https://knot-range.truematchx.com",
   latencyMilliseconds: 123,
   safeDetails: {
     schemaVersion: "knot.owned-seller-endpoint-observation/1",
@@ -71,6 +71,15 @@ describe("EndpointObservationRepository", () => {
       "transportVersion",
     ])
     assert.doesNotMatch(JSON.stringify(first.record), /authorization|bearer|clientSecret|task_description/i)
+  })
+
+  it("accepts both exact spellings of an HTTPS root origin", async () => {
+    const slashless = await new EndpointObservationRepository(new MemoryPool() as unknown as Pool)
+      .appendNegotiationSuccess(input())
+    const withSlash = await new EndpointObservationRepository(new MemoryPool() as unknown as Pool)
+      .appendNegotiationSuccess({ ...input(), endpoint: `${input().endpoint}/` })
+    assert.equal(slashless.record.endpoint, "https://knot-range.truematchx.com")
+    assert.equal(withSlash.record.endpoint, "https://knot-range.truematchx.com/")
   })
 
   it("rejects conflicting retries and malformed metadata", async () => {
