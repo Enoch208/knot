@@ -1,0 +1,70 @@
+YIELD COMPARISON — TIMED TASK
+=============================
+
+You are being timed. That is the point of the exercise: we are measuring how
+long this takes a person. Work at your normal pace. Do not rush, and do not
+worry about being slow — a slow honest time is the useful result.
+
+Take as long as you need. If you cannot finish, say so; that is also a result.
+
+
+THE SITUATION
+-------------
+
+Someone wants to run a grid trading strategy on the WBNB/USDT pair on BNB
+Chain. They have supplied the parameters they want to use.
+
+Your job: work out whether that grid is viable as specified, and if not,
+which parameter is the problem.
+
+
+YOUR FILE
+---------
+
+    experiments/human-arm/grid-1187/input.json
+
+It contains the pair, the pool, the requested grid parameters, and a frozen
+market snapshot. Amounts are integers in base units; both tokens have 18
+decimals, so 1 token = 1000000000000000000 units.
+
+
+WHAT TO WORK OUT
+----------------
+
+    1. decision                          is the grid viable as specified
+    2. levelCount                        how many price levels the parameters imply
+    3. totalCapitalCommittedQuoteUnits   total quote-token capital the ladder commits
+    4. rejectedParametersAndWhy          any parameter you reject, and why. If none, say so.
+
+
+WHAT YOU MAY USE
+----------------
+
+    The input.json file
+    A calculator (or a spreadsheet)
+    Public Venus documentation
+    Public Aave documentation
+    A block explorer
+
+
+WHAT YOU MUST NOT USE
+---------------------
+
+    Any AI assistant of any kind
+    KNOT, or anything belonging to KNOT
+    Any answer to this task that you have seen before
+    Anyone else's help
+
+If you do end up using any of these, just say so — an assisted run recorded
+honestly is useful. A run recorded as unaided when it was not is worthless to
+us and worse than not doing it at all.
+
+
+BEFORE YOU START
+----------------
+
+Tell the person who gave you this that you are ready. They start a timer, then
+leave you alone. When you are done, tell them, and give them your four answers
+and your notes.
+
+Do not edit any file. Just hand back your answers.

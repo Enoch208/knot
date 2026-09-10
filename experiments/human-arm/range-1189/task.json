@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "knot.human-arm.task/1",
+  "taskId": "range-1189",
+  "category": "rebalancing",
+  "frozenAtUtc": "2026-09-10T16:07:43.103Z",
+  "inputSha256": "0x5cab77af274b22378e608ca3c17e902ae7f504b058c242fb99b62185037c0f1d",
+  "question": "Using only the pinned snapshot in input.json, decide whether this PancakeSwap v3 position should hold its current range or be rebalanced. Establish where the current tick sits relative to the position bounds and whether the supplied constraints permit an action.",
+  "allowedTools": [
+    "the supplied input.json",
+    "a calculator",
+    "public PancakeSwap v3 documentation",
+    "a block explorer"
+  ],
+  "forbidden": [
+    "KNOT",
+    "any KNOT agent or endpoint",
+    "the KNOT baseline implementation",
+    "any AI assistant",
+    "any previously seen answer to this task"
+  ],
+  "answerFields": [
+    "decision",
+    "currentTickRelativeToRange",
+    "reason",
+    "unavailableMetrics"
+  ],
+  "agentPairExperiment": "evidence/advantage/rangepilot-1189"
+}

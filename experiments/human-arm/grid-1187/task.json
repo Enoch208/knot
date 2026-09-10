@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "knot.human-arm.task/1",
+  "taskId": "grid-1187",
+  "category": "grid",
+  "frozenAtUtc": "2026-09-10T16:07:43.100Z",
+  "inputSha256": "0xa5080988db61ec66269eecc135c869bf827020bccee616e127d6c50d38209980",
+  "question": "Using only the pinned snapshot in input.json, decide whether the requested WBNB/USDT grid is viable under the supplied parameters. Work out the ladder the parameters imply, the capital it commits, and whether the fee assumptions leave a workable spread.",
+  "allowedTools": [
+    "the supplied input.json",
+    "a calculator",
+    "public PancakeSwap documentation",
+    "a block explorer"
+  ],
+  "forbidden": [
+    "KNOT",
+    "any KNOT agent or endpoint",
+    "the KNOT baseline implementation",
+    "any AI assistant",
+    "any previously seen answer to this task"
+  ],
+  "answerFields": [
+    "decision",
+    "levelCount",
+    "totalCapitalCommittedQuoteUnits",
+    "rejectedParametersAndWhy"
+  ],
+  "agentPairExperiment": "evidence/advantage/gridquant-1187"
+}

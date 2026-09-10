@@ -1,0 +1,69 @@
+YIELD COMPARISON — TIMED TASK
+=============================
+
+You are being timed. That is the point of the exercise: we are measuring how
+long this takes a person. Work at your normal pace. Do not rush, and do not
+worry about being slow — a slow honest time is the useful result.
+
+Take as long as you need. If you cannot finish, say so; that is also a result.
+
+
+THE SITUATION
+-------------
+
+Someone holds a PancakeSwap v3 liquidity position on BNB Chain. They want
+to know whether to leave it alone or rebalance it.
+
+Your job: work out where the current price sits relative to their position,
+and whether their own constraints permit an action.
+
+
+YOUR FILE
+---------
+
+    experiments/human-arm/range-1189/input.json
+
+It contains the position, the pool, the current tick, the position bounds,
+and the constraints the owner set. Ticks are integers.
+
+
+WHAT TO WORK OUT
+----------------
+
+    1. decision                    hold or rebalance
+    2. currentTickRelativeToRange  where the current tick sits vs the bounds
+    3. reason                      why, in one or two lines
+    4. unavailableMetrics          anything the snapshot does not let you determine
+
+
+WHAT YOU MAY USE
+----------------
+
+    The input.json file
+    A calculator (or a spreadsheet)
+    Public Venus documentation
+    Public Aave documentation
+    A block explorer
+
+
+WHAT YOU MUST NOT USE
+---------------------
+
+    Any AI assistant of any kind
+    KNOT, or anything belonging to KNOT
+    Any answer to this task that you have seen before
+    Anyone else's help
+
+If you do end up using any of these, just say so — an assisted run recorded
+honestly is useful. A run recorded as unaided when it was not is worthless to
+us and worse than not doing it at all.
+
+
+BEFORE YOU START
+----------------
+
+Tell the person who gave you this that you are ready. They start a timer, then
+leave you alone. When you are done, tell them, and give them your four answers
+and your notes.
+
+Do not edit any file. Just hand back your answers.
