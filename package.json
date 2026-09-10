@@ -21,6 +21,7 @@
     "category:parity": "npm run test:parity && npm run build:sellers && npm run test:sellers",
     "chain-recovery-rollout:verify": "node scripts/verify-chain-recovery-rollout.ts",
     "claims:verify": "node scripts/verify-claims.ts",
+    "authority:compose": "node scripts/compose-session-hire-authority.ts",
     "ledger:snapshot": "node scripts/build-claim-ledger-snapshot.ts",
     "discovery:coverage": "node scripts/build-discovery-coverage.ts",
     "directory:snapshot": "node scripts/build-directory-snapshot.ts",
