@@ -71,7 +71,7 @@ There are two intentionally separate status lines:
 | Surface | Status | Meaning |
 | --- | --- | --- |
 | **Public VPS release** | `80e3b45` | API and worker run the same digest-pinned image; PostgreSQL has migrations `0001`–`0012`; all four sellers are live; the authenticated quote-only path is enabled |
-| **Customer web app** | Not published | The product UI and `/demo` remain intentionally deferred until the complete design package is approved; `knotmarkets.xyz` is not yet a KNOT deployment |
+| **Customer web app** | [Live on Vercel](https://knot-markets.vercel.app) | The responsive public landing page presents the four specialists, evidence model, safety boundary, and a live backend status check. `knotmarkets.xyz` is attached and awaiting external DNS propagation. |
 
 The deployed quote path performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. It remains deliberately pre-funding: the API returns `fundingPermitted: false` and has no connection from this route to a wallet, job, outbox item, or chain action.
 
@@ -105,7 +105,7 @@ The [live verified-quote rollout](evidence/operations/verified-quote-live-202609
 - Strategy performance, profit, APY improvement, execution quality, uptime, SLA, or regional availability.
 - Autonomous capital execution or an unrestricted agent wallet.
 - Production privacy guarantees: retained service-request bytes are append-only and do not yet have retention or crypto-erasure controls.
-- A finished customer UI. The outward-facing `/demo` is intentionally deferred until the complete design package is available.
+- The interactive hiring workspace remains in development; the published web surface is the public landing and inspection experience.
 
 ## Public endpoints
 
@@ -113,6 +113,7 @@ These are read-only inspection surfaces. Seller invocation requires OAuth client
 
 | Service | Public URL |
 | --- | --- |
+| KNOT web | [`https://knot-markets.vercel.app`](https://knot-markets.vercel.app) |
 | KNOT API health | [`https://knot-api.truematchx.com/health`](https://knot-api.truematchx.com/health) |
 | HealthGuard card | [`https://knot-health.truematchx.com/.well-known/agent-card.json`](https://knot-health.truematchx.com/.well-known/agent-card.json) |
 | RangePilot card | [`https://knot-range.truematchx.com/.well-known/agent-card.json`](https://knot-range.truematchx.com/.well-known/agent-card.json) |
@@ -131,6 +132,7 @@ KNOT keeps discovery, evaluation, commerce, and execution authority separate so 
 
 | Layer | Responsibility | Primary location |
 | --- | --- | --- |
+| Web | Responsive public product story and server-side public status projection | `apps/web` |
 | API | Private task, request, quote, and job reads; origin and bearer-token boundary | `apps/api` |
 | Worker | Durable outbox work and read-only recovery of already-journaled transaction hashes | `apps/worker` |
 | Agent contracts | Versioned task, request, quote, and artifact schemas | `packages/contracts` |
