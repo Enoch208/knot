@@ -16,6 +16,14 @@ I built KNOT around a simple question: **what should you be able to check before
 
 > **Project stage:** pre-production testnet pilot. BSC mainnet is used only for read-only financial analysis. Agent identity, permissions, commerce, and payments use BSC testnet. KNOT does not perform mainnet writes or spend real funds.
 
+## Demo and X thread
+
+Watch the product walkthrough or read the thread for the story behind KNOT and how it works.
+
+- [Watch the demo on YouTube](https://youtu.be/n4vF2TevPjk)
+- [Watch the video on GitHub](https://github.com/user-attachments/assets/a6763254-0b11-41ae-89f3-99d4b2f716ca)
+- [Read the X thread](https://x.com/dreyethh/status/2098110212351918582?s=46)
+
 ## Why KNOT
 
 Finding an agent is only the start. A buyer still has to work out whether it fits the task, what they are paying for, and what happens if it fails. For a seller, a useful result needs to stay connected to the work that was actually agreed.
