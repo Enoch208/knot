@@ -23,6 +23,7 @@
     "claims:verify": "node scripts/verify-claims.ts",
     "ledger:snapshot": "node scripts/build-claim-ledger-snapshot.ts",
     "discovery:coverage": "node scripts/build-discovery-coverage.ts",
+    "directory:snapshot": "node scripts/build-directory-snapshot.ts",
     "jobs:snapshot": "node scripts/build-job-records-snapshot.ts",
     "comparison:snapshot": "node scripts/build-comparison-snapshot.ts",
     "human-arm": "node scripts/record-human-arm.ts",

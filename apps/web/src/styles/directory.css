@@ -1,0 +1,204 @@
+.directory-page {
+  width: min(100% - 48px, 1180px);
+  margin-inline: auto;
+  padding: 80px 0 96px;
+}
+
+.directory-intro {
+  max-width: 68ch;
+  margin-bottom: 32px;
+}
+
+.directory-kicker {
+  display: block;
+  margin: 0 0 12px;
+  color: var(--cyan-deep);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.directory-intro h1 {
+  margin: 0 0 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.directory-intro p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-md);
+  line-height: 1.65;
+}
+
+.directory-findings {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 32px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper-bright);
+}
+
+.directory-findings > div {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 20px 24px;
+}
+
+.directory-findings > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.directory-findings strong {
+  color: var(--danger);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.directory-findings span {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.directory-findings small {
+  color: var(--ink-faint);
+  font-size: var(--text-2xs);
+  line-height: 1.5;
+}
+
+.directory-listing {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper-bright);
+}
+
+.directory-scroll {
+  max-height: 520px;
+  overflow: auto;
+}
+
+.directory-listing table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.directory-listing th,
+.directory-listing td {
+  padding: 10px 24px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.directory-listing thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-bright);
+  color: var(--ink-faint);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.directory-listing tbody tr + tr th,
+.directory-listing tbody tr + tr td {
+  border-top: 1px solid var(--line-soft);
+}
+
+.directory-listing tbody th code {
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+}
+
+.directory-listing tbody th em {
+  display: block;
+  margin-top: 4px;
+  color: var(--cyan-deep);
+  font-size: var(--text-2xs);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.directory-listing tbody td {
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+}
+
+.directory-listing .numeric {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+}
+
+.directory-provenance {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-faint);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+}
+
+.directory-coverage {
+  margin-top: 16px;
+  padding: 16px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper-deep);
+}
+
+.directory-coverage p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-2xs);
+  line-height: 1.6;
+}
+
+.directory-source {
+  margin-top: 8px !important;
+  color: var(--ink-faint) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .directory-findings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .directory-findings > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .directory-findings > div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 720px) {
+  .directory-page {
+    width: min(100% - 32px, 1180px);
+    padding: 48px 0 64px;
+  }
+}
