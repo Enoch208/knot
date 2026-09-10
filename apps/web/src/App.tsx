@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 type ServiceState = "checking" | "available" | "unavailable"
 
@@ -97,66 +97,6 @@ const Check = () => (
   </svg>
 )
 
-function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const cursor = cursorRef.current
-    const finePointer = window.matchMedia(
-      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-    )
-
-    if (!cursor || !finePointer.matches) return
-
-    const root = document.documentElement
-    let frame = 0
-    let x = -100
-    let y = -100
-
-    const paint = () => {
-      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`
-      frame = 0
-    }
-    const move = (event: PointerEvent) => {
-      x = event.clientX
-      y = event.clientY
-      cursor.classList.add("is-visible")
-      if (frame === 0) frame = window.requestAnimationFrame(paint)
-    }
-    const hover = (event: PointerEvent) => {
-      const target = event.target instanceof Element ? event.target : null
-      cursor.classList.toggle(
-        "is-active",
-        Boolean(target?.closest("a, button, [role='button']")),
-      )
-    }
-    const press = () => cursor.classList.add("is-pressed")
-    const release = () => cursor.classList.remove("is-pressed")
-    const hide = () => cursor.classList.remove("is-visible")
-
-    root.classList.add("custom-cursor-ready")
-    window.addEventListener("pointermove", move, { passive: true })
-    window.addEventListener("pointerover", hover, { passive: true })
-    window.addEventListener("pointerdown", press, { passive: true })
-    window.addEventListener("pointerup", release, { passive: true })
-    window.addEventListener("blur", hide)
-    document.addEventListener("mouseleave", hide)
-
-    return () => {
-      root.classList.remove("custom-cursor-ready")
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener("pointermove", move)
-      window.removeEventListener("pointerover", hover)
-      window.removeEventListener("pointerdown", press)
-      window.removeEventListener("pointerup", release)
-      window.removeEventListener("blur", hide)
-      document.removeEventListener("mouseleave", hide)
-    }
-  }, [])
-
-  return <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
-}
-
 function useBackendStatus(): ServiceState {
   const [state, setState] = useState<ServiceState>("checking")
 
@@ -205,7 +145,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
