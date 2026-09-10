@@ -133,7 +133,14 @@ const plan = (
     manifestVerifiedTargets: authority.manifestTargets,
   },
   sdkGrantInput: {
-    entrypoint: "grantSession(wallet, adminSigner, options, config) from @altananetwork/sdk@0.7.1",
+    entrypoint: "not available as an SDK helper at the pinned version",
+    pinnedSdk: "@altananetwork/sdk@0.7.1",
+    availableSessionExports: ["registerSessionKey", "revokeSignatureChecker", "createPrivateKeySigner", "signerFromPrivateKey"],
+    absentSessionExports: ["grantSession", "execute"],
+    entrypointNote:
+      "grantSession and execute are documented by Altana but are not exported by the pinned 0.7.1 build, which @bnbagent/sdk@0.5.5 requires exactly. registerSessionKey registers an already-granted session; it does not grant one. The proven path on this account is direct ERC-7821 account execution, recorded in evidence/testnet/bounded-authority-grant-revoke.json with helperGrantUsed false.",
+    feeTokenWarning:
+      "registerSessionKey accepts an optional feeToken. Do not pass it: a fee token matching a spend permission raises the on-chain cap above the limit derived here.",
     expiry: authority.expiryUnix,
     permissions: {
       calls: authority.permissions.calls,
@@ -153,7 +160,7 @@ const plan = (
     "no evidence file was written; evidence is recorded only after a human executes this plan",
   ],
   humanExecutionStillRequired: [
-    "an admin signer held by the account owner must call grantSession with exactly these permissions",
+    "an admin signer held by the account owner must grant these exact permissions through direct ERC-7821 account execution, because the pinned SDK exports no grantSession helper",
     "a session-signed execute must then submit the five prepared calls in order",
     "the grant, the funded job, and the revoke must be read back before any claim is published",
   ],
