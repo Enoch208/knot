@@ -1,5 +1,7 @@
 import { z } from "zod"
 import { address } from "../../../packages/contracts/src/primitives.ts"
+import { createCommerceProbeReader } from "../../../packages/commerce/src/index.ts"
+import { liveCommerceProbe } from "./hire-preparation.ts"
 import { loadOwnedSellerConfig, type OwnedSellerConfig } from "./owned-seller-config.ts"
 import type { ApiConfig } from "./types.ts"
 
@@ -11,6 +13,7 @@ const environment = z.object({
   KNOT_API_HOST: z.string().min(1).default("127.0.0.1"),
   KNOT_API_PORT: z.coerce.number().int().min(1).max(65_535).default(8787),
   KNOT_API_MAX_BODY_BYTES: z.coerce.number().int().min(1_024).max(1_048_576).default(131_072),
+  KNOT_TESTNET_RPC_URL: z.url().default("https://bsc-testnet-rpc.publicnode.com"),
 })
 
 export interface ServerConfig {
@@ -37,6 +40,10 @@ export const loadServerConfig = (source: NodeJS.ProcessEnv): ServerConfig => {
       allowedOrigin: origin.origin,
       maxBodyBytes: parsed.KNOT_API_MAX_BODY_BYTES,
       now: () => new Date(),
+      commerceProbe: liveCommerceProbe(
+        () => createCommerceProbeReader(parsed.KNOT_TESTNET_RPC_URL),
+        () => new Date(),
+      ),
     },
     ownedSellers: loadOwnedSellerConfig(source),
   }

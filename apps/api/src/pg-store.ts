@@ -3,9 +3,11 @@ import type { ServiceRequestEnvelope } from "../../../packages/contracts/src/ser
 import type { TaskSpec } from "../../../packages/contracts/src/task.ts"
 import {
   ServiceRequestRepository,
+  VerifiedQuoteRepository,
   type ServiceRequestCreation,
   type ServiceRequestRecord,
   type VerifiedQuoteCreation,
+  type VerifiedQuoteRecord,
 } from "../../../packages/db/src/index.ts"
 import { mapArtifact, mapEvent, mapJob, mapTask } from "./db-mappers.ts"
 import type {
@@ -34,11 +36,13 @@ const canonicalJson = (value: unknown): string => {
 export class PgApiStore implements ApiStore {
   private readonly pool: Pool
   private readonly serviceRequests: ServiceRequestRepository
+  private readonly verifiedQuotes: VerifiedQuoteRepository
   private readonly verifiedQuoteCreator: VerifiedQuoteCreator | null
 
   constructor(pool: Pool, verifiedQuoteCreator: VerifiedQuoteCreator | null = null) {
     this.pool = pool
     this.serviceRequests = new ServiceRequestRepository(pool)
+    this.verifiedQuotes = new VerifiedQuoteRepository(pool)
     this.verifiedQuoteCreator = verifiedQuoteCreator
   }
 
@@ -133,6 +137,10 @@ export class PgApiStore implements ApiStore {
   async createVerifiedQuote(serviceRequestId: string, buyer: string): Promise<VerifiedQuoteCreation> {
     if (this.verifiedQuoteCreator === null) throw new VerifiedQuoteCreationUnavailableError()
     return this.verifiedQuoteCreator.create(serviceRequestId, buyer)
+  }
+
+  async getVerifiedQuote(id: string, buyer: string): Promise<VerifiedQuoteRecord | null> {
+    return this.verifiedQuotes.get(id, buyer)
   }
 
   async getJob(jobId: string, buyer: string): Promise<StoredJob | null> {

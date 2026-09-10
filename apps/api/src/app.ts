@@ -11,6 +11,11 @@ import {
 } from "../../../packages/db/src/index.ts"
 import { OwnedSellerClientError } from "../../../packages/security/src/owned-seller-client.ts"
 import { ApiError, invalidRequest, upstreamUnavailable } from "./errors.ts"
+import {
+  HireEnvelopeError,
+  HirePreparationUnavailableError,
+  prepareHireForVerifiedQuote,
+} from "./hire-preparation.ts"
 import { TaskConflictError, VerifiedQuoteCreationUnavailableError } from "./pg-store.ts"
 import { createServiceRequest, createTaskRequest, createVerifiedQuoteRequest, identifier, parseJson } from "./schemas.ts"
 import type { ApiConfig, ApiRequest, ApiResponse, ApiStore, StoredTask } from "./types.ts"
@@ -310,6 +315,36 @@ export const createApiHandler = (store: ApiStore, config: ApiConfig) => {
           correlationId,
           config.allowedOrigin,
         )
+      }
+      const hirePreparationMatch = request.path.match(/^\/api\/verified-quotes\/([^/]+)\/hire-preparation$/)
+      if (request.method === "POST" && hirePreparationMatch) {
+        requireMutationOrigin(request, config)
+        requireAuthorization(request, config)
+        const verifiedQuoteId = decodeIdentifier(hirePreparationMatch[1] ?? "")
+        if (request.headers["idempotency-key"] !== verifiedQuoteId) {
+          throw invalidRequest("Idempotency-Key must equal the verified quote identifier.")
+        }
+        const probe = config.commerceProbe
+        if (!probe) {
+          throw new ApiError(503, "UPSTREAM_UNAVAILABLE", "Commerce preparation is not configured on this deployment.", true)
+        }
+        const record = await store.getVerifiedQuote(verifiedQuoteId, config.buyerAddress)
+        if (!record) throw new ApiError(404, "RESOURCE_NOT_FOUND", "No verified quote matches that identifier.", false)
+        try {
+          const prepared = await prepareHireForVerifiedQuote(probe, {
+            record,
+            nowUnix: Math.floor(config.now().getTime() / 1000),
+          })
+          return encode(200, prepared, correlationId, config.allowedOrigin)
+        } catch (error) {
+          if (error instanceof HirePreparationUnavailableError) {
+            throw new ApiError(503, "UPSTREAM_UNAVAILABLE", `Commerce writes are suspended: ${error.reasons.join("; ")}`, true)
+          }
+          if (error instanceof HireEnvelopeError) {
+            throw new ApiError(409, "CONFLICT", `Hire preparation refused: ${error.code}`, false)
+          }
+          throw error
+        }
       }
       const jobMatch = request.path.match(/^\/api\/jobs\/([^/]+)$/)
       if (request.method === "GET" && jobMatch) {

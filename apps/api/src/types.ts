@@ -1,4 +1,6 @@
 import type { TaskSpec } from "../../../packages/contracts/src/task.ts"
+import type { CommerceCompatibility } from "../../../packages/commerce/src/index.ts"
+import type { VerifiedQuoteRecord } from "../../../packages/db/src/index.ts"
 import type { ServiceRequestEnvelope } from "../../../packages/contracts/src/service-request.ts"
 import type {
   FinancialState,
@@ -73,10 +75,12 @@ export interface ApiStore {
   }): Promise<ServiceRequestCreation>
   getServiceRequest(id: string, buyer: string): Promise<ServiceRequestRecord | null>
   createVerifiedQuote(serviceRequestId: string, buyer: string): Promise<VerifiedQuoteCreation>
+  getVerifiedQuote(id: string, buyer: string): Promise<VerifiedQuoteRecord | null>
   getJob(jobId: string, buyer: string): Promise<StoredJob | null>
 }
 
 export interface ApiConfig {
+  commerceProbe?: () => Promise<CommerceCompatibility>
   authToken: string
   buyerAddress: string
   allowedOrigin: string

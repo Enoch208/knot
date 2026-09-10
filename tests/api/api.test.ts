@@ -175,6 +175,10 @@ class MemoryStore implements ApiStore {
     const job = this.jobs.get(jobId)
     return job?.buyer === owner ? job : null
   }
+
+  async getVerifiedQuote(): Promise<null> {
+    return null
+  }
 }
 
 const config: ApiConfig = {
