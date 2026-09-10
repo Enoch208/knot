@@ -26,3 +26,15 @@ export {
   type SpendPeriod,
   type SpendWindow,
 } from "./spend-period.ts"
+export {
+  ERC7821_BATCH_MODE,
+  SessionCallError,
+  buildGrantCalls,
+  buildRevokeCalls,
+  encodeErc7821Execute,
+  selectorOf,
+  type AllowedCall,
+  type InnerCall,
+  type SpendPeriodCode,
+  type TokenLimit,
+} from "./erc7821-session.ts"
