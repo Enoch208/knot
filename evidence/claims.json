@@ -1766,17 +1766,19 @@
     },
     {
       "id": "owned-seller-quote-persistence-fence",
-      "claim": "Release ce9bc1f260f1 deploys bounded service-request transport and an append-only, buyer-private persistence fence for strictly verified KNOT-operated EOA seller quotes while keeping quote funding disabled and the vault outside the public API.",
+      "claim": "Release 80e3b45 completed one authenticated KNOT-operated RangePilot quote-only flow with dual-RPC confirmed ERC-8004 identity, a verified EIP-191 quote, atomic append-only persistence, and an immutable retry while keeping jobs, wallets, funding, and chain writes disabled.",
       "status": "SUPPORTED",
       "evidenceClasses": [
+        "testnet_observation",
         "synthetic_fixture",
         "publisher_claim"
       ],
       "scope": {
-        "releaseTag": "ce9bc1f260f1",
-        "immutableImageId": "sha256:8e8f568e07bc3564fd2583ce473809c8b4cd56500f0fcbd1f18df880e5ec59d7",
-        "deploymentStatus": "code and empty schema deployed; live quote flow unexercised",
+        "releaseTag": "80e3b45",
+        "immutableImageId": "sha256:482666c2740a6c14f1490c40ec14c0dc32a2fb6c782fdbd8c6e3cf0da190ae87",
+        "deploymentStatus": "live authenticated quote-only flow exercised",
         "sellerRelation": "KNOT_OPERATED",
+        "sellerAgentId": "2297",
         "signatureMethod": "EIP-191 EOA recovery",
         "identityChainId": 97,
         "paymentChainId": 97,
@@ -1784,24 +1786,29 @@
           "base64url",
           "deflate-base64url"
         ],
-        "databaseMigrationCount": 10,
-        "serviceRequestRowsObserved": 0,
-        "verifiedQuoteRowsObserved": 0,
+        "databaseMigrationCount": 12,
+        "serviceRequestRowsObserved": 3,
+        "verifiedQuoteRowsObserved": 1,
+        "confirmedIdentityObservationRowsObserved": 1,
+        "successfulEndpointObservationRowsObserved": 1,
+        "jobsObserved": 0,
+        "outboxRowsObserved": 0,
+        "chainActionsObserved": 0,
         "fundingPermitted": false,
-        "apiRoutePresent": false,
-        "chainReads": 0,
+        "apiRoutePresent": true,
+        "chainReads": "two-provider BSC testnet identity observation",
         "chainWrites": 0
       },
-      "observedAtUtc": "2026-09-09T20:32:09.000Z",
+      "observedAtUtc": "2026-09-10T06:39:53.886Z",
       "sources": [
         {
           "type": "deployment_evidence",
-          "path": "evidence/operations/verified-quote-rollout-20260909.json"
+          "path": "evidence/operations/verified-quote-live-20260910.json"
         },
         {
           "type": "repository_test",
-          "path": "tests/ops/verified-quote-rollout.test.ts",
-          "command": "node --test tests/ops/verified-quote-rollout.test.ts"
+          "path": "tests/ops/verified-quote-live.test.ts",
+          "command": "node --test tests/ops/verified-quote-live.test.ts"
         },
         {
           "type": "repository_test",
@@ -1824,11 +1831,11 @@
         }
       ],
       "limitations": [
-        "The deployed table was empty and no authenticated live request or quote was created, so this does not prove an end-to-end quote flow.",
-        "No API quote route, wallet action, job creation, funding, notification, settlement, or chain write is connected to this boundary.",
-        "The repository persists only EIP-191 EOA quotes; ERC-1271 remains unresolved until a pinned-block network verifier is implemented.",
-        "The seller owner is read from local agent state, while identity block metadata is caller-supplied and validated for shape and time rather than independently obtained from ERC-8004.",
-        "The successful endpoint observation is pre-existing database context, not a network observation performed by the quote repository.",
+        "This is one KNOT-operated RangePilot quote-only observation, not a paid hire, independently operated seller, delivery, settlement, uptime, load, failover, or SLA result.",
+        "The quote route has no wallet action, job creation, funding, notification, settlement, or chain-write connection and explicitly returns fundingPermitted false.",
+        "The repository persists EIP-191 EOA quotes; ERC-1271 remains unresolved until a pinned-block network verifier is implemented.",
+        "The identity observation was obtained from two pinned BSC testnet RPC providers at one confirmed block; it does not establish future owner, endpoint, or provider availability.",
+        "Two pre-fix attempts retained their task and service-request inputs but correctly created no quote, observation, job, outbox item, or chain action when exact endpoint binding failed.",
         "GridQuant job 1187, YieldScout job 1188, and RangePilot job 1189 predate mandatory request-ID replay binding and are intentionally rejected by the new verifier.",
         "Append-only service-request and quote data have no retention or crypto-erasure mechanism."
       ]

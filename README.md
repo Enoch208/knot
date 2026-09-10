@@ -70,10 +70,10 @@ There are two intentionally separate status lines:
 
 | Surface | Status | Meaning |
 | --- | --- | --- |
-| **Public VPS release** | `ce9bc1f260f1` | API, worker, PostgreSQL, object storage, four sellers, migrations `0001`–`0010`, private task/service-request routes, and an empty funding-disabled quote vault are live |
-| **Repository candidate** | Awaiting rollout | Adds migrations `0011`–`0012`, dual-RPC confirmed ERC-8004 identity observations, pinned seller-owner authority, authenticated four-seller quote orchestration, a buyer-private quote route, atomic evidence persistence, and a quote-only demo runner |
+| **Public VPS release** | `80e3b45` | API and worker run the same digest-pinned image; PostgreSQL has migrations `0001`–`0012`; all four sellers are live; the authenticated quote-only path is enabled |
+| **Customer web app** | Not published | The product UI and `/demo` remain intentionally deferred until the complete design package is approved; `knotmarkets.xyz` is not yet a KNOT deployment |
 
-The repository candidate is disabled by default and has passed the deterministic, seller, and disposable-PostgreSQL suites. It is not described as deployed until a sanitized rollout record is committed.
+The deployed quote path performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. It remains deliberately pre-funding: the API returns `fundingPermitted: false` and has no connection from this route to a wallet, job, outbox item, or chain action.
 
 ### What is already proven
 
@@ -84,6 +84,7 @@ The repository candidate is disabled by default and has passed the deterministic
 - One bounded testnet authority was granted, exercised, denied outside scope, revoked, and denied after revocation.
 - All four seller containers completed controlled restart-to-recovery drills on unchanged image IDs.
 - Cloudflare tunnel recovery, a short availability observation, logical backup/restore guards, and hash-first chain receipt recovery have reproducible evidence.
+- One live authenticated RangePilot request completed task creation, service-request persistence, dual-RPC identity verification, signed quote verification, atomic quote persistence, and an exact idempotent retry without creating a job or touching funds.
 
 ### Operational evidence
 
@@ -94,6 +95,8 @@ During a separate [60.845-second client-side observation](evidence/operations/se
 A controlled [Cloudflare tunnel recovery drill](evidence/operations/tunnel-recovery-20260909.json) issued one remote mutation: `systemctl restart cloudflared`. Complete public recovery was verified after `12,832 ms`: the API and database reported `AVAILABLE`, all four identity-bearing seller cards and registration proofs returned HTTP 200, unauthenticated invocation remained HTTP 401, the retained artifact matched `581986011b035229c6fd5ccf50f321a962679bb8ae209d0d639169162469def2`, and all four seller container image IDs and start times remained unchanged. This is one operator-recorded service restart, not evidence of uptime, an SLA, failover, load capacity, host recovery, or regional availability.
 
 The [read-only recovery rollout](evidence/operations/chain-recovery-rollout-20260909.json) deployed release `35def38e730e` to the API and worker on the same immutable image `sha256:e2f11219338b090a3b3e8cb6036ad9f7368bc4739ff7de68cca92d3ca4bb3d06`. Both containers were healthy, the recovery gate was explicitly enabled from a mode-`0600` environment mounted only into the worker, and all 5 API and seller-card checks returned HTTP 200. Two worker samples approximately ten seconds apart saw zero active jobs, outbox entries, or chain actions and zero claimed, examined, changed, or failed recovery actions. A separate in-memory probe inside that deployed worker image observed existing BSC testnet transaction `0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf` as `SUCCESS` at block `130060913` with `11022` confirmations using the known-hash read-only observer. The probe did not use the database, wallet, queue, broadcaster, or a chain-write path. Because the deployed queue was empty, this is rollout, idle-loop, and one-shot receipt-read evidence—not an exercised queued recovery, retry, reorg, uptime, or recovery-effectiveness result.
+
+The [live verified-quote rollout](evidence/operations/verified-quote-live-20260910.json) deploys release `80e3b45` as the digest-pinned API and worker image `sha256:482666c2740a6c14f1490c40ec14c0dc32a2fb6c782fdbd8c6e3cf0da190ae87`. One authenticated RangePilot run returned HTTP `201` for the task, service request, and first quote, then HTTP `200` for an exact retry with the same negotiation hash. The database retained one quote, one confirmed BSC testnet identity observation agreed by two RPC providers, and one successful endpoint observation; it retained zero jobs, outbox items, and chain actions. Two earlier attempts exposed an exact-origin slash mismatch and failed closed with no partial quote or downstream work before the fix in the deployed release. This is one KNOT-operated quote-only observation, not a paid hire, delivery, settlement, uptime, load, or independent-seller result.
 
 ### What is not yet claimed
 
@@ -141,7 +144,7 @@ KNOT keeps discovery, evaluation, commerce, and execution authority separate so 
 
 ### Quote verification boundary
 
-The repository candidate performs the following sequence for a new owned-seller quote:
+The deployed API performs the following sequence for a new owned-seller quote:
 
 1. Lock the buyer and immutable service-request ID.
 2. Refuse an expired task before any RPC, OAuth, or seller request.

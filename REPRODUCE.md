@@ -12,7 +12,7 @@ done
 npm run check
 ```
 
-Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 540 root tests, 20 category-parity tests, and 73 seller tests: 633 total. It covers API boundaries, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, and seller delivery behavior with fixtures.
+Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 542 root tests, 20 category-parity tests, and 73 seller tests: 635 total. It covers API boundaries, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
 
 The default run does not prove live data access, a funded purchase, delivery on chain, settlement, or performance. Environment-gated checks remain separate so a passing fixture suite cannot be mistaken for live evidence.
 
@@ -59,7 +59,13 @@ npm run demo:quote -- <UNIQUE_RUN_ID>
 
 The runner creates a fresh private RangePilot analysis task from the retained, provenance-labeled fixture, persists its exact seller request, requests a verified quote, then requests the same quote again to prove immutable idempotency. It emits sanitized JSON to standard output. It contacts the KNOT API, RangePilot, and two pinned BSC testnet RPCs. It does not access a wallet, create a job, fund escrow, submit a transaction, or perform a mainnet write.
 
-This command requires migrations `0011`–`0012`, the mode-`0600` owned-seller credential file, and explicit server-side enablement. The last published VPS record predates that rollout, so the command is repository capability rather than published live evidence until a newer sanitized deployment capture is committed.
+This command requires migrations `0011`–`0012`, the mode-`0600` owned-seller credential file, and explicit server-side enablement. Release `80e3b45` is deployed on the VPS and one sanitized authenticated RangePilot run is retained at [`evidence/operations/verified-quote-live-20260910.json`](evidence/operations/verified-quote-live-20260910.json). Verify its immutable release, migration hashes, HTTP results, database counts, identity agreement, idempotent retry, failed-closed incident, and zero-funding boundary with:
+
+```sh
+node --test tests/ops/verified-quote-live.test.ts
+```
+
+The offline test verifies the captured record; it does not repeat the private authenticated request, prove current availability, or extend the evidence to a paid hire, delivery, settlement, or independently operated seller.
 
 ## Probe network compatibility
 
