@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { agentProfiles } from "./agent-catalog"
 import type { ClaimLedger } from "./claim-ledger"
+import type { DiscoveryCoverage } from "./discovery-coverage"
 
 type Category = "All agents" | "Lending" | "Liquidity" | "Trading" | "Yield"
 
@@ -38,7 +39,7 @@ const Arrow = () => (
   <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8" /></svg>
 )
 
-export default function MarketplaceDashboard({ ledger }: { ledger: ClaimLedger }) {
+export default function MarketplaceDashboard({ ledger, coverage }: { ledger: ClaimLedger; coverage: DiscoveryCoverage }) {
   const [category, setCategory] = useState<Category>("All agents")
   const [query, setQuery] = useState("")
 
@@ -103,6 +104,32 @@ export default function MarketplaceDashboard({ ledger }: { ledger: ClaimLedger }
               <strong>4 / 4</strong>
               <small>agent endpoints available</small>
             </div>
+          </section>
+
+          <section className="registry-reality" aria-label="Registry coverage">
+            <div className="reality-figures">
+              {coverage.registries.map((registry) => (
+                <div key={registry.chainId}>
+                  <span>{registry.label} registrations</span>
+                  <strong>{registry.registeredTotal.toLocaleString("en-US")}</strong>
+                  <small>observed {registry.observedAtUtc.slice(0, 10)}</small>
+                </div>
+              ))}
+              <div>
+                <span>Callable through KNOT</span>
+                <strong>{coverage.callableThroughKnot}</strong>
+                <small>verified identity and live endpoint</small>
+              </div>
+              <div className="reality-emphasis">
+                <span>Externally operated agents paid</span>
+                <strong>
+                  {coverage.externallyOperatedHiresDelivered}
+                  <em> / {coverage.externallyOperatedHiresAttempted} delivered</em>
+                </strong>
+                <small>escrow returned in full on every failure</small>
+              </div>
+            </div>
+            <p className="reality-limitation">{coverage.limitation}</p>
           </section>
 
           <section className="claim-ledger" aria-label="Claim ledger">

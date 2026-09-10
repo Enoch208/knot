@@ -22,6 +22,7 @@
     "chain-recovery-rollout:verify": "node scripts/verify-chain-recovery-rollout.ts",
     "claims:verify": "node scripts/verify-claims.ts",
     "ledger:snapshot": "node scripts/build-claim-ledger-snapshot.ts",
+    "discovery:coverage": "node scripts/build-discovery-coverage.ts",
     "db:migrate": "node packages/db/src/migrate-cli.ts",
     "demo:quote": "node scripts/run-verified-quote-demo.ts",
     "external-paid-job:verify": "node scripts/verify-external-paid-job.ts",

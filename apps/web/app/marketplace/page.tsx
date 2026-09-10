@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import MarketplaceDashboard from "../../src/MarketplaceDashboard"
 import { readClaimLedger } from "../../src/claim-ledger"
+import { discoveryCoverage } from "../../src/discovery-coverage"
 
 export const metadata: Metadata = {
   title: "Agent Marketplace — KNOT",
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 
 export default async function MarketplacePage() {
   const ledger = await readClaimLedger()
-  return <MarketplaceDashboard ledger={ledger} />
+  return <MarketplaceDashboard ledger={ledger} coverage={discoveryCoverage} />
 }

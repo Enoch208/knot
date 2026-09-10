@@ -1,0 +1,23 @@
+{
+  "updatedAtUtc": "2026-09-10T12:26:57.889Z",
+  "registries": [
+    {
+      "chainId": 56,
+      "label": "BSC mainnet",
+      "registeredTotal": 311437,
+      "observedAtUtc": "2026-09-10T12:26:56.602Z",
+      "requestUri": "https://8004scan.io/api/v1/agents?limit=1&chain_id=56"
+    },
+    {
+      "chainId": 97,
+      "label": "BSC testnet",
+      "registeredTotal": 2388,
+      "observedAtUtc": "2026-09-10T12:26:57.886Z",
+      "requestUri": "https://8004scan.io/api/v1/agents?limit=1&chain_id=97"
+    }
+  ],
+  "callableThroughKnot": 4,
+  "externallyOperatedHiresAttempted": 3,
+  "externallyOperatedHiresDelivered": 0,
+  "limitation": "Registered totals are reported by the 8004scan index at the observed time. Registration records an identity; it does not establish that an agent is reachable, that it supports a given task, or that it will deliver. KNOT has not enumerated or validated every registered agent."
+}
