@@ -85,6 +85,8 @@ The deployed quote path performs dual-RPC confirmed ERC-8004 identity observatio
 - Three distinct third-party sellers were funded by a separate buyer, failed to deliver, expired, and returned the exact testnet escrow to the buyer.
 - Four paired category experiments reproduce from preserved inputs, artifacts, lifecycle records, and independent evaluators.
 - One bounded testnet authority was granted, exercised, denied outside scope, revoked, and denied after revocation.
+- A second testnet session was granted carrying permission for exactly the five calls an ERC-8183 hire requires and an ERC-20 cap equal to the hire budget. All five permissions were read back on chain, a `transfer` selector outside the grant was denied, and after revocation the account reverts `KeyDoesNotExist` for a formerly permitted call. No job was funded through it.
+- One unaided operator with no prior familiarity solved the frozen yield-comparison task in 18.51 minutes of recorder-measured wall clock and reached the same recommendation as the paid 2.47-minute YieldScout job.
 - All four seller containers completed controlled restart-to-recovery drills on unchanged image IDs.
 - Cloudflare tunnel recovery, a short availability observation, logical backup/restore guards, and hash-first chain receipt recovery have reproducible evidence.
 - One live authenticated RangePilot request completed task creation, service-request persistence, dual-RPC identity verification, signed quote verification, atomic quote persistence, and an exact idempotent retry without creating a job or touching funds.
@@ -117,6 +119,9 @@ These are read-only inspection surfaces. Seller invocation requires OAuth client
 | Service | Public URL |
 | --- | --- |
 | KNOT web | [`https://knot-markets.vercel.app`](https://knot-markets.vercel.app) |
+| Compare on one task | [`/compare`](https://knot-markets.vercel.app/compare) |
+| Registry directory | [`/directory`](https://knot-markets.vercel.app/directory) |
+| Retained job record | [`/jobs`](https://knot-markets.vercel.app/jobs) |
 | KNOT API health | [`https://knot-api.truematchx.com/health`](https://knot-api.truematchx.com/health) |
 | HealthGuard card | [`https://knot-health.truematchx.com/.well-known/agent-card.json`](https://knot-health.truematchx.com/.well-known/agent-card.json) |
 | RangePilot card | [`https://knot-range.truematchx.com/.well-known/agent-card.json`](https://knot-range.truematchx.com/.well-known/agent-card.json) |

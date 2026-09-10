@@ -21,11 +21,6 @@ export interface Eip1193Provider {
   request(args: { method: string; params?: readonly unknown[] }): Promise<unknown>
 }
 
-export interface WalletCall {
-  to: string
-  data: string
-  value: string
-}
 
 export type AccountOutcome =
   | { status: "connected"; address: string }
@@ -116,9 +111,10 @@ export async function submitCall(
   call: WalletCall,
 ): Promise<SubmitOutcome> {
   try {
+    await requireWalletIdentity(provider, from)
     const hash = await provider.request({
       method: "eth_sendTransaction",
-      params: [{ from, to: call.to, data: call.data, value: quantity(call.value) }],
+      params: [{ from, chainId: CHAIN_ID_HEX, to: call.to, data: call.data, value: quantity(call.value) }],
     })
     if (typeof hash !== "string" || !/^0x[0-9a-fA-F]{64}$/.test(hash)) {
       return { status: "unresolved", detail: "The wallet did not return a usable transaction hash." }
@@ -128,8 +124,15 @@ export async function submitCall(
     const code = errorCode(error)
     if (code === USER_REJECTED) return { status: "rejected" }
     const detail = errorDetail(error)
-    if (/revert|execution reverted/i.test(detail)) return { status: "reverted", detail }
     return { status: "unresolved", detail }
+  }
+}
+
+export async function requireWalletIdentity(provider: Eip1193Provider, buyer: string): Promise<void> {
+  if (await readChainId(provider) !== BSC_TESTNET_CHAIN_ID) throw new Error("Wallet network changed; BSC testnet (97) is required.")
+  const accounts = await provider.request({ method: "eth_accounts" })
+  if (!Array.isArray(accounts) || typeof accounts[0] !== "string" || accounts[0].toLowerCase() !== buyer.toLowerCase()) {
+    throw new Error("Connect the buyer account shown in the reviewed quote.")
   }
 }
 
@@ -193,3 +196,5 @@ const errorDetail = (error: unknown): string => {
   }
   return "The wallet returned no explanation."
 }
+import type { WalletCall } from "./hire-types"
+export type { WalletCall } from "./hire-types"
