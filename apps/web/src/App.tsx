@@ -160,7 +160,7 @@ function App() {
         <nav className="primary-nav" aria-label="Primary navigation">
           <a href="#agents">Agents</a>
           <a href="#how-it-works">How it works</a>
-          <a href="#evidence">Evidence</a>
+          <a href="/evidence">Evidence</a>
           <a href="#status">Status</a>
         </nav>
 
@@ -188,7 +188,7 @@ function App() {
               <a className="button button-primary" href="/demo">
                 Open demo <Arrow />
               </a>
-              <a className="text-link" href="#evidence">
+              <a className="text-link" href="/evidence">
                 Explore the evidence <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -316,11 +316,9 @@ function App() {
               </p>
               <a
                 className="button button-light"
-                href="https://knot-api.truematchx.com/api/status"
-                target="_blank"
-                rel="noreferrer"
+                href="/evidence"
               >
-                View public status <Arrow />
+                Open Evidence Lab <Arrow />
               </a>
             </div>
 
@@ -437,7 +435,7 @@ function App() {
         <div className="footer-links">
           <a href="/demo">Demo</a>
           <a href="#agents">Agents</a>
-          <a href="#evidence">Evidence</a>
+          <a href="/evidence">Evidence</a>
           <a href="#status">Status</a>
         </div>
         <div className="footer-meta">

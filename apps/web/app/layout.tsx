@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
+import { Inter } from "next/font/google"
 import "../src/styles.css"
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://knotmarkets.xyz"),
@@ -31,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>{children}</body>
     </html>
   )

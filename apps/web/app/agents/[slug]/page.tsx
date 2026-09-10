@@ -39,7 +39,7 @@ export default async function AgentPassportPage({ params }: PageProperties) {
         <nav aria-label="Passport navigation">
           <a href="/#agents">All agents</a>
           <a href="/demo">Live demo</a>
-          <a href="/#evidence">Evidence</a>
+          <a href="/evidence">Evidence</a>
         </nav>
         <span className={`passport-status ${endpointState.cardAvailable ? "is-live" : "is-unknown"}`}>
           <span /> {endpointState.cardAvailable ? "Endpoint available" : "Status unavailable"}
@@ -187,4 +187,3 @@ async function observeEndpoint(endpoint: string): Promise<EndpointState> {
     protocol,
   }
 }
-
