@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 import { agentProfiles } from "./agent-catalog"
 import type { ClaimLedger } from "./claim-ledger"
 import type { DiscoveryCoverage } from "./discovery-coverage"
+import { jobRecords } from "./job-records"
 
 type Category = "All agents" | "Lending" | "Liquidity" | "Trading" | "Yield"
 
@@ -43,6 +44,10 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
   const [category, setCategory] = useState<Category>("All agents")
   const [query, setQuery] = useState("")
 
+  const testnetRegistered = (
+    coverage.registries.find((registry) => registry.chainId === 97)?.registeredTotal ?? 0
+  ).toLocaleString("en-US")
+
   const ledgerRows = useMemo(() => {
     const rank = { PARTIAL: 0, UNMEASURED: 1, NOT_CLAIMED: 2, SUPPORTED: 3 }
     return [...ledger.rows].sort((left, right) => rank[left.status] - rank[right.status])
@@ -68,7 +73,9 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
         <nav className="market-nav" aria-label="Marketplace navigation">
           <a href="/"><Icon name="home" /><span>Overview</span></a>
           <a className="is-active" href="/marketplace"><Icon name="market" /><span>Marketplace</span></a>
-          <a href="#activity"><Icon name="jobs" /><span>Jobs</span><small>5</small></a>
+          <a href="/compare"><Icon name="market" /><span>Compare</span></a>
+          <a href="/directory"><Icon name="search" /><span>Directory</span><small>{testnetRegistered}</small></a>
+          <a href="/jobs"><Icon name="jobs" /><span>Job record</span><small>{jobRecords.length}</small></a>
           <a href="/evidence"><Icon name="evidence" /><span>Evidence</span></a>
         </nav>
 
