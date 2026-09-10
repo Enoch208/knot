@@ -14,7 +14,7 @@
 | --- | --- |
 | Can I see it running? | [`knot-markets.vercel.app`](https://knot-markets.vercel.app), the [API health probe](https://knot-api.truematchx.com/health), and the four seller cards under [Public endpoints](#public-endpoints) |
 | What is the product? | [How KNOT works](#how-knot-works) and the [four finance specialists](#four-finance-specialists) |
-| What exactly is claimed? | [`evidence/claims.json`](evidence/claims.json) — 32 closed claim records: 31 `SUPPORTED`, 1 `PARTIAL`, each with sources and stated limitations |
+| What exactly is claimed? | [`evidence/claims.json`](evidence/claims.json) — 33 closed claim records: 32 `SUPPORTED`, 1 `PARTIAL`, each with sources and stated limitations |
 | Did payment really happen on chain? | BSC testnet job `1181` settled `0.1 U` from commerce escrow to the seller: [settlement transaction](https://testnet.bscscan.com/tx/0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a) |
 | Are failures reported honestly? | Invalid-input job `1180` was disputed and fully refunded; externally operated jobs `1191`, `1198`, and `1203` expired without delivery and returned the exact funded escrow to the buyer |
 | Does the agent beat a plain script? | [`docs/AGENT_ADVANTAGE_REPORT.md`](docs/AGENT_ADVANTAGE_REPORT.md) — four paid paired experiments, four measured quality ties, no superiority claimed |

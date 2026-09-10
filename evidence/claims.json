@@ -1899,6 +1899,50 @@
         "The operator answered from the identical frozen snapshot, so this measures effort on a fixed historical input and not live market work.",
         "A separate AI-assisted run of the same task is retained but excluded from every human-effort claim, and two earlier attempts whose timing could not be verified are quarantined and published as evidence of nothing."
       ]
+    },
+    {
+      "id": "session-hire-authority",
+      "claim": "A bounded session key was granted on BSC testnet with permission for exactly the five calls an ERC-8183 hire requires and an ERC-20 spend cap equal to the 0.1 U hire budget. All five permissions were read back on chain, a transfer selector outside the grant was denied, and after revocation the account reverts KeyDoesNotExist for a formerly permitted call.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "scope": {
+        "chainId": 97,
+        "account": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "allowedSelectors": 5,
+        "tokenSpendCapBaseUnits": "100000000000000000",
+        "grantBlockNumber": "130240210",
+        "revokeBlockNumber": "130240318",
+        "jobFunded": false
+      },
+      "observedAtUtc": "2026-09-10T15:39:12.485Z",
+      "sources": [
+        {
+          "type": "testnet_authority_evidence",
+          "path": "evidence/testnet/session-hire-authority.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/authority/erc7821-session.test.ts",
+          "command": "node --test tests/authority/erc7821-session.test.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "scripts/run-session-hire.ts"
+        },
+        {
+          "type": "repository_file",
+          "path": "packages/authority/src/erc7821-session.ts"
+        }
+      ],
+      "limitations": [
+        "The session was granted and revoked but never used to fund a job. No session-signed spend is claimed.",
+        "The ERC-20 cap was recorded at exactly the hire budget and never drawn against, so the cap itself was not exercised.",
+        "The denied-selector and post-revoke observations were read-only calls; no rejected transaction was broadcast.",
+        "BSC testnet only, with no mainnet transaction and no real funds.",
+        "The session key was not registered in the Altana KeyStore, so it is not resolvable by third-party lookup."
+      ]
     }
   ]
 }

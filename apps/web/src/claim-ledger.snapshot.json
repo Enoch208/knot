@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-09-10T14:44:37.283Z",
+  "updatedAtUtc": "2026-09-10T15:39:13.138Z",
   "claims": [
     {
       "id": "knot-api-available",
@@ -271,6 +271,14 @@
         "mainnet_observation"
       ],
       "observedAtUtc": "2026-09-10T14:38:14.279Z"
+    },
+    {
+      "id": "session-hire-authority",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation"
+      ],
+      "observedAtUtc": "2026-09-10T15:39:12.485Z"
     }
   ]
 }

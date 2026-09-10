@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "knot.testnet-session-hire-authority/1",
+  "recordedAtUtc": "2026-09-10T15:38:54.174Z",
+  "network": {
+    "name": "BSC testnet",
+    "chainId": 97,
+    "transactionExplorerBaseUrl": "https://testnet.bscscan.com/tx/"
+  },
+  "scope": {
+    "account": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+    "sessionKeyAddress": "0x3222a16175356Df94354612083fb4DE44FbaB644",
+    "keyHash": "0x3c75a3e7c91c3ed166d97af6e96f65d48ebb475f01da36e2c14794d626bf2ad3",
+    "executionMode": "direct ERC-7821 account execution",
+    "helperGrantUsed": false,
+    "mainnetWrites": false,
+    "realFunds": false,
+    "tokenTransfers": false,
+    "jobFunded": false
+  },
+  "requestedAuthority": {
+    "allowedCalls": [
+      {
+        "role": "commerce",
+        "target": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "selector": "0x41528812",
+        "functionSignature": "createJob(address,address,uint256,string,address)"
+      },
+      {
+        "role": "router",
+        "target": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "selector": "0x51d5456d",
+        "functionSignature": "registerJob(uint256,address)"
+      },
+      {
+        "role": "commerce",
+        "target": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "selector": "0xdd4ae9d4",
+        "functionSignature": "setBudget(uint256,uint256,bytes)"
+      },
+      {
+        "role": "paymentToken",
+        "target": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "selector": "0x095ea7b3",
+        "functionSignature": "approve(address,uint256)"
+      },
+      {
+        "role": "commerce",
+        "target": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "selector": "0xd2e13f50",
+        "functionSignature": "fund(uint256,uint256,bytes)"
+      }
+    ],
+    "tokenSpendPermission": {
+      "token": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+      "periodCode": 2,
+      "limitBaseUnits": "100000000000000000",
+      "equalsRangePilotHireBudget": true
+    },
+    "expirySeconds": 3600,
+    "expiryUnix": 1789058218
+  },
+  "grant": {
+    "transactionHash": "0x0f08bb5d0ffc2f441f2298a29d8e20e33afd5a6ed243cd98dfc06af1f4ea3bb5",
+    "url": "https://testnet.bscscan.com/tx/0x0f08bb5d0ffc2f441f2298a29d8e20e33afd5a6ed243cd98dfc06af1f4ea3bb5",
+    "receiptStatus": "success",
+    "blockNumber": "130240210",
+    "timestampUtc": "2026-09-10T15:37:00.000Z",
+    "gasUsed": "551883"
+  },
+  "activeReadback": {
+    "allowedSelectorsPermitted": 5,
+    "allowedSelectorsChecked": 5,
+    "tokenSpendLimitObservedBaseUnits": "100000000000000000",
+    "deniedSelectorProbe": {
+      "target": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+      "selector": "0xa9059cbb",
+      "functionSignature": "transfer(address,uint256)",
+      "canExecute": false
+    }
+  },
+  "revoke": {
+    "transactionHash": "0x6f5521d64a1bd8825e1d4b486c4f47c2ac7e4be763e97f08baee3d857865718c",
+    "url": "https://testnet.bscscan.com/tx/0x6f5521d64a1bd8825e1d4b486c4f47c2ac7e4be763e97f08baee3d857865718c",
+    "receiptStatus": "success",
+    "blockNumber": "130240318",
+    "timestampUtc": "2026-09-10T15:37:49.000Z",
+    "gasUsed": "61318"
+  },
+  "postRevokeCheck": {
+    "probedSelector": "0x41528812",
+    "probedTarget": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+    "outcome": "reverted",
+    "revertSelector": "0xe57b6304",
+    "revertReason": "KeyDoesNotExist()",
+    "broadcast": false
+  },
+  "limitations": [
+    "BSC testnet only. No BSC mainnet transaction was submitted and no real funds moved.",
+    "The session was granted and revoked but never used to fund a job, so no session-signed spend is demonstrated here.",
+    "The token spend permission was recorded on chain at exactly the hire budget; it was never drawn against, so the cap was not exercised.",
+    "The denied-selector and post-revoke checks were read-only calls, so no rejected transaction was broadcast.",
+    "The Altana KeyStore registration call present in the earlier bounded-authority grant was not included, so this session key is not registered for third-party lookup."
+  ]
+}
