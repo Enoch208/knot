@@ -80,7 +80,7 @@ export default function EvidencePage() {
           <a href="#shield">Shield</a>
           <a href="#recovery">Recovery</a>
         </nav>
-        <a className="button button-small button-dark" href="/demo">Open demo <Arrow /></a>
+        <a className="button button-small button-dark" href="/marketplace">Open marketplace <Arrow /></a>
       </header>
 
       <main id="evidence-main">

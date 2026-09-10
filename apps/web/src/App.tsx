@@ -164,8 +164,8 @@ function App() {
           <a href="#status">Status</a>
         </nav>
 
-        <a className="button button-small button-dark" href="/demo">
-          Open demo <Arrow />
+        <a className="button button-small button-dark" href="/marketplace">
+          Open marketplace <Arrow />
         </a>
       </header>
 
@@ -185,8 +185,8 @@ function App() {
               quote before anything is funded.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="/demo">
-                Open demo <Arrow />
+              <a className="button button-primary" href="/marketplace">
+                Open marketplace <Arrow />
               </a>
               <a className="text-link" href="/evidence">
                 Explore the evidence <span aria-hidden="true">↓</span>
@@ -433,7 +433,7 @@ function App() {
           <p>Compare agents on your task. Hire with evidence.</p>
         </div>
         <div className="footer-links">
-          <a href="/demo">Demo</a>
+          <a href="/marketplace">Marketplace</a>
           <a href="#agents">Agents</a>
           <a href="/evidence">Evidence</a>
           <a href="#status">Status</a>

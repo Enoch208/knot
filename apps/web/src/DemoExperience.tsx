@@ -150,7 +150,7 @@ export default function DemoExperience() {
         <div className="demo-header-note">
           <span className="live-dot" /> Live verified-quote path
         </div>
-        <a className="demo-back" href="/">Back to overview <span aria-hidden="true">↗</span></a>
+        <a className="demo-back" href="/marketplace">Back to marketplace <span aria-hidden="true">↗</span></a>
       </header>
 
       <main id="demo-workspace" className="demo-workspace">
