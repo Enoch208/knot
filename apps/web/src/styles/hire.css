@@ -1,0 +1,215 @@
+.hire {
+  background: var(--paper-bright);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hire__title {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hire__lede {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.hire__terms {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.hire__term {
+  background: var(--paper-bright);
+  display: grid;
+  grid-template-columns: minmax(9rem, 14rem) 1fr;
+  gap: 16px;
+  padding: 11px 16px;
+  align-items: baseline;
+}
+
+.hire__label {
+  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hire__value {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.hire__value--mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.hire__value--emphasis {
+  color: var(--ink);
+  font-size: var(--text-md);
+  font-weight: 700;
+}
+
+.hire__approve {
+  appearance: none;
+  align-self: flex-start;
+  background: var(--cyan);
+  color: var(--on-cyan);
+  border: 1px solid var(--cyan-edge);
+  border-radius: var(--radius-pill);
+  padding: 12px 26px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hire__approve:disabled {
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  border-color: var(--line);
+  cursor: not-allowed;
+}
+
+.hire__notice {
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hire__notice--refusal {
+  background: var(--danger-tint);
+  border: 1px solid var(--danger);
+}
+
+.hire__notice--refusal .hire__notice-title {
+  color: var(--danger);
+}
+
+.hire__notice--unresolved {
+  background: var(--paper-deep);
+  border: 2px solid var(--ink);
+}
+
+.hire__notice--unresolved .hire__notice-title {
+  color: var(--ink);
+}
+
+.hire__notice-title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.hire__notice-detail {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.hire__switch {
+  appearance: none;
+  align-self: flex-start;
+  margin-top: 4px;
+  background: var(--cyan);
+  color: var(--on-cyan);
+  border: 1px solid var(--cyan-edge);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hire__calls {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.hire__call {
+  background: var(--paper-bright);
+  display: grid;
+  grid-template-columns: 5.5rem 8.5rem 1fr;
+  gap: 12px;
+  padding: 10px 16px;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+}
+
+.hire__call-index {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.hire__call-state {
+  font-weight: 700;
+}
+
+.hire__call-state--waiting,
+.hire__call-state--not-attempted {
+  color: var(--ink-soft);
+}
+
+.hire__call-state--submitted {
+  color: var(--cyan-deep);
+}
+
+.hire__call-state--confirmed {
+  color: var(--status-live-ink);
+}
+
+.hire__call-state--reverted {
+  color: var(--danger);
+}
+
+.hire__call-state--unresolved {
+  color: var(--ink);
+}
+
+.hire__call-hash {
+  color: var(--ink);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .hire__term,
+  .hire__call {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
