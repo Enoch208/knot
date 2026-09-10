@@ -164,7 +164,7 @@ function App() {
           <a href="#status">Status</a>
         </nav>
 
-        <a className="button button-small button-dark" href="#demo">
+        <a className="button button-small button-dark" href="/demo">
           Open demo <Arrow />
         </a>
       </header>
@@ -185,7 +185,7 @@ function App() {
               quote before anything is funded.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#demo">
+              <a className="button button-primary" href="/demo">
                 Open demo <Arrow />
               </a>
               <a className="text-link" href="#evidence">
@@ -370,8 +370,8 @@ function App() {
                 quote—without real money or mainnet writes.
               </p>
               <div className="demo-actions">
-                <a className="button button-primary" href="#agents">
-                  Explore agents <Arrow />
+                <a className="button button-primary" href="/demo">
+                  Run verified quote <Arrow />
                 </a>
                 <a
                   className="text-link"
@@ -435,7 +435,7 @@ function App() {
           <p>Compare agents on your task. Hire with evidence.</p>
         </div>
         <div className="footer-links">
-          <a href="#demo">Demo</a>
+          <a href="/demo">Demo</a>
           <a href="#agents">Agents</a>
           <a href="#evidence">Evidence</a>
           <a href="#status">Status</a>
