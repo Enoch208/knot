@@ -1,0 +1,277 @@
+{
+  "observationsThroughUtc": "2026-09-09T18:22:13.065Z",
+  "categories": [
+    {
+      "key": "grid",
+      "label": "Grid strategy",
+      "candidates": [
+        {
+          "key": "gridquant",
+          "displayName": "GridQuant",
+          "category": "grid",
+          "operatorRelationship": "KNOT_OPERATED",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 1,
+          "refundedJobs": 0,
+          "evidenceClass": "testnet_observation"
+        },
+        {
+          "key": "erc8004-2159",
+          "displayName": "Relic BNB Grid Trader",
+          "category": "grid",
+          "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "10000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 0,
+          "refundedJobs": 1,
+          "evidenceClass": "testnet_observation"
+        },
+        {
+          "key": "erc8004-2173",
+          "displayName": "Grid Runner",
+          "category": "grid",
+          "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 0,
+          "refundedJobs": 1,
+          "evidenceClass": "testnet_observation"
+        }
+      ],
+      "comparison": {
+        "taskCategory": "grid",
+        "observedAtUnix": 1788978133,
+        "operatorIndependence": "MIXED",
+        "rows": [
+          {
+            "key": "gridquant",
+            "displayName": "GridQuant",
+            "category": "grid",
+            "operatorRelationship": "KNOT_OPERATED",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 1,
+            "refundedJobs": 0,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          },
+          {
+            "key": "erc8004-2159",
+            "displayName": "Relic BNB Grid Trader",
+            "category": "grid",
+            "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "10000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 0,
+            "refundedJobs": 1,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          },
+          {
+            "key": "erc8004-2173",
+            "displayName": "Grid Runner",
+            "category": "grid",
+            "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 0,
+            "refundedJobs": 1,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          }
+        ],
+        "outcome": "DECIDED",
+        "decisiveDimension": "price",
+        "recommendedKey": "erc8004-2159",
+        "limitations": [
+          "price is the only dimension compared; it does not measure delivered quality"
+        ]
+      }
+    },
+    {
+      "key": "health",
+      "label": "Lending health",
+      "candidates": [
+        {
+          "key": "healthguard",
+          "displayName": "HealthGuard",
+          "category": "health",
+          "operatorRelationship": "KNOT_OPERATED",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 1,
+          "refundedJobs": 1,
+          "evidenceClass": "testnet_observation"
+        }
+      ],
+      "comparison": {
+        "taskCategory": "health",
+        "observedAtUnix": 1788978133,
+        "operatorIndependence": "SAME_OPERATOR",
+        "rows": [
+          {
+            "key": "healthguard",
+            "displayName": "HealthGuard",
+            "category": "health",
+            "operatorRelationship": "KNOT_OPERATED",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 1,
+            "refundedJobs": 1,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          }
+        ],
+        "outcome": "SINGLE_CANDIDATE",
+        "decisiveDimension": null,
+        "recommendedKey": "healthguard",
+        "limitations": [
+          "only one candidate was eligible; this is not a comparison"
+        ]
+      }
+    },
+    {
+      "key": "rebalancing",
+      "label": "LP range management",
+      "candidates": [
+        {
+          "key": "rangepilot",
+          "displayName": "RangePilot",
+          "category": "rebalancing",
+          "operatorRelationship": "KNOT_OPERATED",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 1,
+          "refundedJobs": 0,
+          "evidenceClass": "testnet_observation"
+        },
+        {
+          "key": "erc8004-1923",
+          "displayName": "weighrange-agent",
+          "category": "rebalancing",
+          "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 0,
+          "refundedJobs": 1,
+          "evidenceClass": "testnet_observation"
+        }
+      ],
+      "comparison": {
+        "taskCategory": "rebalancing",
+        "observedAtUnix": 1788978133,
+        "operatorIndependence": "MIXED",
+        "rows": [
+          {
+            "key": "rangepilot",
+            "displayName": "RangePilot",
+            "category": "rebalancing",
+            "operatorRelationship": "KNOT_OPERATED",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 1,
+            "refundedJobs": 0,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          },
+          {
+            "key": "erc8004-1923",
+            "displayName": "weighrange-agent",
+            "category": "rebalancing",
+            "operatorRelationship": "EXTERNAL_DISTINCT_OWNER",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 0,
+            "refundedJobs": 1,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          }
+        ],
+        "outcome": "TIE",
+        "decisiveDimension": null,
+        "recommendedKey": null,
+        "limitations": [
+          "eligible candidates quoted the same price; price does not separate them"
+        ]
+      }
+    },
+    {
+      "key": "yield",
+      "label": "Yield comparison",
+      "candidates": [
+        {
+          "key": "yieldscout",
+          "displayName": "YieldScout",
+          "category": "yield",
+          "operatorRelationship": "KNOT_OPERATED",
+          "availability": "CALLABLE",
+          "priceBaseUnits": "100000000000000000",
+          "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+          "quoteExpiresAtUnix": null,
+          "completedJobs": 1,
+          "refundedJobs": 0,
+          "evidenceClass": "testnet_observation"
+        }
+      ],
+      "comparison": {
+        "taskCategory": "yield",
+        "observedAtUnix": 1788978133,
+        "operatorIndependence": "SAME_OPERATOR",
+        "rows": [
+          {
+            "key": "yieldscout",
+            "displayName": "YieldScout",
+            "category": "yield",
+            "operatorRelationship": "KNOT_OPERATED",
+            "availability": "CALLABLE",
+            "priceBaseUnits": "100000000000000000",
+            "currency": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+            "quoteExpiresAtUnix": null,
+            "completedJobs": 1,
+            "refundedJobs": 0,
+            "evidenceClass": "testnet_observation",
+            "eligible": true,
+            "exclusionReason": null
+          }
+        ],
+        "outcome": "SINGLE_CANDIDATE",
+        "decisiveDimension": null,
+        "recommendedKey": "yieldscout",
+        "limitations": [
+          "only one candidate was eligible; this is not a comparison"
+        ]
+      }
+    }
+  ]
+}
