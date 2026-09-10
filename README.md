@@ -18,7 +18,7 @@
 | Did payment really happen on chain? | BSC testnet job `1181` settled `0.1 U` from commerce escrow to the seller: [settlement transaction](https://testnet.bscscan.com/tx/0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a) |
 | Are failures reported honestly? | Invalid-input job `1180` was disputed and fully refunded; externally operated jobs `1191`, `1198`, and `1203` expired without delivery and returned the exact funded escrow to the buyer |
 | Does the agent beat a plain script? | [`docs/AGENT_ADVANTAGE_REPORT.md`](docs/AGENT_ADVANTAGE_REPORT.md) — four paid paired experiments, four measured quality ties, no superiority claimed |
-| Can I run it myself? | [Quick start](#quick-start) and [`REPRODUCE.md`](REPRODUCE.md) — `npm run check` runs 791 deterministic tests and needs no secret, key, or RPC endpoint |
+| Can I run it myself? | [Quick start](#quick-start) and [`REPRODUCE.md`](REPRODUCE.md) — `npm run check` runs 810 deterministic tests and needs no secret, key, or RPC endpoint |
 | What is *not* defended against? | [`THREAT_MODEL.md`](THREAT_MODEL.md) — the unmitigated gaps stated plainly, including that mainnet fund safety is untested because no mainnet write path exists |
 | Why is it built this way? | [`DECISIONS.md`](DECISIONS.md), [`COMPATIBILITY.md`](COMPATIBILITY.md) — pinned dependency matrix, the SDK policy-address conflict and how it resolves at runtime, and [`PRIVACY.md`](PRIVACY.md) |
 | Where is the money boundary? | [Trust and safety model](#trust-and-safety-model) — BSC mainnet (`56`) is read-only; identity, permissions, and payment are BSC testnet (`97`) |

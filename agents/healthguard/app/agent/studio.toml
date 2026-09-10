@@ -1,5 +1,5 @@
 [project]
-name = "healthguard-agent"
+name = "KNOT HealthGuard"
 
 [stack]
 # Project-lifetime facts: which runtime adapter recipe this Agent was
