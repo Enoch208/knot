@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "knot.verified-quote-live/1",
+  "capturedAtUtc": "2026-09-10T06:39:53.886Z",
+  "release": {
+    "gitCommit": "80e3b45487d4042b9da4fa5e0b1fd22add79e784",
+    "releaseTag": "80e3b45",
+    "imageReference": "knot/backend@sha256:482666c2740a6c14f1490c40ec14c0dc32a2fb6c782fdbd8c6e3cf0da190ae87",
+    "immutableImageId": "sha256:482666c2740a6c14f1490c40ec14c0dc32a2fb6c782fdbd8c6e3cf0da190ae87",
+    "previousReleaseTag": "67668b1"
+  },
+  "services": {
+    "api": "healthy",
+    "worker": "healthy",
+    "publicApiStatus": "AVAILABLE",
+    "publicDatabaseStatus": "AVAILABLE"
+  },
+  "database": {
+    "migrationCount": 12,
+    "newMigrations": [
+      {
+        "name": "0011_erc8004_identity_observations.sql",
+        "sha256": "b873df58041cd10edfdb035cc8b0e0159711315482182f878e39b7149c95c0dd"
+      },
+      {
+        "name": "0012_verified_quote_identity_observation.sql",
+        "sha256": "b8c720bc841311d7072a7d3d3bee71c3eee37d9190ee4c6ea7317e7e50f50da0"
+      }
+    ],
+    "taskRowCount": 3,
+    "serviceRequestRowCount": 3,
+    "verifiedQuoteRowCount": 1,
+    "identityObservationRowCount": 1,
+    "endpointObservationRowCount": 1,
+    "jobRowCount": 0,
+    "outboxRowCount": 0,
+    "chainActionRowCount": 0
+  },
+  "demo": {
+    "mode": "QUOTE_ONLY",
+    "stage": "VERIFIED_PRE_FUNDING",
+    "taskId": "demo-range-rollout80e3b45",
+    "serviceRequestId": "demo-range-quote-rollout80e3b45",
+    "verifiedQuoteId": "demo-range-quote-rollout80e3b45",
+    "seller": "RangePilot",
+    "sellerRelation": "KNOT_OPERATED",
+    "taskCreateHttpStatus": 201,
+    "serviceRequestCreateHttpStatus": 201,
+    "quoteCreateHttpStatus": 201,
+    "idempotentRetryHttpStatus": 200,
+    "idempotentRetryPreservedNegotiationHash": true,
+    "fundingPermitted": false,
+    "verifiedAtUtc": "2026-09-10T06:36:51.400Z"
+  },
+  "identityObservation": {
+    "chainId": 97,
+    "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+    "agentId": "2297",
+    "owner": "0xe4fed886b4b9062486d4663c6962e14473bd7320",
+    "observationId": "erc8004_2297_130168188_7fac0c9838b1bd06",
+    "blockNumber": "130168188",
+    "blockHash": "0x7fac0c9838b1bd06c8bc0b49e0032eed2dddd289a0390619b85c0fda18ebfa03",
+    "providerCount": 2,
+    "status": "CONFIRMED"
+  },
+  "bindings": {
+    "endpointObservationId": "endpoint_ad3a322b3c08778e6fb3d9cd9d4a01f9",
+    "requestHash": "0x7cf32843a298880e053e19ef1d146a41bb256ed3dcf6fc72e036bf3102dc02b0",
+    "responseHash": "0x9a6fd67c6b981d5767272f734c796b08a5590ab609d8722d23726be711d10dd3",
+    "negotiationHash": "0xf04231dd8ac652a383e8c890ca36361e1bda4ed67a217f5d67832d131d540152",
+    "jobDescriptionHash": "0x95b0756859e895f402c42170d9ef3f90507f399e68f22bc01fe0b761598feff7"
+  },
+  "publicChecks": [
+    {
+      "url": "https://knot-api.truematchx.com/health",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-api.truematchx.com/api/status",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-health.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-range.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-grid.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    },
+    {
+      "url": "https://knot-yield.truematchx.com/.well-known/agent-card.json",
+      "httpStatus": 200
+    }
+  ],
+  "unauthenticatedRequestCheck": {
+    "method": "POST",
+    "path": "/api/tasks/nonexistent/service-requests",
+    "httpStatus": 401,
+    "code": "AUTHORITY_MISMATCH",
+    "serviceRequestRowCountBefore": 3,
+    "serviceRequestRowCountAfter": 3
+  },
+  "recovery": {
+    "preDeployDatabaseAndObjectSnapshotVerified": true,
+    "previousReleaseRetained": true,
+    "previousImageRetained": true
+  },
+  "incident": {
+    "initialQuoteAttempts": 2,
+    "initialHttpStatus": 503,
+    "cause": "The service request retained a slashless origin while the endpoint observation added a trailing slash; the database correctly rejected the non-exact binding.",
+    "partialQuoteRowsCreated": 0,
+    "partialJobsCreated": 0,
+    "partialOutboxRowsCreated": 0,
+    "partialChainActionsCreated": 0,
+    "fixCommit": "80e3b45487d4042b9da4fa5e0b1fd22add79e784"
+  },
+  "boundary": {
+    "authenticatedServiceRequestCreated": true,
+    "authenticatedSellerNegotiationPerformed": true,
+    "verifiedQuotePersistedLive": true,
+    "identityReadRpcUsed": true,
+    "jobCreated": false,
+    "fundingPermitted": false,
+    "walletAccessed": false,
+    "chainWritePerformed": false,
+    "mainnetWritePerformed": false,
+    "retainedMainnetSnapshotReadOnly": true,
+    "frontendChanged": false
+  },
+  "limitations": [
+    "This is one authenticated quote-only observation against the KNOT-operated RangePilot seller, not a paid hire, independently operated seller, delivery, settlement, uptime, load, failover, or SLA result.",
+    "The flow used two BSC testnet RPC providers for a confirmed ERC-8004 identity read and a retained BSC mainnet market snapshot as analysis input; it performed no wallet access, job creation, funding, transaction submission, chain write, or mainnet write.",
+    "The two pre-fix attempts retained task and service-request inputs for diagnosis but created no quote, identity observation, endpoint observation, job, outbox item, or chain action.",
+    "Append-only service-request and verified-quote data still lack retention and crypto-erasure controls and are limited to bounded testnet and demo inputs.",
+    "Point-in-time service health and HTTP responses do not establish future availability."
+  ]
+}
