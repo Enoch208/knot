@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { agentProfiles } from "./agent-catalog"
+import type { ClaimLedger } from "./claim-ledger"
 
 type Category = "All agents" | "Lending" | "Liquidity" | "Trading" | "Yield"
 
@@ -37,9 +38,14 @@ const Arrow = () => (
   <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8" /></svg>
 )
 
-export default function MarketplaceDashboard() {
+export default function MarketplaceDashboard({ ledger }: { ledger: ClaimLedger }) {
   const [category, setCategory] = useState<Category>("All agents")
   const [query, setQuery] = useState("")
+
+  const ledgerRows = useMemo(() => {
+    const rank = { PARTIAL: 0, UNMEASURED: 1, NOT_CLAIMED: 2, SUPPORTED: 3 }
+    return [...ledger.rows].sort((left, right) => rank[left.status] - rank[right.status])
+  }, [ledger.rows])
 
   const visibleAgents = useMemo(() => {
     const term = query.trim().toLowerCase()
@@ -99,11 +105,38 @@ export default function MarketplaceDashboard() {
             </div>
           </section>
 
-          <section className="market-stats" aria-label="Marketplace summary">
-            <div><span>Available agents</span><strong>04</strong><small><i /> All endpoints live</small></div>
-            <div><span>Settled records</span><strong>05</strong><small>BSC testnet</small></div>
-            <div><span>Verified refunds</span><strong>03</strong><small>Exact testnet returns</small></div>
-            <div><span>Mainnet writes</span><strong>00</strong><small>Analysis only</small></div>
+          <section className="claim-ledger" aria-label="Claim ledger">
+            <div className="ledger-head">
+              <div>
+                <span className="market-kicker">Claim ledger</span>
+                <p>Every public statement maps to evidence. Anything unproven is held back rather than rounded up.</p>
+              </div>
+              <a href="/evidence">Inspect all {ledger.total} <Arrow /></a>
+            </div>
+
+            <div className="ledger-summary">
+              {ledger.statusCounts.map(({ status, count }) => (
+                <span className={`ledger-stat is-${status.toLowerCase()}`} key={status}>
+                  <i />{status}<strong>{count}</strong>
+                </span>
+              ))}
+              <span className="ledger-divider" aria-hidden="true" />
+              {ledger.evidenceCounts.map(({ evidenceClass, count }) => (
+                <span className="ledger-class" key={evidenceClass}>
+                  {evidenceClass.replace(/_/g, " ")}<strong>{count}</strong>
+                </span>
+              ))}
+            </div>
+
+            <ol className="ledger-rows">
+              {ledgerRows.map((row) => (
+                <li key={row.id}>
+                  <span className={`ledger-chip is-${row.status.toLowerCase()}`}>{row.status}</span>
+                  <code>{row.id}</code>
+                  <span className="ledger-classes">{row.evidenceClasses.join(" · ") || "—"}</span>
+                </li>
+              ))}
+            </ol>
           </section>
 
           <section className="market-feature">
