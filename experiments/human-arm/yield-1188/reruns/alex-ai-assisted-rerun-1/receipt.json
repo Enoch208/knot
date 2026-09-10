@@ -1,0 +1,19 @@
+{
+  "kind": "local-recorder-execution-receipt",
+  "operatorPseudonym": "alex-ai-assisted-rerun-1",
+  "classification": "AI-assisted repeat with prior answer exposure; excluded from unaided-human and blind-comparison claims",
+  "recordFile": "experiments/human-arm/yield-1188/manual-session-alex-ai-assisted-rerun-1.json",
+  "recordSha256": "ee9efbeafd493d31bd8ef32a849e1647e7b89e9cb263352751deb807fedd0d0e",
+  "recorderSha256": "17585dc0a6651e404350cc533779653113db173d97dcab31931e9476ddb1a9f4",
+  "inputSha256": "0x8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b",
+  "startExitCode": 0,
+  "stopExitCode": 0,
+  "elapsedMillisecondsMeasured": 50617,
+  "assistanceFieldVerified": true,
+  "sessionCopiedWithoutEditing": true,
+  "limitations": "Local logs and hashes aid verification; they are not signed or tamper-proof attestations.",
+  "references": [
+    "https://docs-v4.venus.io/guides/protocol-math",
+    "https://aave.com/help/supplying/supply-tokens"
+  ]
+}

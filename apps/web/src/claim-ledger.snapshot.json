@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-09-10T11:59:26.126Z",
+  "updatedAtUtc": "2026-09-10T14:44:37.283Z",
   "claims": [
     {
       "id": "knot-api-available",
@@ -262,6 +262,15 @@
         "publisher_claim"
       ],
       "observedAtUtc": "2026-09-10T06:39:53.886Z"
+    },
+    {
+      "id": "human-arm-yield-1188",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation",
+        "mainnet_observation"
+      ],
+      "observedAtUtc": "2026-09-10T14:38:14.279Z"
     }
   ]
 }

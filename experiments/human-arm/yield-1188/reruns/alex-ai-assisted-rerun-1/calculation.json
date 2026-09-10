@@ -1,0 +1,72 @@
+{
+  "inputSha256": "0x8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b",
+  "block": "120868475",
+  "horizonSeconds": 31536000,
+  "principalUnits": "1000000000000000000000",
+  "assumptions": [
+    "Frozen historical snapshot; no current execution recommendation.",
+    "Constant rates and simple interest; no unknown compounding cadence assumed.",
+    "Withdrawal need means liquidity availability; no withdrawal date is given.",
+    "Gas allowance is a maximum spend, not an additional fee.",
+    "Both strategies include eventual withdrawal; moving also pays source exit and destination entry.",
+    "netBenefitUnitsOverHorizon means incremental net gain versus staying."
+  ],
+  "markets": [
+    {
+      "marketId": "venus-usdt-core",
+      "checks": {
+        "allowedProtocol": true,
+        "matchingAsset": true,
+        "active": true,
+        "withdrawalCoverage": true,
+        "liquidityFloorAfterWithdrawal": true,
+        "migrationSourceCanExit": true,
+        "capacity": true,
+        "concentration": true,
+        "noLpOrLeverage": true,
+        "noIncentivesAssumed": true,
+        "costBudget": true
+      },
+      "eligible": true,
+      "annualRateFractionRay": "27640606914240000000000000",
+      "grossYieldUnits": "27640606914240000000",
+      "costsUnits": "16851204239142566",
+      "netYieldUnits": "27623755710000857434",
+      "netYieldTokens": "27.623755710000857434",
+      "concentrationBps": 213,
+      "availableLiquidityUnits": "61857863548219395555998131",
+      "capacityHeadroomUnits": "403704322084234894602882451"
+    },
+    {
+      "marketId": "aave-v3-usdt",
+      "checks": {
+        "allowedProtocol": true,
+        "matchingAsset": true,
+        "active": true,
+        "withdrawalCoverage": true,
+        "liquidityFloorAfterWithdrawal": true,
+        "migrationSourceCanExit": true,
+        "capacity": true,
+        "concentration": true,
+        "noLpOrLeverage": true,
+        "noIncentivesAssumed": true,
+        "costBudget": true
+      },
+      "eligible": true,
+      "annualRateFractionRay": "29175811161747734494224000",
+      "grossYieldUnits": "29175811161747734494",
+      "costsUnits": "50553612717427698",
+      "netYieldUnits": "29125257549030306796",
+      "netYieldTokens": "29.125257549030306796",
+      "concentrationBps": 64,
+      "availableLiquidityUnits": "10423852453441127599041108",
+      "capacityHeadroomUnits": "30879981330851769373802889"
+    }
+  ],
+  "recommendedMarketId": "aave-v3-usdt",
+  "decision": "move",
+  "netBenefitUnitsOverHorizon": "1501501839029449362",
+  "netBenefitTokens": "1.501501839029449362",
+  "minimumImprovementUnits": "1000000000000000000",
+  "excludedMarkets": []
+}

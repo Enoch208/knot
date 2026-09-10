@@ -1839,6 +1839,66 @@
         "GridQuant job 1187, YieldScout job 1188, and RangePilot job 1189 predate mandatory request-ID replay binding and are intentionally rejected by the new verifier.",
         "Append-only service-request and quote data have no retention or crypto-erasure mechanism."
       ]
+    },
+    {
+      "id": "human-arm-yield-1188",
+      "claim": "One unaided operator with no prior familiarity solved the frozen yield-comparison task in 1110431 ms of recorder-measured wall clock and reached the same recommendation, decision and net-benefit value as the paid YieldScout job, whose recorded lifecycle was 148373 ms.",
+      "status": "SUPPORTED",
+      "evidenceClasses": [
+        "testnet_observation",
+        "mainnet_observation"
+      ],
+      "scope": {
+        "taskId": "yield-1188",
+        "operatorPseudonym": "participant-1",
+        "priorFamiliarity": "none",
+        "observations": 1,
+        "operators": 1,
+        "humanMilliseconds": 1110431,
+        "agentLifecycleMilliseconds": 148373,
+        "timeRatio": "7.48",
+        "qualityResult": "agreement on all compared fields",
+        "agentServiceFeeBaseUnits": "100000000000000000",
+        "agentServiceFeeSymbol": "U",
+        "agentNetworkFeeBaseUnits": "2168994000000000",
+        "agentNetworkFeeSymbol": "tBNB"
+      },
+      "observedAtUtc": "2026-09-10T14:38:14.279Z",
+      "sources": [
+        {
+          "type": "repository_file",
+          "path": "experiments/human-arm/yield-1188/manual-session-participant-1.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "experiments/human-arm/yield-1188/task.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "experiments/human-arm/yield-1188/input.json"
+        },
+        {
+          "type": "repository_file",
+          "path": "evidence/advantage/human-arm/yield-1188.json"
+        },
+        {
+          "type": "repository_test",
+          "path": "tests/advantage/human-arm.test.ts",
+          "command": "node --test tests/advantage/human-arm.test.ts"
+        },
+        {
+          "type": "paired_experiment_dataset",
+          "path": "evidence/advantage/yieldscout-1188/dataset.json",
+          "command": "npm run advantage:verify -- evidence/advantage/yieldscout-1188/dataset.json"
+        }
+      ],
+      "limitations": [
+        "One operator on one task. A single observation supports no population claim and no average.",
+        "The time boundaries are not identical. The agent window runs from recorded marketplace start through confirmed on-chain submission and includes block inclusion; the operator window covers task work only.",
+        "Costs are testnet U and tBNB. Testnet units are not dollars and no monetary break-even or hourly rate is claimed.",
+        "The operator answered from the identical frozen snapshot, so this measures effort on a fixed historical input and not live market work.",
+        "A separate AI-assisted run of the same task is retained but excluded from every human-effort claim, and two earlier attempts whose timing could not be verified are quarantined and published as evidence of nothing."
+      ]
     }
   ]
 }

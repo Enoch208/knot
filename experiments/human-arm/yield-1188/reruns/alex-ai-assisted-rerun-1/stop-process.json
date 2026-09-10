@@ -1,0 +1,21 @@
+{
+  "command": "npm",
+  "args": [
+    "run",
+    "human-arm",
+    "--",
+    "stop",
+    "yield-1188",
+    "--answer",
+    "{\"recommendedMarketId\":\"aave-v3-usdt\",\"decision\":\"move\",\"netBenefitUnitsOverHorizon\":\"1501501839029449362\",\"excludedMarketsAndWhy\":\"None. Both pass the supplied limits; Aave has the higher projected net return.\"}",
+    "--tools",
+    "input.json,Node.js calculator,Venus docs,Aave docs,AI assistant",
+    "--assistance",
+    "AI-assisted",
+    "--notes",
+    "AI completed the arithmetic, analysis and submission for alex. Repeat run with the input and previous answer already seen; not a blind trial or an unaided human benchmark. Timing covers this assisted rerun only, not human typing or first-time solving. Constant-rate simple-interest estimate: Aave adds about 1.50 USDT net versus staying, above the 1-USDT threshold. Withdrawal need is an availability constraint. Frozen snapshot only; refresh before any real move. Full calculation and process logs are retained in reruns/alex-ai-assisted-rerun-1/."
+  ],
+  "exitCode": 0,
+  "stdout": "\n> knot@0.1.0 human-arm\n> node scripts/record-human-arm.ts stop yield-1188 --answer {\"recommendedMarketId\":\"aave-v3-usdt\",\"decision\":\"move\",\"netBenefitUnitsOverHorizon\":\"1501501839029449362\",\"excludedMarketsAndWhy\":\"None. Both pass the supplied limits; Aave has the higher projected net return.\"} --tools input.json,Node.js calculator,Venus docs,Aave docs,AI assistant --assistance AI-assisted --notes AI completed the arithmetic, analysis and submission for alex. Repeat run with the input and previous answer already seen; not a blind trial or an unaided human benchmark. Timing covers this assisted rerun only, not human typing or first-time solving. Constant-rate simple-interest estimate: Aave adds about 1.50 USDT net versus staying, above the 1-USDT threshold. Withdrawal need is an availability constraint. Frozen snapshot only; refresh before any real move. Full calculation and process logs are retained in reruns/alex-ai-assisted-rerun-1/.\n\n",
+  "stderr": "\n  Recorded 50.6s of measured wall clock for alex-ai-assisted-rerun-1.\n  /Users/enoch/Developer/personal/rival/experiments/human-arm/yield-1188/manual-session-alex-ai-assisted-rerun-1.json\n\n"
+}

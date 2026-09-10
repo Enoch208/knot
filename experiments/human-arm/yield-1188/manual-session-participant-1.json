@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "knot.human-arm.session/1",
+  "taskId": "yield-1188",
+  "operatorPseudonym": "participant-1",
+  "priorFamiliarity": "none",
+  "startedAtUtc": "2026-09-10T14:19:43.847Z",
+  "endedAtUtc": "2026-09-10T14:38:14.279Z",
+  "elapsedMillisecondsMeasured": 1110431,
+  "measurement": "wall-clock, measured by this recorder between start and stop",
+  "answer": {
+    "recommendedMarketId": "aave-v3-usdt",
+    "decision": "move",
+    "netBenefitUnitsOverHorizon": "1501501839029449362",
+    "excludedMarketsAndWhy": "None. Both markets satisfy the supplied constraints; Venus remains valid but has the lower projected net return."
+  },
+  "toolsUsed": [
+    "input.json",
+    "calculator",
+    "public Venus documentation",
+    "public Aave documentation"
+  ],
+  "assistanceReceived": "none",
+  "operatorNotes": "Participant submitted the four values and supporting notes. During the timed run, the AI assistant declined to answer a task question; no substantive task assistance was provided. No funds were moved; recommendation applies only to the frozen snapshot and should be refreshed before any live decision."
+}

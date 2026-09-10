@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "knot.human-arm.session/1",
+  "taskId": "yield-1188",
+  "operatorPseudonym": "alex",
+  "priorFamiliarity": "none",
+  "startedAtUtc": "2026-09-10T13:27:10.412Z",
+  "endedAtUtc": "2026-09-10T13:30:06.323Z",
+  "elapsedMillisecondsMeasured": 175911,
+  "measurement": "wall-clock, measured by this recorder between start and stop",
+  "answer": {
+    "recommendedMarketId": "aave-v3-usdt",
+    "decision": "move",
+    "netBenefitUnitsOverHorizon": "1501501839029449362",
+    "excludedMarketsAndWhy": "None excluded by the supplied constraints. Both Venus and Aave pass protocol/asset eligibility, active supply and withdrawal checks, same-asset/no-leverage exposure, liquidity floor, withdrawal availability, capacity, concentration cap, and cost budget. venus-usdt-core remains eligible but is not selected because its projected net return is lower."
+  },
+  "toolsUsed": [
+    "supplied input.json",
+    "Node.js exact-integer calculator",
+    "public Venus documentation",
+    "public Aave documentation"
+  ],
+  "operatorNotes": "Frozen input SHA-256 verified. Historical evaluation at BSC block 120868475, 2026-09-09T11:15:03Z. No baseline implementation or prior answer was consulted.\nProjection assumptions: constant supplied per-period rates over 31536000 seconds; simple interest with no invented incentives or compounding schedule. Gross yield = floor(amountUnits * rateRay * periodsPerYear * holdingHorizonSeconds / (10^27 * 31536000)). USDT has 18 decimals. This is a deterministic snapshot estimate, not a guarantee of future earnings.\nWithdrawal need of 500 USDT is treated as liquidity that must remain accessible; no withdrawal date is specified, so the modeled principal remains 1000 USDT. Both markets retain far more than the 1000 USDT liquidity floor even after subtracting 500 USDT. Supplied concentration values are Venus 213 bps and Aave 64 bps, both below 9000 bps.\nAnnualized simple rates: Venus 2.764060691424%; Aave 2.9175811161747734494%. Gross projected yield units: Venus 27640606914240000000; Aave 29175811161747734494.\nEntry/exit cost per leg is 16851204239142566 units. Immediate migration costs are Venus exit plus Aave entry = 33702408478285132 units. Including eventual Aave withdrawal, total costs are 50553612717427698 units, below the 1000000000000000000-unit gas allowance. The allowance is a spending cap, not an extra 1-USDT fee.\nnetBenefitUnitsOverHorizon explicitly denotes INCREMENTAL benefit versus staying: 1501501839029449362 units = 1.501501839029449362 USDT, above the 1-USDT improvement threshold. For absolute-return interpretation: stay net after eventual exit = 27623755710000857434 units; move net after source exit, destination entry and eventual exit = 29125257549030306796 units. Destination standalone yield less its entry/exit costs = 29142108753269449362 units. Equal final exit costs cancel in the incremental comparison.\nThis snapshot exceeds the 300-second freshness limit today. The move recommendation applies only to the frozen benchmark inputs. Refresh rates, liquidity, limits, and transaction costs before any live decision. No funds were moved.\nPublic method references: https://docs-v4.venus.io/guides/protocol-math ; https://aave.com/help/supplying/supply-tokens ."
+}

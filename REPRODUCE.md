@@ -12,7 +12,7 @@ done
 npm run check
 ```
 
-Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 667 root tests, 20 category-parity tests, and 73 seller tests: 760 total. It covers API boundaries, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
+Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 675 root tests, 20 category-parity tests, and 73 seller tests: 768 total. It covers API boundaries, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
 
 The default run does not prove live data access, a funded purchase, delivery on chain, settlement, or performance. Environment-gated checks remain separate so a passing fixture suite cannot be mistaken for live evidence.
 

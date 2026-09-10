@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "knot.human-arm.comparison/1",
+  "recordedAtUtc": "2026-09-10T14:44:14.804Z",
+  "taskId": "yield-1188",
+  "frozenInputSha256": "0x8893fdb8507e7dfb580f9d5b5406bb7530ab731d0bc0b866fc2338a91651b33b",
+  "sessionSha256": "0x53cbccfc041c4c2a0e01b1ad4e40358b9a2292e94d1549a59e6f134f0b61620c",
+  "sessionPath": "experiments/human-arm/yield-1188/manual-session-participant-1.json",
+  "agent": {
+    "category": "yield",
+    "experimentPath": "evidence/advantage/yieldscout-1188",
+    "lifecycleStartUtc": "2026-09-09T11:15:24.627Z",
+    "lifecycleEndUtc": "2026-09-09T11:17:53.000Z",
+    "lifecycleMilliseconds": 148373,
+    "serviceFeeUnits": "100000000000000000",
+    "serviceFeeSymbol": "U",
+    "networkFeeUnits": "2168994000000000",
+    "networkFeeSymbol": "tBNB"
+  },
+  "agentAnswer": {
+    "recommendedMarketId": "aave-v3-usdt",
+    "decision": "move",
+    "netBenefitUnitsOverHorizon": "1501501839029449362"
+  },
+  "humanAnswer": {
+    "recommendedMarketId": "aave-v3-usdt",
+    "decision": "move",
+    "netBenefitUnitsOverHorizon": "1501501839029449362",
+    "excludedMarketsAndWhy": "None. Both markets satisfy the supplied constraints; Venus remains valid but has the lower projected net return."
+  },
+  "comparison": {
+    "taskId": "yield-1188",
+    "category": "yield",
+    "operatorPseudonym": "participant-1",
+    "priorFamiliarity": "none",
+    "humanMilliseconds": 1110431,
+    "agentMilliseconds": 148373,
+    "timeRatio": "7.48",
+    "absoluteMillisecondsSaved": 962058,
+    "answersAgree": true,
+    "disagreeingFields": [],
+    "serviceFeeUnits": "100000000000000000",
+    "serviceFeeSymbol": "U",
+    "networkFeeUnits": "2168994000000000",
+    "networkFeeSymbol": "tBNB",
+    "observations": 1,
+    "limitations": [
+      "One operator on one task. No population claim is supported by a single observation.",
+      "The time boundaries are not identical: the agent window runs from recorded marketplace start through confirmed on-chain submission and includes block inclusion, while the operator window covers task work only.",
+      "Costs are U and tBNB on BSC testnet. Testnet units are not dollars and no monetary break-even is claimed.",
+      "The operator worked from the identical frozen input, and the recorder held the clock rather than accepting a stated duration."
+    ]
+  }
+}

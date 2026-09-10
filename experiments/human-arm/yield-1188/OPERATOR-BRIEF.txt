@@ -1,0 +1,105 @@
+YIELD COMPARISON — TIMED TASK
+=============================
+
+You are being timed. That is the point of the exercise: we are measuring how
+long this takes a person. Work at your normal pace. Do not rush, and do not
+worry about being slow — a slow honest time is the useful result.
+
+Take as long as you need. If you cannot finish, say so; that is also a result.
+
+
+THE SITUATION
+-------------
+
+Someone holds 1,000 USDT deposited in a lending market on BNB Chain. They are
+willing to leave it there for 365 days.
+
+Their money is currently in:   venus-usdt-core
+
+They want to know: should it stay where it is, or move to the other market?
+
+
+YOUR FILE
+---------
+
+Everything you need is in one file:
+
+    experiments/human-arm/yield-1188/input.json
+
+It contains a frozen snapshot of two markets (Venus and Aave v3). For each
+market the snapshot gives you, among other fields:
+
+    baseRatePerPeriodRay     the interest rate, in "ray" units
+    periodBasis              what period that rate is per
+    availableLiquidityUnits  how much can be withdrawn right now
+    entryCostUnits           cost to deposit into that market
+    exitCostUnits            cost to withdraw from that market
+    concentrationBps         this position's share of that market
+    capacity / supplyState / withdrawalState / riskFlags
+
+All amounts are integers in base units. USDT has 18 decimals, so
+1 USDT = 1000000000000000000 units.
+
+
+THE RULES THEY SET
+------------------
+
+    Holding horizon            365 days
+    Withdrawal need            500 USDT must stay accessible
+    Minimum liquidity floor    1,000 USDT
+    Concentration cap          9000 bps
+    Gas allowance              1 USDT
+    Minimum improvement        1 USDT
+
+Moving is only worth it if the gain, after paying to leave one market and
+enter the other, beats that minimum improvement threshold.
+
+
+WHAT TO HAND BACK
+-----------------
+
+Four answers:
+
+    1. recommendedMarketId          which market should hold the money
+    2. decision                     "stay" or "move"
+    3. netBenefitUnitsOverHorizon   the gain from your recommendation over the
+                                    365 days, in base units
+    4. excludedMarketsAndWhy        any market you ruled out, and why. If you
+                                    ruled none out, say so.
+
+Also jot down, in your own words: what you did, anything that confused you,
+anything you were unsure about, and roughly how you handled it. Rough notes
+are fine. Being unsure is normal and worth recording.
+
+
+WHAT YOU MAY USE
+----------------
+
+    The input.json file
+    A calculator (or a spreadsheet)
+    Public Venus documentation
+    Public Aave documentation
+    A block explorer
+
+
+WHAT YOU MUST NOT USE
+---------------------
+
+    Any AI assistant of any kind
+    KNOT, or anything belonging to KNOT
+    Any answer to this task that you have seen before
+    Anyone else's help
+
+If you do end up using any of these, just say so — an assisted run recorded
+honestly is useful. A run recorded as unaided when it was not is worthless to
+us and worse than not doing it at all.
+
+
+BEFORE YOU START
+----------------
+
+Tell the person who gave you this that you are ready. They start a timer, then
+leave you alone. When you are done, tell them, and give them your four answers
+and your notes.
+
+Do not edit any file. Just hand back your answers.
