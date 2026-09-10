@@ -1,0 +1,971 @@
+{
+  "schemaVersion": "knot.job-records-snapshot/1",
+  "observationsThroughUtc": "2026-09-09T18:22:13.065Z",
+  "sources": [
+    "evidence/testnet/analysis-paid-jobs-1187-1189.json",
+    "evidence/testnet/external-paid-job-1191.json",
+    "evidence/testnet/external-paid-job-1198.json",
+    "evidence/testnet/external-paid-job-1203.json",
+    "evidence/testnet/healthguard-job-1180.json",
+    "evidence/testnet/healthguard-job-1181.json"
+  ],
+  "jobs": [
+    {
+      "jobId": "1180",
+      "sourcePath": "evidence/testnet/healthguard-job-1180.json",
+      "recordedAtUtc": "2026-09-09T09:57:00Z",
+      "agent": {
+        "agentId": "2295",
+        "name": "KNOT HealthGuard",
+        "category": null,
+        "capability": null,
+        "operatorRelationship": "knot_operated"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "0",
+        "providerReceivedDisplay": "0 U",
+        "buyerRefundedBaseUnits": "100000000000000000",
+        "buyerRefundedDisplay": "0.1 U"
+      },
+      "work": {
+        "deliverySubmitted": true,
+        "deliverableUrl": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7.json",
+        "deliverableSha256": "067712d7a1b5102c7cf3553d5cb34e9f1ffb260172ff2dfafc166c88dd2639d7",
+        "deliverableManifestHash": "0x18722bb6b158a88c502925e272b657866bb3ce4f2a87e19137cf4806791d6342",
+        "artifactStatus": "INVALID_REQUEST",
+        "artifactReasonCode": "INVALID_JSON",
+        "taskId": null,
+        "taskInputHash": null,
+        "snapshotId": null,
+        "quoteRequestHash": null,
+        "negotiationHash": "0x1f13cf7fb966c577d0a5ea5fc2fd1bff95de006aeac9b24a40f54b8f8f1f6596"
+      },
+      "settlement": {
+        "terminalState": "EXPIRED",
+        "classification": "DISPUTED_REFUNDED_TO_BUYER",
+        "disputed": true,
+        "settlementTransactionHash": null,
+        "refundTransactionHash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469"
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0xc7f4d70dfeaed7cad3a96d9e7379fc31c3be1841c3ba761edfa83343970b423c",
+          "receiptStatus": "success",
+          "blockNumber": "129996689",
+          "timestampUtc": "2026-09-09T09:10:32.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0xa6c028e75c0b011133de1e806af716011e0bb25dcc40788efb52963e7d0fb1a3",
+          "receiptStatus": "success",
+          "blockNumber": "129996698",
+          "timestampUtc": "2026-09-09T09:10:36.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x643849aa71ac5395043d8b84c31a3b1dfdfd1d6ceb06f6eaec44ce8cb5f5f1e7",
+          "receiptStatus": "success",
+          "blockNumber": "129996706",
+          "timestampUtc": "2026-09-09T09:10:40.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0x6eacc9d38014d77f519dcefdb56397546e37da21d0201cad782db91111ac3702",
+          "receiptStatus": "success",
+          "blockNumber": "129996732",
+          "timestampUtc": "2026-09-09T09:10:51.000Z"
+        },
+        {
+          "step": "submit",
+          "label": "Deliverable submitted",
+          "hash": "0x6f45b6d0d3f8c39129237816a7a577fec71f95ab902516f1b981dd52fdbd7951",
+          "receiptStatus": "success",
+          "blockNumber": "129996825",
+          "timestampUtc": "2026-09-09T09:11:33.000Z"
+        },
+        {
+          "step": "dispute",
+          "label": "Buyer disputed",
+          "hash": "0x62334978fac4fd41bd50f99410464a99036891790855b6e7257ca1a4a8f22418",
+          "receiptStatus": "success",
+          "blockNumber": "129997656",
+          "timestampUtc": "2026-09-09T09:17:47.000Z"
+        },
+        {
+          "step": "claimRefund",
+          "label": "Escrow refunded",
+          "hash": "0xa700168057f303090aa44e758e05857b41a2175e3a3643ab1cd366e34cd11469",
+          "receiptStatus": "success",
+          "blockNumber": "130002718",
+          "timestampUtc": "2026-09-09T09:55:45.000Z"
+        }
+      ],
+      "limitations": [
+        "Submission and manifest integrity succeeded, but the delivered assessment did not evaluate the requested health snapshot.",
+        "The disputed job reached EXPIRED after its deadline, and claimRefund returned the full 0.1 U escrow to the buyer; no seller earnings are claimed for this job.",
+        "This is one BSC testnet observation and is not a reliability or performance benchmark."
+      ]
+    },
+    {
+      "jobId": "1181",
+      "sourcePath": "evidence/testnet/healthguard-job-1181.json",
+      "recordedAtUtc": "2026-09-09T09:34:12.158Z",
+      "agent": {
+        "agentId": "2295",
+        "name": "KNOT HealthGuard",
+        "category": null,
+        "capability": null,
+        "operatorRelationship": "knot_operated"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "100000000000000000",
+        "providerReceivedDisplay": "0.1 U",
+        "buyerRefundedBaseUnits": "0",
+        "buyerRefundedDisplay": "0 U"
+      },
+      "work": {
+        "deliverySubmitted": true,
+        "deliverableUrl": "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80.json",
+        "deliverableSha256": "476813b986a82578811db331e53c071bba95a5163ce67e1aa0cde447c72cfa80",
+        "deliverableManifestHash": "0x7202735dac6232701b65c1a1f9b0ae63d35543c08bfd931e64636c8ef484660d",
+        "artifactStatus": "NO_DEBT",
+        "artifactReasonCode": "NO_DEBT",
+        "taskId": "health_120852687",
+        "taskInputHash": "0x70ae26f7b870144f823665f05a88a800d7b17d73ad4b4d70f4e2f713c0fc2ce6",
+        "snapshotId": "0x103c2d76a4813be296bee0d7da407ae729e8e53a37dfaaf17595dcc9277d0750",
+        "quoteRequestHash": null,
+        "negotiationHash": "0xe8c1a53ba55186d234e78a84167a6a3ba98737d4d4930673eebbba28eb7c0acf"
+      },
+      "settlement": {
+        "terminalState": "COMPLETED",
+        "classification": "SETTLED_TO_PROVIDER",
+        "disputed": false,
+        "settlementTransactionHash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+        "refundTransactionHash": null
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x07f75bb799ccedfac6b0445fa0fc64fb63223677ffd7f574a50669b2b030e6ef",
+          "receiptStatus": "success",
+          "blockNumber": "129997584",
+          "timestampUtc": "2026-09-09T09:17:15.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x315578535c4731ef703c5ce96aedb29c2eec1a49f4577d9a9686eac3d151bd33",
+          "receiptStatus": "success",
+          "blockNumber": "129997597",
+          "timestampUtc": "2026-09-09T09:17:21.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x28d849b105ad511e9ff6abb41a9d0d4939a81f748e7276273ca2161f11dd2c29",
+          "receiptStatus": "success",
+          "blockNumber": "129997605",
+          "timestampUtc": "2026-09-09T09:17:24.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0x793901d5b99431c19cc664de58983d483dab2300d4b4f7009365cb78ceec5346",
+          "receiptStatus": "success",
+          "blockNumber": "129997624",
+          "timestampUtc": "2026-09-09T09:17:33.000Z"
+        },
+        {
+          "step": "submit",
+          "label": "Deliverable submitted",
+          "hash": "0x3c53e3171728cd67667c82ad9d4b021d982b2370b024d21374367164e2f12fe8",
+          "receiptStatus": "success",
+          "blockNumber": "129997716",
+          "timestampUtc": "2026-09-09T09:18:14.000Z"
+        },
+        {
+          "step": "settle",
+          "label": "Escrow settled",
+          "hash": "0xa3c67eafa69c2b2b2307989efd0df8cbd79fe036f763bdd87b6c4a1816c4483a",
+          "receiptStatus": "success",
+          "blockNumber": "129999770",
+          "timestampUtc": "2026-09-09T09:33:39.000Z"
+        }
+      ],
+      "limitations": [
+        "NO_DEBT is the result for the signed, pinned BSC mainnet snapshot; it is not a guarantee about later borrower state.",
+        "COMPLETED is the terminal on-chain state for this BSC testnet job; no mainnet payment or broader marketplace coverage is inferred.",
+        "This is one service and one BSC testnet job, not a reliability or performance benchmark."
+      ]
+    },
+    {
+      "jobId": "1187",
+      "sourcePath": "evidence/testnet/analysis-paid-jobs-1187-1189.json",
+      "recordedAtUtc": "2026-09-09T11:34:55.952Z",
+      "agent": {
+        "agentId": "2298",
+        "name": "KNOT GridQuant",
+        "category": "grid",
+        "capability": "analysis",
+        "operatorRelationship": "knot_operated"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "100000000000000000",
+        "providerReceivedDisplay": "0.1 U",
+        "buyerRefundedBaseUnits": "0",
+        "buyerRefundedDisplay": "0 U"
+      },
+      "work": {
+        "deliverySubmitted": true,
+        "deliverableUrl": "https://knot-artifacts.truematchx.com/knot-deliverables/gridquant/sha256/0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152.json",
+        "deliverableSha256": "0a8f485757cdc3308e95e944362e2be73d966b2a7309da437abc8f9e04adf152",
+        "deliverableManifestHash": "0xa85e65d09fcf5566ecb62397d311605e4080df29fcf71d115f9897fca443ac77",
+        "artifactStatus": "ANALYZED",
+        "artifactReasonCode": "PLAN",
+        "taskId": "grid-paid-120868475",
+        "taskInputHash": "0x043bcd8d3a62679e2cd88150dd55eb271436e99b8aabbbbe8d3d09e6af807a3f",
+        "snapshotId": "0xcee1d0cca1b88071ae81f8a744eec48df098e7ed0e259201f56b8b90ff5c8117",
+        "quoteRequestHash": null,
+        "negotiationHash": null
+      },
+      "settlement": {
+        "terminalState": "COMPLETED",
+        "classification": "SETTLED_TO_PROVIDER",
+        "disputed": false,
+        "settlementTransactionHash": "0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+        "refundTransactionHash": null
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x7d7319e764850f529e34c3ac6719a77f9b5ad20a8d514b7c629e49b0e43a26f7",
+          "receiptStatus": "success",
+          "blockNumber": "130013450",
+          "timestampUtc": "2026-09-09T11:16:15.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x9685ea3b3795f1602d2bd98ade238c727d25b545b5c1c73c4bce12edc01bb87a",
+          "receiptStatus": "success",
+          "blockNumber": "130013458",
+          "timestampUtc": "2026-09-09T11:16:18.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x5626930433d2e8313b2d8d57026b00e796d6209172f2f36fb3a963982f9e892e",
+          "receiptStatus": "success",
+          "blockNumber": "130013472",
+          "timestampUtc": "2026-09-09T11:16:25.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0xede1f94ccc720ebc260cd691ef9dd2a95f24245318faa9710f8280c371642e96",
+          "receiptStatus": "success",
+          "blockNumber": "130013496",
+          "timestampUtc": "2026-09-09T11:16:35.000Z"
+        },
+        {
+          "step": "submit",
+          "label": "Deliverable submitted",
+          "hash": "0xc11edcdbd2291ae45a5088d68fa3cd123337921f01438325516b01fbdf271775",
+          "receiptStatus": "success",
+          "blockNumber": "130013547",
+          "timestampUtc": "2026-09-09T11:16:58.000Z"
+        },
+        {
+          "step": "settle",
+          "label": "Escrow settled",
+          "hash": "0x2431cdd26ae5607ae461846a21084819abb3cb0002a83e5207b493fa8efc36cc",
+          "receiptStatus": "success",
+          "blockNumber": "130015588",
+          "timestampUtc": "2026-09-09T11:32:17.000Z"
+        }
+      ],
+      "limitations": [
+        "Each observation covers one analysis-only BSC testnet commerce job and does not establish repeatability, uptime, or latency.",
+        "BSC mainnet was read only; no position, order, swap, deposit, withdrawal, migration, or other domain transaction was executed.",
+        "The outcomes are bounded analyses of one pinned input per category, not performance history, earnings, or promised returns.",
+        "U and tBNB are testnet assets; no real funds or mainnet payments were used."
+      ]
+    },
+    {
+      "jobId": "1188",
+      "sourcePath": "evidence/testnet/analysis-paid-jobs-1187-1189.json",
+      "recordedAtUtc": "2026-09-09T11:34:55.952Z",
+      "agent": {
+        "agentId": "2299",
+        "name": "KNOT YieldScout",
+        "category": "yield",
+        "capability": "analysis",
+        "operatorRelationship": "knot_operated"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "100000000000000000",
+        "providerReceivedDisplay": "0.1 U",
+        "buyerRefundedBaseUnits": "0",
+        "buyerRefundedDisplay": "0 U"
+      },
+      "work": {
+        "deliverySubmitted": true,
+        "deliverableUrl": "https://knot-artifacts.truematchx.com/knot-deliverables/yieldscout/sha256/c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9.json",
+        "deliverableSha256": "c3fbb46a4df2110bf3d3f9dfa5c101d5488c0b0c6cd0c4afbc62103cc550edd9",
+        "deliverableManifestHash": "0x461090a6c99dc7634567657a948d7c23f23299a5bffc8615f7839c5492ee92a8",
+        "artifactStatus": "ASSESSED",
+        "artifactReasonCode": null,
+        "taskId": "yield-paid-120868475",
+        "taskInputHash": "0xb62982a78e2277cd0fbea463ff8e85043b357bb41fb273a24b39007cfb14b849",
+        "snapshotId": "0x2fbbbe1d81e28bcbb2ffd90a416a2aeb4f38ca50b3c922627807b27c2abc94a9",
+        "quoteRequestHash": null,
+        "negotiationHash": null
+      },
+      "settlement": {
+        "terminalState": "COMPLETED",
+        "classification": "SETTLED_TO_PROVIDER",
+        "disputed": false,
+        "settlementTransactionHash": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+        "refundTransactionHash": null
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x5d8fa6a6d687915d667448d98da98eb9af5a1a4854eef22fc5078a851ad0b4ec",
+          "receiptStatus": "success",
+          "blockNumber": "130013586",
+          "timestampUtc": "2026-09-09T11:17:16.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x07e0fd25b78b563351a76694677219874eeb7ec52fe73b94bed95333c2c7783a",
+          "receiptStatus": "success",
+          "blockNumber": "130013594",
+          "timestampUtc": "2026-09-09T11:17:20.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x8ee13b8601cc8e0a5268bed09d25e605e1f944fdcc463030248470a3bd85170c",
+          "receiptStatus": "success",
+          "blockNumber": "130013602",
+          "timestampUtc": "2026-09-09T11:17:23.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0xdb7a3426f63a4972161ee448421fb3110cdd9b87a9b22f4f3cf9f880ada3dbee",
+          "receiptStatus": "success",
+          "blockNumber": "130013640",
+          "timestampUtc": "2026-09-09T11:17:40.000Z"
+        },
+        {
+          "step": "submit",
+          "label": "Deliverable submitted",
+          "hash": "0xa6e86b9b5fb10a4968d21fdda3cdc5291dd8fbf5be41268c0ff334c75e536d61",
+          "receiptStatus": "success",
+          "blockNumber": "130013668",
+          "timestampUtc": "2026-09-09T11:17:53.000Z"
+        },
+        {
+          "step": "settle",
+          "label": "Escrow settled",
+          "hash": "0x388afeef6359d213c0259f38601915e1e2678d304ff733281a5d3aae052861af",
+          "receiptStatus": "success",
+          "blockNumber": "130015708",
+          "timestampUtc": "2026-09-09T11:33:11.000Z"
+        }
+      ],
+      "limitations": [
+        "Each observation covers one analysis-only BSC testnet commerce job and does not establish repeatability, uptime, or latency.",
+        "BSC mainnet was read only; no position, order, swap, deposit, withdrawal, migration, or other domain transaction was executed.",
+        "The outcomes are bounded analyses of one pinned input per category, not performance history, earnings, or promised returns.",
+        "U and tBNB are testnet assets; no real funds or mainnet payments were used."
+      ]
+    },
+    {
+      "jobId": "1189",
+      "sourcePath": "evidence/testnet/analysis-paid-jobs-1187-1189.json",
+      "recordedAtUtc": "2026-09-09T11:34:55.952Z",
+      "agent": {
+        "agentId": "2297",
+        "name": "KNOT RangePilot",
+        "category": "rebalancing",
+        "capability": "analysis",
+        "operatorRelationship": "knot_operated"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "100000000000000000",
+        "providerReceivedDisplay": "0.1 U",
+        "buyerRefundedBaseUnits": "0",
+        "buyerRefundedDisplay": "0 U"
+      },
+      "work": {
+        "deliverySubmitted": true,
+        "deliverableUrl": "https://knot-artifacts.truematchx.com/knot-deliverables/rangepilot/sha256/ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a.json",
+        "deliverableSha256": "ca13ae8a177a33a5180762ceaca2faa8bf8415d14079e52980fb5bec3130432a",
+        "deliverableManifestHash": "0xdc56e86a67d947da546e21c901a9e03eb9cb3889bbe2bb3b480e1257b28bb20d",
+        "artifactStatus": "ANALYZED",
+        "artifactReasonCode": "IN_RANGE_HOLD",
+        "taskId": "range-paid-120868475",
+        "taskInputHash": "0x0c074f3a144d94bd672822f603f735abaea245ef54b0ad5b2ac405ca0a00c8c2",
+        "snapshotId": "0xe103913e0241676cb4c8283347723b9bcf6343f5b489a42ad001e8d7c3d08f09",
+        "quoteRequestHash": null,
+        "negotiationHash": null
+      },
+      "settlement": {
+        "terminalState": "COMPLETED",
+        "classification": "SETTLED_TO_PROVIDER",
+        "disputed": false,
+        "settlementTransactionHash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+        "refundTransactionHash": null
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x0e73022383b1d9cd58e0804b374278334442fdbe8bd3272abd1c7899ad617bf1",
+          "receiptStatus": "success",
+          "blockNumber": "130013714",
+          "timestampUtc": "2026-09-09T11:18:14.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x7c93d480741c982f3182060cf93e4d6c7f0cb85ecfa09b4818058ea503f8063a",
+          "receiptStatus": "success",
+          "blockNumber": "130013722",
+          "timestampUtc": "2026-09-09T11:18:17.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x59ff75f2381882bdce42bee7f0c39a6e80d92df44b1fa5c7054a63d7e6590a1e",
+          "receiptStatus": "success",
+          "blockNumber": "130013730",
+          "timestampUtc": "2026-09-09T11:18:21.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0x1e72e81a9fc7553db83ee692cc5b341a1aa763058de0e5dea3dd2fd8fb9fcff8",
+          "receiptStatus": "success",
+          "blockNumber": "130013760",
+          "timestampUtc": "2026-09-09T11:18:34.000Z"
+        },
+        {
+          "step": "submit",
+          "label": "Deliverable submitted",
+          "hash": "0x570568e8d4e474b652ec19af07d56ee38c27a243697251bf445efb97943d450d",
+          "receiptStatus": "success",
+          "blockNumber": "130013791",
+          "timestampUtc": "2026-09-09T11:18:48.000Z"
+        },
+        {
+          "step": "settle",
+          "label": "Escrow settled",
+          "hash": "0xcf39c2df74fb81682e2144858e4ea8fcf6de7fdf00b6bcdbbff625430eefcc01",
+          "receiptStatus": "success",
+          "blockNumber": "130015848",
+          "timestampUtc": "2026-09-09T11:34:14.000Z"
+        }
+      ],
+      "limitations": [
+        "Each observation covers one analysis-only BSC testnet commerce job and does not establish repeatability, uptime, or latency.",
+        "BSC mainnet was read only; no position, order, swap, deposit, withdrawal, migration, or other domain transaction was executed.",
+        "The outcomes are bounded analyses of one pinned input per category, not performance history, earnings, or promised returns.",
+        "U and tBNB are testnet assets; no real funds or mainnet payments were used."
+      ]
+    },
+    {
+      "jobId": "1191",
+      "sourcePath": "evidence/testnet/external-paid-job-1191.json",
+      "recordedAtUtc": "2026-09-09T15:37:08.838Z",
+      "agent": {
+        "agentId": "2159",
+        "name": "Relic BNB Grid Trader",
+        "category": null,
+        "capability": null,
+        "operatorRelationship": "external_distinct_owner"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0x39327A2AB36fd1C5bdE2B5B7e08C8E6AA5C50c50",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": null
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "10000000000000000",
+        "escrowDisplay": "0.01 U",
+        "providerReceivedBaseUnits": "0",
+        "providerReceivedDisplay": "0 U",
+        "buyerRefundedBaseUnits": "10000000000000000",
+        "buyerRefundedDisplay": "0.01 U"
+      },
+      "work": {
+        "deliverySubmitted": false,
+        "deliverableUrl": null,
+        "deliverableSha256": null,
+        "deliverableManifestHash": null,
+        "artifactStatus": null,
+        "artifactReasonCode": null,
+        "taskId": null,
+        "taskInputHash": null,
+        "snapshotId": null,
+        "quoteRequestHash": "0x1c2ed9fc30cee609426a15643502f9cfb209e03afd3f456489c0ef538c9b9fa9",
+        "negotiationHash": "0xffde930a41114cabd7b5773f538b34780c6d95323667c2edbd0457e35c4ff511"
+      },
+      "settlement": {
+        "terminalState": "EXPIRED",
+        "classification": "EXPIRED_WITHOUT_DELIVERY",
+        "disputed": false,
+        "settlementTransactionHash": null,
+        "refundTransactionHash": "0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0"
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x5192c5d956c90284ac3a702707099f92e115e0d2006df2949d736fa4182aac8f",
+          "receiptStatus": "success",
+          "blockNumber": "130027415",
+          "timestampUtc": "2026-09-09T13:00:59.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x9df52f374abf0974e2e4995d5f31ebfed9ea60cf449285b47f9f9573c8ed8664",
+          "receiptStatus": "success",
+          "blockNumber": "130027426",
+          "timestampUtc": "2026-09-09T13:01:04.000Z"
+        },
+        {
+          "step": "approve",
+          "label": "Token allowance approved",
+          "hash": "0xa484006a08b738d85c71edd1056e12b971c3d6ef791d673bd3526232ae01915b",
+          "receiptStatus": "success",
+          "blockNumber": "130027432",
+          "timestampUtc": "2026-09-09T13:01:07.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x05fe013e589da815606c7e752201ecfa801a2ef270205cd87d8e6ef1f1598fb1",
+          "receiptStatus": "success",
+          "blockNumber": "130027445",
+          "timestampUtc": "2026-09-09T13:01:13.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0x408be0beaf03e55d7d075baaddc4993e994f48f4418cbb6d746531538e2ef0c0",
+          "receiptStatus": "success",
+          "blockNumber": "130027464",
+          "timestampUtc": "2026-09-09T13:01:21.000Z"
+        },
+        {
+          "step": "refund",
+          "label": "Escrow refunded",
+          "hash": "0x90dc34325ea51d6673457102c23f129f5f7c2b3855598c8cb21a65bde1134fc0",
+          "receiptStatus": "success",
+          "blockNumber": "130047367",
+          "timestampUtc": "2026-09-09T15:30:38.000Z"
+        },
+        {
+          "step": "markExpired",
+          "label": "Marked expired",
+          "hash": "0x81da14040d920eaa7d3fc38d20ee7331dffceb6766e8684e1c68f34b0607e705",
+          "receiptStatus": "success",
+          "blockNumber": "130047414",
+          "timestampUtc": "2026-09-09T15:30:59.000Z"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet job and does not establish repeatability, uptime, performance, profit, or mainnet readiness.",
+        "No real funds or mainnet writes were used; the task was analysis-only and authorized no transaction execution.",
+        "A distinct ERC-8004 owner and non-KNOT service URL do not prove institutional independence.",
+        "The pre-funding ERC-1271 authorization was not historically rechecked because public RPC historical state was pruned when terminal evidence was captured.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "The service accepted the funded notification but produced no on-chain submission or deliverable before expiry.",
+        "The exact testnet escrow was recovered after expiry; the provider received no payment.",
+        "The failure does not establish that the candidate is hireable or reliable for future tasks."
+      ]
+    },
+    {
+      "jobId": "1198",
+      "sourcePath": "evidence/testnet/external-paid-job-1198.json",
+      "recordedAtUtc": "2026-09-09T17:05:45.835Z",
+      "agent": {
+        "agentId": "2173",
+        "name": "Grid Runner",
+        "category": null,
+        "capability": null,
+        "operatorRelationship": "external_distinct_owner"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xB1b6fCe10211Cd11F177BFD232175cd94Be90962",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": null
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "0",
+        "providerReceivedDisplay": "0 U",
+        "buyerRefundedBaseUnits": "100000000000000000",
+        "buyerRefundedDisplay": "0.1 U"
+      },
+      "work": {
+        "deliverySubmitted": false,
+        "deliverableUrl": null,
+        "deliverableSha256": null,
+        "deliverableManifestHash": null,
+        "artifactStatus": null,
+        "artifactReasonCode": null,
+        "taskId": null,
+        "taskInputHash": null,
+        "snapshotId": null,
+        "quoteRequestHash": "0x1c2ed9fc30cee609426a15643502f9cfb209e03afd3f456489c0ef538c9b9fa9",
+        "negotiationHash": "0x49864369d4768e42a2f9904cb25ea42801757cd652c09fb16eac677227195504"
+      },
+      "settlement": {
+        "terminalState": "EXPIRED",
+        "classification": "EXPIRED_WITHOUT_DELIVERY",
+        "disputed": false,
+        "settlementTransactionHash": null,
+        "refundTransactionHash": "0xe212da697a038c571e68bd75a6b88e4b944fe6c0ad437ae8e915e1bda0b89d35"
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0x3436452e7baa4150a3d3d48d83eae4cd00d50ae9debda5675028921a57d23aa2",
+          "receiptStatus": "success",
+          "blockNumber": "130051309",
+          "timestampUtc": "2026-09-09T16:00:12.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x2fa26131e31b66a2309ec487c2107be1b5e54612d6bfaff5ecf0c2658bd19350",
+          "receiptStatus": "success",
+          "blockNumber": "130051314",
+          "timestampUtc": "2026-09-09T16:00:14.000Z"
+        },
+        {
+          "step": "approve",
+          "label": "Token allowance approved",
+          "hash": "0x61378a968a55f06810000cbfb4dd350d00c7a634db4973a4957a7620359b4f93",
+          "receiptStatus": "success",
+          "blockNumber": "130051319",
+          "timestampUtc": "2026-09-09T16:00:16.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0xc079f3922636a713ff77b5551d97f7e1c806235feef222bb9a2fa02bb0ea7948",
+          "receiptStatus": "success",
+          "blockNumber": "130051324",
+          "timestampUtc": "2026-09-09T16:00:18.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0xacc7091dc3b940f96f57f6cc50c8b3cee1aabc4174709ffc86cb9ea9b2eff9b3",
+          "receiptStatus": "success",
+          "blockNumber": "130051329",
+          "timestampUtc": "2026-09-09T16:00:21.000Z"
+        },
+        {
+          "step": "refund",
+          "label": "Escrow refunded",
+          "hash": "0xe212da697a038c571e68bd75a6b88e4b944fe6c0ad437ae8e915e1bda0b89d35",
+          "receiptStatus": "success",
+          "blockNumber": "130059505",
+          "timestampUtc": "2026-09-09T17:01:40.000Z"
+        },
+        {
+          "step": "markExpired",
+          "label": "Marked expired",
+          "hash": "0x32915dd71b2591b470789c89aba74f6ace4e6fdbc297562eaa889ad32fc6a3c0",
+          "receiptStatus": "success",
+          "blockNumber": "130059524",
+          "timestampUtc": "2026-09-09T17:01:48.000Z"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet job and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+        "No real funds or mainnet writes were used; the task was analysis-only and authorized no transaction execution.",
+        "A distinct ERC-8004 registry owner and non-KNOT service URL do not prove operator, organizational, or institutional independence.",
+        "Historical ERC-1271 verification at the funding block is one point-in-time public RPC observation and may stop being reproducible when that provider prunes state.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "The registry name Grid Runner and card name gridbot-agent do not match.",
+        "The card's published invocation URL does not match the selected HTTPS endpoint and points to localhost.",
+        "The service accepted the funded notification but produced no on-chain submission or deliverable before expiry.",
+        "The exact testnet escrow was recovered after expiry; the provider received no payment.",
+        "The failure does not establish that the candidate is hireable or reliable for future tasks."
+      ]
+    },
+    {
+      "jobId": "1203",
+      "sourcePath": "evidence/testnet/external-paid-job-1203.json",
+      "recordedAtUtc": "2026-09-09T18:22:13.065Z",
+      "agent": {
+        "agentId": "1923",
+        "name": "weighrange-agent",
+        "category": null,
+        "capability": null,
+        "operatorRelationship": "external_distinct_owner"
+      },
+      "network": {
+        "name": "BSC testnet",
+        "chainId": 97,
+        "explorerTxBaseUrl": "https://testnet.bscscan.com/tx/"
+      },
+      "parties": {
+        "buyer": "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930",
+        "provider": "0xB01eeF1075e5a5218bE7d6BC2C7E67FBeb723553",
+        "evaluator": "0xD7d36D66d2F1B608A0F943f722D27e3744f66F25",
+        "buyerIsProvider": false
+      },
+      "contracts": {
+        "commerce": "0xa206c0517B6371C6638CD9e4a42Cc9f02A33B0DE",
+        "paymentToken": "0xc70B8741B8B07A6d61E54fd4B20f22Fa648E5565",
+        "policy": null
+      },
+      "money": {
+        "tokenSymbol": "U",
+        "tokenDecimals": 18,
+        "escrowBaseUnits": "100000000000000000",
+        "escrowDisplay": "0.1 U",
+        "providerReceivedBaseUnits": "0",
+        "providerReceivedDisplay": "0 U",
+        "buyerRefundedBaseUnits": "100000000000000000",
+        "buyerRefundedDisplay": "0.1 U"
+      },
+      "work": {
+        "deliverySubmitted": false,
+        "deliverableUrl": null,
+        "deliverableSha256": null,
+        "deliverableManifestHash": null,
+        "artifactStatus": null,
+        "artifactReasonCode": null,
+        "taskId": null,
+        "taskInputHash": null,
+        "snapshotId": null,
+        "quoteRequestHash": "0xfedc14af7e19368340f87803c0b03de3ab5950784f811276ee883d6adccafaba",
+        "negotiationHash": "0x88ef1c24cfef230774df9c7f6aef15daa59159b30c4569ac8d95cd7610b93a38"
+      },
+      "settlement": {
+        "terminalState": "EXPIRED",
+        "classification": "EXPIRED_WITHOUT_DELIVERY",
+        "disputed": false,
+        "settlementTransactionHash": null,
+        "refundTransactionHash": "0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004"
+      },
+      "transactions": [
+        {
+          "step": "create",
+          "label": "Job created",
+          "hash": "0xa74950d9c6e907f988726d0a1b0a714250b9d21ea6f5a891274bcbc135374f80",
+          "receiptStatus": "success",
+          "blockNumber": "130060893",
+          "timestampUtc": "2026-09-09T17:12:05.000Z"
+        },
+        {
+          "step": "register",
+          "label": "Policy registered",
+          "hash": "0x3e301a1b85bf6f5c253afa72b7e6eac520f4fd726163c397679b78dcbd8b886b",
+          "receiptStatus": "success",
+          "blockNumber": "130060897",
+          "timestampUtc": "2026-09-09T17:12:06.000Z"
+        },
+        {
+          "step": "approve",
+          "label": "Token allowance approved",
+          "hash": "0x2cdc33be6afd31c111610540699ca7f0f1f586638feffc692bfcc7a6c6717fb9",
+          "receiptStatus": "success",
+          "blockNumber": "130060902",
+          "timestampUtc": "2026-09-09T17:12:09.000Z"
+        },
+        {
+          "step": "setBudget",
+          "label": "Budget set",
+          "hash": "0x728a6a7b2b8d8070a41b43b27929b8ac53cc42b013d7d66588ec67b5c1703037",
+          "receiptStatus": "success",
+          "blockNumber": "130060908",
+          "timestampUtc": "2026-09-09T17:12:11.000Z"
+        },
+        {
+          "step": "fund",
+          "label": "Escrow funded",
+          "hash": "0xee8c816faceaea83f0eb9745e72230bde2190f439a4cac9ef8181162d54582bf",
+          "receiptStatus": "success",
+          "blockNumber": "130060913",
+          "timestampUtc": "2026-09-09T17:12:14.000Z"
+        },
+        {
+          "step": "refund",
+          "label": "Escrow refunded",
+          "hash": "0x7e1fe658d6e0000099acba32d832de752197a536545e9940b29ee7d8f75a6004",
+          "receiptStatus": "success",
+          "blockNumber": "130069834",
+          "timestampUtc": "2026-09-09T18:19:08.000Z"
+        },
+        {
+          "step": "markExpired",
+          "label": "Marked expired",
+          "hash": "0x2df0eca643504efd53e97b6d40a9c8868d4d1c8e0fa64e679d45b582da855f9f",
+          "receiptStatus": "success",
+          "blockNumber": "130069851",
+          "timestampUtc": "2026-09-09T18:19:16.000Z"
+        }
+      ],
+      "limitations": [
+        "This is one point-in-time BSC testnet job and does not establish repeatability, uptime, performance, profit, mainnet readiness, or future reliability.",
+        "No real funds or mainnet writes were used; the task was read-only analysis and authorized no transaction execution.",
+        "A distinct ERC-8004 registry owner and non-KNOT service URL do not prove operator, organizational, or institutional independence.",
+        "Registry ownership was observed before funding and again at terminal capture, but could have changed between those observations.",
+        "The EIP-191 signer was recovered from the signed negotiation hash, but this proves only control of the quoted EOA key at signing time.",
+        "The service accepted the funded notification but produced no on-chain submission or deliverable before expiry.",
+        "The exact testnet escrow was recovered after expiry; the provider received no payment.",
+        "This failure does not establish that the candidate is hireable for future tasks.",
+        "One failed observation does not establish the seller's future reliability."
+      ]
+    }
+  ]
+}
