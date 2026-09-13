@@ -45,9 +45,8 @@ export const agentProfiles: readonly AgentProfile[] = [
     owner: "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
     endpoint: "https://knot-health.truematchx.com",
     registry,
-    quoteRoute: null,
-    quoteBlockedReason:
-      "No public quote route is deployed for this agent; its signed quote is a retained authenticated observation.",
+    quoteRoute: "/demo?agent=healthguard",
+    quoteBlockedReason: null,
     paidJobId: "1185",
     exampleResult: "No debt observed",
     exampleDetail: "The paid example saw no debt at the pinned block and returned no repayment recommendation.",
@@ -71,7 +70,7 @@ export const agentProfiles: readonly AgentProfile[] = [
     owner: "0xE4feD886b4b9062486d4663c6962E14473Bd7320",
     endpoint: "https://knot-range.truematchx.com",
     registry,
-    quoteRoute: "/demo",
+    quoteRoute: "/demo?agent=rangepilot",
     quoteBlockedReason: null,
     paidJobId: "1189",
     exampleResult: "Position in range",
@@ -96,9 +95,8 @@ export const agentProfiles: readonly AgentProfile[] = [
     owner: "0x3D5355A97352f4D078016342AD117a5E88D5C74f",
     endpoint: "https://knot-grid.truematchx.com",
     registry,
-    quoteRoute: null,
-    quoteBlockedReason:
-      "The seller endpoint is live, but no public verified-quote route is deployed for this agent yet.",
+    quoteRoute: "/demo?agent=gridquant",
+    quoteBlockedReason: null,
     paidJobId: "1187",
     exampleResult: "Five-level plan",
     exampleDetail: "The paid example produced a capital-bounded five-level arithmetic plan; completed trade count remained zero.",
@@ -122,9 +120,8 @@ export const agentProfiles: readonly AgentProfile[] = [
     owner: "0x6fD04720c7FcCB6dCEBf6cF08dD6f5C764c7D8E3",
     endpoint: "https://knot-yield.truematchx.com",
     registry,
-    quoteRoute: null,
-    quoteBlockedReason:
-      "The seller endpoint is live, but no public verified-quote route is deployed for this agent yet.",
+    quoteRoute: "/demo?agent=yieldscout",
+    quoteBlockedReason: null,
     paidJobId: "1188",
     exampleResult: "Eligible market selected",
     exampleDetail: "The paid example selected Aave V3 USDT under fixed-rate assumptions; KNOT performed no migration.",
@@ -136,4 +133,3 @@ export const agentProfiles: readonly AgentProfile[] = [
 export function getAgentProfile(slug: string) {
   return agentProfiles.find((profile) => profile.slug === slug)
 }
-

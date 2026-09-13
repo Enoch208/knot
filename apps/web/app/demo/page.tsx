@@ -7,7 +7,6 @@ export const metadata: Metadata = {
     "Run a safe KNOT example and inspect a fresh, task-bound BSC testnet quote before funding.",
 }
 
-export default function DemoPage() {
-  return <DemoExperience />
+export default async function DemoPage({ searchParams }: { searchParams: Promise<{ agent?: string }> }) {
+  return <DemoExperience initialAgent={(await searchParams).agent} />
 }
-

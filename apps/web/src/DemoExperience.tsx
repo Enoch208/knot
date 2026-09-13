@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import { agentProfiles, type AgentSlug } from "./agent-catalog"
 import { HirePanel } from "./HirePanel"
+import { SavedHires } from "./SavedHires"
 
 type DemoState = "idle" | "running" | "complete" | "failed"
 
@@ -20,8 +22,7 @@ type QuoteResult = {
     serviceRequestId: string
     category: string
     capability: string
-    targetRangeWidthTicks: number
-    maximumSlippageBps: number
+    bindings: Array<{ label: string; value: string }>
     snapshotBlock: string
     snapshotObservedAt: string
     inputHash: string
@@ -104,12 +105,24 @@ function formatTokenAmount(units: string, decimals: number) {
   return fraction ? `${whole}.${fraction}` : whole
 }
 
-export default function DemoExperience() {
+const isAgentSlug = (value: string | undefined): value is AgentSlug =>
+  agentProfiles.some((profile) => profile.slug === value)
+
+export default function DemoExperience({ initialAgent }: { initialAgent?: string }) {
   const [state, setState] = useState<DemoState>("idle")
+  const [agentSlug, setAgentSlug] = useState<AgentSlug>(isAgentSlug(initialAgent) ? initialAgent : "rangepilot")
   const [width, setWidth] = useState(1200)
   const [slippage, setSlippage] = useState(50)
   const [result, setResult] = useState<QuoteResult | null>(null)
   const [error, setError] = useState("")
+  const selectedAgent = agentProfiles.find((profile) => profile.slug === agentSlug)!
+
+  const chooseAgent = (slug: AgentSlug) => {
+    setAgentSlug(slug)
+    setState("idle")
+    setResult(null)
+    setError("")
+  }
 
   const runDemo = async () => {
     setState("running")
@@ -120,6 +133,7 @@ export default function DemoExperience() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
+          agentSlug,
           targetRangeWidthTicks: width,
           maximumSlippageBps: slippage,
         }),
@@ -156,12 +170,13 @@ export default function DemoExperience() {
       </header>
 
       <main id="demo-workspace" className="demo-workspace">
+        <SavedHires currentQuoteId={result?.verifiedQuoteId} />
         <section className="demo-intro">
-          <p className="eyebrow eyebrow-dark">Safe example · No wallet required</p>
+          <p className="eyebrow eyebrow-dark">Quote requires no wallet · Activation is optional</p>
           <h1>Review the task.<br />Verify the <em>quote.</em></h1>
           <p>
-            Adjust two bounded inputs, then ask RangePilot for a newly verified quote. KNOT
-            checks the agent’s testnet identity and signature before showing it to you.
+            Choose one of four financial specialists, then request a newly verified quote. KNOT
+            checks the exact task, testnet identity, price, expiry, and signature before showing it to you.
           </p>
         </section>
 
@@ -171,29 +186,38 @@ export default function DemoExperience() {
               <span>01</span>
               <div>
                 <p>Configure the example</p>
-                <h2 id="demo-config-title">LP range analysis</h2>
+                <h2 id="demo-config-title">{selectedAgent.category}</h2>
               </div>
             </div>
 
             <article className="selected-agent">
-              <img src="/images/agent-rangepilot.webp" alt="" />
+              <img src={selectedAgent.art} alt="" />
               <div>
                 <p>Selected specialist</p>
-                <h3>RangePilot</h3>
-                <span>ERC-8004 agent 2297 · KNOT-operated</span>
+                <h3>{selectedAgent.name}</h3>
+                <span>ERC-8004 agent {selectedAgent.agentId} · KNOT-operated</span>
               </div>
-              <strong><span /> Live</strong>
+              <strong><span /> Public</strong>
             </article>
 
             <div className="example-notice">
               <span>Read-only example</span>
               <p>
-                A retained PancakeSwap V3 position snapshot on BSC mainnet is used so this run is
-                reproducible. The quote itself uses BSC testnet identity and payment terms.
+                A retained, category-specific BSC mainnet snapshot is used so this run is reproducible.
+                It is not presented as current market data. The quote itself is newly negotiated and
+                uses BSC testnet identity and payment terms.
               </p>
             </div>
 
             <div className="demo-fields">
+              <label>
+                <span>Specialist</span>
+                <small>Choose the capability for this task</small>
+                <select value={agentSlug} onChange={(event) => chooseAgent(event.target.value as AgentSlug)} disabled={state === "running"}>
+                  {agentProfiles.map((profile) => <option value={profile.slug} key={profile.slug}>{profile.name} · {profile.category}</option>)}
+                </select>
+              </label>
+              {agentSlug === "rangepilot" ? <>
               <label>
                 <span>Target range width</span>
                 <small>How wide the analysis window should be</small>
@@ -212,10 +236,22 @@ export default function DemoExperience() {
                   <option value="75">Flexible · 0.75%</option>
                 </select>
               </label>
+              </> : <>
+                <label>
+                  <span>Task mode</span>
+                  <small>Public demo safety boundary</small>
+                  <span className="demo-readonly-field">Analysis only</span>
+                </label>
+                <label>
+                  <span>Input source</span>
+                  <small>Truthful, reproducible observation</small>
+                  <span className="demo-readonly-field">Retained snapshot</span>
+                </label>
+              </>}
             </div>
 
             <button className="button button-primary demo-run" type="button" onClick={runDemo} disabled={state === "running"}>
-              {state === "running" ? "Verifying live quote…" : state === "complete" ? "Run another quote" : "Request verified quote"}
+              {state === "running" ? `Verifying ${selectedAgent.name}…` : state === "complete" ? "Run another quote" : "Request verified quote"}
               {state === "running" ? <span className="button-spinner" /> : <Arrow />}
             </button>
             <p className="demo-consent"><Check /> This action creates no job, accesses no wallet, and moves no funds.</p>
@@ -288,7 +324,7 @@ export default function DemoExperience() {
                   </div>
                   <div>
                     <span>Task binding</span>
-                    <strong>{result.task.targetRangeWidthTicks.toLocaleString()} ticks · {(result.task.maximumSlippageBps / 100).toFixed(2)}%</strong>
+                    <strong>{result.task.bindings.map((binding) => binding.value).join(" · ")}</strong>
                     <code title={result.task.inputHash}>{compact(result.task.inputHash)}</code>
                   </div>
                   <div>
@@ -317,7 +353,13 @@ export default function DemoExperience() {
                   </a>
                 </div>
 
-                {result.quote.expired ? null : <HirePanel verifiedQuoteId={result.verifiedQuoteId} />}
+                {result.quote.expired ? (
+                  <section className="hire" aria-label="Expired quote">
+                    <h2 className="hire__title">This quote has expired</h2>
+                    <p className="hire__lede">Request a fresh signed quote before preparing a hire. No wallet was accessed and no funds moved.</p>
+                    <button className="hire__approve" type="button" onClick={() => { void runDemo() }}>Request fresh quote</button>
+                  </section>
+                ) : <HirePanel verifiedQuoteId={result.verifiedQuoteId} />}
               </div>
             )}
           </section>
@@ -330,15 +372,16 @@ export default function DemoExperience() {
             <h2>Verification before authorization.</h2>
           </div>
           <p>
-            This is a genuine seller negotiation and confirmed BSC testnet identity observation.
-            It is not a payment, delivery, investment recommendation, or promise of performance.
+            The quote above is a genuine seller negotiation and confirmed BSC testnet identity
+            observation. It is not a payment or delivery. Optional activation is restricted to the
+            configured buyer wallet and uses test tokens on BSC testnet.
           </p>
         </section>
       </main>
 
       <footer className="demo-page-footer">
         <p>KNOT · Pre-production testnet pilot</p>
-        <p>BSC mainnet data: read-only · BSC testnet: identity and quote terms</p>
+        <p>BSC mainnet data: read-only · BSC testnet: identity, quotes and optional funding</p>
       </footer>
     </div>
   )

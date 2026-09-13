@@ -12,7 +12,7 @@ done
 npm run check
 ```
 
-Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 698 root tests, 20 category-parity tests, and 73 seller tests: 791 total. It covers API boundaries, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
+Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 747 root tests, 20 category-parity tests, and 73 seller tests: 840 total. It covers API boundaries, four-category public quote routing, live marketplace observation failure states, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
 
 The default run does not prove live data access, a funded purchase, delivery on chain, settlement, or performance. Environment-gated checks remain separate so a passing fixture suite cannot be mistaken for live evidence.
 
@@ -165,6 +165,8 @@ node --test tests/ops/backend-deployment-config.test.ts
 
 ## Test logical backup and restore safety
 
+The archive regression tests additionally exercise a release with no `.git` directory and a validated `.release-commit` marker. Tagged running containers are accepted only when their local immutable repository digest resolves to the exact running image ID. Missing provenance, malformed markers, symlinks, and digest/image disagreement fail closed. No tag is recorded as an immutable backup reference.
+
 ```sh
 npm run test:backend-snapshot
 npm run test:backend-active-recovery
@@ -172,7 +174,7 @@ npm run test:backend-active-recovery
 
 The snapshot suite uses command stubs and temporary directories; it does not contact or modify a deployed environment. It verifies private file modes, fail-if-present staging, a deployment-wide nonblocking maintenance lock, completion and release manifests, database counts, separate inventories for both object buckets, API, worker, and four seller-writer quiescing, refusal when either the current or restored database contains active jobs or chain actions, shadow validation and cleanup, cutover readback, writer health checks, and automatic two-bucket rollback after an injected cutover failure. The active-recovery drill uses disposable PostgreSQL, proves backup refuses a queued `PREPARED` action before `pg_dump`, leaves the action byte-for-byte intact, clears the maintenance lock, and restarts every writer through command stubs.
 
-The operator scripts capture only a quiesced logical PostgreSQL dump plus current `knot-artifacts` and purchased `knot-deliverables` object bytes. They exclude PostgreSQL physical files and WAL, prior object versions and bucket metadata, in-flight requests, host configuration, secrets, and external chain state. A backup requires digest-pinned references and immutable image IDs for the shared API/worker release and each of the four seller containers. A restore additionally requires exact git, lockfile, migration, Compose, network-manifest, and all five deployed-image bindings. It refuses rather than reconciling active work. The completion marker is a co-located integrity checksum, not an authenticity signature. No production restore, deployed active-action recovery, RPO, RTO, or repeated recovery measurement is claimed by this fixture test.
+The operator scripts capture only a quiesced logical PostgreSQL dump plus current `knot-artifacts` and purchased `knot-deliverables` object bytes. They exclude PostgreSQL physical files and WAL, prior object versions and bucket metadata, in-flight requests, host configuration, secrets, and external chain state. A backup records verified digest references and immutable image IDs for the shared API/worker release and each of the four seller containers. A restore additionally requires exact release commit (Git HEAD or the archive's `.release-commit`), lockfile, migration, Compose, network-manifest, and all five deployed-image bindings. It refuses rather than reconciling active work. The completion marker is a co-located integrity checksum, not an authenticity signature. No production restore, deployed active-action recovery, RPO, RTO, or repeated recovery measurement is claimed by this fixture test.
 
 An uncertain rollback, rollback readback, writer restart, or writer health result leaves the deployment-wide lock in a persistent `FAILED` state. Subsequent backup and restore attempts refuse it. After manually establishing the deployment state, an operator must supply the exact failure identifier and original absolute operation target recorded by the interlock:
 
@@ -181,6 +183,28 @@ npm run maintenance:acknowledge -- <ABSOLUTE_LOCK_DIRECTORY> <FAILURE_ID> <ABSOL
 ```
 
 The acknowledgement clears only that exact target-bound failure record; it does not repair, roll back, restart, or validate the deployment.
+
+## Test hire and session recovery boundaries
+
+The live seller manifest expects `KNOT HealthGuard`. Historical availability and tunnel captures retain the former name only for the exact previously recorded card digest; their recorded bytes and timings are not rewritten by the rename. Run `npm run sellers:verify:public` after deployment to check current names, domain registrations and unauthenticated refusals.
+
+Run the focused deterministic regressions without a wallet, network request or deployment:
+
+```sh
+node --test tests/api/hire-preparation.test.ts tests/web/hire-recovery.test.ts tests/web/hire-receipt.test.ts tests/authority/session-journal.test.ts tests/ops/archived-release.test.ts
+npm run check
+```
+
+The browser first prepares only `createJob`, then derives the contract-assigned ID from its confirmed receipt before preparing the four funding calls. Each call requires separate wallet approval, exact buyer/network checks and a persisted intent. Reload the same origin in the same browser profile and open the saved hire to check its receipt; an unknown submission requires its transaction hash, not another create. Recovery validates the hash against saved calldata and a two-confirmation BSC testnet receipt. A different device or cleared browser storage is not covered by this local journal. Completion means funding only, not delivery or settlement.
+
+The operator session journal is saved before a grant broadcast, retains submitted hashes before waiting, and refuses replacement of an unresolved or active session. After a timeout, use the read-only reconciliation command:
+
+```sh
+node scripts/run-session-hire.ts reconcile
+node scripts/run-session-hire.ts reconcile --transaction-hash <RECOVERED_TRANSACTION_HASH>
+```
+
+Supply a hash only when the saved journal has none; it must match the owner, chain, value and exact saved grant or revoke calldata. These commands do not broadcast. A crash can leave a `.secrets/session-hire-state.json.lock` file; first establish that no process still owns the operation and inspect the journal before manually removing that exact stale lock. Never delete the session journal to bypass uncertainty. New grants select a spending period containing the entire one-hour validity interval, including midnight and larger calendar boundaries; legacy grants retain their original encoding for reconciliation. No new live grant, revoke, hire, production backup or deployment is established by these fixtures.
 
 ## Evidence interpretation
 

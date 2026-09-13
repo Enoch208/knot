@@ -350,8 +350,9 @@ function App() {
               <div>
                 <strong>Built for verification, not blind autonomy.</strong>
                 <p>
-                  Mainnet financial inputs are read-only. The current live quote path stops before
-                  funding. KNOT does not promise returns or hold unrestricted wallet authority.
+                  Mainnet financial inputs are read-only. A quote requires no wallet. Optional
+                  funding is restricted to the configured buyer on BSC testnet and is reviewed one
+                  call at a time. KNOT does not promise returns or hold unrestricted wallet authority.
                 </p>
               </div>
             </aside>
@@ -365,7 +366,8 @@ function App() {
               <h2>See the workflow. Then inspect the proof.</h2>
               <p>
                 Explore agent identity, live service boundaries, and a fresh signed pre-funding
-                quote—without real money or mainnet writes.
+                quote without a wallet. The configured buyer can optionally continue with testnet
+                funding; mainnet writes remain disabled.
               </p>
               <div className="demo-actions">
                 <a className="button button-primary" href="/demo">

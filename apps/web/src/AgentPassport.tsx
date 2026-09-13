@@ -21,11 +21,12 @@ const hireBlockedReason =
   "Hiring starts from a verified quote, and no public quote route is deployed for this agent yet."
 
 const hireAvailableNote =
-  "Review the provider, budget, policy and expiry, then fund the escrow from your own wallet on BSC testnet."
+  "Review the provider, budget, policy and expiry. Activation is restricted to KNOT's configured buyer wallet on BSC testnet."
 
 const explorer = "https://testnet.bscscan.com/tx/"
 const artifacts = "https://knot-artifacts.truematchx.com/knot-deliverables/"
 const bnbagentArtifacts = "https://bnbagent-api.bnbchain.world/v1/deliverables/sha256/"
+const internalJobRecords = new Set(["1180", "1181", "1187", "1188", "1189", "1191", "1198", "1203"])
 
 const agentJobRecords: Record<AgentSlug, readonly AgentJobRecord[]> = {
   healthguard: [
@@ -169,6 +170,7 @@ export function AgentJobHistory({ profile }: { profile: AgentProfile }) {
                 </td>
                 <td className="history-amount">0.1 U</td>
                 <td className="history-links">
+                  {internalJobRecords.has(job.jobId) ? <a href={`/jobs/${job.jobId}`}>KNOT receipt →</a> : null}
                   <a href={`${explorer}${job.transactionHash}`} target="_blank" rel="noreferrer">Transaction ↗</a>
                   <a href={job.artifactUrl} target="_blank" rel="noreferrer">Artifact ↗</a>
                 </td>

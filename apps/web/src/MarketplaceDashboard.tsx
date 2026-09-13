@@ -1,10 +1,11 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { agentProfiles } from "./agent-catalog"
 import type { ClaimLedger } from "./claim-ledger"
 import type { DiscoveryCoverage } from "./discovery-coverage"
 import { jobRecords } from "./job-records"
+import type { AgentEndpointObservation } from "./live-agent-observations"
 
 type Category = "All agents" | "Lending" | "Liquidity" | "Trading" | "Yield"
 
@@ -40,13 +41,41 @@ const Arrow = () => (
   <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8" /></svg>
 )
 
-export default function MarketplaceDashboard({ ledger, coverage }: { ledger: ClaimLedger; coverage: DiscoveryCoverage }) {
+export default function MarketplaceDashboard({
+  ledger,
+  coverage,
+  endpointObservations,
+}: {
+  ledger: ClaimLedger
+  coverage: DiscoveryCoverage
+  endpointObservations: AgentEndpointObservation[]
+}) {
   const [category, setCategory] = useState<Category>("All agents")
   const [query, setQuery] = useState("")
+  const searchInput = useRef<HTMLInputElement>(null)
 
   const testnetRegistered = (
     coverage.registries.find((registry) => registry.chainId === 97)?.registeredTotal ?? 0
   ).toLocaleString("en-US")
+  const endpointBySlug = new Map(endpointObservations.map((observation) => [observation.slug, observation]))
+  const endpointsAvailable = endpointObservations.filter((observation) => observation.state === "AVAILABLE").length
+  const latestEndpointCheck = endpointObservations.at(-1)?.checkedAtUtc
+  const endpointCheckTime = latestEndpointCheck
+    ? new Intl.DateTimeFormat("en", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "UTC", hour12: false,
+    }).format(new Date(latestEndpointCheck))
+    : "unavailable"
+
+  useEffect(() => {
+    const focusSearch = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        searchInput.current?.focus()
+      }
+    }
+    window.addEventListener("keydown", focusSearch)
+    return () => window.removeEventListener("keydown", focusSearch)
+  }, [])
 
   const ledgerRows = useMemo(() => {
     const rank = { PARTIAL: 0, UNMEASURED: 1, NOT_CLAIMED: 2, SUPPORTED: 3 }
@@ -90,12 +119,12 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
           <div className="market-search">
             <Icon name="search" />
             <label htmlFor="agent-search" className="sr-only">Search agents</label>
-            <input id="agent-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search agents or capabilities" />
+            <input ref={searchInput} id="agent-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search agents or capabilities" />
             <kbd>⌘ K</kbd>
           </div>
           <div className="market-top-actions">
             <span className="market-readonly">Mainnet · read only</span>
-            <a className="market-wallet" href="/demo"><span className="market-wallet-dot" /> Run live quote <Arrow /></a>
+            <a className="market-wallet" href="/demo"><span className="market-wallet-dot" /> Run a verified quote <Arrow /></a>
           </div>
         </header>
 
@@ -107,9 +136,9 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
               <span>Four KNOT-operated agents. Mainnet financial data stays read-only; commerce stays on testnet.</span>
             </div>
             <div className="market-proof-seal">
-              <span>Live system</span>
-              <strong>4 / 4</strong>
-              <small>agent endpoints available</small>
+              <span>Live endpoint check</span>
+              <strong>{endpointsAvailable} / {agentProfiles.length}</strong>
+              <small>fully available · {endpointCheckTime} UTC</small>
             </div>
           </section>
 
@@ -175,9 +204,9 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
 
           <section className="market-feature">
             <div className="market-feature-copy">
-              <span className="market-kicker">Featured workflow · RangePilot</span>
+              <span className="market-kicker">Featured workflow · four specialists</span>
               <h2>From task constraints<br />to a signed quote.</h2>
-              <p>Adjust two bounded inputs and verify agent identity, request binding, price, terms, and expiry—without connecting a wallet.</p>
+              <p>Choose a specialist and verify agent identity, request binding, price, terms, and expiry—without connecting a wallet.</p>
               <div><a className="market-primary" href="/demo">Run verified quote <Arrow /></a><a href="/agents/rangepilot">View passport</a></div>
             </div>
             <div className="market-chart" aria-label="Illustrative range analysis grid">
@@ -195,7 +224,7 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
 
           <section className="agent-directory">
             <div className="directory-head">
-              <div><span>Live directory</span><h2>Verified agents</h2></div>
+              <div><span>Verified directory snapshot</span><h2>KNOT-operated agents</h2></div>
               <div className="category-tabs" role="tablist" aria-label="Agent category">
                 {categories.map((item) => <button className={category === item ? "is-active" : ""} key={item} onClick={() => setCategory(item)} type="button">{item}</button>)}
               </div>
@@ -203,16 +232,25 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
 
             <div className="agent-table">
               <div className="agent-table-head"><span>Agent</span><span>Category</span><span>Identity</span><span>Price</span><span>Status</span><span /></div>
-              {visibleAgents.map((agent) => (
-                <article className="agent-table-row" key={agent.slug}>
+              {visibleAgents.map((agent) => {
+                const observation = endpointBySlug.get(agent.slug)
+                const state = observation?.state ?? "UNAVAILABLE"
+                const stateLabel = state === "AVAILABLE" ? "Available" : state === "DEGRADED" ? "Partial" : "Unavailable"
+                return <article className="agent-table-row" key={agent.slug}>
                   <div className="table-agent"><img src={agent.art} alt="" /><div><strong>{agent.name}</strong><small>{agent.boundary}</small></div></div>
                   <span>{agent.category}</span>
                   <span className="table-mono">ERC-8004 #{agent.agentId}</span>
-                  <strong className="table-price">0.1 <small>U</small></strong>
-                  <span className="table-live"><i /> Live</span>
+                  <strong className="table-price">0.1 <small>U · retained quote</small></strong>
+                  <span
+                    className={`table-live is-${state.toLowerCase()}`}
+                    title={`Card: ${observation?.cardAvailable ? "available" : "unavailable"}; domain proof: ${observation?.proofAvailable ? "available" : "unavailable"}`}
+                  >
+                    <i />
+                    <span><strong>{stateLabel}</strong><small>{observation?.latencyMs === null || observation?.latencyMs === undefined ? "check failed" : `${observation.latencyMs} ms · endpoint + proof`}</small></span>
+                  </span>
                   <a href={`/agents/${agent.slug}`} aria-label={`Open ${agent.name} passport`}><Arrow /></a>
                 </article>
-              ))}
+              })}
               {visibleAgents.length === 0 && <div className="agent-empty">No agents match this filter.</div>}
             </div>
           </section>
@@ -224,8 +262,8 @@ export default function MarketplaceDashboard({ ledger, coverage }: { ledger: Cla
             </div>
             <aside className="market-boundary-card">
               <span>Execution boundary</span>
-              <strong>Your wallet stays out of the demo.</strong>
-              <p>The public workflow stops after quote verification. It never funds a job or writes to mainnet.</p>
+              <strong>Verify without a wallet. Activate only when ready.</strong>
+              <p>The quote step moves no funds. Optional activation is restricted to the configured buyer wallet, uses test tokens, and never writes to mainnet.</p>
               <a href="/evidence">Inspect every claim <Arrow /></a>
             </aside>
           </section>

@@ -1,4 +1,8 @@
 import type { NextConfig } from "next"
+import { dirname, resolve } from "node:path"
+import { fileURLToPath } from "node:url"
+
+const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..")
 
 const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -10,7 +14,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
-  turbopack: { root: process.cwd() },
+  turbopack: { root: repositoryRoot },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }]
   },

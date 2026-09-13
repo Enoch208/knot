@@ -1,20 +1,16 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server.js"
 import { keccak256 } from "viem"
-import {
-  rangePilotRequestTemplate,
-  rangePilotTaskTemplate,
-} from "../../../../src/demo/rangepilot-example"
+import { buildDemoQuoteExample, type DemoAgentSlug } from "../../../../src/demo/quote-examples.ts"
 
 export const dynamic = "force-dynamic"
 export const runtime = "nodejs"
 
 const API_ORIGIN = "https://knot-api.truematchx.com"
-const SELLER_ORIGIN = "https://knot-range.truematchx.com"
 const MUTATION_ORIGIN = "https://knotmarkets.xyz"
-const WINDOW_MILLISECONDS = 5 * 60_000
 const responseHeaders = { "Cache-Control": "no-store, max-age=0" }
 const allowedWidths = new Set([600, 1200, 2400])
 const allowedSlippage = new Set([25, 50, 75])
+const allowedAgents = new Set<DemoAgentSlug>(["healthguard", "rangepilot", "gridquant", "yieldscout"])
 
 type UpstreamResponse = { status: number; body: unknown }
 
@@ -36,46 +32,18 @@ export async function POST(request: Request) {
     return failure(400, "INVALID_REQUEST", "Choose one of the supported example settings.", false)
   }
 
-  const windowNumber = Math.floor(Date.now() / WINDOW_MILLISECONDS)
-  const windowStart = windowNumber * WINDOW_MILLISECONDS
-  const variant = `${options.targetRangeWidthTicks}-${options.maximumSlippageBps}`
-  const taskId = `web-range-${windowNumber.toString(36)}-${variant}`
-  const serviceRequestId = `web-range-quote-${windowNumber.toString(36)}-${variant}`
-  const deadlineUtc = new Date(windowStart + 30 * 60_000).toISOString()
-  const sellerRequest = {
-    ...rangePilotRequestTemplate,
-    task: {
-      ...rangePilotRequestTemplate.task,
-      taskId,
-      constraints: {
-        ...rangePilotRequestTemplate.task.constraints,
-        targetRangeWidthTicks: options.targetRangeWidthTicks,
-        maximumSlippageBps: options.maximumSlippageBps,
-      },
-    },
-  }
-  const requestBytes = Buffer.from(JSON.stringify(sellerRequest), "utf8")
+  const example = buildDemoQuoteExample(options)
+  const { taskId, serviceRequestId, requestBytes, task } = example
   const inputHash = keccak256(requestBytes)
-  const task = {
-    ...rangePilotTaskTemplate,
-    taskId,
-    deadlineUtc,
-    inputHash,
-    constraints: {
-      ...rangePilotTaskTemplate.constraints,
-      targetRangeWidthTicks: options.targetRangeWidthTicks,
-      maximumSlippageBps: options.maximumSlippageBps,
-    },
-  }
   const envelope = {
     schemaVersion: "knot.service-request/1",
     task,
     request: {
       mediaType: "application/json",
-      schemaVersion: "knot.rangepilot.request/1",
+      schemaVersion: example.requestSchemaVersion,
       bytesBase64url: requestBytes.toString("base64url"),
     },
-    transport: "deflate-base64url",
+    transport: example.transport,
   }
 
   try {
@@ -83,7 +51,7 @@ export async function POST(request: Request) {
     const serviceRequestResult = await postUpstream(
       `/api/tasks/${taskId}/service-requests`,
       serviceRequestId,
-      { id: serviceRequestId, endpoint: SELLER_ORIGIN, envelope },
+      { id: serviceRequestId, endpoint: example.sellerOrigin, envelope },
       authToken,
     )
     const quoteResult = await postUpstream(
@@ -115,20 +83,19 @@ export async function POST(request: Request) {
         mode: "QUOTE_ONLY",
         verifiedQuoteId: quote.id,
         agent: {
-          name: "RangePilot",
+          name: example.agentName,
           relation: "KNOT-operated",
-          endpoint: SELLER_ORIGIN,
+          endpoint: example.sellerOrigin,
           agentId: quote.providerAgentId,
         },
         task: {
           id: taskId,
           serviceRequestId,
-          category: "LP range analysis",
+          category: example.categoryLabel,
           capability: "Analysis only",
-          targetRangeWidthTicks: options.targetRangeWidthTicks,
-          maximumSlippageBps: options.maximumSlippageBps,
-          snapshotBlock: sellerRequest.snapshot.blockNumber,
-          snapshotObservedAt: sellerRequest.snapshot.capturedAtUtc,
+          bindings: example.bindings,
+          snapshotBlock: example.snapshotBlock,
+          snapshotObservedAt: example.snapshotObservedAt,
           inputHash,
         },
         identity: {
@@ -178,12 +145,20 @@ export async function POST(request: Request) {
   }
 }
 
-function readOptions(value: unknown): { targetRangeWidthTicks: 600 | 1200 | 2400; maximumSlippageBps: 25 | 50 | 75 } | null {
+function readOptions(value: unknown): {
+  agentSlug: DemoAgentSlug
+  targetRangeWidthTicks?: 600 | 1200 | 2400
+  maximumSlippageBps?: 25 | 50 | 75
+} | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null
   const record = value as Record<string, unknown>
-  if (Object.keys(record).some((key) => key !== "targetRangeWidthTicks" && key !== "maximumSlippageBps")) return null
+  if (Object.keys(record).some((key) => !["agentSlug", "targetRangeWidthTicks", "maximumSlippageBps"].includes(key))) return null
+  const agentSlug = record.agentSlug
+  if (typeof agentSlug !== "string" || !allowedAgents.has(agentSlug as DemoAgentSlug)) return null
+  if (agentSlug !== "rangepilot") return { agentSlug: agentSlug as DemoAgentSlug }
   if (!allowedWidths.has(Number(record.targetRangeWidthTicks)) || !allowedSlippage.has(Number(record.maximumSlippageBps))) return null
   return {
+    agentSlug,
     targetRangeWidthTicks: Number(record.targetRangeWidthTicks) as 600 | 1200 | 2400,
     maximumSlippageBps: Number(record.maximumSlippageBps) as 25 | 50 | 75,
   }
@@ -218,13 +193,22 @@ async function postUpstream(path: string, idempotencyKey: string, body: unknown,
 }
 
 class UpstreamError extends Error {
+  readonly status: number
+  readonly code: string
+  readonly explanation: string
+  readonly retryable: boolean
+
   constructor(
-    readonly status: number,
-    readonly code: string,
-    readonly explanation: string,
-    readonly retryable: boolean,
+    status: number,
+    code: string,
+    explanation: string,
+    retryable: boolean,
   ) {
     super(explanation)
+    this.status = status
+    this.code = code
+    this.explanation = explanation
+    this.retryable = retryable
   }
 }
 

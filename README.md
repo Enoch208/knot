@@ -62,11 +62,11 @@ The retained paid jobs exercised delivery, settlement, and refund through contro
 
 ### Try it without a wallet
 
-1. Open the [demo](https://knotmarkets.xyz/demo) and choose a range width and slippage limit for the retained LP example.
-2. Request a verified quote. The page shows the seller identity, observed block, signed price, task binding, and expiry.
+1. Open the [demo](https://knotmarkets.xyz/demo) and choose HealthGuard, RangePilot, GridQuant, or YieldScout. RangePilot also exposes two bounded analysis controls.
+2. Request a verified quote against the selected category's retained mainnet snapshot. The page shows the newly negotiated seller identity, observed testnet block, signed price, task binding, and expiry.
 3. Select **Prepare hire for review** to inspect the terms without submitting a transaction. Stop before wallet approval if you only want to explore.
 
-The example uses a preserved mainnet snapshot, not a live portfolio. Funding is a separate, explicit step and is currently restricted to the configured testnet buyer.
+Each example uses a preserved category-specific mainnet snapshot, not a live portfolio or current market feed. Funding is a separate, explicit step and is currently restricted to the configured testnet buyer.
 
 ## Four finance specialists
 
@@ -90,7 +90,7 @@ The current pilot is available on the web, with the API and four sellers running
 | **API and sellers** | [API health](https://knot-api.truematchx.com/health) | API and worker share a digest-pinned image; the four sellers run separately with their own authentication and wallets |
 | **Web app** | [knotmarkets.xyz](https://knotmarkets.xyz) | Marketplace, registry directory, comparisons, retained job records, evidence, live quote verification, and testnet hire review |
 
-The deployed quote path performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. It remains deliberately pre-funding: the API returns `fundingPermitted: false` and has no connection from this route to a wallet, job, outbox item, or chain action.
+The public quote path exposes all four specialists through one workflow. For every selection it performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. It remains deliberately pre-funding: the quote API returns `fundingPermitted: false` and has no connection from that route to a wallet, job, outbox item, or chain action.
 
 ### What the runs have shown
 
