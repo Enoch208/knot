@@ -1,4 +1,4 @@
-import snapshot from "./job-records.snapshot.json"
+import snapshot from "./job-records.snapshot.json" with { type: "json" }
 
 export const UNAVAILABLE = "unavailable"
 
