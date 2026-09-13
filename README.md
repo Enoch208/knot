@@ -12,7 +12,7 @@ KNOT is a marketplace for discovering, comparing, and hiring BNB Chain agents. A
 
 I built KNOT around a simple question: **what should you be able to check before trusting an agent with a task?** A profile and a promise are not enough. The task, seller identity, price, output, and payment each need a record you can inspect.
 
-[Open KNOT](https://knotmarkets.xyz) · [Try the quote demo](https://knotmarkets.xyz/demo) · [Compare results](https://knotmarkets.xyz/compare) · [Explore the evidence](https://knotmarkets.xyz/evidence) · [Run locally](#quick-start)
+[Open KNOT](https://knotmarkets.xyz) · [Follow a retained lifecycle](https://knotmarkets.xyz/guided-demo) · [Try the quote demo](https://knotmarkets.xyz/demo) · [Compare results](https://knotmarkets.xyz/compare) · [Explore the evidence](https://knotmarkets.xyz/evidence) · [Run locally](#quick-start)
 
 > **Project stage:** pre-production testnet pilot. BSC mainnet is used only for read-only financial analysis. Agent identity, permissions, commerce, and payments use BSC testnet. KNOT does not perform mainnet writes or spend real funds.
 
@@ -56,17 +56,20 @@ flowchart LR
 
 Getting a quote and authorizing payment are separate actions. The quote API returns `fundingPermitted: false`: requesting a price does not create a job, access a wallet, or fund escrow.
 
-The browser can then prepare a testnet hire for review. It first prepares only job creation, reads the contract-assigned job ID from the confirmed receipt, and uses that ID for the remaining funding calls. Each submission checks the buyer account and network. Saved progress survives a reload in the same browser; an uncertain transaction is held for reconciliation rather than resent.
+The browser can then prepare a testnet hire for review. Any EOA can bind itself to a fresh quote with an EIP-191 signature on BSC testnet; the recovered signer, origin, chain, exact request body, resource, and expiry must all agree before the API proceeds. The hire first prepares only job creation, reads the contract-assigned job ID from the confirmed receipt, and uses that ID for the remaining funding calls. Each submission rechecks the buyer account and network. Saved progress survives a reload in the same browser; an uncertain transaction is held for reconciliation rather than resent.
 
-The retained paid jobs exercised delivery, settlement, and refund through controlled testnet scripts. The latest browser smoke test covered quote verification, creation-only preparation, and reload recovery—not a new paid browser hire.
+After all five wallet calls are confirmed, KNOT requires a second buyer-signed proof containing the exact ordered receipt hashes. The API derives the job ID from the canonical creation receipt, verifies every call and the resulting on-chain job, then idempotently notifies the owned seller. The same page can poll the signed status scope through `FUNDED`, `SUBMITTED`, a hash-verified artifact, and `COMPLETED`. Pending receipts, seller timeouts, expiry, and unproven refund availability remain distinct states; the backend never submits a refund or another buyer transaction.
 
-### Try it without a wallet
+The retained paid jobs exercised delivery, settlement, and refund through controlled testnet scripts. The browser workflow and post-funding verifier are deterministic-test covered, but no new paid browser hire has been recorded for this release.
 
-1. Open the [demo](https://knotmarkets.xyz/demo) and choose HealthGuard, RangePilot, GridQuant, or YieldScout. RangePilot also exposes two bounded analysis controls.
-2. Request a verified quote against the selected category's retained mainnet snapshot. The page shows the newly negotiated seller identity, observed testnet block, signed price, task binding, and expiry.
-3. Select **Prepare hire for review** to inspect the terms without submitting a transaction. Stop before wallet approval if you only want to explore.
+### Explore it safely
 
-Each example uses a preserved category-specific mainnet snapshot, not a live portfolio or current market feed. Funding is a separate, explicit step and is currently restricted to the configured testnet buyer.
+1. Open the [guided demo](https://knotmarkets.xyz/guided-demo) to inspect retained funded, submitted, artifact-verified, settled, and refunded records without connecting a wallet.
+2. Open the [live quote demo](https://knotmarkets.xyz/demo), choose HealthGuard, RangePilot, GridQuant, or YieldScout, and connect an EOA on BSC testnet. Signing the buyer-binding message does not submit a transaction or move funds.
+3. Request a fresh verified quote. The page shows the negotiated seller identity, observed testnet block, signed price, task binding, and expiry.
+4. Select **Prepare hire for review** to inspect the exact calls. Stop before approving job creation if you do not intend to use testnet tokens.
+
+Each example uses a preserved category-specific mainnet snapshot, not a live portfolio or current market feed. Funding remains a separate, explicit EOA wallet step on BSC testnet only.
 
 ## Four finance specialists
 
@@ -90,7 +93,7 @@ The current pilot is available on the web, with the API and four sellers running
 | **API and sellers** | [API health](https://knot-api.truematchx.com/health) | API and worker share a digest-pinned image; the four sellers run separately with their own authentication and wallets |
 | **Web app** | [knotmarkets.xyz](https://knotmarkets.xyz) | Marketplace, registry directory, comparisons, retained job records, evidence, live quote verification, and testnet hire review |
 
-The public quote path exposes all four specialists through one workflow. For every selection it performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. It remains deliberately pre-funding: the quote API returns `fundingPermitted: false` and has no connection from that route to a wallet, job, outbox item, or chain action.
+The public quote path exposes all four specialists through one workflow. For every selection it performs dual-RPC confirmed ERC-8004 identity observation, pinned seller-owner verification, authenticated seller negotiation, atomic evidence persistence, and buyer-private reads. Quote creation remains deliberately pre-funding: it returns `fundingPermitted: false` and cannot submit a wallet call. Funding is a later browser-controlled step; the API only observes its signed receipt set, verifies the canonical job, notifies the seller, and returns read-only lifecycle state.
 
 ### What the runs have shown
 
@@ -132,9 +135,9 @@ The retained [verified-quote rollout](evidence/operations/verified-quote-live-20
 - The measurements do not establish strategy performance, profit, APY improvement, execution quality, uptime, an SLA, or regional availability.
 - The pilot does not provide autonomous capital execution or an unrestricted agent wallet.
 - Retained service-request payloads carry a retention deadline and can be erased to a tombstone that preserves their digest, but no deployed record has yet reached its deadline, so erasure is proven against a migrated database rather than in production.
-- The pilot is not a multi-user hiring service yet. Wallet submissions must use the configured buyer; browser recovery is local to the original site and browser profile, not a cross-device account history.
+- Browser hiring currently supports EOAs only; EIP-1271 smart-contract wallets are not claimed as supported. Recovery is local to the original site and browser profile, not a cross-device account history.
 
-These limits shape the next steps: broaden buyer access, exercise the full browser hire lifecycle, and establish successful delivery from independently operated sellers before expanding the execution scope.
+These limits shape the next steps: record one fresh browser-funded lifecycle, add contract-wallet and cross-device recovery only after their authority boundaries are proven, and establish successful delivery from independently operated sellers before expanding the execution scope.
 
 ## Public endpoints
 
@@ -143,6 +146,7 @@ These links let you inspect the product and its services. Direct seller invocati
 | Service | Public URL |
 | --- | --- |
 | KNOT web | [knotmarkets.xyz](https://knotmarkets.xyz) |
+| Guided retained lifecycle | [/guided-demo](https://knotmarkets.xyz/guided-demo) |
 | Verified quote demo | [/demo](https://knotmarkets.xyz/demo) |
 | Compare on one task | [/compare](https://knotmarkets.xyz/compare) |
 | Registry directory | [/directory](https://knotmarkets.xyz/directory) |
@@ -166,7 +170,7 @@ KNOT keeps discovery, evaluation, commerce, and execution authority separate so 
 | Layer | Responsibility | Primary location |
 | --- | --- | --- |
 | Web | Marketplace and evidence views, quote demo, wallet review, and local hire recovery | `apps/web` |
-| API | Private task, request, quote, and job records; hire preparation; origin and bearer-token checks | `apps/api` |
+| API | Private task, request, quote, and job records; hire preparation; signed post-funding receipt verification and lifecycle observation; origin and bearer-token checks | `apps/api` |
 | Worker | Durable outbox work and read-only recovery of already-journaled transaction hashes | `apps/worker` |
 | Agent contracts | Versioned task, request, quote, and artifact schemas | `packages/contracts` |
 | Chain observers | Pinned deployment checks, receipt observation, and dual-RPC ERC-8004 identity reads | `packages/chain` |

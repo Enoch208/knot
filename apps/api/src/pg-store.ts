@@ -54,20 +54,24 @@ export class PgApiStore implements ApiStore {
       jobs: string | null
       migration_0011: boolean
       migration_0012: boolean
+      migration_0014: boolean
+      browser_funding_claims: string | null
       service_requests: string | null
       tasks: string | null
       verified_quotes: string | null
     }>(
-      "SELECT to_regclass('public.artifacts')::text AS artifacts, to_regclass('public.erc8004_identity_observations')::text AS identity_observations, EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'verified_quotes' AND column_name = 'identity_observation_id') AS identity_observation_column, to_regclass('public.jobs')::text AS jobs, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0011_erc8004_identity_observations.sql') AS migration_0011, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0012_verified_quote_identity_observation.sql') AS migration_0012, to_regclass('public.service_requests')::text AS service_requests, to_regclass('public.tasks')::text AS tasks, to_regclass('public.verified_quotes')::text AS verified_quotes",
+      "SELECT to_regclass('public.artifacts')::text AS artifacts, to_regclass('public.browser_funding_claims')::text AS browser_funding_claims, to_regclass('public.erc8004_identity_observations')::text AS identity_observations, EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'verified_quotes' AND column_name = 'identity_observation_id') AS identity_observation_column, to_regclass('public.jobs')::text AS jobs, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0011_erc8004_identity_observations.sql') AS migration_0011, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0012_verified_quote_identity_observation.sql') AS migration_0012, EXISTS (SELECT 1 FROM schema_migrations WHERE name = '0014_browser_funding_claims.sql') AS migration_0014, to_regclass('public.service_requests')::text AS service_requests, to_regclass('public.tasks')::text AS tasks, to_regclass('public.verified_quotes')::text AS verified_quotes",
     )
     const row = result.rows[0]
     if (
       !row?.artifacts ||
+      !row.browser_funding_claims ||
       !row.identity_observations ||
       !row.identity_observation_column ||
       !row.jobs ||
       !row.migration_0011 ||
       !row.migration_0012 ||
+      !row.migration_0014 ||
       !row.service_requests ||
       !row.tasks ||
       !row.verified_quotes

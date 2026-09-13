@@ -4,7 +4,9 @@ import { useEffect, useState } from "react"
 import "./styles/hire.css"
 import { CallList, NoticeBanner, TermList, unresolved, type Notice } from "./HireReview"
 import { validatePrepared } from "./hire-calls"
-import { beginJournal, readJournal } from "./hire-journal"
+import { beginJournal, readJournal, saveJournal } from "./hire-journal"
+import { requestHireLifecycle } from "./hire-lifecycle-client"
+import { fundingProof, lifecycleView, parsePublicHireStatus } from "./hire-lifecycle"
 import { readTestnetReceipt } from "./hire-receipt"
 import { recoverHireHash, runHirePhase } from "./hire-runner"
 import type { HireJournal } from "./hire-types"
@@ -89,9 +91,88 @@ export function HirePanel({ verifiedQuoteId }: { verifiedQuoteId: string }) {
     } finally { setBusy(false) }
   }
 
+  const syncLifecycle = async (operation: "funding-confirmation" | "hire-status") => {
+    setBusy(true)
+    setNotice(null)
+    try {
+      if (!navigator.locks) throw new Error("This browser cannot safely lock lifecycle checks across tabs.")
+      await navigator.locks.request("knot-hire-wallet", { ifAvailable: true }, async lock => {
+        if (!lock) throw new Error("Another tab is handling this hire. Wait and check saved progress.")
+        const saved = readJournal(localStorage, verifiedQuoteId)
+        if (!saved) throw new Error("No saved hire exists on this device.")
+        const proofBody = operation === "funding-confirmation" ? fundingProof(saved) : {}
+        const provider = readInjectedProvider()
+        if (!provider) throw new Error("Connect the buyer EOA to authorize this read-only lifecycle check.")
+        const account = await requestAccount(provider)
+        if (account.status === "rejected") throw new Error("Wallet connection was declined. No transaction was requested.")
+        if (account.status !== "connected") throw new Error(account.detail)
+        if (account.address.toLowerCase() !== saved.prepared.envelope.buyer.toLowerCase()) {
+          throw new Error("Connect the buyer account shown above. No transaction was requested.")
+        }
+        const network = await ensureBscTestnet(provider)
+        if (network.status === "rejected") throw new Error("BSC testnet selection was declined. No transaction was requested.")
+        if (network.status !== "ready") throw new Error(network.detail)
+
+        const priorState = saved.postFunding?.confirmationState ?? "idle"
+        const existingProof = operation === "funding-confirmation" ? saved.postFunding?.fundingProof : saved.postFunding?.statusProof
+        const persist = () => { saveJournal(localStorage, saved); setJournal(structuredClone(saved)) }
+        saved.postFunding = {
+          confirmationState: existingProof ? priorState : "signing",
+          lastStatus: saved.postFunding?.lastStatus ?? null,
+          checkedAtUtc: saved.postFunding?.checkedAtUtc ?? null,
+          ...(saved.postFunding?.fundingProof ? { fundingProof: saved.postFunding.fundingProof } : {}),
+          ...(saved.postFunding?.statusProof ? { statusProof: saved.postFunding.statusProof } : {}),
+        }
+        persist()
+        const outcome = await requestHireLifecycle(
+          provider,
+          verifiedQuoteId,
+          account.address,
+          operation,
+          proofBody,
+          existingProof,
+          signedProof => {
+            if (operation === "funding-confirmation") saved.postFunding!.fundingProof = signedProof
+            else saved.postFunding!.statusProof = signedProof
+            saved.postFunding!.confirmationState = "submitted"
+            persist()
+          },
+        )
+        if (outcome.status === "rejected") {
+          saved.postFunding.confirmationState = saved.postFunding.lastStatus ? "confirmed" : priorState === "signing" ? "idle" : priorState
+          persist()
+          throw new Error("Lifecycle authorization was declined. No transaction was requested.")
+        }
+        if (outcome.status === "unresolved") {
+          saved.postFunding.confirmationState = "unresolved"
+          persist()
+          throw new Error(`${outcome.detail} The saved authorization can be checked again without resending a transaction.`)
+        }
+        if (![200, 202].includes(outcome.httpStatus)) {
+          const response = outcome.body && typeof outcome.body === "object" ? outcome.body as Record<string, unknown> : {}
+          saved.postFunding.confirmationState = outcome.httpStatus === 409 ? "conflict" : "unresolved"
+          if ([400, 401].includes(outcome.httpStatus)) {
+            if (operation === "funding-confirmation") delete saved.postFunding.fundingProof
+            else delete saved.postFunding.statusProof
+          }
+          persist()
+          throw new Error(typeof response.explanation === "string" ? response.explanation : "The lifecycle service refused this request.")
+        }
+        const status = parsePublicHireStatus(outcome.body, saved)
+        saved.postFunding.lastStatus = status
+        saved.postFunding.checkedAtUtc = new Date().toISOString()
+        saved.postFunding.confirmationState = status.verification.state === "CONFIRMED" ? "confirmed" : "pending"
+        persist()
+      })
+    } catch (error) {
+      setNotice(unresolved(error instanceof Error ? error.message : "The live lifecycle could not be reconciled."))
+    } finally { setBusy(false) }
+  }
+
   const completed = journal?.prepared.stage === "FUND" && journal.progress.every(p => p.state === "confirmed")
   const pending = journal?.progress.some(p => ["signing", "submitted", "unresolved"].includes(p.state)) ?? false
   const reverted = journal?.progress.some(p => p.state === "reverted") ?? false
+  const lifecycle = completed ? lifecycleView(journal?.postFunding) : null
   return (
     <section className="hire">
       <h2 className="hire__title">Review before you approve</h2>
@@ -102,7 +183,41 @@ export function HirePanel({ verifiedQuoteId }: { verifiedQuoteId: string }) {
         {journal.creationHash ? <p>Creation transaction: {journal.creationHash}</p> : null}
       </> : null}
       <NoticeBanner notice={notice} onSwitch={() => { void act(false) }} />
-      {completed ? <p role="status">All funding calls confirmed. This does not mean the seller has delivered or the payment has settled.</p> : null}
+      {completed && lifecycle ? <section className={`hire-lifecycle hire-lifecycle--${lifecycle.tone}`} aria-labelledby="live-hire-title">
+        <div className="hire-lifecycle__heading">
+          <div>
+            <p className="hire-lifecycle__eyebrow">Live BSC testnet lifecycle</p>
+            <h3 id="live-hire-title">{lifecycle.title}</h3>
+          </div>
+          {journal?.postFunding?.checkedAtUtc ? <p className="hire-lifecycle__checked">Checked {new Date(journal.postFunding.checkedAtUtc).toLocaleString()}</p> : null}
+        </div>
+        <p className="hire-lifecycle__detail">{lifecycle.detail}</p>
+        <ol className="hire-lifecycle__steps">
+          {lifecycle.steps.map(step => <li className={`hire-lifecycle__step hire-lifecycle__step--${step.state}`} key={step.label}>
+            <span className="hire-lifecycle__dot" aria-hidden="true" />
+            <span><strong>{step.label}</strong><small>{step.detail}</small></span>
+          </li>)}
+        </ol>
+        {journal?.postFunding?.lastStatus ? <div className="hire-lifecycle__facts">
+          <p><span>Chain job</span><strong>{journal.postFunding.lastStatus.jobId ? `#${journal.postFunding.lastStatus.jobId}` : "Pending verification"}</strong></p>
+          <p><span>Seller notice</span><strong>{journal.postFunding.lastStatus.sellerNotification.state.replaceAll("_", " ")}</strong></p>
+          <p><span>Work</span><strong>{journal.postFunding.lastStatus.lifecycle.workState.replaceAll("_", " ")}</strong></p>
+          <p><span>Funds</span><strong>{journal.postFunding.lastStatus.lifecycle.financialState.replaceAll("_", " ")}</strong></p>
+        </div> : null}
+        {lifecycle.refundCall ? <div className="hire-lifecycle__refund">
+          <strong>Buyer-wallet refund available</strong>
+          <p>KNOT has not sent this transaction. The live service returned a canonical BSC testnet call for the connected buyer to review in their wallet.</p>
+        </div> : null}
+        <div className="hire-lifecycle__actions">
+          {!journal?.postFunding?.lastStatus || lifecycle.canRetryConfirmation ? <button className="hire__approve" type="button" disabled={busy} onClick={() => { void syncLifecycle("funding-confirmation") }}>
+            {busy ? "Reconciling…" : journal?.postFunding?.fundingProof ? "Resume funding verification" : "Verify funding & notify seller"}
+          </button> : null}
+          {journal?.postFunding?.lastStatus && lifecycle.canCheck ? <button className="hire__secondary" type="button" disabled={busy} onClick={() => { void syncLifecycle("hire-status") }}>
+            {busy ? "Checking…" : journal.postFunding.statusProof ? "Check live status" : "Authorize live status"}
+          </button> : null}
+        </div>
+        <p className="hire-lifecycle__boundary">Status checks use a scoped EOA signature and never send a transaction. Reloading this page restores the saved authorization and last verified state.</p>
+      </section> : null}
       <button className="hire__approve" type="button" disabled={busy || !loaded || !!completed || reverted} onClick={() => { void act(!pending) }}>
         {busy ? "Checking saved progress…" : !journal ? "Prepare hire for review" : pending ? "Check saved transaction" : journal.prepared.stage === "CREATE" ? "Approve job creation" : "Approve next funding call"}
       </button>

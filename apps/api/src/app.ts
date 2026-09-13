@@ -26,6 +26,7 @@ import {
 import { TaskConflictError, VerifiedQuoteCreationUnavailableError } from "./pg-store.ts"
 import {
   createSelfServiceVerifiedQuoteRequest,
+  confirmFundingRequest,
   createServiceRequest,
   createTaskRequest,
   createVerifiedQuoteRequest,
@@ -34,6 +35,7 @@ import {
 } from "./schemas.ts"
 import type { ApiConfig, ApiRequest, ApiResponse, ApiStore, StoredTask } from "./types.ts"
 import { VerifiedQuoteOrchestrationError } from "./verified-quote-orchestrator.ts"
+import { PostFundingError } from "./post-funding.ts"
 
 const correlationPattern = /^[A-Za-z0-9._:-]{1,128}$/
 
@@ -215,6 +217,11 @@ const prepareVerifiedHire = async (
 
 const asFailure = (error: unknown): ApiError => {
   if (error instanceof ApiError) return error
+  if (error instanceof PostFundingError) {
+    if (error.code === "NOT_FOUND") return new ApiError(404, "RESOURCE_NOT_FOUND", error.message, false, "unknown")
+    if (error.code === "UPSTREAM_UNAVAILABLE") return new ApiError(503, "UPSTREAM_UNAVAILABLE", error.message, true, "unknown")
+    return new ApiError(409, "CONFLICT", error.message, false, "unknown")
+  }
   if (error instanceof TaskConflictError) {
     return new ApiError(409, "CONFLICT", "The task identifier is bound to different intent.", false)
   }
@@ -373,6 +380,52 @@ export const createApiHandler = (store: ApiStore, config: ApiConfig) => {
         }
         const buyer = await requireBuyerIntent(request, config, "PREPARE_HIRE", verifiedQuoteId, body)
         return encode(200, await prepareVerifiedHire(store, config, buyer, verifiedQuoteId), correlationId, config.allowedOrigin)
+      }
+      const fundingConfirmationMatch = request.path.match(/^\/api\/self-service\/verified-quotes\/([^/]+)\/funding-confirmation$/)
+      if (request.method === "POST" && fundingConfirmationMatch) {
+        requireMutationOrigin(request, config)
+        requireAuthorization(request, config)
+        const verifiedQuoteId = decodeIdentifier(fundingConfirmationMatch[1] ?? "")
+        const body = requireJson(request, config.maxBodyBytes)
+        const parsed = confirmFundingRequest.safeParse(parseJson(body))
+        if (!parsed.success) throw invalidRequest("The funding confirmation request is invalid.")
+        if (request.headers["idempotency-key"] !== verifiedQuoteId) {
+          throw invalidRequest("Idempotency-Key must equal the verified quote identifier.")
+        }
+        const buyer = await requireBuyerIntent(request, config, "CONFIRM_FUNDING", verifiedQuoteId, body)
+        const quote = await store.getVerifiedQuote(verifiedQuoteId, buyer)
+        if (!quote) throw new ApiError(404, "RESOURCE_NOT_FOUND", "No verified quote matches that identifier.", false)
+        if (!config.postFunding) {
+          throw new ApiError(503, "UPSTREAM_UNAVAILABLE", "Post-funding verification is not configured on this deployment.", true, "unknown")
+        }
+        const result = await config.postFunding.confirm({
+          verifiedQuote: quote,
+          buyer,
+          creationTransactionHash: parsed.data.creationTransactionHash as `0x${string}`,
+          fundingTransactionHashes: parsed.data.fundingTransactionHashes as [`0x${string}`, `0x${string}`, `0x${string}`, `0x${string}`],
+        })
+        return encode(result.status, result.body, correlationId, config.allowedOrigin)
+      }
+      const hireStatusMatch = request.path.match(/^\/api\/self-service\/verified-quotes\/([^/]+)\/hire-status$/)
+      if (request.method === "POST" && hireStatusMatch) {
+        requireMutationOrigin(request, config)
+        requireAuthorization(request, config)
+        const verifiedQuoteId = decodeIdentifier(hireStatusMatch[1] ?? "")
+        const body = requireJson(request, config.maxBodyBytes)
+        if (!createVerifiedQuoteRequest.safeParse(parseJson(body)).success) {
+          throw invalidRequest("The hire status request body must be an empty JSON object.")
+        }
+        if (request.headers["idempotency-key"] !== verifiedQuoteId) {
+          throw invalidRequest("Idempotency-Key must equal the verified quote identifier.")
+        }
+        const buyer = await requireBuyerIntent(request, config, "READ_HIRE_STATUS", verifiedQuoteId, body)
+        const quote = await store.getVerifiedQuote(verifiedQuoteId, buyer)
+        if (!quote) throw new ApiError(404, "RESOURCE_NOT_FOUND", "No verified quote matches that identifier.", false)
+        if (!config.postFunding) {
+          throw new ApiError(503, "UPSTREAM_UNAVAILABLE", "Post-funding verification is not configured on this deployment.", true, "unknown")
+        }
+        const result = await config.postFunding.status(quote, buyer)
+        return encode(result.status, result.body, correlationId, config.allowedOrigin)
       }
       if (request.method === "POST" && request.path === "/api/tasks") {
         requireMutationOrigin(request, config)

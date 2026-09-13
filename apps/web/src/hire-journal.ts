@@ -1,10 +1,12 @@
 import { validatePrepared } from "./hire-calls.ts"
+import { parsePublicHireStatus } from "./hire-lifecycle.ts"
 import type { HireJournal, PreparedHire } from "./hire-types.ts"
 
 export interface JournalStorage { getItem(key: string): string | null; setItem(key: string, value: string): void }
 const keyFor = (id: string): string => `knot.hire/2:${id}`
 const indexKey = "knot.hire/2:index"
 const states = new Set(["waiting", "signing", "submitted", "confirmed", "reverted", "unresolved", "not attempted"])
+const confirmationStates = new Set(["idle", "signing", "submitted", "pending", "confirmed", "conflict", "unresolved"])
 
 export function readJournal(storage: JournalStorage, id: string): HireJournal | null {
   const raw = storage.getItem(keyFor(id))
@@ -18,10 +20,24 @@ export function readJournal(storage: JournalStorage, id: string): HireJournal | 
   if (JSON.stringify(initial) !== JSON.stringify(current) || !Array.isArray(journal.progress) || journal.progress.length !== journal.prepared.calls.length ||
       journal.progress.some(p => !states.has(p.state) || (p.transactionHash !== null && !/^0x[0-9a-fA-F]{64}$/.test(p.transactionHash)) ||
         (["submitted", "confirmed"].includes(p.state) && p.transactionHash === null)) ||
-      (journal.prepared.stage === "FUND" && !/^0x[0-9a-fA-F]{64}$/.test(journal.creationHash ?? ""))) {
+      (journal.prepared.stage === "FUND" && !/^0x[0-9a-fA-F]{64}$/.test(journal.creationHash ?? "")) ||
+      !validPostFunding(journal)) {
     throw new Error("Saved hire is inconsistent; reconcile it before retrying.")
   }
   return journal
+}
+
+function validPostFunding(journal: HireJournal): boolean {
+  const value = journal.postFunding
+  if (value === undefined) return true
+  if (!value || !confirmationStates.has(value.confirmationState) ||
+      (value.checkedAtUtc !== null && (typeof value.checkedAtUtc !== "string" || !Number.isFinite(Date.parse(value.checkedAtUtc))))) return false
+  for (const proof of [value.fundingProof, value.statusProof]) {
+    if (proof !== undefined && (!proof || typeof proof.intent !== "string" || !/^[A-Za-z0-9_-]{1,4096}$/.test(proof.intent) ||
+      typeof proof.signature !== "string" || !/^0x[0-9a-fA-F]{130}$/.test(proof.signature))) return false
+  }
+  if (value.lastStatus === null) return true
+  try { parsePublicHireStatus(value.lastStatus, journal); return true } catch { return false }
 }
 
 export function saveJournal(storage: JournalStorage, journal: HireJournal): void {

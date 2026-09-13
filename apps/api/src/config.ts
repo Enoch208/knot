@@ -18,6 +18,7 @@ const environment = z.object({
 
 export interface ServerConfig {
   databaseUrl: string
+  testnetRpcUrl: string
   host: string
   port: number
   api: ApiConfig
@@ -32,6 +33,7 @@ export const loadServerConfig = (source: NodeJS.ProcessEnv): ServerConfig => {
   }
   return {
     databaseUrl: parsed.DATABASE_URL,
+    testnetRpcUrl: parsed.KNOT_TESTNET_RPC_URL,
     host: parsed.KNOT_API_HOST,
     port: parsed.KNOT_API_PORT,
     api: {

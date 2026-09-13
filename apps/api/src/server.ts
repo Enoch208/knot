@@ -7,6 +7,8 @@ import { PgApiStore } from "./pg-store.ts"
 import type { ApiRequest, ApiResponse } from "./types.ts"
 import { VerifiedQuoteOrchestrator } from "./verified-quote-orchestrator.ts"
 import { PgVerifiedQuotePersistence } from "./verified-quote-persistence.ts"
+import { PostFundingService } from "./post-funding.ts"
+import { createLiveFundingChainReader, createOwnedSellerFundingNotifier, PgBrowserFundingStore } from "./post-funding-live.ts"
 
 const headerValue = (headers: IncomingHttpHeaders, name: string): string | undefined => {
   const value = headers[name]
@@ -55,6 +57,15 @@ const run = async (): Promise<void> => {
     ? new VerifiedQuoteOrchestrator(new PgVerifiedQuotePersistence(pool), config.ownedSellers, { now: config.api.now })
     : null
   const store = new PgApiStore(pool, verifiedQuoteCreator)
+  if (config.api.commerceProbe) {
+    config.api.postFunding = new PostFundingService(
+      new PgBrowserFundingStore(pool),
+      createLiveFundingChainReader(config.testnetRpcUrl),
+      config.api.commerceProbe,
+      createOwnedSellerFundingNotifier(config.ownedSellers),
+      config.api.now,
+    )
+  }
   await store.status()
   const handle = createApiHandler(store, config.api)
   const server = createServer((request, response) => {

@@ -9,6 +9,7 @@ import type {
   ApiStore,
   StoredTask,
   TaskCreation,
+  PostFundingCoordinator,
 } from "../../apps/api/src/types.ts"
 import type { CommerceCompatibility } from "../../packages/commerce/src/index.ts"
 import type { ServiceRequestEnvelope } from "../../packages/contracts/src/service-request.ts"
@@ -163,6 +164,11 @@ const config: ApiConfig = {
   commerceProbe: async () => compatibility(),
 }
 
+const postFunding: PostFundingCoordinator = {
+  async confirm(input) { return { status: 200, body: { buyer: input.buyer, verifiedQuoteId: input.verifiedQuote.id } } },
+  async status(record, owner) { return { status: 200, body: { buyer: owner, verifiedQuoteId: record.id } } },
+}
+
 const quotePayload = (buyer: `0x${string}`) => {
   const prefix = buyerResourcePrefix(buyer)
   const taskId = `${prefix}task_1`
@@ -240,7 +246,11 @@ const signRequest = async (
     method: "POST",
     path: action === "CREATE_VERIFIED_QUOTE"
       ? "/api/self-service/verified-quotes"
-      : `/api/self-service/verified-quotes/${resourceId}/hire-preparation`,
+      : action === "PREPARE_HIRE"
+        ? `/api/self-service/verified-quotes/${resourceId}/hire-preparation`
+        : action === "CONFIRM_FUNDING"
+          ? `/api/self-service/verified-quotes/${resourceId}/funding-confirmation`
+          : `/api/self-service/verified-quotes/${resourceId}/hire-status`,
     headers: {
       authorization: `Bearer ${token}`,
       "content-type": "application/json",
@@ -329,5 +339,43 @@ describe("self-service buyer binding", () => {
     const response = await createApiHandler(store, config)(request)
     assert.equal(response.status, 409)
     assert.match(response.body, /QUOTE_EXPIRED/)
+  })
+
+  it("binds funding confirmation and status reads to the recovered quote owner", async () => {
+    const store = new SelfServiceStore()
+    const payload = quotePayload(buyerA.address)
+    store.quotes.set(payload.serviceRequestId, quoteRecord(payload.serviceRequestId, buyerA.address, payload.taskId))
+    const fundingBody = JSON.stringify({
+      creationTransactionHash: `0x${"01".repeat(32)}`,
+      fundingTransactionHashes: [
+        `0x${"02".repeat(32)}`,
+        `0x${"03".repeat(32)}`,
+        `0x${"04".repeat(32)}`,
+        `0x${"05".repeat(32)}`,
+      ],
+    })
+    const fundingRequest = await signRequest(buyerA, "CONFIRM_FUNDING", payload.serviceRequestId, fundingBody)
+    const statusRequest = await signRequest(buyerA, "READ_HIRE_STATUS", payload.serviceRequestId, "{}")
+    const handler = createApiHandler(store, { ...config, postFunding })
+    const [funding, status] = await Promise.all([handler(fundingRequest), handler(statusRequest)])
+    assert.equal(funding.status, 200, funding.body)
+    assert.equal(status.status, 200, status.body)
+    assert.equal(JSON.parse(funding.body).buyer, buyerA.address)
+    assert.equal(JSON.parse(status.body).buyer, buyerA.address)
+
+    const stolen = await signRequest(buyerB, "READ_HIRE_STATUS", payload.serviceRequestId, "{}")
+    const denied = await handler(stolen)
+    assert.equal(denied.status, 404)
+  })
+
+  it("rejects duplicate funding hashes before calling post-funding verification", async () => {
+    const store = new SelfServiceStore()
+    const payload = quotePayload(buyerA.address)
+    store.quotes.set(payload.serviceRequestId, quoteRecord(payload.serviceRequestId, buyerA.address, payload.taskId))
+    const hash = `0x${"06".repeat(32)}`
+    const body = JSON.stringify({ creationTransactionHash: hash, fundingTransactionHashes: [hash, hash, hash, hash] })
+    const request = await signRequest(buyerA, "CONFIRM_FUNDING", payload.serviceRequestId, body)
+    const response = await createApiHandler(store, { ...config, postFunding })(request)
+    assert.equal(response.status, 400)
   })
 })

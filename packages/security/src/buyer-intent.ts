@@ -7,7 +7,12 @@ const digest = z.string().regex(/^0x[0-9a-f]{64}$/)
 const signature = z.string().regex(/^0x[0-9a-fA-F]{130}$/)
 const address = z.string().regex(/^0x[0-9a-fA-F]{40}$/)
 
-export const buyerIntentAction = z.enum(["CREATE_VERIFIED_QUOTE", "PREPARE_HIRE"])
+export const buyerIntentAction = z.enum([
+  "CREATE_VERIFIED_QUOTE",
+  "PREPARE_HIRE",
+  "CONFIRM_FUNDING",
+  "READ_HIRE_STATUS",
+])
 
 export const buyerIntent = z.object({
   schemaVersion: z.literal("knot.buyer-intent/1"),

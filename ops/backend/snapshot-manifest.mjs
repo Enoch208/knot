@@ -9,7 +9,7 @@ const imageIdPattern = /^sha256:[0-9a-f]{64}$/
 const imageReferencePattern = /^[^\s]+@sha256:[0-9a-f]{64}$/
 const timestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/
 const expectedTables = [
-  "agent_capabilities", "agents", "artifacts", "auditions", "benchmark_runs", "candidate_runs",
+  "agent_capabilities", "agents", "artifacts", "auditions", "benchmark_runs", "browser_funding_claims", "candidate_runs",
   "chain_action_recovery_attempts", "chain_actions", "claims", "endpoint_observations", "erc8004_identity_observations", "evaluations", "job_events", "jobs", "outbox",
   "quotes", "service_requests", "sessions", "snapshots", "tasks", "verified_quotes",
 ]

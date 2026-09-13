@@ -41,6 +41,24 @@ export const createSelfServiceVerifiedQuoteRequest = z.object({
   serviceRequest: createServiceRequest,
 }).strict()
 
+const transactionHash = z.string().regex(/^0x[0-9a-fA-F]{64}$/)
+
+export const confirmFundingRequest = z.object({
+  creationTransactionHash: transactionHash,
+  fundingTransactionHashes: z.tuple([
+    transactionHash,
+    transactionHash,
+    transactionHash,
+    transactionHash,
+  ]),
+}).strict().superRefine((value, context) => {
+  const hashes = [value.creationTransactionHash, ...value.fundingTransactionHashes]
+    .map((hash) => hash.toLowerCase())
+  if (new Set(hashes).size !== hashes.length) {
+    context.addIssue({ code: "custom", message: "transaction hashes must be distinct" })
+  }
+})
+
 export const parseJson = (body: string): unknown => {
   try {
     return JSON.parse(body) as unknown

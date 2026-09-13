@@ -5,11 +5,13 @@ import { PgApiStore } from "../../apps/api/src/pg-store.ts"
 
 interface StatusRow {
   artifacts: string | null
+  browser_funding_claims: string | null
   identity_observations: string | null
   identity_observation_column: boolean
   jobs: string | null
   migration_0011: boolean
   migration_0012: boolean
+  migration_0014: boolean
   service_requests: string | null
   tasks: string | null
   verified_quotes: string | null
@@ -17,11 +19,13 @@ interface StatusRow {
 
 const available = (): StatusRow => ({
   artifacts: "artifacts",
+  browser_funding_claims: "browser_funding_claims",
   identity_observations: "erc8004_identity_observations",
   identity_observation_column: true,
   jobs: "jobs",
   migration_0011: true,
   migration_0012: true,
+  migration_0014: true,
   service_requests: "service_requests",
   tasks: "tasks",
   verified_quotes: "verified_quotes",
@@ -40,7 +44,7 @@ class StatusPool {
 const store = (pool: StatusPool): PgApiStore => new PgApiStore(pool as unknown as Pool)
 
 describe("API database readiness", () => {
-  test("requires the immutable identity table, verified-quote link, and both migrations", async () => {
+  test("requires identity, verified-quote, and browser-funding schema", async () => {
     const pool = new StatusPool()
     await store(pool).status()
     assert.equal(pool.queries.length, 1)
@@ -48,12 +52,13 @@ describe("API database readiness", () => {
     assert.match(pool.queries[0]!, /identity_observation_id/)
     assert.match(pool.queries[0]!, /0011_erc8004_identity_observations\.sql/)
     assert.match(pool.queries[0]!, /0012_verified_quote_identity_observation\.sql/)
+    assert.match(pool.queries[0]!, /0014_browser_funding_claims\.sql/)
   })
 
   test("fails closed when an identity schema prerequisite is absent", async () => {
-    for (const key of ["identity_observations", "identity_observation_column", "migration_0011", "migration_0012"] as const) {
+    for (const key of ["identity_observations", "identity_observation_column", "migration_0011", "migration_0012", "browser_funding_claims", "migration_0014"] as const) {
       const pool = new StatusPool()
-      pool.row = { ...pool.row, [key]: key === "identity_observations" ? null : false }
+      pool.row = { ...pool.row, [key]: key === "identity_observations" || key === "browser_funding_claims" ? null : false }
       await assert.rejects(store(pool).status(), /required database schema is unavailable/)
     }
   })

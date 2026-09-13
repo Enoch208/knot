@@ -81,11 +81,29 @@ export interface ApiStore {
 
 export interface ApiConfig {
   commerceProbe?: () => Promise<CommerceCompatibility>
+  postFunding?: PostFundingCoordinator
   authToken: string
   buyerAddress: string
   allowedOrigin: string
   maxBodyBytes: number
   now: () => Date
+}
+
+export interface FundingConfirmationInput {
+  verifiedQuote: VerifiedQuoteRecord
+  buyer: string
+  creationTransactionHash: `0x${string}`
+  fundingTransactionHashes: readonly [`0x${string}`, `0x${string}`, `0x${string}`, `0x${string}`]
+}
+
+export interface PostFundingResult {
+  status: 200 | 202
+  body: unknown
+}
+
+export interface PostFundingCoordinator {
+  confirm(input: FundingConfirmationInput): Promise<PostFundingResult>
+  status(verifiedQuote: VerifiedQuoteRecord, buyer: string): Promise<PostFundingResult>
 }
 
 export interface ApiRequest {
