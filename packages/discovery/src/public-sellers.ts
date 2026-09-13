@@ -22,7 +22,7 @@ export const expectedPublicSellers: readonly ExpectedPublicSeller[] = Object.fre
     key: "healthguard",
     category: "health",
     origin: "https://knot-health.truematchx.com",
-    cardName: "healthguard-agent",
+    cardName: "KNOT HealthGuard",
     oauthScope: "knot:healthguard:invoke",
     registry: BSC_TESTNET_ERC8004_REGISTRY,
     agentId: 2295,

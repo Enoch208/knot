@@ -153,6 +153,19 @@ function reader(overrides: {
 }
 
 describe("public seller release verification", () => {
+  test("accepts the renamed HealthGuard card and rejects its former display name", async () => {
+    const health = expectedPublicSellers.find(seller => seller.key === "healthguard")!
+    assert.equal(health.cardName, "KNOT HealthGuard")
+    const healthReader = (name: string): PublicSellerHttpReader => ({
+      getJson: async url => ({ status: 200, body: url.endsWith("agent-card.json")
+        ? { ...validCard(health) as object, name }
+        : { registrations: [{ agentId: health.agentId, agentRegistry: `eip155:97:${health.registry}` }] } }),
+      postUnauthenticated: async () => 401,
+    })
+    assert.equal((await verifyPublicSeller(healthReader("KNOT HealthGuard"), health)).outcome, "VERIFIED")
+    assert.equal((await verifyPublicSeller(healthReader("healthguard-agent"), health)).outcome, "MISMATCH")
+  })
+
   test("verifies the card, OAuth boundary, unauthenticated refusal, and domain identity together", async () => {
     const result = await verifyPublicSeller(reader(), expected)
     assert.deepEqual(result, {

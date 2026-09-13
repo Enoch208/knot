@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto"
 import { z } from "zod"
 import { expectedPublicSellers } from "../../discovery/src/public-sellers.ts"
+import { capturedSellerName } from "./captured-seller-name.ts"
 
 const utc = z.iso.datetime()
 const digest = z.string().regex(/^[0-9a-f]{64}$/)
@@ -171,7 +172,7 @@ function verifySeller(observed: z.infer<typeof seller>, bodies: Map<string, Uint
   if (observed.requests.agentCard.url !== `${expected.origin}/.well-known/agent-card.json`) throw new Error(`${observed.key} card URL mismatch`)
   if (observed.requests.domainRegistration.url !== `${expected.origin}/.well-known/agent-registration.json`) throw new Error(`${observed.key} registration URL mismatch`)
   if (observed.requests.unauthenticatedInvocation.url !== `${expected.origin}/`) throw new Error(`${observed.key} invocation URL mismatch`)
-  verifyCardBody(readBody(observed.requests.agentCard, bodies, references), expected)
+  verifyCardBody(readBody(observed.requests.agentCard, bodies, references), expected, observed.requests.agentCard.sha256)
   verifyRegistrationBody(readBody(observed.requests.domainRegistration, bodies, references), expected.agentId)
 }
 
@@ -182,9 +183,9 @@ function readBody(request: z.infer<typeof jsonResponse>, bodies: Map<string, Uin
   try { return JSON.parse(Buffer.from(bytes).toString("utf8")) as unknown } catch { throw new Error("availability response body is not JSON") }
 }
 
-function verifyCardBody(input: unknown, expected: (typeof expectedPublicSellers)[number]): void {
+function verifyCardBody(input: unknown, expected: (typeof expectedPublicSellers)[number], bodySha256: string): void {
   const parsed = card.parse(input)
-  if (parsed.name !== expected.cardName || parsed.url !== `${expected.origin}/`) throw new Error(`${expected.key} captured card identity mismatch`)
+  if (parsed.name !== capturedSellerName(expected, bodySha256) || parsed.url !== `${expected.origin}/`) throw new Error(`${expected.key} captured card identity mismatch`)
   const skillIds = new Set(parsed.skills.map((skill) => skill.id))
   if (!skillIds.has("negotiate") || !skillIds.has("notify_funded")) throw new Error(`${expected.key} captured card capability mismatch`)
   const oauth = parsed.securitySchemes.oauth2.flows.clientCredentials

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto"
 import { z } from "zod"
 import { expectedPublicSellers } from "../../discovery/src/public-sellers.ts"
+import { capturedSellerName } from "./captured-seller-name.ts"
 import { tunnelCapturedResponseSchema, tunnelRecoveryEvidenceSchema, tunnelRecoveryLimitations, type TunnelRecoveryEvidence, type TunnelPublicSnapshot } from "./tunnel-recovery-schema.ts"
 
 export { tunnelRecoveryEvidenceSchema, tunnelRecoveryLimitations, tunnelPublicSnapshotSchema, type TunnelRecoveryEvidence, type TunnelPublicSnapshot } from "./tunnel-recovery-schema.ts"
@@ -186,7 +187,7 @@ function verifySellerProbe(observed: TunnelPublicSnapshot["sellers"][number], no
   verifyProbeUrl(observed.domainRegistration.url, `${expected.origin}/.well-known/agent-registration.json`, nonce)
   verifyProbeUrl(observed.unauthenticatedInvocation.url, `${expected.origin}/`, nonce)
   const card = z.object({
-    name: z.literal(expected.cardName), url: z.literal(`${expected.origin}/`), protocolVersion: z.literal("0.3.0"), preferredTransport: z.literal("JSONRPC"),
+    name: z.literal(capturedSellerName(expected, observed.agentCard.sha256)), url: z.literal(`${expected.origin}/`), protocolVersion: z.literal("0.3.0"), preferredTransport: z.literal("JSONRPC"),
     skills: z.array(z.object({ id: z.string() }).passthrough()),
     securitySchemes: z.object({ oauth2: z.object({ flows: z.object({ clientCredentials: z.object({ tokenUrl: z.literal(`${expected.origin}/oauth/token`), scopes: z.record(z.string(), z.string()) }).passthrough() }).passthrough() }).passthrough() }).passthrough(),
     security: z.array(z.record(z.string(), z.array(z.string()))),
