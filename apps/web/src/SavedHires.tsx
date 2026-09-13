@@ -14,8 +14,9 @@ export function SavedHires({ currentQuoteId }: { currentQuoteId: string | undefi
   if (unreadable) return <p role="alert">Saved hire recovery is unavailable. Do not clear site data or start a replacement for an unresolved transaction.</p>
   const previous = ids.filter(id => id !== currentQuoteId)
   if (previous.length === 0) return null
-  return <section aria-label="Saved hires">
+  return <section className="saved-hires" aria-label="Saved hires">
     <h2>Recover a saved hire</h2>
+    <p>These attempts belong to this browser profile. Reconcile unresolved transactions before starting another.</p>
     {previous.map(id => <details key={id}><summary>{id}</summary><HirePanel verifiedQuoteId={id} /></details>)}
   </section>
 }

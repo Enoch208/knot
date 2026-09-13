@@ -214,6 +214,16 @@ The API has exactly one bearer token and exactly one buyer address, both from th
 
 The following have received no analysis and no measurement in this repository: timing and side-channel attacks on the quote or authority paths; economic or MEV attacks against settlement ordering; collusion between a seller and the evaluator; supply-chain compromise of the installed npm dependencies beyond lockfile pinning; TLS PKI compromise, since `safeFetch` pins a resolved IP address but relies on the platform trust store; physical or host-level compromise of the VPS; abuse of the LLM credential path in the seller images, which is configured but unused by every analysis path (`buildRunWork` in all four sellers returns a deterministic analyzer, not a model call).
 
+## Hire and session recovery boundaries
+
+Browser hire preparation returns only `createJob`; it does not predict or invent an on-chain job identifier. A chain-97 reader verifies two confirmations, canonical block identity, and transaction sender, target, calldata, and value before accepting a unique matching `JobCreated` event. Only then are the four funding calls constructed for the emitted identifier. Each wallet submission checks the currently selected account against the reviewed buyer and includes chain ID 97. Funding is reviewed separately, and each submitted call is reconciled before another is requested.
+
+Browser progress is written before requesting a signature and immediately after receiving its transaction hash. A Web Lock excludes concurrent wallet actions in tabs of the same origin. Saved attempts are discoverable on the demo page after reload. A missing hash blocks automatic retry; a user-supplied recovered hash must match the saved transaction intent. Storage failure blocks sending. This is not a multi-device/server-side execution journal: deleting site data, another origin, or a different browser profile can lose the local protection. The configured single-buyer restriction still applies.
+
+Session grants use a private, atomic journal and an exclusive process lock. Prepared or uncertain grants cannot be overwritten; reconciled revoked or reverted grants are archived before replacement. The submit hash is saved before receipt polling, and `reconcile` does not broadcast. A spending period is chosen to contain the whole session; a session with no such period is refused. A lock left by a crashed process is deliberately not broken automatically: establish the process has stopped and reconcile its recorded intent before an operator removes that exact lock file. These controls assume a trustworthy host and wallet.
+
+No new live hire, grant/revoke, or deployed backup drill is established by the regression fixtures in `hire-recovery-regression-boundaries`.
+
 ## Related documents
 
 - `DECISIONS.md` — why these boundaries were chosen, and what was rejected.

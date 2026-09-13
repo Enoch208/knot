@@ -8,6 +8,39 @@
   gap: 18px;
 }
 
+.saved-hires {
+  margin: 0 0 24px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-bright);
+}
+
+.saved-hires > h2,
+.saved-hires > p {
+  margin: 0;
+}
+
+.saved-hires > h2 {
+  font-size: var(--text-md);
+}
+
+.saved-hires > p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: var(--text-xs);
+}
+
+.saved-hires details {
+  margin-top: 12px;
+}
+
+.saved-hires summary {
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  overflow-wrap: anywhere;
+}
+
 .hire__title {
   margin: 0;
   color: var(--ink);

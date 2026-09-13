@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile } from "node:fs/promises"
+import { readFile } from "node:fs/promises"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { createPublicClient, createWalletClient, http, type Address, type Hex } from "viem"
@@ -17,6 +17,8 @@ import {
   type AllowedCall,
   type TokenLimit,
 } from "../packages/authority/src/index.ts"
+import { smallestSpendWindowContaining } from "../packages/authority/src/spend-period.ts"
+import { beginSessionJournal, readSessionJournal, saveSessionJournal, withSessionJournalLock, type SessionJournalState } from "../packages/authority/src/session-journal.ts"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const STATE = join(ROOT, ".secrets", "session-hire-state.json")
@@ -34,7 +36,6 @@ const RPC = process.env.KNOT_TESTNET_RPC_URL ?? "https://bsc-testnet-rpc.publicn
 
 const BUDGET = 100_000_000_000_000_000n
 const NATIVE_CEILING = 5_000_000_000_000_000n
-const DAY_PERIOD = 2 as const
 const SESSION_SECONDS = 3600
 
 const ALLOWED: AllowedCall[] = [
@@ -45,17 +46,15 @@ const ALLOWED: AllowedCall[] = [
   { target: COMMERCE, selector: "0xd2e13f50" },
 ]
 
-const TOKEN_LIMITS: TokenLimit[] = [
-  { token: TOKEN, periodCode: DAY_PERIOD, limitBaseUnits: BUDGET },
-]
-
-interface SessionState {
+interface SessionState extends SessionJournalState {
   sessionAddress: Address
   sessionPrivateKey: Hex
   keyHash: Hex
   expiryUnix: number
+  startUnix?: number
   grantTransactionHash?: Hex
   revokeTransactionHash?: Hex
+  previousRevokeTransactionHashes?: Hex[]
 }
 
 const execute = process.argv.includes("--execute")
@@ -81,15 +80,17 @@ async function adminAccount() {
 const publicClient = () => createPublicClient({ chain: bscTestnet, transport: http(RPC, { timeout: 30_000 }) })
 
 async function readState(): Promise<SessionState> {
-  return JSON.parse(await readFile(STATE, "utf8")) as SessionState
+  const state = await readSessionJournal<SessionState>(STATE)
+  if (!state) throw new Error("No session journal exists.")
+  return state
 }
 
 async function writeState(state: SessionState): Promise<void> {
-  await mkdir(dirname(STATE), { recursive: true })
-  await writeFile(STATE, `${JSON.stringify(state, null, 2)}\n`)
+  await saveSessionJournal(STATE, state)
 }
 
 function newSession(): SessionState {
+  const startUnix = Math.floor(Date.now() / 1000)
   const sessionPrivateKey = generatePrivateKey()
   const sessionAddress = privateKeyToAccount(sessionPrivateKey).address
   const publicKey = sessionPublicKeyFromAddress(sessionAddress)
@@ -97,24 +98,33 @@ function newSession(): SessionState {
     sessionAddress,
     sessionPrivateKey,
     keyHash: deriveKeyHash(SECP256K1_KEY_TYPE, publicKey),
-    expiryUnix: Math.floor(Date.now() / 1000) + SESSION_SECONDS,
+    startUnix,
+    phase: "prepared",
+    expiryUnix: startUnix + SESSION_SECONDS,
   }
 }
 
 function grantBatch(state: SessionState): Hex {
+  const window = smallestSpendWindowContaining(state.startUnix ?? state.expiryUnix - SESSION_SECONDS, state.expiryUnix)
+  if (!window) throw new Error("No spending period contains the whole session.")
+  const periodCode = (state.startUnix === undefined ? 2 : window.periodCode) as TokenLimit["periodCode"]
+  const tokenLimits: TokenLimit[] = [{ token: TOKEN, periodCode, limitBaseUnits: BUDGET }]
   const publicKey = sessionPublicKeyFromAddress(state.sessionAddress)
   return encodeErc7821Execute([
     buildAuthorizeCall(ACCOUNT, state.expiryUnix, publicKey),
-    ...buildGrantCalls(ACCOUNT, state.keyHash, ALLOWED, TOKEN_LIMITS, NATIVE_CEILING, NATIVE_CEILING, DAY_PERIOD),
+    ...buildGrantCalls(ACCOUNT, state.keyHash, ALLOWED, tokenLimits, NATIVE_CEILING, NATIVE_CEILING, periodCode),
   ])
 }
 
-async function send(data: Hex): Promise<Hex> {
+async function send(data: Hex, submitted: (hash: Hex) => Promise<void>): Promise<Hex> {
   const account = await adminAccount()
+  if (account.address.toLowerCase() !== ACCOUNT.toLowerCase()) throw new Error("Keystore does not match the configured session owner.")
+  if (await publicClient().getChainId() !== 97) throw new Error("Session RPC is not on BSC testnet.")
   const wallet = createWalletClient({ account, chain: bscTestnet, transport: http(RPC, { timeout: 30_000 }) })
   const hash = await wallet.sendTransaction({ to: ACCOUNT, data, value: 0n })
+  await submitted(hash)
   out(`  submitted ${hash}`)
-  const receipt = await publicClient().waitForTransactionReceipt({ hash, timeout: 180_000 })
+  const receipt = await publicClient().waitForTransactionReceipt({ hash, confirmations: 2, timeout: 180_000 })
   out(`  receipt ${receipt.status} in block ${receipt.blockNumber}`)
   if (receipt.status !== "success") throw new Error(`transaction ${hash} reverted`)
   return hash
@@ -144,7 +154,7 @@ async function main(): Promise<void> {
     out(`  session addr  ${state.sessionAddress}`)
     out(`  key hash      ${state.keyHash}`)
     out(`  expiry        ${new Date(state.expiryUnix * 1000).toISOString()}`)
-    out(`  token cap     ${BUDGET} on ${TOKEN} (period day)`)
+    out(`  token cap     ${BUDGET} on ${TOKEN} (period contains the entire session)`)
     out(`  native cap    ${NATIVE_CEILING} wei (relay fee only)`)
     out(`  allowed calls ${ALLOWED.length}`)
     for (const entry of ALLOWED) out(`     ${entry.selector}  ${entry.target}`)
@@ -161,7 +171,13 @@ async function main(): Promise<void> {
       out("  dry run: pass --execute to submit\n")
       return
     }
-    state.grantTransactionHash = await send(data)
+    await beginSessionJournal(STATE, state)
+    state.grantTransactionHash = await send(data, async hash => {
+      state.grantTransactionHash = hash
+      state.phase = "grant-submitted"
+      await writeState(state)
+    })
+    state.phase = "active"
     await writeState(state)
     out(`  state written to .secrets/session-hire-state.json\n`)
     return
@@ -177,22 +193,55 @@ async function main(): Promise<void> {
 
   if (phase === "revoke") {
     const state = await readState()
+    if (state.phase !== "active") throw new Error("Reconcile the existing grant before submitting a revoke.")
     const data = encodeErc7821Execute(buildRevokeCalls(ACCOUNT, state.keyHash))
     out(`\n  REVOKE  keyHash ${state.keyHash}`)
     if (!execute) {
       out("  dry run: pass --execute to submit\n")
       return
     }
-    state.revokeTransactionHash = await send(data)
+    if (state.revokeTransactionHash) {
+      state.previousRevokeTransactionHashes = [...(state.previousRevokeTransactionHashes ?? []), state.revokeTransactionHash]
+      delete state.revokeTransactionHash
+    }
+    state.phase = "revoke-submitted"
+    await writeState(state)
+    state.revokeTransactionHash = await send(data, async hash => {
+      state.revokeTransactionHash = hash
+      await writeState(state)
+    })
+    state.phase = "revoked"
     await writeState(state)
     out("  session revoked\n")
     return
   }
 
-  throw new Error("usage: run-session-hire <plan|grant|verify|revoke> [--execute]")
+  if (phase === "reconcile") {
+    const state = await readState()
+    const revoking = !!state.revokeTransactionHash || state.phase === "revoke-submitted"
+    const recovered = process.argv[process.argv.indexOf("--transaction-hash") + 1]
+    const providedHash = process.argv.includes("--transaction-hash") ? recovered : undefined
+    if (providedHash && !/^0x[0-9a-fA-F]{64}$/.test(providedHash)) throw new Error("Invalid recovery transaction hash.")
+    const savedHash = revoking ? state.revokeTransactionHash : state.grantTransactionHash
+    if (savedHash && providedHash && savedHash !== providedHash) throw new Error("A different hash is already recorded; resolve it first.")
+    const hash = (savedHash ?? providedHash) as Hex | undefined
+    if (!hash) throw new Error("Submission hash is unknown. Recover it from the wallet before any new grant; the journal is retained.")
+    if (await publicClient().getChainId() !== 97) throw new Error("Session RPC is not on BSC testnet.")
+    const receipt = await publicClient().waitForTransactionReceipt({ hash, confirmations: 2, timeout: 180_000 })
+    const tx = await publicClient().getTransaction({ hash })
+    if (tx.chainId !== 97 || tx.value !== 0n || tx.to?.toLowerCase() !== ACCOUNT.toLowerCase() || tx.from.toLowerCase() !== ACCOUNT.toLowerCase() ||
+        tx.input !== (revoking ? encodeErc7821Execute(buildRevokeCalls(ACCOUNT, state.keyHash)) : grantBatch(state))) throw new Error("Transaction does not match the saved session intent.")
+    if (revoking) state.revokeTransactionHash = hash
+    else state.grantTransactionHash = hash
+    state.phase = receipt.status === "success" ? (revoking ? "revoked" : "active") : (revoking ? "active" : "grant-reverted")
+    await writeState(state)
+    out(`  reconciled ${state.phase}`)
+    return
+  }
+  throw new Error("usage: run-session-hire <plan|grant|verify|revoke|reconcile> [--execute]")
 }
 
-await main().catch((error: unknown) => {
+await (phase === "plan" ? main() : withSessionJournalLock(STATE, main)).catch((error: unknown) => {
   out(`\n  ${error instanceof Error ? error.message : String(error)}\n`)
   process.exitCode = 1
 })

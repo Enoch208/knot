@@ -1,36 +1,10 @@
 "use client"
 
 import { formatUnits } from "viem"
+import type { CallProgress, HireEnvelope } from "./hire-types"
+export type { CallProgress, HireEnvelope } from "./hire-types"
 
 const PAYMENT_TOKEN_DECIMALS = 18
-
-export interface HireEnvelope {
-  chainId: number
-  jobId: string
-  buyer: string
-  provider: string
-  budgetBaseUnits: string
-  paymentToken: string
-  commerce: string
-  policy: string
-  disputeWindowSeconds: number
-  expiredAtUnix: number
-  quoteExpiresAtUnix: number
-  callCount: number
-}
-
-export type CallState =
-  | "waiting"
-  | "submitted"
-  | "confirmed"
-  | "reverted"
-  | "unresolved"
-  | "not attempted"
-
-export interface CallProgress {
-  state: CallState
-  transactionHash: string | null
-}
 
 export interface Notice {
   tone: "refusal" | "unresolved"
@@ -68,7 +42,7 @@ export function TermList({ envelope }: { envelope: HireEnvelope }) {
     { label: "Job expires", value: `${utc(envelope.expiredAtUnix)} (unix ${envelope.expiredAtUnix})` },
     { label: "Quote expires", value: `${utc(envelope.quoteExpiresAtUnix)} (unix ${envelope.quoteExpiresAtUnix})` },
     { label: "Wallet calls", value: String(envelope.callCount) },
-    { label: "Job identifier", value: envelope.jobId },
+    { label: "Job identifier", value: envelope.jobId ?? "Assigned by the contract after creation" },
     { label: "Buyer", value: envelope.buyer },
   ]
   return (

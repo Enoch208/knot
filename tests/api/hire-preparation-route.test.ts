@@ -94,7 +94,7 @@ describe("hire preparation route", () => {
     assert.equal(body.envelope.budgetBaseUnits, "100000000000000000")
     assert.equal(body.envelope.policy, POLICY)
     assert.equal(body.envelope.disputeWindowSeconds, 900)
-    assert.equal(body.calls.length, 5)
+    assert.equal(body.calls.length, 1)
   })
 
   it("refuses when the deployment has no commerce probe configured", async () => {

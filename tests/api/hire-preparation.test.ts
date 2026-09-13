@@ -1,7 +1,6 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 import {
-  deriveJobId,
   prepareHireForVerifiedQuote,
   HirePreparationUnavailableError,
 } from "../../apps/api/src/hire-preparation.ts"
@@ -61,15 +60,15 @@ test("a verified quote prepares a hire bound to the live commerce observation", 
   assert.equal(prepared.verifiedQuoteId, "vq_01JKNOTDEMO0000000000000")
   assert.equal(prepared.blockNumber, "130000000")
   assert.equal(prepared.envelope.budgetBaseUnits, "100000000000000000")
-  assert.equal(prepared.calls.length, 5)
+  assert.equal(prepared.calls.length, 1)
+  assert.equal(prepared.envelope.jobId, null)
+  assert.equal(prepared.stage, "CREATE")
 })
 
-test("the job id is deterministic so a retried preparation cannot create a second on-chain job", () => {
-  const first = deriveJobId("vq_01JKNOTDEMO0000000000000")
-  const second = deriveJobId("vq_01JKNOTDEMO0000000000000")
-  assert.equal(first, second)
-  assert.notEqual(first, deriveJobId("vq_01JKNOTDEMO0000000000001"))
-  assert.ok(first > 0n, "job id must be positive")
+test("HIRE-ID-01 no funding calls or invented job ID are exposed before creation", async () => {
+  const prepared = await prepareHireForVerifiedQuote(async () => compatibility(), { record: record(), nowUnix: NOW })
+  assert.equal(prepared.envelope.jobId, null)
+  assert.deepEqual(prepared.calls.map(call => call.data.slice(0, 10)), ["0x41528812"])
 })
 
 test("suspended commerce writes refuse preparation and surface the reason", async () => {

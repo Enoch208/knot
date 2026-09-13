@@ -25,7 +25,7 @@ The single most important fact in this document: **a KNOT job publishes the buye
 | Correlation ids | API response header `x-correlation-id`, API error bodies | Returned to the caller only | Not persisted as a record of its own |
 | Session permission grants | `sessions.permissions`; the on-chain key-store grant on chain `97` | The on-chain grant is public | Yes for the on-chain part |
 
-There is no end-user account system. There are no cookies, no analytics, no session tracking and no third-party scripts in `apps/web`, which is a read-only public projection holding no credential.
+There is no end-user account system, cookie-based tracking, analytics or third-party script in `apps/web`. The browser hire flow keeps a recovery journal in origin-scoped `localStorage`: quote IDs, buyer/provider addresses, complete prepared call data (including the public job description), transaction hashes and progress. It contains no private key or API credential. Anyone with access to that browser profile, or code executing on the same origin, may read it. It remains until browser storage is cleared; clearing it removes local recovery protection, not on-chain transactions. Do not clear it while a hire is unresolved. The web server holds the private API credential; the browser asks the user's injected wallet to sign.
 
 ## Written on chain, therefore public and permanent
 
@@ -91,7 +91,7 @@ Content addressing makes this worse for confidentiality and better for integrity
 | Object store (MinIO) | `knot-artifacts` (internal) and `knot-deliverables` (served publicly) | `knot-artifacts` is created with `mc anonymous set none` and a scoped IAM-style policy limited to `GetObject`/`PutObject` on that bucket for one named user |
 | Mode-`0600` environment files | Every credential listed in `ops/backend/secrets.schema.json` | Root-only on the host; never in Git |
 
-`ops/backend/secrets.schema.json` contains no key material for the KNOT backend — no keystore, no mnemonic, no private key. Grep for a signing path in `packages/`, `apps/` or `scripts/` and you will find none: `createWalletClient`, `privateKeyToAccount`, `writeContract`, `sendTransaction` and `sendRawTransaction` appear only in test fixtures.
+`ops/backend/secrets.schema.json` contains no key material for the KNOT backend — no keystore, no mnemonic, no private key. Signing does exist outside that backend: the browser requests injected-wallet signatures, and operator-only session scripts unlock a local keystore. The session script stores its recovery journal, including the generated session private key, under `.secrets/session-hire-state.json` with mode `0600` in a mode-`0700` directory; terminal-state archives retain that same private material. These files are excluded from Git and must be handled as credentials.
 
 The private API surface is genuinely private. Task, service-request, verified-quote and job routes require a bearer token; mutation routes additionally require an exact `Origin` and an `Idempotency-Key` equal to the immutable resource identifier. Only `/health` and `/api/status` are unauthenticated, and both return exactly four fields: service name, status, check time, and a database status.
 
@@ -163,7 +163,7 @@ For an external provider, being paid by KNOT is itself disclosed: the external j
 ## What KNOT does not do
 
 - No mainnet write, so no mainnet address is ever linked to a KNOT payment. Mainnet is read-only and reads are anonymous `eth_call`s.
-- No collection of names, emails, phone numbers, IP-based profiles or device identifiers. `apps/web` contains no cookie, `localStorage`, analytics or third-party script reference, and loads no external script or font origin.
+- No collection of names, emails, phone numbers, IP-based profiles or device identifiers. Browser `localStorage` is used for the hire recovery journal described above, not analytics; the web app loads no external script or font origin.
 - No forwarded-IP header is treated as an identity. Seller rate limiting explicitly refuses to derive a caller identity from request payload fields or forwarded IP headers, and enables a per-caller bucket only when the operator names a header its trusted edge sets after stripping caller-supplied values.
 - No selling, sharing or secondary use of buyer data.
 - No off-repository telemetry from the marketplace backend. The API and worker write structured lines to standard error only.

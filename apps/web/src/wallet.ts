@@ -1,10 +1,11 @@
+import type { WalletCall } from "./hire-types.ts"
+export type { WalletCall } from "./hire-types.ts"
+
 export const BSC_TESTNET_CHAIN_ID = 97
 
 const CHAIN_ID_HEX = "0x61"
 const USER_REJECTED = 4001
 const CHAIN_NOT_ADDED = 4902
-const RECEIPT_POLL_MILLISECONDS = 3_000
-const RECEIPT_DEADLINE_MILLISECONDS = 180_000
 
 const BSC_TESTNET_PARAMETERS = {
   chainId: CHAIN_ID_HEX,
@@ -38,14 +39,8 @@ export type SubmitOutcome =
   | { status: "reverted"; detail: string }
   | { status: "unresolved"; detail: string }
 
-export type SettlementOutcome =
-  | { status: "confirmed"; transactionHash: string; blockNumber: string }
-  | { status: "reverted"; transactionHash: string }
-  | { status: "unresolved"; transactionHash: string }
-
 export function readInjectedProvider(): Eip1193Provider | null {
-  if (typeof window === "undefined") return null
-  const candidate = (window as { ethereum?: unknown }).ethereum
+  const candidate = (globalThis as { window?: { ethereum?: unknown } }).window?.ethereum
   if (!candidate || typeof candidate !== "object") return null
   const provider = candidate as { request?: unknown }
   return typeof provider.request === "function" ? candidate as Eip1193Provider : null
@@ -136,50 +131,6 @@ export async function requireWalletIdentity(provider: Eip1193Provider, buyer: st
   }
 }
 
-export async function awaitSettlement(
-  provider: Eip1193Provider,
-  transactionHash: string,
-  deadlineMilliseconds = RECEIPT_DEADLINE_MILLISECONDS,
-): Promise<SettlementOutcome> {
-  const deadline = Date.now() + deadlineMilliseconds
-  while (Date.now() < deadline) {
-    const receipt = await readReceipt(provider, transactionHash)
-    if (receipt) {
-      if (receipt.status === "0x1") {
-        return { status: "confirmed", transactionHash, blockNumber: receipt.blockNumber }
-      }
-      if (receipt.status === "0x0") return { status: "reverted", transactionHash }
-      return { status: "unresolved", transactionHash }
-    }
-    await pause(RECEIPT_POLL_MILLISECONDS)
-  }
-  return { status: "unresolved", transactionHash }
-}
-
-async function readReceipt(
-  provider: Eip1193Provider,
-  transactionHash: string,
-): Promise<{ status: string; blockNumber: string } | null> {
-  try {
-    const value = await provider.request({
-      method: "eth_getTransactionReceipt",
-      params: [transactionHash],
-    })
-    if (!value || typeof value !== "object") return null
-    const receipt = value as { status?: unknown; blockNumber?: unknown }
-    if (typeof receipt.status !== "string") return null
-    return {
-      status: receipt.status,
-      blockNumber: typeof receipt.blockNumber === "string" ? receipt.blockNumber : "unknown",
-    }
-  } catch {
-    return null
-  }
-}
-
-const pause = (milliseconds: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, milliseconds))
-
 const quantity = (decimalValue: string): string => `0x${BigInt(decimalValue).toString(16)}`
 
 const errorCode = (error: unknown): number | null => {
@@ -196,5 +147,3 @@ const errorDetail = (error: unknown): string => {
   }
   return "The wallet returned no explanation."
 }
-import type { WalletCall } from "./hire-types"
-export type { WalletCall } from "./hire-types"

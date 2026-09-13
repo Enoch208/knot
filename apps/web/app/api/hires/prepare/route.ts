@@ -91,7 +91,9 @@ async function forwardPreparation(verifiedQuoteId: string, authToken: string): P
     !calls ||
     envelope.chainId !== 97 ||
     typeof envelope.budgetBaseUnits !== "string" ||
-    typeof envelope.jobId !== "string" ||
+    body.stage !== "CREATE" ||
+    envelope.jobId !== null ||
+    calls.length !== 1 ||
     envelope.callCount !== calls.length ||
     body.verifiedQuoteId !== verifiedQuoteId
   ) {
@@ -105,6 +107,7 @@ async function forwardPreparation(verifiedQuoteId: string, authToken: string): P
 
   return Response.json(
     {
+      stage: "CREATE",
       envelope,
       calls,
       verifiedQuoteId,

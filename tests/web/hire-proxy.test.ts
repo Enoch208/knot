@@ -15,7 +15,7 @@ interface UpstreamAttempt {
 
 const envelope = () => ({
   chainId: 97,
-  jobId: "412903118884421",
+  jobId: null,
   buyer: "0x71b1373FCDffBd669b85d39B2CFB37fFB9C62930",
   provider: "0xaF7474d06f171e6fD72fc5aF114b34f3D5AF8389",
   descriptionSha256Source: "KNOT verified hire: RangePilot LP range analysis",
@@ -26,14 +26,14 @@ const envelope = () => ({
   disputeWindowSeconds: 900,
   expiredAtUnix: 1_788_000_000,
   quoteExpiresAtUnix: 1_787_990_000,
-  callCount: 2,
+  callCount: 1,
 })
 
 const preparation = () => ({
+  stage: "CREATE",
   envelope: envelope(),
   calls: [
     { to: POLICY, data: "0xab", value: "0" },
-    { to: POLICY, data: "0xcd", value: "0" },
   ],
   verifiedQuoteId: quoteId,
   observedAtUtc: "2026-09-10T00:00:00.000Z",
@@ -93,7 +93,7 @@ describe("hire preparation proxy", () => {
     assert.equal(returned.budgetBaseUnits, "100000000000000000")
     assert.equal(returned.policy, POLICY)
     assert.equal(returned.disputeWindowSeconds, 900)
-    assert.equal((body.calls as unknown[]).length, 2)
+    assert.equal((body.calls as unknown[]).length, 1)
     assert.equal(body.verifiedQuoteId, quoteId)
     assert.equal(response.headers.get("cache-control"), "no-store, max-age=0")
   })
@@ -218,7 +218,7 @@ describe("hire preparation proxy", () => {
 
   it("refuses to serve a preparation whose call count contradicts its envelope", async () => {
     const tampered = preparation()
-    tampered.calls = [{ to: POLICY, data: "0xab", value: "0" }]
+    tampered.calls = []
     stubUpstream(200, tampered)
     const response = await POST(hireRequest())
     assert.equal(response.status, 502)

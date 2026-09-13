@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { getAddress, toFunctionSelector } from "viem"
+import { createPublicClient, getAddress, http, parseAbi, toFunctionSelector } from "viem"
 import {
   MAXIMUM_RELAY_FEE_ALLOWANCE_WEI,
   SessionHireAuthorityError,
@@ -14,7 +14,6 @@ import {
   type CommerceCompatibility,
   type PreparedHire,
 } from "../packages/commerce/src/index.ts"
-import { deriveJobId } from "../apps/api/src/hire-preparation.ts"
 
 const RANGEPILOT_PROVIDER = "0xE4feD886b4b9062486d4663c6962E14473Bd7320"
 const RANGEPILOT_AGENT_ID = "2297"
@@ -22,7 +21,6 @@ const BUYER = "0x71b1373FcdFfBD669B85D39b2Cfb37fFb9c62930"
 const PRICE_BASE_UNITS = "100000000000000000"
 const PRICE_LABEL = "0.1 U (BSC testnet payment token, 18 decimals)"
 const DESCRIPTION = "KNOT verified hire: RangePilot pinned PancakeSwap V3 range analysis"
-const QUOTE_REFERENCE = "compose-session-hire-authority/rangepilot-0.1U"
 const QUOTE_LIFETIME_SECONDS = 600
 
 const KNOWN_SIGNATURES = [
@@ -78,6 +76,7 @@ const plan = (
     agent: "RangePilot",
     agentId: RANGEPILOT_AGENT_ID,
     jobId: authority.jobId,
+    jobIdBinding: "Counter prediction for an atomic batch only; sequential funding must use the actual creation receipt.",
     buyerAccount: authority.account,
     provider: authority.provider,
     priceLabel: PRICE_LABEL,
@@ -161,7 +160,7 @@ const plan = (
   ],
   humanExecutionStillRequired: [
     "an admin signer held by the account owner must grant these exact permissions through direct ERC-7821 account execution, because the pinned SDK exports no grantSession helper",
-    "a session-signed execute must then submit the five prepared calls in order",
+    "a session-signed execute must submit the five calls atomically after checking the counter again; a sequential wallet flow must use the actual creation receipt instead",
     "the grant, the funded job, and the revoke must be read back before any claim is published",
   ],
 })
@@ -175,8 +174,15 @@ if (compatibility.status !== "VERIFIED" || !compatibility.writeAllowed) {
 }
 
 const nowUnix = Math.floor(Date.now() / 1000)
+const counterClient = createPublicClient({ transport: http(process.env.KNOT_BSC_TESTNET_RPC_URL ?? TESTNET.rpcUrls[0]) })
+if (await counterClient.getChainId() !== 97) fail("WRONG_CHAIN", ["job counter must be read on BSC testnet"])
+const commerce = TESTNET.contracts.find((contract) => contract.role === "commerce")
+if (!commerce) fail("NO_COMMERCE", ["commerce is absent from the pinned manifest"])
+const jobCounter = await counterClient.readContract({
+  address: getAddress(commerce.address), abi: parseAbi(["function jobCounter() view returns (uint256)"]), functionName: "jobCounter",
+})
 const prepared = prepareHireEnvelope(compatibility, {
-  jobId: deriveJobId(QUOTE_REFERENCE),
+  jobId: jobCounter + 1n,
   provider: RANGEPILOT_PROVIDER,
   buyer: BUYER,
   description: DESCRIPTION,

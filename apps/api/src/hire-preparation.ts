@@ -1,4 +1,3 @@
-import { keccak256, toHex } from "viem"
 import {
   HireEnvelopeError,
   prepareHireEnvelope,
@@ -20,20 +19,16 @@ export class HirePreparationUnavailableError extends Error {
 
 export { HireEnvelopeError }
 
-const JOB_ID_SPACE = 1_000_000_000_000_000n
-
-export function deriveJobId(verifiedQuoteId: string): bigint {
-  const digest = keccak256(toHex(`knot.hire/1:${verifiedQuoteId}`))
-  return (BigInt(digest) % JOB_ID_SPACE) + 1n
-}
-
 export interface HirePreparationInput {
   record: VerifiedQuoteRecord
   nowUnix: number
   jobLifetimeSeconds?: number
 }
 
-export interface HirePreparation extends PreparedHire {
+export interface HirePreparation {
+  stage: "CREATE"
+  envelope: Omit<PreparedHire["envelope"], "jobId"> & { jobId: null }
+  calls: PreparedHire["calls"]
   verifiedQuoteId: string
   observedAtUtc: string
   blockNumber: string | null
@@ -52,7 +47,7 @@ export async function prepareHireForVerifiedQuote(
 
   const quote = input.record.quote
   const prepared = prepareHireEnvelope(compatibility, {
-    jobId: deriveJobId(input.record.id),
+    jobId: 1n,
     provider: input.record.sellerOwner,
     buyer: input.record.buyer,
     description: input.record.canonicalJobDescription,
@@ -66,7 +61,9 @@ export async function prepareHireForVerifiedQuote(
   })
 
   return {
-    ...prepared,
+    stage: "CREATE",
+    envelope: { ...prepared.envelope, jobId: null, callCount: 1 },
+    calls: prepared.calls.slice(0, 1),
     verifiedQuoteId: input.record.id,
     observedAtUtc: compatibility.observedAtUtc,
     blockNumber: compatibility.blockNumber,
