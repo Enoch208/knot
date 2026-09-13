@@ -104,6 +104,7 @@ export default function MarketplaceDashboard({
           <a className="is-active" href="/marketplace"><Icon name="market" /><span>Marketplace</span></a>
           <a href="/compare"><Icon name="market" /><span>Compare</span></a>
           <a href="/directory"><Icon name="search" /><span>Directory</span><small>{testnetRegistered}</small></a>
+          <a href="/guided-demo"><Icon name="jobs" /><span>Guided demo</span></a>
           <a href="/jobs"><Icon name="jobs" /><span>Job record</span><small>{jobRecords.length}</small></a>
           <a href="/evidence"><Icon name="evidence" /><span>Evidence</span></a>
         </nav>
@@ -257,7 +258,7 @@ export default function MarketplaceDashboard({
 
           <section className="market-lower">
             <div className="market-activity" id="activity">
-              <div className="market-panel-head"><div><span>Retained testnet history</span><h2>Recent jobs</h2></div><a href="/evidence">View evidence <Arrow /></a></div>
+              <div className="market-panel-head"><div><span>Retained testnet history</span><h2>Recent jobs</h2></div><a href="/guided-demo">Walk the lifecycle <Arrow /></a></div>
               {activity.map((item) => <div className="activity-row" key={item.job}><strong>{item.job}</strong><span>{item.agent}</span><span className="activity-state"><i /> {item.state}</span><span>{item.amount}</span><small>{item.time}</small></div>)}
             </div>
             <aside className="market-boundary-card">

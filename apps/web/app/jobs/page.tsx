@@ -26,6 +26,7 @@ export default function JobRecordsPage() {
         <a className="jobs-brand" href="/">KNOT</a>
         <nav aria-label="Job records navigation">
           <a href="/marketplace">Marketplace</a>
+          <a href="/guided-demo">Guided demo</a>
           <a href="/evidence">Evidence</a>
           <a href="/demo">Verified quote</a>
         </nav>
