@@ -1,11 +1,6 @@
 import { keccak256 } from "viem"
 import type { AgentSlug } from "../agent-catalog.ts"
-import healthRequestTemplate from "../../../../evidence/advantage/healthguard-1185/input.json" with { type: "json" }
-import healthTaskTemplate from "../../../../evidence/advantage/healthguard-1185/task.json" with { type: "json" }
-import gridRequestTemplate from "../../../../evidence/advantage/gridquant-1187/input.json" with { type: "json" }
-import gridTaskTemplate from "../../../../evidence/advantage/gridquant-1187/task.json" with { type: "json" }
-import yieldRequestTemplate from "../../../../evidence/advantage/yieldscout-1188/input.json" with { type: "json" }
-import yieldTaskTemplate from "../../../../evidence/advantage/yieldscout-1188/task.json" with { type: "json" }
+import retainedExamples from "./retained-examples.json" with { type: "json" }
 import { rangePilotRequestTemplate, rangePilotTaskTemplate } from "./rangepilot-example.ts"
 
 export type DemoAgentSlug = AgentSlug
@@ -38,8 +33,8 @@ const definitions = {
     categoryLabel: "Lending health",
     schemaVersion: "knot.health.request/1",
     transport: "base64url" as const,
-    task: healthTaskTemplate,
-    request: healthRequestTemplate,
+    task: retainedExamples.healthguard.task,
+    request: retainedExamples.healthguard.request,
   },
   rangepilot: {
     name: "RangePilot",
@@ -56,8 +51,8 @@ const definitions = {
     categoryLabel: "Grid design",
     schemaVersion: "knot.gridquant.request/2",
     transport: "deflate-base64url" as const,
-    task: gridTaskTemplate,
-    request: gridRequestTemplate,
+    task: retainedExamples.gridquant.task,
+    request: retainedExamples.gridquant.request,
   },
   yieldscout: {
     name: "YieldScout",
@@ -65,8 +60,8 @@ const definitions = {
     categoryLabel: "Yield comparison",
     schemaVersion: "knot.yield.request/2",
     transport: "deflate-base64url" as const,
-    task: yieldTaskTemplate,
-    request: yieldRequestTemplate,
+    task: retainedExamples.yieldscout.task,
+    request: retainedExamples.yieldscout.request,
   },
 } as const
 
