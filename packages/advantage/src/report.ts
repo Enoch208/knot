@@ -64,7 +64,7 @@ export interface VerifiedShieldReport {
 }
 
 export class AdvantageReportError extends Error {
-  readonly code: "DATASET_SHAPE" | "DUPLICATE_CATEGORY" | "LIFECYCLE_EVIDENCE" | "MISSING_CATEGORY" | "UNEXPECTED_CATEGORY"
+  readonly code: "DATASET_SHAPE" | "DUPLICATE_CATEGORY" | "HUMAN_ARM_EVIDENCE" | "LIFECYCLE_EVIDENCE" | "MISSING_CATEGORY" | "UNEXPECTED_CATEGORY"
 
   constructor(code: AdvantageReportError["code"], message: string) {
     super(message)
@@ -76,7 +76,7 @@ export class AdvantageReportError extends Error {
 export async function buildAgentAdvantageReport(
   sources: readonly AdvantageDatasetSource[],
   shieldSource: ShieldReportSource,
-  humanArm: HumanArmComparison | null = null,
+  humanArm: HumanArmComparison | readonly HumanArmComparison[] | null = null,
 ): Promise<string> {
   const experiments: VerifiedReportExperiment[] = []
   const evaluators = [
@@ -138,10 +138,27 @@ export async function buildAgentAdvantageReport(
     evaluation,
     groundTruthText: shieldSource.groundTruthText,
   })
+  const humanArms = humanArm === null ? [] : Array.isArray(humanArm) ? [...humanArm] : [humanArm]
+  const taskIds = new Set<string>()
+  const humanTaskCategories: Readonly<Record<string, FinanceCategory>> = {
+    "yield-1188": "yield",
+    "grid-1187": "grid",
+    "range-1189": "rebalancing",
+  }
+  for (const comparison of humanArms) {
+    if (taskIds.has(comparison.taskId)) {
+      throw new AdvantageReportError("HUMAN_ARM_EVIDENCE", `duplicate human arm: ${comparison.taskId}`)
+    }
+    const expectedCategory = humanTaskCategories[comparison.taskId]
+    if (!expectedCategory || comparison.category !== expectedCategory) {
+      throw new AdvantageReportError("HUMAN_ARM_EVIDENCE", `unexpected human arm: ${comparison.taskId}/${comparison.category}`)
+    }
+    taskIds.add(comparison.taskId)
+  }
   return renderAgentAdvantageReport(
     experiments,
     { evaluationPath: shieldSource.evaluationPath, evaluation, capture, report },
-    humanArm,
+    humanArms,
   )
 }
 

@@ -1,5 +1,5 @@
-YIELD COMPARISON — TIMED TASK
-=============================
+LP RANGE DECISION — TIMED TASK
+==============================
 
 You are being timed. That is the point of the exercise: we are measuring how
 long this takes a person. Work at your normal pace. Do not rush, and do not
@@ -41,8 +41,7 @@ WHAT YOU MAY USE
 
     The input.json file
     A calculator (or a spreadsheet)
-    Public Venus documentation
-    Public Aave documentation
+    Public PancakeSwap v3 documentation
     A block explorer
 
 

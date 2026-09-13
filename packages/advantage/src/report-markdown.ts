@@ -13,7 +13,7 @@ const names = {
 export function renderAgentAdvantageReport(
   experiments: readonly VerifiedReportExperiment[],
   shield: VerifiedShieldReport,
-  humanArm: HumanArmComparison | null = null,
+  humanArms: readonly HumanArmComparison[] = [],
 ): string {
   const lines = [
     "# Agent Advantage Report",
@@ -30,14 +30,14 @@ export function renderAgentAdvantageReport(
     "",
   ]
   for (const experiment of experiments) lines.push(...experimentSection(experiment))
-  if (humanArm) lines.push(...humanArmSection(humanArm))
+  if (humanArms.length > 0) lines.push(...humanArmsSection(humanArms))
   lines.push(...shieldSection(shield))
   lines.push(
     "## Interpretation limits",
     "",
     "- All four finance results are single-input quality observations. A tie is a tie; none establishes superiority or repeatability.",
     "- Three TaskSpecs cryptographically match their committed raw input bytes. HealthGuard's paired paths share the same separately SHA-256-bound input, but its TaskSpec input hash does not match the committed input bytes; the authentic signed-task preimage binding is therefore not established.",
-    "- Agent lifecycle durations and baseline calculation measurements have different boundaries. Across the four deterministic pairs they establish no speed, latency, labor, or human-time advantage; the only human-effort observation in this report is the single recorded operator session below.",
+    humanEffortLimit(humanArms),
     "- Service fees are testnet U and network fees are tBNB. They are not revenue, dollars, or evidence of production cost advantage.",
     "- No paired result establishes profit, APY, return, savings, PnL, win rate, execution quality, or future performance.",
     "- The finance artifacts are analysis only. No mainnet position, order, swap, deposit, withdrawal, migration, or repayment was executed.",
@@ -177,12 +177,18 @@ function fromDocs(repositoryPath: string): string {
 
 const minutes = (milliseconds: number): string => (milliseconds / 60_000).toFixed(2)
 
-function humanArmSection(comparison: HumanArmComparison): string[] {
-  return [
-    "## Recorded operator session",
+function humanArmsSection(comparisons: readonly HumanArmComparison[]): string[] {
+  const lines = [
+    comparisons.length === 1 ? "## Recorded operator session" : "## Recorded operator sessions",
     "",
-    `One operator worked the frozen \`${comparison.taskId}\` input with no KNOT access and no assistant, while a recorder held the clock. This is the only human-effort measurement in this report.`,
+    comparisons.length === 1
+      ? `One operator worked the frozen \`${comparisons[0]!.taskId}\` input with no KNOT access and no assistant, while a recorder held the clock. This is the only human-effort measurement in this report.`
+      : `${comparisons.length} operators each worked one frozen task with no KNOT access and no assistant, while a recorder held each clock. Each row is one observation; this is not a population estimate.`,
     "",
+  ]
+  for (const comparison of comparisons) {
+    if (comparisons.length > 1) lines.push(`### \`${comparison.taskId}\``, "")
+    lines.push(
     "| Arm | Measured time | Outcome |",
     "| --- | ---: | --- |",
     `| Operator \`${comparison.operatorPseudonym}\` (prior familiarity: ${comparison.priorFamiliarity}) | ${minutes(comparison.humanMilliseconds)} min | ${comparison.answersAgree ? "agreed with the paid agent on every compared field" : `disagreed on ${comparison.disagreeingFields.join(", ")}`} |`,
@@ -192,5 +198,17 @@ function humanArmSection(comparison: HumanArmComparison): string[] {
     "",
     ...comparison.limitations.map((limitation) => `- ${limitation}`),
     "",
-  ]
+    )
+  }
+  return lines
+}
+
+function humanEffortLimit(comparisons: readonly HumanArmComparison[]): string {
+  if (comparisons.length === 0) {
+    return "- Agent lifecycle durations and baseline calculation measurements have different boundaries. Across the four deterministic pairs they establish no speed, latency, labor, or human-time advantage; no human-effort observation is included."
+  }
+  if (comparisons.length === 1) {
+    return "- Agent lifecycle durations and baseline calculation measurements have different boundaries. Across the four deterministic pairs they establish no speed, latency, labor, or human-time advantage; the only human-effort observation in this report is the single recorded operator session below."
+  }
+  return `- Agent lifecycle durations and human task measurements have different boundaries. The ${comparisons.length} recorded operator sessions are separate single-task observations; they do not establish a population-level speed, labor, or cost advantage.`
 }

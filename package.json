@@ -28,6 +28,7 @@
     "jobs:snapshot": "node scripts/build-job-records-snapshot.ts",
     "comparison:snapshot": "node scripts/build-comparison-snapshot.ts",
     "human-arm": "node scripts/record-human-arm.ts",
+    "human-arm:evidence": "node scripts/human-arm-evidence.ts",
     "db:migrate": "node packages/db/src/migrate-cli.ts",
     "demo:quote": "node scripts/run-verified-quote-demo.ts",
     "external-paid-job:verify": "node scripts/verify-external-paid-job.ts",

@@ -83,6 +83,62 @@ test("the committed report is deterministic and derived from all four verified f
   }
 })
 
+test("the report renders three distinct human task observations without aggregating them into a population claim", async () => {
+  const yieldArm = await loadHumanArm()
+  const gridArm: HumanArmComparison = {
+    ...yieldArm,
+    taskId: "grid-1187",
+    category: "grid",
+    operatorPseudonym: "participant-2",
+    humanMilliseconds: 271_117,
+    agentMilliseconds: 93_618,
+    timeRatio: "2.90",
+    absoluteMillisecondsSaved: 177_499,
+  }
+  const rangeArm: HumanArmComparison = {
+    ...yieldArm,
+    taskId: "range-1189",
+    category: "rebalancing",
+    operatorPseudonym: "participant-3",
+    humanMilliseconds: 315_731,
+    agentMilliseconds: 203_400,
+    timeRatio: "1.55",
+    absoluteMillisecondsSaved: 112_331,
+  }
+  const report = await buildAgentAdvantageReport(
+    await loadSources(),
+    await loadShield(),
+    [yieldArm, gridArm, rangeArm],
+  )
+  assert.match(report, /## Recorded operator sessions/)
+  for (const taskId of ["yield-1188", "grid-1187", "range-1189"]) {
+    assert.ok(report.includes(`### \`${taskId}\``))
+  }
+  assert.match(report, /Each row is one observation; this is not a population estimate/)
+  assert.match(report, /3 recorded operator sessions are separate single-task observations/)
+})
+
+test("duplicate human tasks fail closed", async () => {
+  const humanArm = await loadHumanArm()
+  await assert.rejects(
+    buildAgentAdvantageReport(await loadSources(), await loadShield(), [humanArm, humanArm]),
+    (error: unknown) => error instanceof AdvantageReportError && error.code === "HUMAN_ARM_EVIDENCE",
+  )
+})
+
+test("unknown or category-swapped human tasks fail closed", async () => {
+  const humanArm = await loadHumanArm()
+  for (const changed of [
+    { ...humanArm, taskId: "unrecorded-task" },
+    { ...humanArm, category: "grid" },
+  ]) {
+    await assert.rejects(
+      buildAgentAdvantageReport(await loadSources(), await loadShield(), changed),
+      (error: unknown) => error instanceof AdvantageReportError && error.code === "HUMAN_ARM_EVIDENCE",
+    )
+  }
+})
+
 test("the report keeps the verified Shield measurement separate from marketplace pairs", async () => {
   const report = await buildAgentAdvantageReport(await loadSources(), await loadShield())
   assert.match(report, /## Shield high-stakes corpus evaluation/)

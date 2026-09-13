@@ -2,6 +2,8 @@ import { readFile, writeFile } from "node:fs/promises"
 import { dirname, resolve } from "node:path"
 import { buildAgentAdvantageReport, type AdvantageDatasetSource } from "../packages/advantage/src/report.ts"
 import type { HumanArmComparison } from "../packages/advantage/src/human-arm.ts"
+import type { BuiltHumanArmEvidence, HumanArmTaskId } from "../packages/advantage/src/human-arm-evidence.ts"
+import { verifyStoredHumanArmEvidence } from "./human-arm-evidence.ts"
 import { shieldSlitherCapture } from "../packages/services/shield/index.ts"
 
 const repositoryRoot = resolve(import.meta.dirname, "..")
@@ -67,6 +69,22 @@ for (const output of capture.outputs) {
 const humanArmArtifact = JSON.parse(
   await readFile(resolve(repositoryRoot, "evidence/advantage/human-arm/yield-1188.json"), "utf8"),
 ) as { comparison: HumanArmComparison }
+const humanArms: HumanArmComparison[] = [humanArmArtifact.comparison]
+for (const taskId of ["grid-1187", "range-1189"] as const satisfies readonly HumanArmTaskId[]) {
+  const path = resolve(repositoryRoot, `evidence/advantage/human-arm/${taskId}.json`)
+  let text: string
+  try {
+    text = await readFile(path, "utf8")
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") continue
+    throw error
+  }
+  const artifact = JSON.parse(text) as BuiltHumanArmEvidence
+  if (artifact.taskId !== taskId || artifact.schemaVersion !== "knot.human-arm.comparison/2") {
+    throw new Error(`${path} is not the expected ${taskId} comparison`)
+  }
+  humanArms.push((await verifyStoredHumanArmEvidence(artifact)).comparison)
+}
 
 const report = await buildAgentAdvantageReport(sources, {
   evaluationPath: "evidence/shield/corpus-v1/evaluation.json",
@@ -76,7 +94,7 @@ const report = await buildAgentAdvantageReport(sources, {
   runsText: await readFile(resolve(repositoryRoot, "evidence/shield/corpus-v1/runs.json"), "utf8"),
   evaluation: JSON.parse(await readFile(resolve(repositoryRoot, "evidence/shield/corpus-v1/evaluation.json"), "utf8")) as unknown,
   groundTruthText: await readFile(resolve(repositoryRoot, "tests/fixtures/shield/corpus-v1/ground-truth.json"), "utf8"),
-}, humanArmArtifact.comparison)
+}, humanArms)
 const outputPath = resolve(repositoryRoot, "docs/AGENT_ADVANTAGE_REPORT.md")
 await writeFile(outputPath, report)
 process.stdout.write(`[advantage] verified four finance pairs and Shield; wrote ${outputPath}\n`)

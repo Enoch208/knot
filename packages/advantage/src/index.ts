@@ -1,4 +1,5 @@
 export * from "./healthguard.ts"
+export * from "./human-arm-evidence.ts"
 export * from "./gridquant-math.ts"
 export * from "./gridquant-reference.ts"
 export * from "./gridquant-schemas.ts"
