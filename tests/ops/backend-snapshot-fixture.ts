@@ -26,7 +26,7 @@ export async function command(program: string, args: string[], env: NodeJS.Proce
   return run(program, args, { cwd: repository, env: { ...process.env, ...env } })
 }
 
-export async function completeSnapshot(path: string, database = "target-database") {
+export async function completeSnapshot(path: string, database = "target-database", sourceRepository = repository) {
   for (const bucket of ["knot-artifacts", "knot-deliverables"]) await mkdir(resolve(path, "buckets", bucket), { recursive: true, mode: 0o700 })
   await writeFile(resolve(path, "database.dump"), database)
   await writeFile(resolve(path, "database-counts.tsv"), migratedTableNames.map((name) => `${name}\t0`).join("\n") + "\n")
@@ -34,7 +34,7 @@ export async function completeSnapshot(path: string, database = "target-database
   await writeFile(resolve(path, "deployed-images.tsv"), imageNames.map((name) => `${name}\t${imageReference}\t${imageId}`).join("\n") + "\n")
   await writeFile(resolve(path, "buckets/knot-artifacts/result.json"), "target-artifact")
   await writeFile(resolve(path, "buckets/knot-deliverables/purchased.json"), "target-deliverable")
-  await command(process.execPath, [manifestProgram, "capture", path, repository, resolve(path, "deployed-images.tsv"), "2026-09-09T16:00:00Z"])
+  await command(process.execPath, [manifestProgram, "capture", path, sourceRepository, resolve(path, "deployed-images.tsv"), "2026-09-09T16:00:00Z"])
   const manifest = await readFile(resolve(path, "manifest.json"))
   await writeFile(resolve(path, "COMPLETE"), `${createHash("sha256").update(manifest).digest("hex")}\n`)
 }
@@ -52,7 +52,17 @@ export async function testEnvironment() {
   const docker = `#!/bin/sh
 set -eu
 printf '%s\n' "$*" >> "$KNOT_TEST_LOG"
+if [ "$1" = "image" ]; then
+  case "$*" in
+    *RepoDigests*) printf '%s\n' "$KNOT_TEST_IMAGE_REFERENCE" ;;
+    *) if [ "\${KNOT_TEST_RESOLVED_IMAGE_DRIFT:-0}" = 1 ]; then printf '%s\n' "sha256:${"c".repeat(64)}"; else printf '%s\n' "$KNOT_TEST_IMAGE_ID"; fi ;;
+  esac
+  exit 0
+fi
 if [ "$1" = "inspect" ]; then
+  if [ "\${KNOT_TEST_TAGGED_IMAGES:-0}" = 1 ]; then
+    case "$*" in *Config.Image*) printf '%s\n' 'knot/backend:release'; exit 0 ;; esac
+  fi
   container=
   for argument in "$@"; do container=$argument; done
   case "$*" in

@@ -78,6 +78,19 @@ validate_image_metadata() {
   esac
 }
 
+immutable_container_reference() {
+  container_reference=$(docker inspect --format '{{.Config.Image}}' "$1")
+  case "$container_reference" in
+    *@sha256:????????????????????????????????????????????????????????????????) printf '%s\n' "$container_reference"; return 0 ;;
+  esac
+  running_image=$(docker inspect --format '{{.Image}}' "$1")
+  immutable_reference=$(docker image inspect "$running_image" --format '{{index .RepoDigests 0}}') || return 1
+  validate_image_metadata "$1" "$immutable_reference" "$running_image" || return 1
+  resolved_image=$(docker image inspect "$immutable_reference" --format '{{.Id}}') || return 1
+  [ "$resolved_image" = "$running_image" ] || { printf '%s\n' "immutable reference differs from running image" >&2; return 1; }
+  printf '%s\n' "$immutable_reference"
+}
+
 writer_container_metadata() {
   output_path=$1
   api_container=$(dc ps --all -q api)
@@ -86,8 +99,8 @@ writer_container_metadata() {
     printf '%s\n' "api and worker containers must exist" >&2
     return 1
   }
-  api_reference=$(docker inspect --format '{{.Config.Image}}' "$api_container")
-  worker_reference=$(docker inspect --format '{{.Config.Image}}' "$worker_container")
+  api_reference=$(immutable_container_reference "$api_container")
+  worker_reference=$(immutable_container_reference "$worker_container")
   api_image_id=$(docker inspect --format '{{.Image}}' "$api_container")
   worker_image_id=$(docker inspect --format '{{.Image}}' "$worker_container")
   [ "$api_reference" = "$worker_reference" ] && [ "$api_image_id" = "$worker_image_id" ] || {
@@ -100,7 +113,7 @@ writer_container_metadata() {
   for seller_name in healthguard rangepilot gridquant yieldscout; do
     seller_container=$(seller_dc "$seller_name" ps --all -q agent)
     [ -n "$seller_container" ] || { printf '%s\n' "$seller_name container must exist" >&2; return 1; }
-    seller_reference=$(docker inspect --format '{{.Config.Image}}' "$seller_container")
+    seller_reference=$(immutable_container_reference "$seller_container")
     seller_image_id=$(docker inspect --format '{{.Image}}' "$seller_container")
     validate_image_metadata "$seller_name" "$seller_reference" "$seller_image_id"
     printf '%s\t%s\t%s\n' "$seller_name" "$seller_reference" "$seller_image_id" >> "$output_path"

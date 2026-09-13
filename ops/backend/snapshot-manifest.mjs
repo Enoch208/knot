@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto"
-import { execFileSync } from "node:child_process"
+import { readReleaseCommit } from "./release-identity.mjs"
 import { lstat, readdir, readFile, stat, writeFile } from "node:fs/promises"
 import { relative, resolve, sep } from "node:path"
 
@@ -86,7 +86,7 @@ async function releaseRecord(repository, deployedImagesPath) {
   const migrations = []
   for (const name of migrationNames) migrations.push(await fileRecord(repository, resolve(migrationsRoot, name)))
   return {
-    gitCommit: execFileSync("git", ["-C", repository, "rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+    gitCommit: await readReleaseCommit(repository),
     packageLock: await fileRecord(repository, resolve(repository, "package-lock.json")),
     migrations,
     compose: await fileRecord(repository, resolve(repository, "ops/backend/compose.yaml")),
