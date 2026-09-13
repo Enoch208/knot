@@ -12,7 +12,7 @@ done
 npm run check
 ```
 
-Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 747 root tests, 20 category-parity tests, and 73 seller tests: 840 total. It covers API boundaries, four-category public quote routing, live marketplace observation failure states, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
+Each seller is an isolated pnpm workspace with its own frozen lockfile, so the seller install loop is required on a clean checkout. `npm run check` type-checks the root packages, verifies the public claim ledger, and builds and tests all four seller packages. The current gate contains 792 root tests, 20 category-parity tests, and 73 seller tests: 885 total. It covers API boundaries, four-category public quote routing, live marketplace observation failure states, buyer-signed quote and hire binding, canonical post-funding receipt verification, reload-safe lifecycle recovery, byte-exact private seller-request preparation, retained paid-request replay through the production seller parsers, chain-read validation, commerce compatibility, durable state transitions, the four analyzers, category parity, seller delivery behavior with fixtures, and the closed live-rollout record.
 
 The default run does not prove live data access, a funded purchase, delivery on chain, settlement, or performance. Environment-gated checks remain separate so a passing fixture suite cannot be mistaken for live evidence.
 
@@ -155,7 +155,7 @@ npm run chain-recovery-rollout:verify
 
 The offline verifier binds the sanitized release, immutable image, service starts, mode-`0600` worker-only gate, seven migrations, empty database and worker samples, five HTTP-200 checks, the one-shot job-1203 receipt observation, and every zero-write limitation. It does not repeat the deployment or RPC call and therefore verifies the captured record rather than proving uptime or queued recovery effectiveness.
 
-That seven-migration count belongs to the retained rollout; the current source tree contains 12 migrations.
+That seven-migration count belongs to the retained rollout; the current source tree contains 14 migrations.
 
 The deployment contract keeps the observer configuration in a mode-`0600` environment mounted only into the worker and rejects unsafe RPC locations or out-of-range recovery controls:
 
