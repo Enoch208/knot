@@ -1,11 +1,13 @@
 import assert from "node:assert/strict"
 import { afterEach, beforeEach, describe, it } from "node:test"
+import { privateKeyToAccount } from "viem/accounts"
 import { POST } from "../../apps/web/app/api/hires/prepare/route.ts"
 
 const token = "b".repeat(48)
 const origin = "https://knotmarkets.xyz"
 const quoteId = "vq_01JKNOTDEMO0000000000000"
 const POLICY = "0xd6a4217588F6B1F5657a92A3e94E6422aD771cEA"
+const selfServiceBuyer = privateKeyToAccount(`0x${"44".repeat(32)}`)
 
 interface UpstreamAttempt {
   url: string
@@ -85,6 +87,38 @@ afterEach(() => {
 })
 
 describe("hire preparation proxy", () => {
+  it("drafts and forwards a buyer-signed self-service preparation", async () => {
+    const draftResponse = await POST(hireRequest({
+      body: JSON.stringify({ stage: "DRAFT", verifiedQuoteId: quoteId, buyer: selfServiceBuyer.address }),
+    }))
+    assert.equal(draftResponse.status, 200)
+    assert.equal(attempts.length, 0)
+    const draft = await readBody(draftResponse)
+    const signature = await selfServiceBuyer.signMessage({ message: String(draft.message) })
+    const prepared = preparation()
+    prepared.envelope.buyer = selfServiceBuyer.address
+    stubUpstream(200, prepared)
+    const response = await POST(hireRequest({
+      body: JSON.stringify({ verifiedQuoteId: quoteId, buyerIntent: draft.buyerIntent, buyerSignature: signature }),
+    }))
+    assert.equal(response.status, 200)
+    assert.match(attempts[0]!.url, /\/api\/self-service\/verified-quotes\/vq_01JKNOTDEMO0000000000000\/hire-preparation$/)
+    assert.equal(attempts[0]!.headers["x-knot-buyer-signature"], signature)
+    assert.equal(attempts[0]!.headers["x-knot-buyer-intent"], draft.buyerIntent)
+  })
+
+  it("refuses a signed preparation returned for a different buyer", async () => {
+    const draft = await readBody(await POST(hireRequest({
+      body: JSON.stringify({ stage: "DRAFT", verifiedQuoteId: quoteId, buyer: selfServiceBuyer.address }),
+    })))
+    const signature = await selfServiceBuyer.signMessage({ message: String(draft.message) })
+    const response = await POST(hireRequest({
+      body: JSON.stringify({ verifiedQuoteId: quoteId, buyerIntent: draft.buyerIntent, buyerSignature: signature }),
+    }))
+    assert.equal(response.status, 502)
+    assert.match(String((await readBody(response)).explanation), /different buyer/)
+  })
+
   it("returns the reviewable envelope and calls for a prepared hire", async () => {
     const response = await POST(hireRequest())
     assert.equal(response.status, 200)

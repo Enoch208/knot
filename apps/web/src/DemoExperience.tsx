@@ -4,6 +4,8 @@ import { useState } from "react"
 import { agentProfiles, type AgentSlug } from "./agent-catalog"
 import { HirePanel } from "./HirePanel"
 import { SavedHires } from "./SavedHires"
+import { signBuyerIntent } from "./buyer-intent-client"
+import { ensureBscTestnet, readInjectedProvider, requestAccount } from "./wallet"
 
 type DemoState = "idle" | "running" | "complete" | "failed"
 
@@ -58,7 +60,7 @@ type QuoteResult = {
   }
   boundary: {
     fundingPermitted: false
-    walletAccessed: false
+    walletAccessed: true
     jobCreated: false
     chainWritePerformed: false
     mainnetWritePerformed: false
@@ -129,13 +131,48 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
     setError("")
     setResult(null)
     try {
-      const response = await fetch("/api/demo/quote", {
+      const provider = readInjectedProvider()
+      if (!provider) throw new Error("Connect an EOA browser wallet to bind this quote.")
+      const account = await requestAccount(provider)
+      if (account.status === "rejected") throw new Error("Wallet connection was declined. No transaction was requested.")
+      if (account.status !== "connected") throw new Error(account.detail)
+      const network = await ensureBscTestnet(provider)
+      if (network.status === "rejected") throw new Error("BSC testnet selection was declined. No transaction was requested.")
+      if (network.status !== "ready") throw new Error(network.detail)
+      const options = {
+        agentSlug,
+        targetRangeWidthTicks: width,
+        maximumSlippageBps: slippage,
+      }
+      const draftResponse = await fetch("/api/self-service/quote", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ stage: "DRAFT", buyer: account.address, ...options }),
+      })
+      const draft = await draftResponse.json() as {
+        explanation?: unknown
+        buyerIntent?: unknown
+        message?: unknown
+        requestBodyBase64url?: unknown
+      }
+      if (
+        !draftResponse.ok ||
+        typeof draft.buyerIntent !== "string" ||
+        typeof draft.message !== "string" ||
+        typeof draft.requestBodyBase64url !== "string"
+      ) throw new Error(typeof draft.explanation === "string" ? draft.explanation : "Buyer binding could not be prepared.")
+      const signed = await signBuyerIntent(provider, account.address, draft.message)
+      if (signed.status === "rejected") throw new Error("Buyer binding was declined. No transaction was requested.")
+      if (signed.status !== "signed") throw new Error(signed.detail)
+      const response = await fetch("/api/self-service/quote", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          agentSlug,
-          targetRangeWidthTicks: width,
-          maximumSlippageBps: slippage,
+          stage: "EXECUTE",
+          ...options,
+          buyerIntent: draft.buyerIntent,
+          buyerSignature: signed.signature,
+          requestBodyBase64url: draft.requestBodyBase64url,
         }),
       })
       const body = await response.json() as QuoteResult | { explanation?: unknown }
@@ -172,7 +209,7 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
       <main id="demo-workspace" className="demo-workspace">
         <SavedHires currentQuoteId={result?.verifiedQuoteId} />
         <section className="demo-intro">
-          <p className="eyebrow eyebrow-dark">Quote requires no wallet · Activation is optional</p>
+          <p className="eyebrow eyebrow-dark">EOA-bound quote · BSC testnet · Activation is optional</p>
           <h1>Review the task.<br />Verify the <em>quote.</em></h1>
           <p>
             Choose one of four financial specialists, then request a newly verified quote. KNOT
@@ -251,10 +288,10 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
             </div>
 
             <button className="button button-primary demo-run" type="button" onClick={runDemo} disabled={state === "running"}>
-              {state === "running" ? `Verifying ${selectedAgent.name}…` : state === "complete" ? "Run another quote" : "Request verified quote"}
+              {state === "running" ? `Verifying ${selectedAgent.name}…` : state === "complete" ? "Run another quote" : "Connect & request quote"}
               {state === "running" ? <span className="button-spinner" /> : <Arrow />}
             </button>
-            <p className="demo-consent"><Check /> This action creates no job, accesses no wallet, and moves no funds.</p>
+            <p className="demo-consent"><Check /> Your EOA signs one exact quote intent. No transaction or funds are requested.</p>
           </section>
 
           <section className={`demo-output output-${state}`} aria-live="polite" aria-busy={state === "running"}>
@@ -295,7 +332,7 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
                 <p className="result-kicker">Failed closed · Unfunded</p>
                 <h3>The quote was not shown as verified.</h3>
                 <p>{error}</p>
-                <strong>No wallet was accessed and no funds moved.</strong>
+                <strong>No transaction was requested and no funds moved.</strong>
               </div>
             )}
 
@@ -356,7 +393,7 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
                 {result.quote.expired ? (
                   <section className="hire" aria-label="Expired quote">
                     <h2 className="hire__title">This quote has expired</h2>
-                    <p className="hire__lede">Request a fresh signed quote before preparing a hire. No wallet was accessed and no funds moved.</p>
+                    <p className="hire__lede">Request a fresh buyer-bound quote before preparing a hire. No transaction was requested and no funds moved.</p>
                     <button className="hire__approve" type="button" onClick={() => { void runDemo() }}>Request fresh quote</button>
                   </section>
                 ) : <HirePanel verifiedQuoteId={result.verifiedQuoteId} />}
@@ -373,8 +410,8 @@ export default function DemoExperience({ initialAgent }: { initialAgent?: string
           </div>
           <p>
             The quote above is a genuine seller negotiation and confirmed BSC testnet identity
-            observation. It is not a payment or delivery. Optional activation is restricted to the
-            configured buyer wallet and uses test tokens on BSC testnet.
+            observation. It is not a payment or delivery. Optional activation stays bound to the
+            same connected EOA and uses test tokens on BSC testnet. Smart-contract wallets are not supported in this release.
           </p>
         </section>
       </main>

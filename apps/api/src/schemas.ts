@@ -35,6 +35,12 @@ export const createServiceRequest = z
   })
   .strict()
 
+export const createSelfServiceVerifiedQuoteRequest = z.object({
+  task: taskSpec,
+  accessScope,
+  serviceRequest: createServiceRequest,
+}).strict()
+
 export const parseJson = (body: string): unknown => {
   try {
     return JSON.parse(body) as unknown

@@ -1,4 +1,4 @@
-import { keccak256 } from "viem"
+import { getAddress, keccak256 } from "viem"
 import type { AgentSlug } from "../agent-catalog.ts"
 import retainedExamples from "./retained-examples.json" with { type: "json" }
 import { rangePilotRequestTemplate, rangePilotTaskTemplate } from "./rangepilot-example.ts"
@@ -71,14 +71,17 @@ const record = (value: unknown): Record<string, unknown> => value as Record<stri
 export function buildDemoQuoteExample(
   options: DemoQuoteOptions,
   now = new Date(),
+  buyer?: string,
 ): DemoQuoteExample {
   const definition = definitions[options.agentSlug]
+  const boundBuyer = buyer === undefined ? null : getAddress(buyer)
   const windowNumber = Math.floor(now.getTime() / (5 * 60_000))
   const variant = options.agentSlug === "rangepilot"
     ? `-${options.targetRangeWidthTicks}-${options.maximumSlippageBps}`
     : ""
-  const taskId = `web-${options.agentSlug}-${windowNumber.toString(36)}${variant}`
-  const serviceRequestId = `web-${options.agentSlug}-quote-${windowNumber.toString(36)}${variant}`
+  const namespace = boundBuyer === null ? "" : `ss_${boundBuyer.slice(2).toLowerCase()}_`
+  const taskId = `${namespace}web-${options.agentSlug}-${windowNumber.toString(36)}${variant}`
+  const serviceRequestId = `${namespace}web-${options.agentSlug}-quote-${windowNumber.toString(36)}${variant}`
   const deadlineUtc = new Date(windowNumber * 5 * 60_000 + 30 * 60_000).toISOString()
   const task = record(clone(definition.task))
   const sellerRequest = record(clone(definition.request))

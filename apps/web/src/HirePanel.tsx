@@ -8,6 +8,7 @@ import { beginJournal, readJournal } from "./hire-journal"
 import { readTestnetReceipt } from "./hire-receipt"
 import { recoverHireHash, runHirePhase } from "./hire-runner"
 import type { HireJournal } from "./hire-types"
+import { signBuyerIntent } from "./buyer-intent-client"
 import { ensureBscTestnet, readInjectedProvider, requestAccount } from "./wallet"
 
 export function HirePanel({ verifiedQuoteId }: { verifiedQuoteId: string }) {
@@ -36,13 +37,35 @@ export function HirePanel({ verifiedQuoteId }: { verifiedQuoteId: string }) {
         if (!lock) throw new Error("Another tab is handling this hire. Wait and check saved progress.")
         let saved = readJournal(localStorage, verifiedQuoteId)
         if (!saved) {
+          const provider = readInjectedProvider()
+          if (!provider) throw new Error("Connect an EOA browser wallet to bind this hire.")
+          const account = await requestAccount(provider)
+          if (account.status === "rejected") throw new Error("Wallet connection was declined. No transaction was requested.")
+          if (account.status !== "connected") throw new Error(account.detail)
+          const network = await ensureBscTestnet(provider)
+          if (network.status === "rejected") throw new Error("BSC testnet selection was declined. No transaction was requested.")
+          if (network.status !== "ready") throw new Error(network.detail)
+          const draftResponse = await fetch("/api/hires/prepare", {
+            method: "POST", headers: { "content-type": "application/json", "idempotency-key": verifiedQuoteId },
+            body: JSON.stringify({ stage: "DRAFT", verifiedQuoteId, buyer: account.address }), signal: AbortSignal.timeout(10_000),
+          })
+          const draft = await draftResponse.json() as { explanation?: unknown; buyerIntent?: unknown; message?: unknown }
+          if (!draftResponse.ok || typeof draft.buyerIntent !== "string" || typeof draft.message !== "string") {
+            throw new Error(typeof draft.explanation === "string" ? draft.explanation : "Buyer binding could not be prepared.")
+          }
+          const signed = await signBuyerIntent(provider, account.address, draft.message)
+          if (signed.status === "rejected") throw new Error("Buyer binding was declined. No transaction was requested.")
+          if (signed.status !== "signed") throw new Error(signed.detail)
           const response = await fetch("/api/hires/prepare", {
             method: "POST", headers: { "content-type": "application/json", "idempotency-key": verifiedQuoteId },
-            body: JSON.stringify({ verifiedQuoteId }), signal: AbortSignal.timeout(50_000),
+            body: JSON.stringify({ verifiedQuoteId, buyerIntent: draft.buyerIntent, buyerSignature: signed.signature }), signal: AbortSignal.timeout(50_000),
           })
           const body = await response.json()
           if (!response.ok) throw new Error(body.explanation ?? "Hire preparation was refused.")
           const prepared = validatePrepared(body, verifiedQuoteId)
+          if (prepared.envelope.buyer.toLowerCase() !== account.address.toLowerCase()) {
+            throw new Error("The prepared hire does not belong to the connected account.")
+          }
           saved = beginJournal(localStorage, prepared)
           setJournal(saved)
           return

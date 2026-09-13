@@ -133,10 +133,6 @@ const requireEqual = (left: unknown, right: unknown, message: string): void => {
   if (!equal(left, right)) failBinding(message)
 }
 
-const requireBuyer = (requester: string, buyer: string): void => {
-  if (requester !== buyer) failBinding("seller request authority does not match the buyer")
-}
-
 const sha256 = (bytes: Uint8Array): `0x${string}` =>
   `0x${createHash("sha256").update(bytes).digest("hex")}`
 
@@ -270,7 +266,6 @@ const assertRangeBinding = (
 const assertGridBinding = (
   task: Extract<TaskSpec, { category: "grid" }>,
   request: z.infer<typeof gridQuantEvaluationInput>,
-  buyer: string,
   requestHash: string,
 ): string => {
   const internal = request.task
@@ -318,8 +313,7 @@ const assertGridBinding = (
     },
     "GridQuant request does not match the marketplace task or exact input hash",
   )
-  requireBuyer(internal.requester, buyer)
-  requireBuyer(request.snapshot.requester, buyer)
+  requireEqual(internal.requester, request.snapshot.requester, "GridQuant task and snapshot requesters differ")
   if (!request.snapshot.analysisAuthorized) failBinding("GridQuant analysis is not authorized")
   requireEqual(
     { snapshotId: request.snapshot.snapshotId, chainId: request.snapshot.chainId, pair: request.snapshot.pair },
@@ -335,7 +329,6 @@ const ceilDiv = (numerator: bigint, denominator: bigint): bigint =>
 const assertYieldBinding = (
   task: Extract<TaskSpec, { category: "yield" }>,
   request: z.infer<typeof yieldScoutEvaluationInput>,
-  buyer: string,
   requestHash: string,
 ): string => {
   const minimumImprovement = ceilDiv(
@@ -385,7 +378,6 @@ const assertYieldBinding = (
     },
     "YieldScout request does not match the marketplace task or exact input hash",
   )
-  requireBuyer(request.requester, buyer)
   if (!request.analysisAuthorized) failBinding("YieldScout analysis is not authorized")
   requireEqual(
     { chainId: request.snapshot.chainId, asset: request.snapshot.asset },
@@ -397,7 +389,6 @@ const assertYieldBinding = (
 
 const parseRequest = (
   envelope: ServiceRequestEnvelope,
-  buyer: string,
   requestValue: unknown,
   requestHash: string,
 ): { snapshotId: string; inputBinding: ServiceRequestInputBinding } => {
@@ -431,14 +422,14 @@ const parseRequest = (
         if (request.task.capability !== "analysis" || request.task.parameters.executionMode !== "analysis") {
           failCapability("GridQuant accepts one-shot analysis requests only")
         }
-        return { snapshotId: assertGridBinding(envelope.task, request, buyer, requestHash), inputBinding: "EXACT_REQUEST_BYTES" }
+        return { snapshotId: assertGridBinding(envelope.task, request, requestHash), inputBinding: "EXACT_REQUEST_BYTES" }
       }
       case "yield": {
         const request = yieldScoutEvaluationInput.parse(requestValue)
         if (request.capability !== "analysis" || request.executionChainId !== null) {
           failCapability("YieldScout accepts one-shot analysis requests only")
         }
-        return { snapshotId: assertYieldBinding(envelope.task, request, buyer, requestHash), inputBinding: "EXACT_REQUEST_BYTES" }
+        return { snapshotId: assertYieldBinding(envelope.task, request, requestHash), inputBinding: "EXACT_REQUEST_BYTES" }
       }
       case "security":
         return failBinding("security seller requests are not supported")
@@ -483,7 +474,7 @@ export const prepareServiceRequest = (
     throw new ServiceRequestPreparationError("INVALID_REQUEST_BYTES", "service request is not valid UTF-8 JSON")
   }
   const requestKeccak256 = keccak256(requestBytes)
-  const binding = parseRequest(envelope, buyer, requestValue, requestKeccak256)
+  const binding = parseRequest(envelope, requestValue, requestKeccak256)
   const encodedBytes = envelope.transport === "base64url"
     ? envelope.request.bytesBase64url
     : deflateRawSync(requestBytes).toString("base64url")

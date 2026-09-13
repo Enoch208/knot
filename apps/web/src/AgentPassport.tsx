@@ -21,7 +21,7 @@ const hireBlockedReason =
   "Hiring starts from a verified quote, and no public quote route is deployed for this agent yet."
 
 const hireAvailableNote =
-  "Review the provider, budget, policy and expiry. Activation is restricted to KNOT's configured buyer wallet on BSC testnet."
+  "Connect an EOA to bind the quote to its buyer, then review the provider, budget, policy and expiry before any BSC testnet call."
 
 const explorer = "https://testnet.bscscan.com/tx/"
 const artifacts = "https://knot-artifacts.truematchx.com/knot-deliverables/"

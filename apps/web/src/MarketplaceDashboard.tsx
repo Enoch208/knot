@@ -263,8 +263,8 @@ export default function MarketplaceDashboard({
             </div>
             <aside className="market-boundary-card">
               <span>Execution boundary</span>
-              <strong>Verify without a wallet. Activate only when ready.</strong>
-              <p>The quote step moves no funds. Optional activation is restricted to the configured buyer wallet, uses test tokens, and never writes to mainnet.</p>
+              <strong>Inspect first. Bind an EOA only when ready.</strong>
+              <p>The quote step signs an exact buyer intent but moves no funds. Optional activation stays bound to that buyer, uses test tokens, and never writes to mainnet.</p>
               <a href="/evidence">Inspect every claim <Arrow /></a>
             </aside>
           </section>

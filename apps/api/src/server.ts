@@ -36,6 +36,8 @@ const requestHeaders = (headers: IncomingHttpHeaders): ApiRequest["headers"] => 
   "idempotency-key": headerValue(headers, "idempotency-key"),
   origin: headerValue(headers, "origin"),
   "x-correlation-id": headerValue(headers, "x-correlation-id"),
+  "x-knot-buyer-intent": headerValue(headers, "x-knot-buyer-intent"),
+  "x-knot-buyer-signature": headerValue(headers, "x-knot-buyer-signature"),
 })
 
 const writeResponse = (target: ServerResponse, response: ApiResponse): void => {

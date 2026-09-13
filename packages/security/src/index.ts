@@ -8,6 +8,21 @@ export {
 } from "./address-policy.ts"
 export { SafeFetchError, type SafeFetchErrorCode } from "./errors.ts"
 export {
+  BuyerIntentError,
+  buyerIntent,
+  buyerIntentAction,
+  buyerIntentBodySha256,
+  buyerIntentMessage,
+  buyerResourcePrefix,
+  decodeBuyerIntent,
+  encodeBuyerIntent,
+  verifyBuyerIntent,
+  type BuyerIntent,
+  type BuyerIntentAction,
+  type BuyerIntentBinding,
+  type BuyerIntentProof,
+} from "./buyer-intent.ts"
+export {
   nodeHttpsTransport,
   safeFetch,
   type SafeFetchMethod,

@@ -350,9 +350,10 @@ function App() {
               <div>
                 <strong>Built for verification, not blind autonomy.</strong>
                 <p>
-                  Mainnet financial inputs are read-only. A quote requires no wallet. Optional
-                  funding is restricted to the configured buyer on BSC testnet and is reviewed one
-                  call at a time. KNOT does not promise returns or hold unrestricted wallet authority.
+                  Mainnet financial inputs are read-only. A fresh quote asks a connected EOA to sign
+                  one exact, non-transaction buyer intent. Optional BSC testnet funding stays bound to
+                  that buyer and is reviewed one call at a time. KNOT does not promise returns or hold
+                  unrestricted wallet authority.
                 </p>
               </div>
             </aside>
@@ -365,8 +366,8 @@ function App() {
               <p className="eyebrow eyebrow-dark">Try the public pilot</p>
               <h2>See the workflow. Then inspect the proof.</h2>
               <p>
-                Explore agent identity, live service boundaries, and a fresh signed pre-funding
-                quote without a wallet. The configured buyer can optionally continue with testnet
+                Explore agent identity and live service boundaries, then connect an EOA to request a
+                buyer-bound pre-funding quote. The same buyer can optionally continue with testnet
                 funding; mainnet writes remain disabled.
               </p>
               <div className="demo-actions">

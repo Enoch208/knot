@@ -10,6 +10,13 @@ import {
   type VerifiedQuoteRecord,
 } from "../../../packages/db/src/index.ts"
 import { OwnedSellerClientError } from "../../../packages/security/src/owned-seller-client.ts"
+import {
+  BuyerIntentError,
+  buyerResourcePrefix,
+  decodeBuyerIntent,
+  verifyBuyerIntent,
+  type BuyerIntentAction,
+} from "../../../packages/security/src/buyer-intent.ts"
 import { ApiError, invalidRequest, upstreamUnavailable } from "./errors.ts"
 import {
   HireEnvelopeError,
@@ -17,7 +24,14 @@ import {
   prepareHireForVerifiedQuote,
 } from "./hire-preparation.ts"
 import { TaskConflictError, VerifiedQuoteCreationUnavailableError } from "./pg-store.ts"
-import { createServiceRequest, createTaskRequest, createVerifiedQuoteRequest, identifier, parseJson } from "./schemas.ts"
+import {
+  createSelfServiceVerifiedQuoteRequest,
+  createServiceRequest,
+  createTaskRequest,
+  createVerifiedQuoteRequest,
+  identifier,
+  parseJson,
+} from "./schemas.ts"
 import type { ApiConfig, ApiRequest, ApiResponse, ApiStore, StoredTask } from "./types.ts"
 import { VerifiedQuoteOrchestrationError } from "./verified-quote-orchestrator.ts"
 
@@ -137,6 +151,68 @@ const requireJson = (request: ApiRequest, maxBodyBytes: number): string => {
   return request.body
 }
 
+const requireBuyerIntent = async (
+  request: ApiRequest,
+  config: ApiConfig,
+  action: BuyerIntentAction,
+  resourceId: string,
+  body: string,
+): Promise<string> => {
+  const encoded = request.headers["x-knot-buyer-intent"]
+  const signature = request.headers["x-knot-buyer-signature"]
+  const idempotencyKey = request.headers["idempotency-key"]
+  if (!encoded || !signature || !idempotencyKey) {
+    throw new ApiError(401, "AUTHORITY_MISMATCH", "A buyer-signed intent is required.", false, "unfunded")
+  }
+  try {
+    const intent = decodeBuyerIntent(encoded)
+    return await verifyBuyerIntent(
+      { intent, signature: signature as `0x${string}` },
+      {
+        action,
+        resourceId,
+        idempotencyKey,
+        origin: config.allowedOrigin,
+        body,
+        now: config.now(),
+      },
+    )
+  } catch (error) {
+    if (error instanceof BuyerIntentError) {
+      throw new ApiError(401, "AUTHORITY_MISMATCH", "The buyer-signed intent is invalid, expired, or does not match this request.", false, "unfunded")
+    }
+    throw error
+  }
+}
+
+const prepareVerifiedHire = async (
+  store: ApiStore,
+  config: ApiConfig,
+  buyer: string,
+  verifiedQuoteId: string,
+): Promise<unknown> => {
+  const probe = config.commerceProbe
+  if (!probe) {
+    throw new ApiError(503, "UPSTREAM_UNAVAILABLE", "Commerce preparation is not configured on this deployment.", true)
+  }
+  const record = await store.getVerifiedQuote(verifiedQuoteId, buyer)
+  if (!record) throw new ApiError(404, "RESOURCE_NOT_FOUND", "No verified quote matches that identifier.", false)
+  try {
+    return await prepareHireForVerifiedQuote(probe, {
+      record,
+      nowUnix: Math.floor(config.now().getTime() / 1000),
+    })
+  } catch (error) {
+    if (error instanceof HirePreparationUnavailableError) {
+      throw new ApiError(503, "UPSTREAM_UNAVAILABLE", `Commerce writes are suspended: ${error.reasons.join("; ")}`, true)
+    }
+    if (error instanceof HireEnvelopeError) {
+      throw new ApiError(409, "CONFLICT", `Hire preparation refused: ${error.code}`, false)
+    }
+    throw error
+  }
+}
+
 const asFailure = (error: unknown): ApiError => {
   if (error instanceof ApiError) return error
   if (error instanceof TaskConflictError) {
@@ -205,7 +281,7 @@ export const createApiHandler = (store: ApiStore, config: ApiConfig) => {
         return {
           status: 204,
           headers: {
-            "access-control-allow-headers": "authorization, content-type, idempotency-key, x-correlation-id",
+            "access-control-allow-headers": "authorization, content-type, idempotency-key, x-correlation-id, x-knot-buyer-intent, x-knot-buyer-signature",
             "access-control-allow-methods": "GET, POST, OPTIONS",
             "access-control-allow-origin": config.allowedOrigin,
             "cache-control": "no-store",
@@ -223,6 +299,80 @@ export const createApiHandler = (store: ApiStore, config: ApiConfig) => {
           checkedAt: config.now().toISOString(),
           dependencies: { database: "AVAILABLE" },
         }, correlationId, config.allowedOrigin)
+      }
+      if (request.method === "POST" && request.path === "/api/self-service/verified-quotes") {
+        requireMutationOrigin(request, config)
+        requireAuthorization(request, config)
+        const body = requireJson(request, config.maxBodyBytes)
+        const decoded = parseJson(body)
+        if (decoded === undefined) throw invalidRequest("The request body is not valid JSON.")
+        const parsed = createSelfServiceVerifiedQuoteRequest.safeParse(decoded)
+        if (!parsed.success) throw invalidRequest("The self-service quote request is invalid.")
+        const { task, accessScope, serviceRequest } = parsed.data
+        if (serviceRequest.envelope.task.taskId !== task.taskId) {
+          throw invalidRequest("The service request task does not match the supplied task.")
+        }
+        if (request.headers["idempotency-key"] !== serviceRequest.id) {
+          throw invalidRequest("Idempotency-Key must equal the immutable service request identifier.")
+        }
+        const buyer = await requireBuyerIntent(
+          request,
+          config,
+          "CREATE_VERIFIED_QUOTE",
+          serviceRequest.id,
+          body,
+        )
+        const namespace = buyerResourcePrefix(buyer)
+        if (!task.taskId.startsWith(namespace) || !serviceRequest.id.startsWith(namespace)) {
+          throw invalidRequest("Self-service resource identifiers must use the recovered buyer namespace.")
+        }
+        if (new Date(task.deadlineUtc).getTime() <= config.now().getTime()) {
+          throw invalidRequest("The task deadline must be in the future.")
+        }
+        const taskResult = await store.createTask(buyer, task, accessScope)
+        const serviceRequestResult = await store.createServiceRequest({
+          id: serviceRequest.id,
+          buyer,
+          endpoint: serviceRequest.endpoint,
+          idempotencyKey: serviceRequest.id,
+          envelope: serviceRequest.envelope,
+        })
+        const quoteResult = await store.createVerifiedQuote(serviceRequest.id, buyer)
+        return encode(
+          quoteResult.created ? 201 : 200,
+          {
+            ...verifiedQuoteResponse(quoteResult.record, config.now()),
+            buyer,
+            buyerBinding: {
+              method: "EIP-191",
+              chainId: 97,
+              action: "CREATE_VERIFIED_QUOTE",
+              resourceId: serviceRequest.id,
+            },
+            lifecycle: {
+              taskStatus: taskResult.created ? 201 : 200,
+              serviceRequestStatus: serviceRequestResult.created ? 201 : 200,
+              quoteStatus: quoteResult.created ? 201 : 200,
+            },
+          },
+          correlationId,
+          config.allowedOrigin,
+        )
+      }
+      const selfServiceHireMatch = request.path.match(/^\/api\/self-service\/verified-quotes\/([^/]+)\/hire-preparation$/)
+      if (request.method === "POST" && selfServiceHireMatch) {
+        requireMutationOrigin(request, config)
+        requireAuthorization(request, config)
+        const verifiedQuoteId = decodeIdentifier(selfServiceHireMatch[1] ?? "")
+        const body = requireJson(request, config.maxBodyBytes)
+        if (!createVerifiedQuoteRequest.safeParse(parseJson(body)).success) {
+          throw invalidRequest("The hire preparation request body must be an empty JSON object.")
+        }
+        if (request.headers["idempotency-key"] !== verifiedQuoteId) {
+          throw invalidRequest("Idempotency-Key must equal the verified quote identifier.")
+        }
+        const buyer = await requireBuyerIntent(request, config, "PREPARE_HIRE", verifiedQuoteId, body)
+        return encode(200, await prepareVerifiedHire(store, config, buyer, verifiedQuoteId), correlationId, config.allowedOrigin)
       }
       if (request.method === "POST" && request.path === "/api/tasks") {
         requireMutationOrigin(request, config)
@@ -324,27 +474,12 @@ export const createApiHandler = (store: ApiStore, config: ApiConfig) => {
         if (request.headers["idempotency-key"] !== verifiedQuoteId) {
           throw invalidRequest("Idempotency-Key must equal the verified quote identifier.")
         }
-        const probe = config.commerceProbe
-        if (!probe) {
-          throw new ApiError(503, "UPSTREAM_UNAVAILABLE", "Commerce preparation is not configured on this deployment.", true)
-        }
-        const record = await store.getVerifiedQuote(verifiedQuoteId, config.buyerAddress)
-        if (!record) throw new ApiError(404, "RESOURCE_NOT_FOUND", "No verified quote matches that identifier.", false)
-        try {
-          const prepared = await prepareHireForVerifiedQuote(probe, {
-            record,
-            nowUnix: Math.floor(config.now().getTime() / 1000),
-          })
-          return encode(200, prepared, correlationId, config.allowedOrigin)
-        } catch (error) {
-          if (error instanceof HirePreparationUnavailableError) {
-            throw new ApiError(503, "UPSTREAM_UNAVAILABLE", `Commerce writes are suspended: ${error.reasons.join("; ")}`, true)
-          }
-          if (error instanceof HireEnvelopeError) {
-            throw new ApiError(409, "CONFLICT", `Hire preparation refused: ${error.code}`, false)
-          }
-          throw error
-        }
+        return encode(
+          200,
+          await prepareVerifiedHire(store, config, config.buyerAddress, verifiedQuoteId),
+          correlationId,
+          config.allowedOrigin,
+        )
       }
       const jobMatch = request.path.match(/^\/api\/jobs\/([^/]+)$/)
       if (request.method === "GET" && jobMatch) {

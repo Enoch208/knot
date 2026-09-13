@@ -88,22 +88,14 @@ test("rejects byte changes that break an exact TaskSpec input hash", async () =>
   )
 })
 
-test("rejects category bindings and requester authority mismatches", async () => {
-  const value = await fixture(fixtures[2])
-  const request = JSON.parse(value.requestBytes.toString("utf8")) as { task: { requester: string }; snapshot: { requester: string } }
-  request.task.requester = "0x1111111111111111111111111111111111111111"
-  request.snapshot.requester = request.task.requester
-  const bytes = Buffer.from(JSON.stringify(request), "utf8")
-  const task = value.envelope.task as { inputHash: string }
-  const envelope = {
-    ...value.envelope,
-    task: { ...task, inputHash: "0x92962f6a778439713494e2f9bca3096e11d196b5480f8fa80fb4284fe370f090" },
-    request: { ...value.envelope.request, bytesBase64url: bytes.toString("base64url") },
+test("keeps retained analysis requesters separate from marketplace ownership", async () => {
+  const marketplaceBuyer = "0x1111111111111111111111111111111111111111"
+  for (const entry of [fixtures[2], fixtures[3]]) {
+    const value = await fixture(entry)
+    const prepared = prepareServiceRequest(value.envelope, marketplaceBuyer)
+    assert.equal(prepared.buyer, marketplaceBuyer)
+    assert.equal(prepared.requestBytesBase64url, value.requestBytes.toString("base64url"))
   }
-  assert.throws(
-    () => prepareServiceRequest(envelope, buyer),
-    (error: unknown) => error instanceof ServiceRequestPreparationError && error.code === "TASK_BINDING_MISMATCH",
-  )
 })
 
 test("rejects compressed HealthGuard v1 and noncanonical request bytes", async () => {
